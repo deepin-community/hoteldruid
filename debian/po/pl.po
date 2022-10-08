@@ -1,0 +1,211 @@
+# Polish messages for debian-installer.
+# Copyright (C) 2003 Software in the Public Interest, Inc.
+# This file is distributed under the same license as debian-installer.
+# Copyright (C) 2004-2010 Bartosz Feński <fenio@debian.org>
+#
+#
+# Translations from iso-codes:
+#   Tobias Toedter <t.toedter@gmx.net>, 2007.
+#     Translations taken from ICU SVN on 2007-09-09
+#   Jakub Bogusz <qboosh@pld-linux.org>, 2009-2011
+#
+#      Alastair McKinstry <mckinstry@computer.org>, 2001
+#      Alastair McKinstry, <mckinstry@debian.org>, 2004.
+#      Andrzej M. Krzysztofowicz <ankry@mif.pg.gda.pl>, 2007
+#      Cezary Jackiewicz <cjackiewicz@poczta.onet.pl>, 2000-2001
+#      Free Software Foundation, Inc., 2000-2010
+#      Free Software Foundation, Inc., 2004-2009
+#      GNOME PL Team <translators@gnome.pl>, 2001
+#      Jakub Bogusz <qboosh@pld-linux.org>, 2007-2011
+#      Tomasz Z. Napierala <zen@debian.linux.org.pl>, 2004, 2006.
+#      Translations from KDE:
+#      - Jacek Stolarczyk <jacek@mer.chemia.polsl.gliwice.pl>
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: debian-installer\n"
+"Report-Msgid-Bugs-To: hoteldruid@packages.debian.org\n"
+"POT-Creation-Date: 2012-11-18 11:29+0100\n"
+"PO-Revision-Date: 2011-10-11 21:15+0100\n"
+"Last-Translator: Marcin Owsiany <porridge@debian.org>\n"
+"Language-Team: Polish <debian-l10n-polish@lists.debian.org>\n"
+"Language: pl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#. Type: boolean
+#. Description
+#: ../templates:1001
+msgid "Automatically configure the Apache web server for HotelDruid?"
+msgstr "Skonfigurować serwer WWW Apache do obsługi programu HotelDruid?"
+
+#. Type: boolean
+#. Description
+#: ../templates:1001
+msgid ""
+"HotelDruid runs on any web server supporting PHP, but automatic "
+"configuration can only be performed for Apache."
+msgstr ""
+"HotelDruid działa na każdym serwerze WWW obsługującym PHP, lecz konfiguracja "
+"automatyczna może być wykonana jedynie w przypadku Apache'a."
+
+#. Type: boolean
+#. Description
+#: ../templates:1001
+msgid ""
+"Once configured, HotelDruid can be accessed locally at \"http://localhost/"
+"hoteldruid\"."
+msgstr ""
+"Po skonfigurowaniu, dostęp do programu HotelDruid można uzyskać lokalnie pod "
+"adresem \"http://localhost/hoteldruid\"."
+
+#. Type: boolean
+#. Description
+#: ../templates:1001
+msgid "Please choose whether automatic configuration should be performed now."
+msgstr ""
+"Proszę wybrać, czy automatyczna konfiguracja ma teraz zostać przeprowadzona."
+
+#. Type: boolean
+#. Description
+#: ../templates:2001
+msgid "Restrict HotelDruid access to localhost?"
+msgstr "Ograniczyć dostęp do programu HotelDruid do komputera lokalnego?"
+
+#. Type: boolean
+#. Description
+#: ../templates:2001
+msgid ""
+"The Apache web server can be configured to forbid HotelDruid connections "
+"from other machines."
+msgstr ""
+"Serwer WWW Apache może zostać tak skonfigurowany, aby zabraniał połączeń z "
+"programem HotelDruid pochodzących z innych komputerów."
+
+#. Type: boolean
+#. Description
+#: ../templates:2001
+msgid ""
+"It is recommended to activate this setting if HotelDruid is going to be used "
+"only from this machine."
+msgstr ""
+"Zaleca się włączenie tego ustawienia, jeśli HotelDruid będzie używany "
+"jedynie z bieżącego komputera."
+
+#. Type: boolean
+#. Description
+#: ../templates:3001
+msgid "Reload the web server configuration for HotelDruid?"
+msgstr "Przeładować konfigurację serwera WWW do programu HotelDruid?"
+
+#. Type: boolean
+#. Description
+#: ../templates:3001
+msgid ""
+"In order to activate the new configuration for HotelDruid, the web server "
+"has to reload its configuration files."
+msgstr ""
+"Aby aktywować nową konfigurację programu HotelDruid, serwer WWW musi "
+"przeładować swoje pliki konfiguracyjne."
+
+#. Type: string
+#. Description
+#: ../templates:4001
+msgid "HotelDruid administrator username:"
+msgstr "Nazwa użytkownika administrującego programem HotelDruid:"
+
+#. Type: string
+#. Description
+#: ../templates:4001
+msgid ""
+"Please enter a name for the administrator user, which will be able to manage "
+"HotelDruid's configuration and create new users. The username should be "
+"composed of ASCII letters and numbers only."
+msgstr ""
+"Proszę podać nazwę użytkownika administrującego, który będzie mógł zarządzać "
+"konfiguracją programu HotelDruid i tworzyć nowych użytkowników, Nazwa "
+"użytkownika powinna składać się jedynie ze znaków ASCII i cyfr."
+
+#. Type: string
+#. Description
+#: ../templates:4001
+msgid ""
+"You can later change the administrator username and password from the \"User "
+"management\" page in HotelDruid. If this field is left blank, no user login "
+"will be required to access HotelDruid."
+msgstr ""
+"Można zmienić nazwę administratora i jego hasło na stronie \"User management"
+"\" programu HotelDruid. Jeśli pole to pozostanie puste, logowanie nie będzie "
+"konieczne do uzyskania dostępu do aplikacji HotelDruid."
+
+#. Type: password
+#. Description
+#: ../templates:5001
+msgid "HotelDruid administrator password:"
+msgstr "Hasło użytkownika administrującego programem HotelDruid:"
+
+#. Type: password
+#. Description
+#: ../templates:5001
+msgid "Please choose a password for the HotelDruid administrator."
+msgstr "Proszę wybrać hasło administratora programu HotelDruid."
+
+#. Type: password
+#. Description
+#: ../templates:6001
+msgid "Re-enter password to verify:"
+msgstr "Potwierdź hasło:"
+
+#. Type: password
+#. Description
+#: ../templates:6001
+msgid ""
+"Please enter the same \"admin\" password again to verify you have typed it "
+"correctly."
+msgstr ""
+
+#. Type: error
+#. Description
+#: ../templates:7001
+msgid "Password input error"
+msgstr "Błąd podczas wprowadzania"
+
+#. Type: error
+#. Description
+#: ../templates:7001
+msgid "The two passwords you entered were not the same. Please try again."
+msgstr ""
+"Hasła, które zostały wpisane nie są identyczne. Proszę spróbować jeszcze raz."
+
+#. Type: boolean
+#. Description
+#: ../templates:8001
+msgid "Erase HotelDruid data when purging the package?"
+msgstr "Usunąć dane programu HotelDruid podczas czyszczenia pakietu?"
+
+#. Type: boolean
+#. Description
+#: ../templates:8001
+msgid "The hoteldruid package is about to be purged from this system."
+msgstr "Pakiet hoteldruid ma zostać wyczyszczony."
+
+#. Type: boolean
+#. Description
+#: ../templates:8001
+msgid ""
+"HotelDruid stores its data in \"/var/lib/hoteldruid\". If you choose this "
+"option, these data files will be erased now."
+msgstr ""
+"HotelDruid przechowuje swoje dane w \"/var/lib/hoteldruid\". Jeśli wybierze "
+"się tę opcję, pliki te zostaną teraz usunięte."
+
+#. Type: boolean
+#. Description
+#: ../templates:8001
+msgid ""
+"Refuse this option if there is operational information which should be kept "
+"after HotelDruid is purged."
+msgstr ""
+"Proszę wybrać \"nie\", jeśli znajdują się tam informacje, które powinny "
+"zostać zachowane po wyczyszczeniu programu HotelDruid."

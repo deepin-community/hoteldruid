@@ -1,0 +1,86 @@
+#!/bin/sh
+# Script to launch HotelDruid in a browser. The default browser will be 
+# firefox/iceweasel (supports html5 drag and drop), you can change it in the 
+# configuration file sourced below.  This script is also needed to add 
+# menu entries without triggering lintian warnings (command not in package). 
+
+
+# Configuration file
+. /etc/hoteldruid/launcher_config
+
+
+
+if [ -n "$1" ]
+then
+
+  if [ $1 = "-v" ] || [ $1 = "--version" ]
+  then
+    printf "\nHotelDruid launcher script version 0.1\n\n";
+    exit 0
+  fi
+
+
+  if [ $1 = "-h" ] || [ $1 = "--help" ]
+  then
+    printf "\nSee /etc/hoteldruid/launcher_config for configuration options.\n\n";
+    exit 0
+  fi
+
+fi
+
+
+
+if [ -n "$DISPLAY" ]
+then
+
+  if [ -x "$HOTELDRUID_XBROWSER" ]
+  then
+    $HOTELDRUID_XBROWSER $HOTELDRUID_URL &
+  else
+    if [ -x "/usr/bin/xdg-open" ]
+    then
+      /usr/bin/xdg-open $HOTELDRUID_URL
+    else
+      if [ -x "/usr/bin/sensible-browser" ]
+      then
+        /usr/bin/sensible-browser $HOTELDRUID_URL &
+      else
+        if [ -x "/usr/bin/x-www-browser" ]
+        then
+          /usr/bin/x-www-browser $HOTELDRUID_URL &
+        else
+          if [ -t 1 ]
+          then
+            if [ -x "/usr/bin/www-browser" ]
+            then
+              /usr/bin/www-browser $HOTELDRUID_URL
+            else
+              echo "Sorry, no browser found."
+              exit 1
+            fi
+          else
+            exit 1
+          fi
+        fi
+      fi
+    fi
+  fi
+
+else
+
+  if [ -t 1 ]
+  then
+    if [ -x "/usr/bin/www-browser" ]
+    then
+      /usr/bin/www-browser $HOTELDRUID_URL
+    else
+      echo "Sorry, no browser found."
+      exit 1
+    fi
+  else
+    exit 1
+  fi
+
+fi
+
+exit 0

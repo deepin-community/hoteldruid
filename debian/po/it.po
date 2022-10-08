@@ -1,0 +1,193 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2016 THE hoteldruid'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the hoteldruid package.
+# Marco M. F. De Santis <marco@digitaldruid.net>, 2016.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: hoteldruid 2.0.0\n"
+"Report-Msgid-Bugs-To: hoteldruid@packages.debian.org\n"
+"POT-Creation-Date: 2012-11-18 11:29+0100\n"
+"PO-Revision-Date: 2012-06-11 15:00+0200\n"
+"Last-Translator: Marco M. F. De Santis <marco@digitaldruid.net>\n"
+"Language-Team: Italian <tp@lists.linux.it>\n"
+"Language: it\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#. Type: boolean
+#. Description
+#: ../templates:1001
+msgid "Automatically configure the Apache web server for HotelDruid?"
+msgstr "Configurare automaticamente il server web Apache per HotelDruid?"
+
+#. Type: boolean
+#. Description
+#: ../templates:1001
+msgid ""
+"HotelDruid runs on any web server supporting PHP, but automatic "
+"configuration can only be performed for Apache."
+msgstr ""
+"HotelDruid può funzionare su qualsiasi server web che supporti PHP, ma solo "
+"solo Apache può essere configurato automaticamente."
+
+#. Type: boolean
+#. Description
+#: ../templates:1001
+msgid ""
+"Once configured, HotelDruid can be accessed locally at \"http://localhost/"
+"hoteldruid\"."
+msgstr ""
+"Una volta configurato, si può accedere localmente a HotelDruid da \"http://"
+"localhost/hoteldruid\"."
+
+#. Type: boolean
+#. Description
+#: ../templates:1001
+msgid "Please choose whether automatic configuration should be performed now."
+msgstr "Selezionare se effettuare la configurazione automatica ora."
+
+#. Type: boolean
+#. Description
+#: ../templates:2001
+msgid "Restrict HotelDruid access to localhost?"
+msgstr "Limitare l'accesso a HotelDruid al solo localhost?"
+
+#. Type: boolean
+#. Description
+#: ../templates:2001
+msgid ""
+"The Apache web server can be configured to forbid HotelDruid connections "
+"from other machines."
+msgstr ""
+"Il server web Apache può essere configurato per proibire connessioni a HotelDruid "
+"che provengano da altri computer."
+
+#. Type: boolean
+#. Description
+#: ../templates:2001
+msgid ""
+"It is recommended to activate this setting if HotelDruid is going to be used "
+"only from this machine."
+msgstr ""
+"Si consiglia l'attivazione di questa impostazione se si è intenzionati ad usare "
+"HotelDruid solo da questo computer"
+
+#. Type: boolean
+#. Description
+#: ../templates:3001
+msgid "Reload the web server configuration for HotelDruid?"
+msgstr "Ricaricare la configurazione del server web ora?"
+
+#. Type: boolean
+#. Description
+#: ../templates:3001
+msgid ""
+"In order to activate the new configuration for HotelDruid, the web server "
+"has to reload its configuration files."
+msgstr ""
+"Per attivare la nuova configurazione per HotelDruid, il server web deve "
+"ricaricare i suoi file di configurazione."
+
+#. Type: string
+#. Description
+#: ../templates:4001
+msgid "HotelDruid administrator username:"
+msgstr "Nome dell'utente amministratore di HotelDruid:"
+
+#. Type: string
+#. Description
+#: ../templates:4001
+msgid ""
+"Please enter a name for the administrator user, which will be able to manage "
+"HotelDruid's configuration and create new users. The username should be "
+"composed of ASCII letters and numbers only."
+msgstr ""
+"Inserire un nome per l'utente amministratore, il quale potrà gestire la "
+"configurazione di HotelDruid e creare nuovi utenti. Il nome utente "
+"deve essere composto solo da caratteri ASCII e numeri."
+
+#. Type: string
+#. Description
+#: ../templates:4001
+msgid ""
+"You can later change the administrator username and password from the \"User "
+"management\" page in HotelDruid. If this field is left blank, no user login "
+"will be required to access HotelDruid."
+msgstr ""
+"Il nome e la password dell'utente amministratore possono essere cambiate in "
+"seguito dalla pagina di \"gestione degli utenti\" di HotelDruid. Se questo campo "
+"è lasciato vuoto, non verrà richiesto il login utente per l'accesso ad HotelDruid."
+
+#. Type: password
+#. Description
+#: ../templates:5001
+msgid "HotelDruid administrator password:"
+msgstr "Password dell'utente amministratore di HotelDruid:"
+
+#. Type: password
+#. Description
+#: ../templates:5001
+msgid "Please choose a password for the HotelDruid administrator."
+msgstr "Scegliere una password per l'utente amministratore di HotelDruid."
+
+#. Type: password
+#. Description
+#: ../templates:6001
+msgid "Re-enter password to verify:"
+msgstr "Inserire nuovamente la password per verifica:"
+
+#. Type: password
+#. Description
+#: ../templates:6001
+msgid ""
+"Please enter the same \"admin\" password again to verify you have typed it "
+"correctly."
+msgstr ""
+"Inserire nuovamente la medesima password dell'amministratore, per poter "
+"verificare che sia stata digitata correttamente."
+
+#. Type: error
+#. Description
+#: ../templates:7001
+msgid "Password input error"
+msgstr "Errore d'immissione della password"
+
+#. Type: error
+#. Description
+#: ../templates:7001
+msgid "The two passwords you entered were not the same. Please try again."
+msgstr "Le due password inserire non sono identiche. Riprovare."
+
+#. Type: boolean
+#. Description
+#: ../templates:8001
+msgid "Erase HotelDruid data when purging the package?"
+msgstr "Cancellare i dati di HotelDruid quando si elimina il pacchetto?"
+
+#. Type: boolean
+#. Description
+#: ../templates:8001
+msgid "The hoteldruid package is about to be purged from this system."
+msgstr "Il pacchetto hoteldruid sta per essere eliminato dal sistema."
+
+#. Type: boolean
+#. Description
+#: ../templates:8001
+msgid ""
+"HotelDruid stores its data in \"/var/lib/hoteldruid\". If you choose this "
+"option, these data files will be erased now."
+msgstr ""
+"HotelDruid conserva i suoi dati in \"/var/lib/hoteldruid\". Se si seleziona "
+"questa opzione, allora tutti i file con questi dati verranno cancellati ora."
+
+#. Type: boolean
+#. Description
+#: ../templates:8001
+msgid ""
+"Refuse this option if there is operational information which should be kept "
+"after HotelDruid is purged."
+msgstr ""
+"Respingere questa opzione se ci sono informazioni operative che dovrebbero"
+"essere mantenute dopo che HotelDruid è stato eliminato."

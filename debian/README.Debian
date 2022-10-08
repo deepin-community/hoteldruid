@@ -1,0 +1,39 @@
+HotelDruid for Debian
+==================
+
+Administrator User and Login
+--------------------------------------
+If during package configuration you didn't choose to restrict access only 
+to localhost, then you should set the password for the administrator user 
+before inserting any sensitive data. The password can be set from the 
+"users management" page. Once this password has been set, a login will 
+be required to access HotelDruid.
+
+
+Database Connection and Migration
+--------------------------------------
+By default this HotelDruid package creates a Sqlite database on the first 
+access (no connection data needed). Later you can migrate to MySQL or 
+PostgreSQL using the HoteldDruid backup system: create a new backup 
+file and then restore it, selecting "new data" for the database connection.
+
+If you insert the database data modifying the /etc/hoteldruid/database.php 
+file, then HotelDruid will always use that data for connection (even on first 
+access). Before migrating to MySQL or PostgreSQL you can insert the 
+database username and password there, so that they will not be stored 
+in other files under /var/lib/hoteldruid. Changing "database type", 
+"database name" or "tables prefix" variables before migrating will give you 
+errors as tables have not been created yet on the new database.
+
+
+Launcher Script
+-----------------
+The hoteldruid-launcher script can be used to open HotelDruid main 
+menu in a browser. The default browser is firefox/iceweasel (supports 
+html5 drag & drop), but you can change it in the configuration file 
+/etc/hoteldruid/launcher_config, where you can also modify the 
+default HotelDruid URL (http://localhost/hoteldruid/). This script is also 
+called by the HotelDruid desktop menu entries.
+
+
+ -- Marco Maria Francesco De Santis <marco@digitaldruid.net>  Sat, 16 Jun 2012 12:52:56 +0200

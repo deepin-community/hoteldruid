@@ -1,0 +1,194 @@
+hoteldruid (3.0.3-1) UNRELEASED; urgency=medium
+
+  * update
+
+ -- Marco Maria Francesco De Santis <marco@digitaldruid.net>  Thu, 28 Apr 2022 18:24:02 +0800
+
+hoteldruid (3.0.3-1) unstable; urgency=low
+
+  * New upstream release
+    - Fixes multiple sql injection and XSS vulnerabilities.
+      (Ref: CVE-2021-37832, CVE-2021-37833, CVE-2021-38559)
+      (Closes: #991910)
+  * debian/control: updated Standards-Version
+  * debian/watch: updated debian watch file standard
+  * Added lintian override for index.html that is not documentation
+  * Updated appdata file with categories and content_rating
+  * debian/postinst: replaced tempfile with mktemp (Closes: #992458)
+  * Added autopkg tests: install-sqlite and lint
+  * debian/config: don't set administrator-username as blank when called
+    twice
+  * Removed debian/compat file and updated debhelper compatibility level
+    to 13 in debian/control
+
+ -- Marco Maria Francesco De Santis <marco@digitaldruid.net>  Fri, 29 Oct 2021 19:19:29 +0100
+
+hoteldruid (3.0.1-1) unstable; urgency=low
+
+  * New upstream release
+  * debian/control: updated Standards-Version
+
+ -- Marco Maria Francesco De Santis <marco@digitaldruid.net>  Tue, 11 Feb 2020 13:56:17 +0000
+
+hoteldruid (3.0.0-1) unstable; urgency=low
+
+  * New upstream release
+  * debian/control: updated Standards-Version
+
+ -- Marco Maria Francesco De Santis <marco@digitaldruid.net>  Thu, 07 Nov 2019 00:13:47 +0000
+
+hoteldruid (2.3.2-1) unstable; urgency=high
+
+  * New upstream release
+    - Fixes multiple sql injection and XSS vulnerabilities.
+      (Ref: CVE-2019-9084, CVE-2019-9085, CVE-2019-9086, CVE-2019-9087)
+  * Removed patch fix-gestione-utenti (integrated in upstream).
+
+ -- Marco Maria Francesco De Santis <marco@digitaldruid.net>  Wed, 27 Feb 2019 17:12:56 +0000
+
+hoteldruid (2.3.0-2) unstable; urgency=high
+
+  * Added a patch to fix sql injection in gestione_utenti.php with
+    variable id_utente_mod.
+    (ref: CVE-2018-1000871) (Closes: #917099)
+  * debian/control: updated Standards-Version
+
+ -- Marco Maria Francesco De Santis <marco@digitaldruid.net>  Mon, 07 Jan 2019 12:48:13 +0000
+
+hoteldruid (2.3.0-1) unstable; urgency=low
+
+  * New upstream release.
+
+ -- Marco Maria Francesco De Santis <marco@digitaldruid.net>  Fri, 09 Nov 2018 01:03:50 +0000
+
+hoteldruid (2.2.4-1) unstable; urgency=low
+
+  * New upstream release.
+  * debian/control: updated Standards-Version
+  * debian/control: added suggest on sensible-utils for hoteldruid-launcher
+    previously included in debianutils
+
+ -- Marco Maria Francesco De Santis <marco@digitaldruid.net>  Mon, 01 OCT 2018 01:09:57 +0100
+
+hoteldruid (2.2.3-1) unstable; urgency=low
+
+  * New upstream release.
+  * debian/control: updated Standards-Version
+  * Renamed desktop file to follow latest desktop-entry specification
+  * updated appdata file with new name of desktop file
+
+ -- Marco Maria Francesco De Santis <marco@digitaldruid.net>  Sun, 03 Jun 2018 01:18:36 +0100
+
+hoteldruid (2.2.2-1) unstable; urgency=low
+
+  * New upstream release.
+  * debian/control: updated Standards-Version and added Rules-Requires-Root
+  * debian/control: added recommendation on php-imap previously included in
+    core php packages
+  * debian/install: changed AppStream metadata location as required by new
+    AppStream guidelines
+  * debian/install: removed xpm icon and added 64x64 png icon
+  * debian/extra/appdata/hoteldruid.appdata.xml: changed license to CC0-1.0
+  * debian/compat: updated debhelper compatibility level to 11
+
+ -- Marco Maria Francesco De Santis <marco@digitaldruid.net>  Wed, 28 Feb 2018 01:33:02 +0000
+
+hoteldruid (2.2.1-1) unstable; urgency=low
+
+  * New upstream release.
+  * debian/control: updated Standards-Version
+  * debian/postinst: removed fallback to init.d script for new standards
+    version
+
+ -- Marco Maria Francesco De Santis <marco@digitaldruid.net>  Thu, 27 Jul 2017 16:58:23 +0100
+
+hoteldruid (2.2.0-1) unstable; urgency=low
+
+  * New upstream release. (Closes: #699184)
+  * debian/po: include new template translations
+     + pt_BR.po: Brazilian Portuguese by Adriano Rafael Gomes. (Closes: #839275)
+  * Added /usr/share/appdata/hoteldruid.appdata.xml for hoteldruid-launcher
+
+ -- Marco Maria Francesco De Santis <marco@digitaldruid.net>  Thu, 22 Dec 2016 10:09:46 +0000
+
+hoteldruid (2.1.4-2) unstable; urgency=low
+
+  * debian/control: adopted new php packaging names. (Closes: #821503)
+  * debian/control: added new dependency on php-xml, previously included in
+    core php packages.
+  * debian/control: swapped suggestion on iceweasel with firefox.
+  * debian/control: updated Standards-Version (no change needed).
+
+ -- Marco Maria Francesco De Santis <marco@digitaldruid.net>  Mon, 09 May 2016 22:19:46 +0100
+
+hoteldruid (2.1.4-1) unstable; urgency=low
+
+  * New upstream release.
+  * Deleted patch backup_bug (integrated in upstream).
+  * Removed file base.js from patch debianize (integrated in upstream).
+  * debian/control: added php7.0 as alternative to php5.
+  * debian/control: updated Standards-Version (no change needed).
+
+ -- Marco Maria Francesco De Santis <marco@digitaldruid.net>  Sat, 06 Feb 2016 01:07:02 +0000
+
+hoteldruid (2.1.3-1) unstable; urgency=low
+
+  * New upstream release.
+  * debian/control: updated Standards-Version (no change needed).
+  * removed MimeType from hoteldruid-launcher desktop entry.
+  * debian/po: include new template translations
+     + nl.po: Dutch translation, thanks to Frans Spiesschaert. (Closes: #767416)
+  * debian/postinst: use Require syntax in apache2 configuration.
+  * Removed debian/menu as requested by Technical Committee decision on #741573.
+  * debian/postrm: use shell function to check if ucf and ucfr exist.
+  * Removed echo -e from HotelDruid launcher script. (Closes: #772237)
+  * Added a patch to fix some backup bugs in includes/funzioni_backup.php.
+  * Changed debhelper compatibility version to level 9.
+  * Added base.js to debianize patch to cut a line larger than 256 characters.
+
+ -- Marco Maria Francesco De Santis <marco@digitaldruid.net>  Thu, 17 Dec 2015 21:26:05 +0100
+
+hoteldruid (2.1.0-1) unstable; urgency=low
+
+  * New upstream release.
+  * debian/copyright: updated format to 1.0.
+  * debian/control: updated Standards-Version (no change needed).
+  * added Keywords to hoteldruid-launcher desktop entry.
+  * debian/postinst, debian/postrm: adapt to apache2 >= 2.4.
+
+ -- Marco Maria Francesco De Santis <marco@digitaldruid.net>  Tue, 19 Aug 2014 19:26:56 +0200
+
+hoteldruid (2.0.3-1) unstable; urgency=low
+
+  * New upstream release
+
+ -- Marco Maria Francesco De Santis <marco@digitaldruid.net>  Mon, 11 Mar 2013 12:33:19 +0100
+
+hoteldruid (2.0.2-1) unstable; urgency=low
+
+  * New upstream release.
+  * debian/config: ask questions for administrator username and password.
+  * debian/postrm: hoteldruid/purgedata question has priority medium.
+  * debian/install: install png icon for freedektop.org menu entry.
+  * added sensible-browser to hoteldruid-launcher script.
+  * Debconf templates and debian/control reviewed by the debian-l10n-
+    english team as part of the Smith review project. Closes: #683182
+  * [Debconf translation updates]
+  * Russian (Yuri Kozlov).  Closes: #684314
+  * Danish (Joe Hansen).  Closes: #684389
+  * Polish (Michał Kułach).  Closes: #684410
+  * French (David Prévot).  Closes: #684505
+  * Swedish (Martin Bagge / brother).  Closes: #684943
+  * Czech (Michal Simunek).  Closes: #685496
+  * Portuguese (Miguel Figueiredo).  Closes: #685548
+  * Spanish; (Omar Campagne).  Closes: #685592
+  * German (Martin Eberhard Schauer).  Closes: #685642
+  * Japanese (victory). Closes: #692787
+
+ -- Marco Maria Francesco De Santis <marco@digitaldruid.net>  Thu, 13 Dec 2012 10:42:26 +0200
+
+hoteldruid (2.0.1-1) unstable; urgency=low
+
+  * Initial release (Closes: #676699)
+
+ -- Marco Maria Francesco De Santis <marco@digitaldruid.net>  Sat, 29 Jun 2012 09:12:47 +0200

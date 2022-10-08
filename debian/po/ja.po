@@ -1,0 +1,192 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# victory <victory.deb@gmail.com>, 2012.
+# 
+msgid ""
+msgstr ""
+"Project-Id-Version: hoteldruid\n"
+"Report-Msgid-Bugs-To: hoteldruid@packages.debian.org\n"
+"POT-Creation-Date: 2012-11-18 11:29+0100\n"
+"PO-Revision-Date: 2012-11-18 19:29+0900\n"
+"Last-Translator: victory <victory.deb@gmail.com>\n"
+"Language-Team: Japanese <debian-japanese@lists.debian.org>\n"
+"Language: ja\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#. Type: boolean
+#. Description
+#: ../templates:1001
+msgid "Automatically configure the Apache web server for HotelDruid?"
+msgstr "Apache ウェブサーバを HotelDruid 用に自動的に設定しますか?"
+
+#. Type: boolean
+#. Description
+#: ../templates:1001
+msgid ""
+"HotelDruid runs on any web server supporting PHP, but automatic "
+"configuration can only be performed for Apache."
+msgstr ""
+"HotelDruid は PHP 対応のウェブサーバであればどれでも動作しますが、自動設定は "
+"Apache ウェブサーバに対してのみ可能です。"
+
+#. Type: boolean
+#. Description
+#: ../templates:1001
+msgid ""
+"Once configured, HotelDruid can be accessed locally at \"http://localhost/"
+"hoteldruid\"."
+msgstr ""
+"設定が出来ると、HotelDruid はローカルから「http://localhost/hoteldruid」でア"
+"クセス出来るようになります。"
+
+#. Type: boolean
+#. Description
+#: ../templates:1001
+msgid "Please choose whether automatic configuration should be performed now."
+msgstr "ここで自動設定を行うかどうか選択してください。"
+
+#. Type: boolean
+#. Description
+#: ../templates:2001
+msgid "Restrict HotelDruid access to localhost?"
+msgstr "HotelDruid へのアクセスをローカルホストからに制限しますか?"
+
+#. Type: boolean
+#. Description
+#: ../templates:2001
+msgid ""
+"The Apache web server can be configured to forbid HotelDruid connections "
+"from other machines."
+msgstr ""
+"Apache ウェブサーバは他のコンピュータからの接続を禁止するように設定できます。"
+
+#. Type: boolean
+#. Description
+#: ../templates:2001
+msgid ""
+"It is recommended to activate this setting if HotelDruid is going to be used "
+"only from this machine."
+msgstr ""
+"HotelDruid をこのマシンからのみ利用する予定であれば、この設定を有効にするよう"
+"勧めます。"
+
+#. Type: boolean
+#. Description
+#: ../templates:3001
+msgid "Reload the web server configuration for HotelDruid?"
+msgstr "ウェブサーバの設定を HotelDruid 用に読み込み直しますか?"
+
+#. Type: boolean
+#. Description
+#: ../templates:3001
+msgid ""
+"In order to activate the new configuration for HotelDruid, the web server "
+"has to reload its configuration files."
+msgstr ""
+"HotelDruid 用の新しい設定を反映させるためには、ウェブサーバは設定ファイルをリ"
+"ロードしなければなりません。"
+
+#. Type: string
+#. Description
+#: ../templates:4001
+msgid "HotelDruid administrator username:"
+msgstr "HotelDruid の管理者ユーザ名:"
+
+#. Type: string
+#. Description
+#: ../templates:4001
+msgid ""
+"Please enter a name for the administrator user, which will be able to manage "
+"HotelDruid's configuration and create new users. The username should be "
+"composed of ASCII letters and numbers only."
+msgstr ""
+"管理ユーザの名前を入力してください。このユーザは HotelDruid の設定管理と新規"
+"ユーザの作成が可能になります。ユーザ名にはアスキー文字と数字だけを組み合わせ"
+"てください。"
+
+#. Type: string
+#. Description
+#: ../templates:4001
+msgid ""
+"You can later change the administrator username and password from the \"User "
+"management\" page in HotelDruid. If this field is left blank, no user login "
+"will be required to access HotelDruid."
+msgstr ""
+"管理ユーザのユーザ名とパスワードは HotelDruid の「ユーザ管理」ページから変更"
+"できるようになります。これを空白にすると、HotelDruid へのアクセスにログインを"
+"要求しなくなります。"
+
+#. Type: password
+#. Description
+#: ../templates:5001
+msgid "HotelDruid administrator password:"
+msgstr "HotelDruid の管理者パスワード:"
+
+#. Type: password
+#. Description
+#: ../templates:5001
+msgid "Please choose a password for the HotelDruid administrator."
+msgstr "HotelDruid 管理ユーザのパスワードを入力してください。"
+
+#. Type: password
+#. Description
+#: ../templates:6001
+msgid "Re-enter password to verify:"
+msgstr "確認のためパスワードを再入力:"
+
+#. Type: password
+#. Description
+#: ../templates:6001
+msgid ""
+"Please enter the same \"admin\" password again to verify you have typed it "
+"correctly."
+msgstr ""
+"正しくパスワードが入力されているのを確認するため、同じ「admin」パスワードをも"
+"う一度入力してください。"
+
+#. Type: error
+#. Description
+#: ../templates:7001
+msgid "Password input error"
+msgstr "パスワード入力エラー"
+
+#. Type: error
+#. Description
+#: ../templates:7001
+msgid "The two passwords you entered were not the same. Please try again."
+msgstr "入力した 2 つのパスワードが一致しません。もう一度入力してください。"
+
+#. Type: boolean
+#. Description
+#: ../templates:8001
+msgid "Erase HotelDruid data when purging the package?"
+msgstr "パッケージの完全削除時に HotelDruid のデータを削除しますか?"
+
+#. Type: boolean
+#. Description
+#: ../templates:8001
+msgid "The hoteldruid package is about to be purged from this system."
+msgstr "hoteldruid パッケージをこのシステムから完全削除しようとしています。"
+
+#. Type: boolean
+#. Description
+#: ../templates:8001
+msgid ""
+"HotelDruid stores its data in \"/var/lib/hoteldruid\". If you choose this "
+"option, these data files will be erased now."
+msgstr ""
+"HotelDruid はデータを「/var/lib/hoteldruid」に保存します。このオプションを選"
+"択すると、ここにあるデータファイルは直ちに削除されます。"
+
+#. Type: boolean
+#. Description
+#: ../templates:8001
+msgid ""
+"Refuse this option if there is operational information which should be kept "
+"after HotelDruid is purged."
+msgstr ""
+"HotelDruid を完全削除した後に残しておきたい運用情報がある場合は、このオプショ"
+"ンを拒否してください。"

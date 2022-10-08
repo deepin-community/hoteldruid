@@ -1,0 +1,193 @@
+# Danish translation hoteldruid.
+# Copyright (C) 2012 hoteldruid & nedenstående oversættere.
+# This file is distributed under the same license as the hoteldruid package.
+# Joe Hansen <joedalton2@yahoo.dk>, 2012.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: hoteldruid\n"
+"Report-Msgid-Bugs-To: hoteldruid@packages.debian.org\n"
+"POT-Creation-Date: 2012-11-18 11:29+0100\n"
+"PO-Revision-Date: 2012-08-09 23:51+0200\n"
+"Last-Translator: Joe Hansen <joedalton2@yahoo.dk>\n"
+"Language-Team: Danish <debian-l10n-danish@lists.debian.org>\n"
+"Language: da\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#. Type: boolean
+#. Description
+#: ../templates:1001
+msgid "Automatically configure the Apache web server for HotelDruid?"
+msgstr "Konfigurer automatisk Apache-internetserveren for hotelDruid?"
+
+#. Type: boolean
+#. Description
+#: ../templates:1001
+msgid ""
+"HotelDruid runs on any web server supporting PHP, but automatic "
+"configuration can only be performed for Apache."
+msgstr ""
+"HotelDruid kører på enhver internetserver, der understøtter PHP, men "
+"automatisk konfiguration kan kun udføres for Apache."
+
+#. Type: boolean
+#. Description
+#: ../templates:1001
+msgid ""
+"Once configured, HotelDruid can be accessed locally at \"http://localhost/"
+"hoteldruid\"."
+msgstr ""
+"Når først konfigureret kan HotelDruid tilgås lokalt på »http://localhost/"
+"hoteldruid«."
+
+#. Type: boolean
+#. Description
+#: ../templates:1001
+msgid "Please choose whether automatic configuration should be performed now."
+msgstr "Vælg venligst hvorvidt automatisk konfiguration skal udføres nu."
+
+#. Type: boolean
+#. Description
+#: ../templates:2001
+msgid "Restrict HotelDruid access to localhost?"
+msgstr "Begræns HotelDruid-adgang til localhost?"
+
+#. Type: boolean
+#. Description
+#: ../templates:2001
+msgid ""
+"The Apache web server can be configured to forbid HotelDruid connections "
+"from other machines."
+msgstr ""
+"Apache-internetserveren kan konfigureres til at forbyde HotelDruid-"
+"forbindelser fra andre maskiner."
+
+#. Type: boolean
+#. Description
+#: ../templates:2001
+msgid ""
+"It is recommended to activate this setting if HotelDruid is going to be used "
+"only from this machine."
+msgstr ""
+"Det anbefales, at aktivere denne indstilling hvis HotelDruid kun skal bruges "
+"fra denne maskine."
+
+#. Type: boolean
+#. Description
+#: ../templates:3001
+msgid "Reload the web server configuration for HotelDruid?"
+msgstr "Genindlæs konfigurationen for internetserveren for HotelDruid?"
+
+#. Type: boolean
+#. Description
+#: ../templates:3001
+msgid ""
+"In order to activate the new configuration for HotelDruid, the web server "
+"has to reload its configuration files."
+msgstr ""
+"For at aktivere den nye konfiguration for HotelDruid, så skal "
+"internetserveren genindlæse sine konfigurationsfiler."
+
+#. Type: string
+#. Description
+#: ../templates:4001
+msgid "HotelDruid administrator username:"
+msgstr "Brugernavn for HotelDruid-administratoren:"
+
+#. Type: string
+#. Description
+#: ../templates:4001
+msgid ""
+"Please enter a name for the administrator user, which will be able to manage "
+"HotelDruid's configuration and create new users. The username should be "
+"composed of ASCII letters and numbers only."
+msgstr ""
+"Indtast venligst et navn for administratorbrugeren, som vil kunne håndtere "
+"HotelDruids konfiguration og oprette nye brugere. Brugernavnet må kun bestå "
+"af ASCII-bogstaver og tal."
+
+#. Type: string
+#. Description
+#: ../templates:4001
+msgid ""
+"You can later change the administrator username and password from the \"User "
+"management\" page in HotelDruid. If this field is left blank, no user login "
+"will be required to access HotelDruid."
+msgstr ""
+"Du kan senere ændre brugernavn og adgangskode for administratoren fra siden "
+"»User management« i HotelDruid. Hvis dette felt er tomt, vil der ikke blive "
+"krævet brugerlogind for at tilgå HotelDruid."
+
+#. Type: password
+#. Description
+#: ../templates:5001
+msgid "HotelDruid administrator password:"
+msgstr "Adgangskode for HotelDruid-administratoren:"
+
+#. Type: password
+#. Description
+#: ../templates:5001
+msgid "Please choose a password for the HotelDruid administrator."
+msgstr "Vælg venligst en adgangskode for HotelDruid-administratoren."
+
+#. Type: password
+#. Description
+#: ../templates:6001
+msgid "Re-enter password to verify:"
+msgstr "Genindtast adgangskode for at verificere:"
+
+#. Type: password
+#. Description
+#: ../templates:6001
+msgid ""
+"Please enter the same \"admin\" password again to verify you have typed it "
+"correctly."
+msgstr ""
+"Indtast venligst den samme »adminadgangskode« igen for at verificere din "
+"indtastning."
+
+#. Type: error
+#. Description
+#: ../templates:7001
+msgid "Password input error"
+msgstr "Inddatafejl for adgangskode"
+
+#. Type: error
+#. Description
+#: ../templates:7001
+msgid "The two passwords you entered were not the same. Please try again."
+msgstr "De to adgangskode, du indtastede, var ikke ens. Forsøg venligst igen."
+
+#. Type: boolean
+#. Description
+#: ../templates:8001
+msgid "Erase HotelDruid data when purging the package?"
+msgstr "Slet HotelDruid-data når pakken afinstalleres?"
+
+#. Type: boolean
+#. Description
+#: ../templates:8001
+msgid "The hoteldruid package is about to be purged from this system."
+msgstr "Pakken hoteldruid er ved at blive afinstalleret fra dette system."
+
+#. Type: boolean
+#. Description
+#: ../templates:8001
+msgid ""
+"HotelDruid stores its data in \"/var/lib/hoteldruid\". If you choose this "
+"option, these data files will be erased now."
+msgstr ""
+"HotelDruid gemmer sine data i »/var/lib/hoteldruid«. Hvis du vælger denne "
+"indstilling, så vil disse data blive slettet nu."
+
+#. Type: boolean
+#. Description
+#: ../templates:8001
+msgid ""
+"Refuse this option if there is operational information which should be kept "
+"after HotelDruid is purged."
+msgstr ""
+"Afvis dette valg hvis der er operationel information, som skal bevares efter "
+"at HotelDruid er blevet afinstalleret."

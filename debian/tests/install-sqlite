@@ -1,0 +1,12 @@
+#!/bin/sh
+# Verify the installation was successful.
+
+set -e
+
+if [ -e "/var/lib/hoteldruid/data/dati_connessione.php" ]; then
+  echo "HotelDruid already installed!"
+else
+
+  curl --silent -d "lingua=en" "http://localhost/hoteldruid/creadb.php" | grep "Data inserted!"
+
+fi

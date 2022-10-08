@@ -1,0 +1,198 @@
+# Dutch translation of hoteldruid debconf templates.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the hoteldruid package.
+# Frans Spiesschaert <Frans.Spiesschaert@yucom.be>, 2014.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: hoteldruid\n"
+"Report-Msgid-Bugs-To: hoteldruid@packages.debian.org\n"
+"POT-Creation-Date: 2012-11-18 11:29+0100\n"
+"PO-Revision-Date: 2014-10-20 16:37+0200\n"
+"Last-Translator: Frans Spiesschaert <Frans.Spiesschaert@yucom.be>\n"
+"Language-Team: Debian Dutch l10n Team <debian-l10n-dutch@lists.debian.org>\n"
+"Language: nl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. Type: boolean
+#. Description
+#: ../templates:1001
+msgid "Automatically configure the Apache web server for HotelDruid?"
+msgstr "De Apache webserver automatisch instellen voor HotelDruid?"
+
+#. Type: boolean
+#. Description
+#: ../templates:1001
+msgid ""
+"HotelDruid runs on any web server supporting PHP, but automatic "
+"configuration can only be performed for Apache."
+msgstr ""
+"HotelDruid kan uitgevoerd worden op elke webserver die PHP ondersteunt, maar "
+"enkel voor Apache kan de configuratie automatisch gebeuren."
+
+#. Type: boolean
+#. Description
+#: ../templates:1001
+msgid ""
+"Once configured, HotelDruid can be accessed locally at \"http://localhost/"
+"hoteldruid\"."
+msgstr ""
+"Eens HotelDruid ingesteld werd, is het lokaal bereikbaar op \"http://"
+"localhost/hoteldruid\"."
+
+#. Type: boolean
+#. Description
+#: ../templates:1001
+msgid "Please choose whether automatic configuration should be performed now."
+msgstr "Gelieve aan te geven of de automatische configuratie nu moet gebeuren."
+
+#. Type: boolean
+#. Description
+#: ../templates:2001
+msgid "Restrict HotelDruid access to localhost?"
+msgstr "Toegankelijkheid van HotelDruid beperken tot localhost?"
+
+#. Type: boolean
+#. Description
+#: ../templates:2001
+msgid ""
+"The Apache web server can be configured to forbid HotelDruid connections "
+"from other machines."
+msgstr ""
+"De Apache webserver kan zo ingesteld worden dat HotelDruid-verbindingen "
+"vanaf andere computers verboden worden."
+
+#. Type: boolean
+#. Description
+#: ../templates:2001
+msgid ""
+"It is recommended to activate this setting if HotelDruid is going to be used "
+"only from this machine."
+msgstr ""
+"Het wordt aanbevolen om deze instelling te activeren indien HotelDruid enkel "
+"voor deze computer gebruikt zal worden."
+
+#. Type: boolean
+#. Description
+#: ../templates:3001
+msgid "Reload the web server configuration for HotelDruid?"
+msgstr "De webserver-configuratie opnieuw laden voor HotelDruid?"
+
+#. Type: boolean
+#. Description
+#: ../templates:3001
+msgid ""
+"In order to activate the new configuration for HotelDruid, the web server "
+"has to reload its configuration files."
+msgstr ""
+"Om de nieuwe configuratie effectief te maken voor HotelDruid, moet de "
+"webserver zijn configuratiebestanden opnieuw laden."
+
+#. Type: string
+#. Description
+#: ../templates:4001
+msgid "HotelDruid administrator username:"
+msgstr "Gebruikersnaam voor de beheerder van HotelDruid:"
+
+#. Type: string
+#. Description
+#: ../templates:4001
+msgid ""
+"Please enter a name for the administrator user, which will be able to manage "
+"HotelDruid's configuration and create new users. The username should be "
+"composed of ASCII letters and numbers only."
+msgstr ""
+"Gelieve een gebruikersnaam op te geven voor de beheerder. Die zal in staat "
+"zijn de instellingen van HotelDruid te beheren en nieuwe gebruikers aan te "
+"maken. De gebruikersnaam mag enkel bestaan uit ASCII letters en cijfers."
+
+#. Type: string
+#. Description
+#: ../templates:4001
+msgid ""
+"You can later change the administrator username and password from the \"User "
+"management\" page in HotelDruid. If this field is left blank, no user login "
+"will be required to access HotelDruid."
+msgstr ""
+"U kunt later de gebruikersnaam en het wachtwoord voor de beheerder van "
+"HotelDruid wijzigen vanaf de pagina \"Gebruikersbeheer\" in HotelDruid. "
+"Indien u dit veld leeg laat, zal men zich als gebruiker niet moeten "
+"aanmelden om toegang te hebben tot HotelDruid."
+
+#. Type: password
+#. Description
+#: ../templates:5001
+msgid "HotelDruid administrator password:"
+msgstr "Wachtwoord voor de beheerder van HotelDruid:"
+
+#. Type: password
+#. Description
+#: ../templates:5001
+msgid "Please choose a password for the HotelDruid administrator."
+msgstr "Gelieve een wachtwoord te kiezen voor de beheerder van HotelDruid."
+
+#. Type: password
+#. Description
+#: ../templates:6001
+msgid "Re-enter password to verify:"
+msgstr "Voer ter verificatie het wachtwoord opnieuw in:"
+
+#. Type: password
+#. Description
+#: ../templates:6001
+msgid ""
+"Please enter the same \"admin\" password again to verify you have typed it "
+"correctly."
+msgstr ""
+"Gelieve hetzelfde wachtwoord voor \"beheerder\" nogmaals in te voeren om te "
+"controleren of u het juist intypte."
+
+#. Type: error
+#. Description
+#: ../templates:7001
+msgid "Password input error"
+msgstr "Fout bij het invoeren van het wachtwoord"
+
+#. Type: error
+#. Description
+#: ../templates:7001
+msgid "The two passwords you entered were not the same. Please try again."
+msgstr ""
+"De twee wachtwoorden die u invoerde waren niet identiek. Gelieve opnieuw te "
+"proberen."
+
+#. Type: boolean
+#. Description
+#: ../templates:8001
+msgid "Erase HotelDruid data when purging the package?"
+msgstr "De gegevens van HotelDruid wissen wanneer het pakket opgeruimd wordt?"
+
+#. Type: boolean
+#. Description
+#: ../templates:8001
+msgid "The hoteldruid package is about to be purged from this system."
+msgstr ""
+"Het pakket hoteldruid staat op het punt opgeruimd te worden op dit systeem."
+
+#. Type: boolean
+#. Description
+#: ../templates:8001
+msgid ""
+"HotelDruid stores its data in \"/var/lib/hoteldruid\". If you choose this "
+"option, these data files will be erased now."
+msgstr ""
+"HotelDruid bewaart zijn gegevens in \"/var/lib/hoteldruid\". Indien u voor "
+"deze optie kiest, zullen deze gegevensbestanden nu gewist worden."
+
+#. Type: boolean
+#. Description
+#: ../templates:8001
+msgid ""
+"Refuse this option if there is operational information which should be kept "
+"after HotelDruid is purged."
+msgstr ""
+"Verwerp deze optie indien er zich daar operationele informatie bevindt die "
+"bewaard moet worden na het opruimen van HotelDruid."

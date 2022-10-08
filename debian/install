@@ -1,0 +1,17 @@
+
+includes     usr/share/hoteldruid
+img            usr/share/hoteldruid
+themes       usr/share/hoteldruid
+
+*.php          usr/share/hoteldruid
+*.html         usr/share/hoteldruid
+*.css          usr/share/hoteldruid
+*.js             usr/share/hoteldruid
+NO_SOURCE_CODE_UPDATE    usr/share/hoteldruid
+
+/debian/extra/etc/*  etc/hoteldruid
+/debian/extra/bin/*  usr/bin
+/debian/extra/applications/*  usr/share/applications
+/debian/extra/appdata/*  usr/share/metainfo
+/debian/extra/icons/hicolor/32x32/*  usr/share/icons/hicolor/32x32/apps/
+/debian/extra/icons/hicolor/64x64/*  usr/share/icons/hicolor/64x64/apps/

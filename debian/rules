@@ -1,0 +1,29 @@
+#!/usr/bin/make -f
+
+# Uncomment this to turn on verbose mode.
+export DH_VERBOSE=1
+
+DESTDIR=$(CURDIR)/debian/hoteldruid
+
+%:
+	dh $@
+
+override_dh_install:
+	dh_install
+	# Already installed to /var/lib/ and /usr/share/doc
+	rm -rf $(DESTDIR)/usr/share/hoteldruid/dati
+	rm -rf $(DESTDIR)/usr/share/hoteldruid/doc
+
+override_dh_fixperms:
+	dh_fixperms
+	# Allow www-data to write pages and data files
+	chown -R www-data.root $(DESTDIR)/var/lib/hoteldruid/data
+	chown -R www-data.root $(DESTDIR)/var/lib/hoteldruid/pages
+	chmod 700 $(DESTDIR)/var/lib/hoteldruid/data
+
+	# Standard permission for webapp configuration
+	chown -R root.www-data $(DESTDIR)/etc/hoteldruid
+	chmod 640 $(DESTDIR)/etc/hoteldruid/database.php
+
+override_dh_installchangelogs:
+	dh_installchangelogs doc/CHANGELOG

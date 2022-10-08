@@ -1,0 +1,35 @@
+Author: Marco M. F. De Santis <marco@digitaldruid.net>
+Description: Changes some constants, that are defined by upstream, 
+ to set the filesystem paths as required by Debian and to automatically
+ create the sqlite3 database on first access.
+Last-Update: 2012-06-24
+Forwarded: not-needed
+--- a/costanti.php
++++ b/costanti.php
+@@ -22,11 +22,11 @@
+ 
+ 
+ # Path to dati folder and database data file
+-define('C_DATI_PATH',"./dati");
+-#define('C_EXT_DB_DATA_PATH',"");
++define('C_DATI_PATH',"/var/lib/hoteldruid/data");
++define('C_EXT_DB_DATA_PATH',"/etc/hoteldruid/database.php");
+ 
+-#define('C_CARTELLA_CREA_MODELLI',"");
+-#define('C_URL_CREA_MODELLI',"");
++define('C_CARTELLA_CREA_MODELLI',"/var/lib/hoteldruid/pages");
++define('C_URL_CREA_MODELLI',"./pages/");
+ 
+ # costanti generali
+ define('C_GIORNI_NUOVO_ANNO',"9");
+--- a/includes/costanti.php
++++ b/includes/costanti.php
+@@ -43,7 +43,7 @@
+ #$prefisso = $prefisso[(count($prefisso)-2)];
+ define('C_CREADB_PREFISSO_TAB',"");
+ # "NO", "SI" o "AUTO"
+-define('C_UTILIZZA_SEMPRE_DEFAULTS',"NO");
++define('C_UTILIZZA_SEMPRE_DEFAULTS',"AUTO");
+ define('C_CREADB_CITTA_DEFAULT',"NO");
+ 
+ 

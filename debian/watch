@@ -1,0 +1,8 @@
+
+# Compulsory line, this is a version 3 file
+version=4
+
+# Uncomment to examine a Webpage
+# <Webpage URL> <string match>
+opts=pgpsigurlmangle=s/$/.sig/ \
+https://www.digitaldruid.net/en/download.html .*download/hoteldruid_(.*)\.tar\.gz

@@ -1,0 +1,6 @@
+# Application data is private
+hoteldruid: non-standard-dir-perm var/lib/hoteldruid/data/ 0700 != 0755
+# Database connection data is private
+hoteldruid: non-standard-file-perm etc/hoteldruid/database.php 0640 != 0644
+# Not a documentation file, just a redirect from directory index to login page
+hoteldruid: package-contains-documentation-outside-usr-share-doc usr/share/hoteldruid/index.html

@@ -1,0 +1,193 @@
+# Czech PO debconf template translation of hoteldruid.
+# Copyright (C) 2012 Michal Simunek <michal.simunek@gmail.com>
+# This file is distributed under the same license as the hoteldruid package.
+# Michal Simunek <michal.simunek@gmail.com>, 2012.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: hoteldruid 2.0.1-2\n"
+"Report-Msgid-Bugs-To: hoteldruid@packages.debian.org\n"
+"POT-Creation-Date: 2012-11-18 11:29+0100\n"
+"PO-Revision-Date: 2012-08-21 11:31+0200\n"
+"Last-Translator: Michal Simunek <michal.simunek@gmail.com>\n"
+"Language-Team: Czech <debian-l10n-czech@lists.debian.org>\n"
+"Language: cs\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#. Type: boolean
+#. Description
+#: ../templates:1001
+msgid "Automatically configure the Apache web server for HotelDruid?"
+msgstr "Nastavit automaticky webový server Apache pro HotelDruid?"
+
+#. Type: boolean
+#. Description
+#: ../templates:1001
+msgid ""
+"HotelDruid runs on any web server supporting PHP, but automatic "
+"configuration can only be performed for Apache."
+msgstr ""
+"HotelDruid běží na jakémkoli webovém serveru, který podporuje PHP, "
+"automatické nastavení lze však provést pouze pro Apache."
+
+#. Type: boolean
+#. Description
+#: ../templates:1001
+msgid ""
+"Once configured, HotelDruid can be accessed locally at \"http://localhost/"
+"hoteldruid\"."
+msgstr ""
+"Po nastavení bude možné k HotelDruid místně přistupovat na adrese \"http://"
+"localhost/hoteldruid\"."
+
+#. Type: boolean
+#. Description
+#: ../templates:1001
+msgid "Please choose whether automatic configuration should be performed now."
+msgstr "Zvolte si prosím, zda se má nyní provést automatické nastavení."
+
+#. Type: boolean
+#. Description
+#: ../templates:2001
+msgid "Restrict HotelDruid access to localhost?"
+msgstr "Omezit přístup k HotelDruid pouze na místního hostitele?"
+
+#. Type: boolean
+#. Description
+#: ../templates:2001
+msgid ""
+"The Apache web server can be configured to forbid HotelDruid connections "
+"from other machines."
+msgstr ""
+"Webový server Apache lze nastavit tak, aby blokoval připojování k HotelDruid "
+"z jiných počítačů."
+
+#. Type: boolean
+#. Description
+#: ../templates:2001
+msgid ""
+"It is recommended to activate this setting if HotelDruid is going to be used "
+"only from this machine."
+msgstr ""
+"Toto nastavení se doporučuje aktivovat v případě, že se bude HotelDruid "
+"používat jen z tohoto počítače."
+
+#. Type: boolean
+#. Description
+#: ../templates:3001
+msgid "Reload the web server configuration for HotelDruid?"
+msgstr "Načíst nastavení webového serveru pro HotelDruid?"
+
+#. Type: boolean
+#. Description
+#: ../templates:3001
+msgid ""
+"In order to activate the new configuration for HotelDruid, the web server "
+"has to reload its configuration files."
+msgstr ""
+"K aktivaci nového nastavení pro HotelDruid je nutné, aby webový server znovu "
+"načetl své konfigurační soubory."
+
+#. Type: string
+#. Description
+#: ../templates:4001
+msgid "HotelDruid administrator username:"
+msgstr "Uživatelské jméno správce HotelDruid:"
+
+#. Type: string
+#. Description
+#: ../templates:4001
+msgid ""
+"Please enter a name for the administrator user, which will be able to manage "
+"HotelDruid's configuration and create new users. The username should be "
+"composed of ASCII letters and numbers only."
+msgstr ""
+"Zadejte prosím uživatelské jméno správce, ten bude moci spravovat nastavení "
+"HotelDruid a přidávat nové uživatele. Uživatelské jméno se musí skládat "
+"pouze z ASCII znaků a číslic."
+
+#. Type: string
+#. Description
+#: ../templates:4001
+msgid ""
+"You can later change the administrator username and password from the \"User "
+"management\" page in HotelDruid. If this field is left blank, no user login "
+"will be required to access HotelDruid."
+msgstr ""
+"Uživatelské jméno a heslo správce lze později změnit v HotelDruid na stránce "
+"\"Správa uživatelů\". Ponecháte-li políčko prázdné, nebude pro přístup k "
+"HotelDruid vyžadováno přihlášení."
+
+#. Type: password
+#. Description
+#: ../templates:5001
+msgid "HotelDruid administrator password:"
+msgstr "Heslo správce HotelDruid:"
+
+#. Type: password
+#. Description
+#: ../templates:5001
+msgid "Please choose a password for the HotelDruid administrator."
+msgstr "Zvolte si prosím heslo pro správce HotelDruid."
+
+#. Type: password
+#. Description
+#: ../templates:6001
+msgid "Re-enter password to verify:"
+msgstr "Zopakujte heslo pro ověření:"
+
+#. Type: password
+#. Description
+#: ../templates:6001
+msgid ""
+"Please enter the same \"admin\" password again to verify you have typed it "
+"correctly."
+msgstr ""
+"Zadejte prosím heslo pro správce ještě jednou, abyste se ujistili, že jste "
+"ho zadali správně."
+
+#. Type: error
+#. Description
+#: ../templates:7001
+msgid "Password input error"
+msgstr "Chyba při zadávání hesla"
+
+#. Type: error
+#. Description
+#: ../templates:7001
+msgid "The two passwords you entered were not the same. Please try again."
+msgstr "Zadaná hesla nesouhlasí. Zkuste to prosím znovu."
+
+#. Type: boolean
+#. Description
+#: ../templates:8001
+msgid "Erase HotelDruid data when purging the package?"
+msgstr "Mají se při odstraňování balíčku vymazat data pro HotelDruid?"
+
+#. Type: boolean
+#. Description
+#: ../templates:8001
+msgid "The hoteldruid package is about to be purged from this system."
+msgstr "Chystáte se ze systému kompletně odstranit balíček hoteldruid."
+
+#. Type: boolean
+#. Description
+#: ../templates:8001
+msgid ""
+"HotelDruid stores its data in \"/var/lib/hoteldruid\". If you choose this "
+"option, these data files will be erased now."
+msgstr ""
+"HotelDruid uchovává svá data ve \"/var/lib/hoteldruid\". Zvolíte-li tuto "
+"možnost, soubory s daty budou nyní vymazány."
+
+#. Type: boolean
+#. Description
+#: ../templates:8001
+msgid ""
+"Refuse this option if there is operational information which should be kept "
+"after HotelDruid is purged."
+msgstr ""
+"Pokud tato data obsahují provozní informace, které je třeba po odstranění "
+"HotelDruid zachovat, tuto možnost odmítněte."

@@ -1,0 +1,6 @@
+Tests: lint
+Depends: @, php-cli
+
+Tests: install-sqlite
+Depends: @, curl, apache2
+Restrictions: needs-root, isolation-container

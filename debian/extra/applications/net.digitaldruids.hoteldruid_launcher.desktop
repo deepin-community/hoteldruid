@@ -1,0 +1,23 @@
+[Desktop Entry]
+Categories=Application;Office;
+Comment[it]=Gestisci le prenotazioni per il tuo hotel, ostello o B&B
+Comment[en]=Manage the reservations for your hotel, hostel or B&B
+Comment=Manage the reservations for your hotel, hostel or B&B
+Exec=hoteldruid-launcher
+GenericName[it]=Gestione Alberghiera
+GenericName[es]=Gestión Hotelera
+GenericName[en]=Hotel Management
+GenericName=Hotel Management
+Keywords=hotel;hostel;b&b
+Icon=hoteldruid.png
+Name[en]=HotelDruid
+Name=HotelDruid
+Path=
+StartupNotify=true
+Terminal=false
+Type=Application
+X-DBUS-ServiceName=
+X-DBUS-StartupType=
+X-KDE-SubstituteUID=false
+X-KDE-Username=
+X-MultipleArgs=false

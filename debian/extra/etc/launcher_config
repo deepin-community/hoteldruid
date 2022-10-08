@@ -1,0 +1,7 @@
+# This is the cofiguration file used by the HotelDruid shell script launcher
+
+# The URL at which HotelDruid is found
+HOTELDRUID_URL="http://localhost/hoteldruid/"
+
+# The default graphical (X11) web browser to be lauched
+HOTELDRUID_XBROWSER="/usr/bin/firefox"

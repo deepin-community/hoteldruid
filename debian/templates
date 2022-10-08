@@ -1,0 +1,68 @@
+Template: hoteldruid/configure-apache
+Type: boolean
+Default: true
+_Description: Automatically configure the Apache web server for HotelDruid?
+ HotelDruid runs on any web server supporting PHP, but automatic
+ configuration can only be performed for Apache.
+ .
+ Once configured, HotelDruid can be accessed locally at
+ "http://localhost/hoteldruid".
+ .
+ Please choose whether automatic configuration should be performed now.
+
+Template: hoteldruid/restrict-localhost
+Type: boolean
+Default: true
+_Description: Restrict HotelDruid access to localhost?
+ The Apache web server can be configured to forbid HotelDruid
+ connections from other machines.
+ .
+ It is recommended to activate this setting if HotelDruid is
+ going to be used only from this machine.
+
+Template: hoteldruid/restart-webserver
+Type: boolean
+Default: true
+_Description: Reload the web server configuration for HotelDruid?
+ In order to activate the new configuration for HotelDruid,
+ the web server has to reload its configuration files.
+
+Template: hoteldruid/administrator-username
+Type: string
+Default: admin
+_Description: HotelDruid administrator username:
+ Please enter a name for the administrator user, which will be able to
+ manage HotelDruid's configuration and create new users. The
+ username should be composed of ASCII letters and numbers only.
+ .
+ You can later change the administrator username and password from
+ the "User management" page in HotelDruid. If this field is left blank,
+ no user login will be required to access HotelDruid.
+
+Template: hoteldruid/administrator-password
+Type: password
+_Description: HotelDruid administrator password:
+ Please choose a password for the HotelDruid administrator.
+
+Template: hoteldruid/confirm-password
+Type: password
+_Description: Re-enter password to verify:
+ Please enter the same "admin" password again to verify
+ you have typed it correctly.
+
+Template: hoteldruid/administrator-failpass
+Type: error
+_Description: Password input error
+ The two passwords you entered were not the same. Please try again.
+
+Template: hoteldruid/purgedata
+Type: boolean
+Default: false
+_Description: Erase HotelDruid data when purging the package?
+ The hoteldruid package is about to be purged from this system.
+ .
+ HotelDruid stores its data in "/var/lib/hoteldruid".
+ If you choose this option, these data files will be erased now.
+ .
+ Refuse this option if there is operational information which should be
+ kept after HotelDruid is purged.

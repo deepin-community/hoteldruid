@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2016 Marco Maria Francesco De Santis <marco@digitaldruid.net> -->
+<component type="desktop">
+ <id>net.digitaldruids.hoteldruid_launcher.desktop</id>
+ <metadata_license>CC0-1.0</metadata_license>
+ <project_license>AGPL-3.0+</project_license>
+ <launchable type="desktop-id">hoteldruid_launcher.desktop</launchable>
+ <name>HotelDruid</name>
+ <summary>Property management system for hotels</summary>
+ <summary xml:lang="it">Sistema di gestione alberghiera</summary>
+ <summary xml:lang="es">Sistema de gestión hotelera</summary>
+ <description>
+  <p>
+   HotelDruid is designed to make hotel rooms, bed and breakfast apartments,
+   or any other kind of daily rental easy to manage from a web browser.
+  </p>
+  <p>Main features:</p>
+  <ul>
+   <li>automatic assignment of reservations to rooms by user-defined rules</li>
+   <li>creation of public web pages displaying room availability, etc.</li>
+   <li>saving, printing, and emailing of documents and invoices</li>
+   <li>electronic point of sale</li>
+   <li>management of groups and privileges for multi-user operation</li>
+   <li>generation of statistical reports</li>
+  </ul>
+  <p>
+   It uses an SQLite database by default but can be configured for use
+   with MySQL or PostgreSQL.
+  </p>
+ </description>
+ <categories>
+   <category>Office</category>
+   <category>Calendar</category>
+   <category>Finance</category>
+ </categories>
+ <screenshots>
+  <screenshot type="default">
+   <image>https://www.hoteldruid.com/en/snapshot_month.png</image>
+   <caption>The month view of reservations in rooms</caption>
+  </screenshot>
+  <screenshot>
+   <image>https://www.hoteldruid.com/en/snapshot_reservations.png</image>
+   <caption>The reservations list</caption>
+  </screenshot>
+ </screenshots>
+ <url type="homepage">https://www.hoteldruid.com</url>
+ <content_rating type="oars-1.0">
+   <content_attribute id="social-chat">moderate</content_attribute>
+ </content_rating>
+</component>

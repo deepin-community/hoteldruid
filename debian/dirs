@@ -1,0 +1,4 @@
+usr/share/hoteldruid
+var/lib/hoteldruid/data
+var/lib/hoteldruid/pages
+etc/hoteldruid
