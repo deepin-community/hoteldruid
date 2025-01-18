@@ -2,7 +2,7 @@
 
 ##################################################################################
 #    HOTELDRUID
-#    Copyright (C) 2001-2021 by Marco Maria Francesco De Santis (marco@digitaldruid.net)
+#    Copyright (C) 2001-2023 by Marco Maria Francesco De Santis (marco@digitaldruid.net)
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published by
@@ -94,13 +94,14 @@ fwrite($file,"
 function formatta_input_var_x_file ($input_utente) {
 
 if (@get_magic_quotes_gpc()) $input_utente = stripslashes($input_utente);
-$input_utente = str_replace("\\\\","\\",$input_utente);
+$input_utente = str_replace("\\\\","\\",(string) $input_utente);
 $input_utente = str_replace("\\","\\\\",$input_utente);
 $input_utente = str_replace("\"","\\\"",$input_utente);
 $input_utente = str_replace("\\\\n","\\n",$input_utente);
 $input_utente = str_replace("<!-- END1 ","<!-- ED1 ",$input_utente);
 $input_utente = str_replace("<!-- START2:","<!-- ST2:",$input_utente);
 $input_utente = str_replace("<!-- END2:","<!-- ED2:",$input_utente);
+$input_utente = str_replace('{$','{\$',$input_utente);
 return $input_utente;
 
 } # fine function formatta_input_var_x_file
@@ -128,7 +129,7 @@ elseif ($HTTP_SERVER_VARS['SERVER_PORT']) $SERVER_PORT = $HTTP_SERVER_VARS['SERV
 if ($_SERVER['SERVER_NAME']) $SERVER_NAME = $_SERVER['SERVER_NAME'];
 elseif ($HTTP_SERVER_VARS['SERVER_NAME']) $SERVER_NAME = $HTTP_SERVER_VARS['SERVER_NAME'];
 if ($_SERVER['PHP_SELF']) $PHP_SELF = $_SERVER['PHP_SELF'];
-if ($HTTPS == "on" or $_SERVER['HTTPS'] == "on" or $SERVER_PORT == "443") $url_server = "https://".$SERVER_NAME;
+if ((isset($HTTPS) and $HTTPS == "on") or (isset($_SERVER['HTTPS']) and $_SERVER['HTTPS'] == "on") or (isset($SERVER_PORT) and $SERVER_PORT == "443")) $url_server = "https://".$SERVER_NAME;
 else $url_server = "http://".$SERVER_NAME;
 if ($SERVER_PORT and $SERVER_PORT != "80" and $SERVER_PORT != "443") $url_server .= ":$SERVER_PORT";
 if (substr($PHP_SELF,0,1) != "/") $PHP_SELF = "/".$PHP_SELF;
@@ -192,7 +193,7 @@ if ($altri_domini) {
 if (defined("C_CARTELLA_CREA_MODELLI") and C_CARTELLA_CREA_MODELLI != "") $percorso_cartella_dominio = substr($percorso_cartella_modello,strlen(C_CARTELLA_CREA_MODELLI));
 else $percorso_cartella_dominio = $percorso_cartella_modello;
 if (substr($percorso_cartella_dominio,0,1) == "/") $percorso_cartella_dominio = substr($percorso_cartella_dominio,1);
-if (strcmp($percorso_cartella_dominio,"") and substr($percorso_cartella_dominio,-1) != "/") $percorso_cartella_dominio .= "/";
+if (strcmp((string) $percorso_cartella_dominio,"") and substr($percorso_cartella_dominio,-1) != "/") $percorso_cartella_dominio .= "/";
 if (substr($percorso_cartella_dominio,0,2) == "./") $percorso_cartella_dominio = substr($percorso_cartella_dominio,2);
 $lista_altri_domini = "";
 $num_altri_domini = count($altri_domini);

@@ -2,7 +2,7 @@
 
 ##################################################################################
 #    HOTELDRUID
-#    Copyright (C) 2001-2021 by Marco Maria Francesco De Santis (marco@digitaldruid.net)
+#    Copyright (C) 2001-2023 by Marco Maria Francesco De Santis (marco@digitaldruid.net)
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published by
@@ -23,7 +23,7 @@
 
 
 
-function inserisci_prenotazione ($inizioperiodo,$fineperiodo,$lista_app,$tipotariffa,$numpersone,$prenota_vicine,$idclienti,$conferma,$pagato,$caparra,$met_paga_caparra,$commissioni,$origine_prenota,$sconto,$giorno_stima_checkin,$ora_stima_checkin,$min_stima_checkin,$commento,&$stato,$anno,$PHPR_TAB_PRE,$ins_passato="",$id_utente_imp="",$id_prenota_imp="",$tariffe_sett_imp="",$ins_costi_agg="",$costo_letto_imposto="NO") {
+function inserisci_prenotazione ($inizioperiodo,$fineperiodo,$lista_app,$tipotariffa,$numpersone,$prenota_vicine,$idclienti,$conferma,$pagato,$caparra,$met_paga_caparra,$commissioni,$origine_prenota,$sconto,$giorno_stima_checkin,$ora_stima_checkin,$min_stima_checkin,$commento,&$stato,$anno,$PHPR_TAB_PRE,$ins_passato="",$id_utente_imp="",$id_prenota_imp="",$tariffe_sett_imp="",$ins_costi_agg="",$costo_letto_imposto="NO",$info_per_mod=array('num' => 0),$spezza=0) {
 global $id_utente,$HOSTNAME;
 
 $PHPR_TAB_PRE = aggslashdb($PHPR_TAB_PRE);
@@ -50,16 +50,45 @@ $stile_soldi = stile_soldi();
 $stile_data = stile_data();
 
 $num_tipologie = count($inizioperiodo);
+$adatta_num_persone = 0;
+if (empty($spezza)) $spezza = 0;
+elseif (substr($spezza,0,1) == "p") {
+$spezza = (int) substr($spezza,1);
+$adatta_num_persone = 1;
+#$costo_letto_imposto = "NO";
+} # fine elseif (substr($spezza,0,1) == "p")
+$n_tronchi_max = 0;
 $appartamenti = esegui_query("select * from $tableappartamenti ");
 $numappartamenti = numlin_query($appartamenti);
 $id_app_richiesti = 0;
 
 $dati_tariffe = dati_tariffe($tablenometariffe,"","",$tableregole);
 if ($ins_costi_agg or $costo_letto_imposto != "NO") {
+$stato['vincoli_num_persone'] = 1;
 if (!function_exists('dati_costi_agg_ntariffe')) include("./includes/funzioni_costi_agg.php");
 $dati_ca = dati_costi_agg_ntariffe($tablenometariffe,$dati_tariffe['num'],"NO","",$tableappartamenti);
 } # fine if ($ins_costi_agg or $costo_letto_imposto != "NO")
 
+if ($info_per_mod['num']) {
+# Periodi modificati inclusi in periodo chiuso, devono essere ordinati per data iniziale nel caso ce ne siano vari in un solo periodo chiuso
+$info_per_mod_ord = $info_per_mod['ini'];
+asort($info_per_mod_ord);
+reset($info_per_mod_ord);
+$info_per_mod['new']['num'] = 0;
+foreach ($info_per_mod_ord as $num_per => $ini_per) {
+$info_per_mod['new']['ini'][$info_per_mod['new']['num']] = $ini_per;
+$info_per_mod['new']['fine'][$info_per_mod['new']['num']] = $info_per_mod['fine'][$num_per];
+$info_per_mod['new']['app'][$info_per_mod['new']['num']] = $info_per_mod['app'][$num_per];
+$info_per_mod['new']['num']++;
+} # fine foreach ($info_per_mod_ord as $num_per => $ini_per)
+$info_per_mod = $info_per_mod['new'];
+unset($info_per_mod_ord);
+} # fine if ($info_per_mod['num'])
+
+$inizioperiodo_orig = array();
+$fineperiodo_orig = array();
+$numpersone_orig = array();
+$numpersone_orig2 = array();
 $app_eliminati_costi = array();
 $inserire = "";
 $mess_prenota = "";
@@ -86,18 +115,21 @@ if ($num_idfineperiodo == 0) $idfineperiodo = -1;
 else $idfineperiodo = risul_query($idfineperiodo,0,'idperiodi');
 $fineperiodo[$n_t] = $idfineperiodo;
 if (empty($idfineperiodo_tot) or $idfineperiodo > $idfineperiodo_tot) $idfineperiodo_tot = $idfineperiodo;
+if ($dati_tariffe[$tipotariffa[$n_t]]['nome']) $nometariffa_vedi = mex("tariffa","prenota.php")." ".$dati_tariffe[$tipotariffa[$n_t]]['nome'];
+else $nometariffa_vedi = mex("tariffa","prenota.php").substr($tipotariffa[$n_t],7);
 
-$id_periodo_corrente = calcola_id_periodo_corrente($anno);
+if (empty($id_periodo_corrente)) $id_periodo_corrente = calcola_id_periodo_corrente($anno,'NO');
 if ($id_periodo_corrente > $idinizioperiodo and !$ins_passato) $data_sbagliata = 1;
 else $data_sbagliata = 0;
 if ($idfineperiodo < $idinizioperiodo or $data_sbagliata) {
 $inserire = "NO";
-$mess_errore .= mex("Le date sono sbagliate","clienti.php");
+$mess_errore .= mex("Le date sono sbagliate","clienti.php")." (".mex("dal","prenota.php")." ".formatta_data($inizioperiodo_orig[$n_t],$stile_data)." ".mex("al","prenota.php")." ".formatta_data($fineperiodo_orig[$n_t],$stile_data).")";
 if ($num_tipologie > 1) $mess_errore .= " (".mex("tipologia","clienti.php")." $n_t)";
 $mess_errore .= ".<br>";
 } # fine if ($idfineperiodo < $idinizioperiodo or...
 
 $tariffa_sbagliata = "";
+$tariffa_chiusa = 0;
 if (substr($tipotariffa[$n_t],0,7) != "tariffa" or controlla_num_pos(substr($tipotariffa[$n_t],7)) == "NO") $tariffa_sbagliata = "SI";
 else {
 $tar_sett_imp = fixset($tariffe_sett_imp[$n_t]);
@@ -105,14 +137,16 @@ for ($num1 = $inizioperiodo[$n_t] ; $num1 <= $fineperiodo[$n_t] ; $num1++) {
 $rigasettimana = esegui_query("select * from $tableperiodi where idperiodi = '$num1' ");
 $esistetariffa = risul_query($rigasettimana,0,$tipotariffa[$n_t]);
 $esistetariffap = risul_query($rigasettimana,0,$tipotariffa[$n_t]."p");
-if ((!strcmp($esistetariffa,"") or $esistetariffa < 0) and (!strcmp($esistetariffap,"") or $esistetariffap < 0) and (!isset($tar_sett_imp[$num1]) or !strcmp($tar_sett_imp[$num1],""))) $tariffa_sbagliata = "SI";
-if (!empty($dati_tariffe[$tipotariffa[$n_t]]['chiusa'][$num1]) and (!isset($tar_sett_imp[$num1]) or !strcmp($tar_sett_imp[$num1],""))) $tariffa_sbagliata = "SI";
+if ((!strcmp((string) $esistetariffa,"") or $esistetariffa < 0) and (!strcmp((string) $esistetariffap,"") or $esistetariffap < 0) and (!isset($tar_sett_imp[$num1]) or !strcmp((string) $tar_sett_imp[$num1],""))) $tariffa_sbagliata = "SI";
+elseif (!empty($dati_tariffe[$tipotariffa[$n_t]]['chiusa'][$num1]) and (!isset($tar_sett_imp[$num1]) or !strcmp((string) $tar_sett_imp[$num1],""))) $tariffa_sbagliata = "SI";
+if ($tariffa_sbagliata == "SI") $tariffa_chiusa = 1;
 } # fine for $num1
 } # fine else if (substr($tipotariffa[$n_t],0,7) != "tariffa" or...
 if ($tariffa_sbagliata == "SI") {
 $inserire = "NO";
-$mess_errore .= mex("Si deve inserire il tipo di tariffa","clienti.php");
-if ($num_tipologie > 1) $mess_errore .= "(".mex("tipologia","clienti.php")." $n_t)";
+if ($tariffa_chiusa) $mess_errore .= mex("La tariffa richiesta è chiusa in questo periodo","clienti.php")." ($nometariffa_vedi ".mex("dal","prenota.php")." ".formatta_data($inizioperiodo_orig[$n_t],$stile_data)." ".mex("al","prenota.php")." ".formatta_data($fineperiodo_orig[$n_t],$stile_data).")";
+else $mess_errore .= mex("Si deve inserire il tipo di tariffa","clienti.php");
+if ($num_tipologie > 1) $mess_errore .= " (".mex("tipologia","clienti.php")." $n_t)";
 $mess_errore .= ".<br>";
 } # fine if ($tariffa_sbagliata == "SI")
 else {
@@ -134,15 +168,24 @@ if (!$id_utente_ins and $id_utente) $id_utente_ins = $id_utente;
 if (!$id_utente_ins) $id_utente_ins = 1;
 
 # se vi è una regola 4 per la tariffa
-if (!$numpersone[$n_t]) {
-$regole4 = esegui_query("select * from $tableregole where tariffa_per_persone = '".aggslashdb($tipotariffa[$n_t])."'");
-if (numlin_query($regole4) == 1) $numpersone[$n_t] = risul_query($regole4,0,'iddatainizio');
-} # fine if (!$numpersone[$n_t])
+$regole3 = esegui_query("select * from $tableregole where tariffa_per_persone = '".aggslashdb($tipotariffa[$n_t])."'");
+if (!$numpersone[$n_t] and numlin_query($regole3) == 1 and risul_query($regole3,0,'iddatainizio')) $numpersone[$n_t] = risul_query($regole3,0,'iddatainizio');
+$numpersone_orig[$n_t] = $numpersone[$n_t];
+if (numlin_query($regole3) == 1 and risul_query($regole3,0,'iddatafine')) {
+$num_pers_min = risul_query($regole3,0,'iddatafine');
+if (!$numpersone[$n_t] or $numpersone[$n_t] < $num_pers_min) {
+$numpersone[$n_t] = $num_pers_min;
+if ($adatta_num_persone) {
+$numpersone_orig2[$n_t] = $numpersone_orig[$n_t];
+$numpersone_orig[$n_t] = $numpersone[$n_t];
+} # fine if ($adatta_num_persone)
+} # fine if (!$numpersone[$n_t] or $numpersone[$n_t] < $num_pers_min)
+} # fine if (risul_query($regole3,0,'iddatafine'))
 
 if (!$numpersone[$n_t]) {
 if ($dati_tariffe[$tipotariffa[$n_t]]['moltiplica'] == "p") {
 $inserire = "NO";
-$mess_errore .= mex("Si deve inserire il numero delle persone per questa tariffa","clienti.php");
+$mess_errore .= mex("Si deve inserire il numero delle persone per questa tariffa","clienti.php")." ($nometariffa_vedi)";
 if ($num_tipologie > 1) $mess_errore .= "(".mex("tipologia","clienti.php")." $n_t)";
 $mess_errore .= ".<br>";
 } # fine if ($dati_tariffe[$tipotariffa[$n_t]]['moltiplica'] == "p")
@@ -178,11 +221,12 @@ $mess_errore .= ".<br>";
 } # fine if (!empty($lista_app[$n_t]))
 
 # se il costo letto imposto ha appartamenti incompatibili
-if ($costo_letto_imposto != "NO" and $costo_letto_imposto[$n_t]['id'] and strcmp($dati_ca[$dati_ca['id'][$costo_letto_imposto[$n_t]['id']]]['appincompatibili'],"")) {
+if ($costo_letto_imposto != "NO" and !empty($costo_letto_imposto[$n_t]['id']) and strcmp((string) $dati_ca[$dati_ca['id'][$costo_letto_imposto[$n_t]['id']]]['appincompatibili'],"")) {
 $app_incomp_costi[$n_t] = ",".$dati_ca[$dati_ca['id'][$costo_letto_imposto[$n_t]['id']]]['appincompatibili'].",";
 $lista_app_corr = fixset($lista_app[$n_t]);
 $lista_app[$n_t] = "";
-if (strcmp($lista_app_corr,"")) $lista_app_corr = ",$lista_app_corr,";
+$app_eliminati_costi[$n_t] = "";
+if (strcmp((string) $lista_app_corr,"")) $lista_app_corr = ",$lista_app_corr,";
 for ($num1 = 0 ; $num1 < $numappartamenti ; $num1++) {
 $idapp = risul_query($appartamenti,$num1,'idappartamenti');
 if (!$lista_app_corr or str_replace(",$idapp,","",$lista_app_corr) != $lista_app_corr) {
@@ -190,7 +234,15 @@ if (str_replace(",$idapp,","",$app_incomp_costi[$n_t]) == $app_incomp_costi[$n_t
 else $app_eliminati_costi[$n_t] .= ",$idapp";
 } # fine if (!$lista_app_corr or str_replace(",$idapp,","",$lista_app_corr) != $lista_app_corr)
 } # fine for $num1
-if ($lista_app[$n_t]) {
+if ($lista_app[$n_t] or ($adatta_num_persone)) {
+if ($adatta_num_persone and $app_eliminati_costi[$n_t]) {
+$costo_letto_imposto[$n_t]['id'] = "";
+$numpersone[$n_t] += $costo_letto_imposto[$n_t]['molt'];
+$numpersone_orig[$n_t] += $costo_letto_imposto[$n_t]['molt'];
+$lista_app[$n_t] = $lista_app_corr;
+$app_eliminati_costi[$n_t] = "";
+} # fine if ($lista_app[$n_t] or ($adatta_num_persone))
+else {
 $lista_app[$n_t] = substr($lista_app[$n_t],1);
 $app_eliminati_costi[$n_t] = substr($app_eliminati_costi[$n_t],1);
 if (str_replace(",","",$lista_app[$n_t]) != $lista_app[$n_t]) $assegnazioneapp[$n_t] = "c";
@@ -199,14 +251,15 @@ $app_richiesti_id[$n_t] = array();
 $vett_app = explode(",",$lista_app[$n_t]);
 $num_app = count($vett_app);
 for ($num1 = 0 ; $num1 < $num_app ; $num1++) $app_richiesti_id[$n_t][$vett_app[$num1]] = "SI";
-} # fine if ($lista_app[$n_t])
+} # fine else if ($lista_app[$n_t] or ($adatta_num_persone))
+} # fine if ($lista_app[$n_t] or ($adatta_num_persone))
 else {
-$mess_errore .= mex("Non c'è nessun appartamento tra quelli richiesti che sia compatibile con i costi aggiuntivi selezionati",'unit.php');
+$mess_errore .= mex("Non c'è nessun appartamento tra quelli richiesti che sia compatibile con i costi aggiuntivi selezionati",'unit.php')." ($nometariffa_vedi)";
 if ($num_tipologie > 1) $mess_errore .= " (".mex("tipologia","clienti.php")." $n_t)";
 $mess_errore .= ".<br>";
 $inserire = "NO";
-} # fine else if ($lista_app[$n_t])
-} # fine if ($costo_letto_imposto != "NO" and $costo_letto_imposto[$n_t]['id'] and strcmp($dati_ca[$dati_ca['id'][$costo_letto_imposto[$n_t]['id']]]['appincompatibili'],""))
+} # fine else if ($lista_app[$n_t] or ($adatta_num_persone))
+} # fine if ($costo_letto_imposto != "NO" and !empty($costo_letto_imposto[$n_t]['id']) and strcmp((string) $dati_ca[$dati_ca['id'][$costo_letto_imposto[$n_t]['id']]]['appincompatibili'],""))
 
 if ($numpersone[$n_t]) {
 if (controlla_num_pos($numpersone[$n_t]) == "NO") {
@@ -217,30 +270,38 @@ $mess_errore .= ".<br>";
 } # fine if (controlla_num_pos($numpersone[$n_t]) == "NO")
 $app_richiesti_copia = $app_richiesti_id[$n_t];
 $posti = 0;
-if ($app_regola2_predef) {
+if (!empty($app_regola2_predef)) {
 $app_regola2_predef = ",$app_regola2_predef,";
 $posto_reg2_orig = 0;
-} # fine if ($app_regola2_predef)
+} # fine if (!empty($app_regola2_predef))
 for ($num1 = 0 ; $num1 < $numappartamenti ; $num1++) {
 $idapp = risul_query($appartamenti,$num1,'idappartamenti');
 $maxoccupanti = risul_query($appartamenti,$num1,'maxoccupanti');
 if (!$app_richiesti_copia or (isset($app_richiesti_copia[$idapp]) and $app_richiesti_copia[$idapp] == "SI")) {
 if ($maxoccupanti and $maxoccupanti < $numpersone[$n_t]) {
+if (!$adatta_num_persone) {
 $app_richiesti_id[$n_t][$idapp] = "NO";
+$stato['vincoli_num_persone'] = 1;
+} # fine if (!$adatta_num_persone)
+else {
+$numpersone[$n_t] = $maxoccupanti;
+$app_richiesti_id[$n_t][$idapp] = "SI";
+$posti++;
+} # fine if (!$adatta_num_persone)
 } # fine if ($maxoccupanti and $maxoccupanti < $numpersone[$n_t])
 else {
 $app_richiesti_id[$n_t][$idapp] = "SI";
 $posti++;
 } # fine else if ($maxoccupanti and $maxoccupanti < $numpersone[$n_t])
 } # fine if (!$app_richiesti_copia or (isset($app_richiesti_copia[$idapp]) and...
-if ($app_regola2_predef) {
+if (!empty($app_regola2_predef)) {
 if (str_replace(",$idapp,","",$app_regola2_predef) != $app_regola2_predef) {
 if (!$maxoccupanti or $maxoccupanti >= $numpersone[$n_t]) $posto_reg2_orig = 1;
 } # fine if (str_replace(",$idapp,","",$app_regola2_predef) != $app_regola2_predef)
-} # fine if ($app_regola2_predef)
+} # fine if (!empty($app_regola2_predef))
 } # fine for $num1
-if ($posti == 0 or ($app_regola2_predef and !$posto_reg2_orig)) {
-$mess_errore .= mex("Non c'è nessun appartamento tra quelli richiesti che possa ospitare",'unit.php')." ".$numpersone[$n_t]." ".mex("persone","clienti.php");
+if ($posti == 0 or (!empty($app_regola2_predef) and empty($posto_reg2_orig))) {
+$mess_errore .= mex("Non c'è nessun appartamento tra quelli richiesti che possa ospitare",'unit.php')." ".$numpersone[$n_t]." ".mex("persone","clienti.php")." ($nometariffa_vedi)";
 if ($num_tipologie > 1) $mess_errore .= " (".mex("tipologia","clienti.php")." $n_t)";
 $mess_errore .= ".<br>";
 $inserire = "NO";
@@ -264,21 +325,20 @@ $app_richiesti[',succ_non_vicino,'] = $prenota_vicine;
 elseif ($prenota_vicine == "SI") $app_richiesti[',vicini,'] = "SI";
 } # fine if ($num_tipologie > 1)
 
-if ($id_prenota_imp) {
+if (!empty($id_prenota_imp[$n_t])) {
 if (controlla_num_pos($id_prenota_imp[$n_t]) == "SI") {
 $id_esistente = esegui_query("select idprenota from $tableprenota where idprenota = '".$id_prenota_imp[$n_t]."' ");
 if (numlin_query($id_esistente)) unset($id_prenota_imp);
 } # fine if (controlla_num_pos($id_prenota_imp[$n_t]) == "SI")
 else unset($id_prenota_imp);
-} # fine if ($id_prenota_imp)
+} # fine if (!empty($id_prenota_imp[$n_t]))
 
 } # fine for $n_t
 
 
 if ($inserire != "NO") {
 
-$condizioni_regole1_non_sel = "";
-$app_agenzia = esegui_query("select * from $tableregole where app_agenzia != ''$condizioni_regole1_non_sel");
+$app_agenzia = esegui_query("select * from $tableregole where app_agenzia != '' ");
 $num_app_agenzia = numlin_query($app_agenzia);
 
 $minuti_durata_insprenota = esegui_query("select valpersonalizza_num from $tablepersonalizza where idpersonalizza = 'minuti_durata_insprenota' and idutente = '1'");
@@ -308,15 +368,36 @@ else $tot_prenota = 0;
 $profondita['tot_prenota_ini'] = $tot_prenota;
 $profondita['tot_prenota_attuale'] = $tot_prenota;
 tab_a_var($limiti_var,$app_prenota_id,$app_orig_prenota_id,$inizio_prenota_id,$fine_prenota_id,$app_assegnabili_id,$prenota_in_app_sett,$anno,$dati_app,$profondita,$PHPR_TAB_PRE."prenota");
-unset($info_periodi_ag);
-$info_periodi_ag['numero'] = 0;
+$info_periodi_ag = array('numero' => 0);
+# Periodi con regole 1 di chiusura (motivazione2 = x) sono inseriti in $app_prenota_id
 for ($num1 = 0 ; $num1 < $num_app_agenzia ; $num1++) {
 $mot2 = risul_query($app_agenzia,$num1,'motivazione2');
 if ($mot2 == "x") {
-$info_periodi_ag['app'][$info_periodi_ag['numero']] = risul_query($app_agenzia,$num1,'app_agenzia');
-$info_periodi_ag['ini'][$info_periodi_ag['numero']] = risul_query($app_agenzia,$num1,'iddatainizio');
-$info_periodi_ag['fine'][$info_periodi_ag['numero']] = risul_query($app_agenzia,$num1,'iddatafine');
+$app_ag = risul_query($app_agenzia,$num1,'app_agenzia');
+$ini_ag = risul_query($app_agenzia,$num1,'iddatainizio');
+$fine_ag = risul_query($app_agenzia,$num1,'iddatafine');
+# Se ci sono periodi lasciati liberi da prenotazioni che si stanno modificando non si devono chiudere
+for ($num2 = 0 ; $num2 < $info_per_mod['num'] ; $num2++) {
+if ($info_per_mod['app'][$num2] == $app_ag and $info_per_mod['ini'][$num2] <= $fine_ag and $info_per_mod['fine'][$num2] >= $ini_ag) {
+if ($info_per_mod['ini'][$num2] > $ini_ag and $info_per_mod['fine'][$num2] < $fine_ag) {
+$info_periodi_ag['app'][$info_periodi_ag['numero']] = $app_ag;
+$info_periodi_ag['ini'][$info_periodi_ag['numero']] = $ini_ag;
+$info_periodi_ag['fine'][$info_periodi_ag['numero']] = ($info_per_mod['ini'][$num2] - 1);
 $info_periodi_ag['numero']++;
+$ini_ag = ($info_per_mod['fine'][$num2] + 1);
+} # fine if ($info_per_mod['ini'][$num2] > $ini_ag and...
+else {
+if ($info_per_mod['ini'][$num2] <= $ini_ag) $ini_ag = ($info_per_mod['fine'][$num2] + 1);
+if ($info_per_mod['fine'][$num2] >= $fine_ag) $fine_ag = ($info_per_mod['ini'][$num2] - 1);
+} # fine else if ($info_per_mod['ini'][$num2] > $ini_ag and...
+} # fine if ($info_per_mod['app'][$num2] == $app_ag and...
+} # fine for $num2
+if ($fine_ag >= $ini_ag) {
+$info_periodi_ag['app'][$info_periodi_ag['numero']] = $app_ag;
+$info_periodi_ag['ini'][$info_periodi_ag['numero']] = $ini_ag;
+$info_periodi_ag['fine'][$info_periodi_ag['numero']] = $fine_ag;
+$info_periodi_ag['numero']++;
+} # fine if ($fine_ag >= $ini_ag)
 } # fine if ($mot2 == "x")
 } # fine for $num1
 if ($info_periodi_ag['numero']) inserisci_prenota_fittizie($info_periodi_ag,$profondita,$app_prenota_id,$inizio_prenota_id,$fine_prenota_id,$prenota_in_app_sett,$app_assegnabili_id);
@@ -345,10 +426,10 @@ $numprenotazioni = 0;
 for ($num2 = 0 ; $num2 < $dati_app['totapp'] ; $num2++) if (!empty($prenota_in_app_sett2[$dati_app['posizione'][$num2]][$num1])) $numprenotazioni++;
 if ($numprenotazioni >= $numappartamenti) $occupare_app_agenzia_sempre = "SI";
 } # fine for $num1
-if ($occupare_app_agenzia_sempre != "SI") {
+if ($occupare_app_agenzia_sempre != "SI" and $spezza < 2) {
 $app_orig_prenota_id = $app_prenota_id2;
 liberasettimane($idinizioperiodo_vett,$idfineperiodo_vett,$limiti_var2,$anno,$fatto_libera,$app_liberato,$profondita2,$app_richiesti,$app_prenota_id2,$app_orig_prenota_id,$inizio_prenota_id2,$fine_prenota_id2,$app_assegnabili_id2,$prenota_in_app_sett2,$dati_app,$PHPR_TAB_PRE."prenota");
-} # fine if ($occupare_app_agenzia_sempre != "SI")
+} # fine if ($occupare_app_agenzia_sempre != "SI" and $spezza < 2)
 else $fatto_libera = "NO";
 if ($fatto_libera == "SI") {
 $risul_agg = aggiorna_tableprenota($app_prenota_id2,$app_orig_prenota_id,$tableprenota);
@@ -366,28 +447,84 @@ global $sec_limite_libsett;
 $limiti_var['t_limite'] = (time() + $sec_limite_libsett);
 $app_liberato = "";
 $app_orig_prenota_id = $app_prenota_id;
+unset($limiti_var2);
+unset($profondita2);
+unset($prenota_in_app_sett2);
+unset($inizio_prenota_id2);
+unset($fine_prenota_id2);
+unset($app_prenota_id2);
+unset($app_assegnabili_id2);
+
+if ($spezza < 2) {
+if ($spezza) {
+$limiti_var2 = $limiti_var;
+$profondita2 = $profondita;
+$prenota_in_app_sett2 = $prenota_in_app_sett;
+$inizio_prenota_id2 = $inizio_prenota_id;
+$fine_prenota_id2 = $fine_prenota_id;
+$app_prenota_id2 = $app_prenota_id;
+$app_assegnabili_id2 = $app_assegnabili_id;
+} # fine if ($spezza)
 liberasettimane($idinizioperiodo_vett,$idfineperiodo_vett,$limiti_var,$anno,$fatto_libera2,$app_liberato,$profondita,$app_richiesti,$app_prenota_id,$app_orig_prenota_id,$inizio_prenota_id,$fine_prenota_id,$app_assegnabili_id,$prenota_in_app_sett,$dati_app,$PHPR_TAB_PRE."prenota");
-if ($fatto_libera2 != "NO") {
-$risul_agg = aggiorna_tableprenota($app_prenota_id,$app_orig_prenota_id,$tableprenota);
-if (!$risul_agg) $fatto_libera2 = "NO";
-} # fine if ($fatto_libera2 != "NO")
-if ($fatto_libera2 == "NO") {
-$inserire = "NO";
-$mess_errore .= mex("Nel periodo selezionato non è possibile ospitare il cliente negli appartamenti richiesti",'unit.php');
-if ($app_incomp_costi) $mess_errore .= " ".mex("con i costi aggiuntivi selezionati",'clienti.php');
-$mess_errore .= ".<br>";
+} # fine if ($spezza < 2)
+if ($spezza and ($spezza > 1 or $fatto_libera == "NO")) {
+if (!function_exists('spezzaprenota')) include("./includes/spezzaprenota.php");
+if ($spezza < 2) {
+$limiti_var = $limiti_var2;
+unset($limiti_var2);
+$profondita = $profondita2;
+unset($profondita2);
+$prenota_in_app_sett = $prenota_in_app_sett2;
+unset($prenota_in_app_sett2);
+$inizio_prenota_id = $inizio_prenota_id2;
+unset($inizio_prenota_id2);
+$fine_prenota_id = $fine_prenota_id2;
+unset($fine_prenota_id2);
+$app_prenota_id = $app_prenota_id2;
+unset($app_prenota_id2);
+$app_assegnabili_id = $app_assegnabili_id2;
+unset($app_assegnabili_id2);
+$app_orig_prenota_id = $app_prenota_id;
+} # fine if ($spezza < 2)
+$n_tronchi_vett = array();
+$idinizio_vett = array();
+$idfine_vett = array();
+$app_liberato_vett = array();
+$app_liberato = array();
 for ($n_t = 1 ; $n_t <= $num_tipologie ; $n_t++) {
-$mess_prenota .= mex("Prenotazione","prenota.php")." ".mex("dal","prenota.php")." <b>".formatta_data($inizioperiodo_orig[$n_t],$stile_data)."</b> ".mex("al","prenota.php")." <b>".formatta_data($fineperiodo_orig[$n_t],$stile_data)."</b>";
-$mess_prenota .= " ".mex("a nome di","prenota.php")." <b>$cognome</b> ";
-if ($numpersone[$n_t]) $mess_prenota .= " ".mex("per","prenota.php")." <b>".$numpersone[$n_t]."</b> ".mex("persone","prenota.php")."";
-if ($dati_tariffe[$tipotariffa[$n_t]]['nome']) $nometariffa_vedi = $dati_tariffe[$tipotariffa[$n_t]]['nome'];
-else $nometariffa_vedi = mex("tariffa","prenota.php").substr($tipotariffa[$n_t],7);
-$mess_prenota .= ", ".mex("tariffa","prenota.php")." \"$nometariffa_vedi\".<br><br>";
-} # fine for $n_t
-} # fine if ($fatto_libera2 == "NO")
+unset($vett_idinizio);
+unset($vett_idfine);
+$n_tronchi = 0;
+unset($app_lib);
+spezzaprenota($idinizioperiodo_vett[$n_t],$idfineperiodo_vett[$n_t],$anno,$limiti_var,$profondita,$app_richiesti[$n_t],$n_tronchi,$app_lib,$vett_idinizio,$vett_idfine,0,$app_prenota_id,$app_orig_prenota_id,$inizio_prenota_id,$fine_prenota_id,$app_assegnabili_id,$prenota_in_app_sett,$dati_app,$PHPR_TAB_PRE."prenota");
+if ($n_tronchi > 0) {
+$fatto_libera2 = "SI";
+if ($n_tronchi > $n_tronchi_max) $n_tronchi_max = $n_tronchi;
+$n_tronchi_vett[$n_t] = $n_tronchi;
+$idinizio_vett[$n_t] = $vett_idinizio;
+$idfine_vett[$n_t] = $vett_idfine;
+$app_liberato[$n_t] = $app_lib[1];
+$app_liberato_vett[$n_t] = $app_lib;
+for ($num1 = 1 ; $num1 <= $n_tronchi ; $num1++) {
+$profondita['tot_prenota_attuale']++;
+$app_prenota_id[$profondita['tot_prenota_attuale']] = $app_lib[$num1];
+$inizio_prenota_id[$profondita['tot_prenota_attuale']] = $vett_idinizio[$num1];
+$fine_prenota_id[$profondita['tot_prenota_attuale']] = $vett_idfine[$num1];
+for ($num2 = $vett_idinizio[$num1] ; $num2 <= $vett_idfine[$num1] ; $num2++) $prenota_in_app_sett[$app_lib[$num1]][$num2] = $profondita['tot_prenota_attuale'];
+} # fine for $num1
+$id_app_richiesti = ($id_app_richiesti + $n_tronchi - 1);
+} # fine if ($n_tronchi > 0)
 else {
-$appartamento = $app_liberato;
-$mess_regola1 .= mex("Sono stati fatti i seguenti spostamenti nei periodi della <div style=\"display: inline; color: blue;\">regola di assegnazione 1</div>",'clienti.php').":<br>";
+$fatto_libera2 = "NO";
+$n_tronchi_max = 0;
+break;
+} # fine else if ($n_tronchi > 0)
+} # fine for $n_t
+if ($fatto_libera2 != "NO") for ($n_t = 1 ; $n_t <= $num_tipologie ; $n_t++) for ($num1 = 2 ; $num1 <= count($app_liberato_vett[$n_t]) ; $num1++) $app_liberato[(count($app_liberato) + 1)] = $app_liberato_vett[$n_t][$num1];
+} # fine if ($spezza and ($spezza < 2 or $fatto_libera == "NO"))
+
+if ($fatto_libera2 != "NO") {
+$mess_reg1 = "";
 for ($num1 = 0 ; $num1 < $num_app_agenzia ; $num1++) {
 $mot2 = risul_query($app_agenzia,$num1,'motivazione2');
 if ($mot2 != "x") {
@@ -399,7 +536,7 @@ $idprenota_cambiate_da_ag = esegui_query("select idprenota from $tableprenota wh
 $num_idprenota_cambiate_da_ag = numlin_query($idprenota_cambiate_da_ag);
 for ($num2 = 0 ; $num2 < $num_idprenota_cambiate_da_ag ; $num2 = $num2 + 1) {
 $idprenota_cambiata = risul_query($idprenota_cambiate_da_ag,$num2,'idprenota');
-if ($app_prenota_id[$idprenota_cambiata] and $app_prenota_id[$idprenota_cambiata] != $id_app_agenzia) {
+if (!empty($app_prenota_id[$idprenota_cambiata]) and $app_prenota_id[$idprenota_cambiata] != $id_app_agenzia) {
 $idapp_camb = $app_prenota_id[$idprenota_cambiata];
 $dati_cambiati = esegui_query("select * from $tableprenota where idprenota = '$idprenota_cambiata'");
 $idclienti_camb = risul_query($dati_cambiati,0,'idclienti');
@@ -414,46 +551,64 @@ $iddatafine_camb = $fine_prenota_id[$idprenota_cambiata];
 $datafine_camb = esegui_query("select datafine from $tableperiodi where idperiodi = '$iddatafine_camb'");
 $datafine_camb = risul_query($datafine_camb,0,'datafine');
 $datafine_camb_f = formatta_data($datafine_camb,$stile_data);
-$mess_regola1 .= mex("La prenotazione dal","clienti.php")." $datainizio_camb_f ".mex("al","clienti.php")." $datafine_camb_f ".mex("a nome di","clienti.php")." $cliente_camb ".mex("verrà spostata dall'appartamento",'unit.php')." <div style=\"display: inline; color: blue;\"><b>$id_app_agenzia</b></div> (<b>$motivazione_app_agenzia</b>) ".mex("al","clienti.php")." $idapp_camb.<br>";
-} # fine if ($app_prenota_id[$idprenota_cambiata] and $app_prenota_id[$idprenota_cambiata] != $id_app_agenzia)
+$mess_reg1 .= mex("La prenotazione dal","clienti.php")." $datainizio_camb_f ".mex("al","clienti.php")." $datafine_camb_f ".mex("a nome di","clienti.php")." $cliente_camb ".mex("verrà spostata dall'appartamento",'unit.php')." <b>$id_app_agenzia</b> (<b>$motivazione_app_agenzia</b>) ".mex("al","clienti.php")." $idapp_camb.<br>";
+} # fine if (!empty($app_prenota_id[$idprenota_cambiata]) and $app_prenota_id[$idprenota_cambiata] != $id_app_agenzia)
 } # fine for $num2
 $idprenota_cambiate_a_ag = prenota_in_app_e_periodo($id_app_agenzia,$idinizio_app_agenzia,$idfine_app_agenzia,$prenota_in_app_sett,$fine_prenota_id,$num_pca);
 for ($num2 = 1 ; $num2 <= $num_pca ; $num2++) {
 $idprenota_cambiata = $idprenota_cambiate_a_ag[$num2];
-if ($app_orig_prenota_id[$idprenota_cambiata] and $app_prenota_id[$idprenota_cambiata] != $app_orig_prenota_id[$idprenota_cambiata]) {
-$dati_cambiati = esegui_query("select * from $tableprenota where idprenota = $idprenota_cambiata");
+if (!empty($app_orig_prenota_id[$idprenota_cambiata]) and $app_prenota_id[$idprenota_cambiata] != $app_orig_prenota_id[$idprenota_cambiata]) {
+$dati_cambiati = esegui_query("select * from $tableprenota where idprenota = '$idprenota_cambiata' ");
 $idapp_camb = $app_orig_prenota_id[$idprenota_cambiata];
 $idclienti_camb = risul_query($dati_cambiati,0,'idclienti');
-$cliente_camb = esegui_query("select cognome from $tableclienti where idclienti = $idclienti_camb");
+$cliente_camb = esegui_query("select cognome from $tableclienti where idclienti = '$idclienti_camb' ");
 if ($idclienti_camb) $cliente_camb = risul_query($cliente_camb,0,'cognome');
 else $cliente_camb = "?";
 $iddatainizio_camb = $inizio_prenota_id[$idprenota_cambiata];
-$datainizio_camb = esegui_query("select datainizio from $tableperiodi where idperiodi = $iddatainizio_camb");
+$datainizio_camb = esegui_query("select datainizio from $tableperiodi where idperiodi = '$iddatainizio_camb' ");
 $datainizio_camb = risul_query($datainizio_camb,0,'datainizio');
 $datainizio_camb_f = formatta_data($datainizio_camb,$stile_data);
 $iddatafine_camb = $fine_prenota_id[$idprenota_cambiata];
-$datafine_camb = esegui_query("select datafine from $tableperiodi where idperiodi = $iddatafine_camb");
+$datafine_camb = esegui_query("select datafine from $tableperiodi where idperiodi = '$iddatafine_camb' ");
 $datafine_camb = risul_query($datafine_camb,0,'datafine');
 $datafine_camb_f = formatta_data($datafine_camb,$stile_data);
-$mess_regola1 .= mex("La prenotazione dal","clienti.php")." $datainizio_camb_f ".mex("al","clienti.php")." $datafine_camb_f ".mex("a nome di","clienti.php")." $cliente_camb ".mex("verrà spostata dall'appartamento",'unit.php')." $idapp_camb ".mex("al","clienti.php")." <div style=\"display: inline; color: blue;\"><b>$id_app_agenzia</b></div> (<b>$motivazione_app_agenzia</b>).<br>";
-} # fine if ($app_orig_prenota_id[$idprenota_cambiata] and...
+$mess_reg1 .= mex("La prenotazione dal","clienti.php")." $datainizio_camb_f ".mex("al","clienti.php")." $datafine_camb_f ".mex("a nome di","clienti.php")." $cliente_camb ".mex("verrà spostata dall'appartamento",'unit.php')." $idapp_camb ".mex("al","clienti.php")." <b>$id_app_agenzia</b> (<b>$motivazione_app_agenzia</b>).<br>";
+} # fine if (!empty($app_orig_prenota_id[$idprenota_cambiata]) and...
 } # fine for $num2
 for ($num2 = 1 ; $num2 <= $id_app_richiesti ; $num2++) {
-if ($id_app_richiesti > 1) $appartamento_controlla = $appartamento[$num2];
-else $appartamento_controlla = $appartamento;
+$appartamento_controlla = $app_liberato[$num2];
 if ($id_app_agenzia == $appartamento_controlla and $idinizio_app_agenzia <= $idfineperiodo and $idfine_app_agenzia >= $idinizioperiodo) {
-$mess_regola1 .= mex("La nuova prenotazione verrà inserita nell'appartamento",'unit.php')." <div style=\"display: inline; color: blue;\"><b>$id_app_agenzia</b></div> (<b>$motivazione_app_agenzia</b>).<br>";
+$mess_reg1 .= mex("La nuova prenotazione verrà inserita nell'appartamento",'unit.php')." <b>$id_app_agenzia</b> (<b>$motivazione_app_agenzia</b>).<br>";
 } # fine if ($id_app_agenzia == $appartamento_controlla and ...
 } # fine for $num2
 } # fine if ($mot2 != "x")
 } # fine for $num1
+$risul_agg = aggiorna_tableprenota($app_prenota_id,$app_orig_prenota_id,$tableprenota);
+if (!$risul_agg) $fatto_libera2 = "NO";
+} # fine if ($fatto_libera2 != "NO")
+if ($fatto_libera2 == "NO") {
+$inserire = "NO";
+$mess_errore .= mex("Nel periodo selezionato non è possibile ospitare il cliente negli appartamenti richiesti",'unit.php');
+if (!empty($app_incomp_costi)) $mess_errore .= " ".mex("con i costi aggiuntivi selezionati",'clienti.php');
+$mess_errore .= ".<br>";
+for ($n_t = 1 ; $n_t <= $num_tipologie ; $n_t++) {
+$mess_prenota .= mex("Prenotazione","prenota.php")." ".mex("dal","prenota.php")." <b>".formatta_data($inizioperiodo_orig[$n_t],$stile_data)."</b> ".mex("al","prenota.php")." <b>".formatta_data($fineperiodo_orig[$n_t],$stile_data)."</b>";
+$mess_prenota .= " ".mex("a nome di","prenota.php")." <b>$cognome</b> ";
+if ($numpersone[$n_t]) $mess_prenota .= " ".mex("per","prenota.php")." <b>".$numpersone[$n_t]."</b> ".mex("persone","prenota.php")."";
+if ($dati_tariffe[$tipotariffa[$n_t]]['nome']) $nometariffa_vedi = $dati_tariffe[$tipotariffa[$n_t]]['nome'];
+else $nometariffa_vedi = mex("tariffa","prenota.php").substr($tipotariffa[$n_t],7);
+$mess_prenota .= ", ".mex("tariffa","prenota.php")." \"$nometariffa_vedi\".<br><br>";
+} # fine for $n_t
+} # fine if ($fatto_libera2 == "NO")
+else {
+$appartamento = $app_liberato;
+if ($mess_reg1) $mess_regola1 .= mex("Sono stati fatti i seguenti spostamenti nei periodi della <div style=\"display: inline; color: blue;\">regola di assegnazione 1</div>",'clienti.php').":<br>".$mess_reg1;
 } # fine else if ($fatto_libera2 == "NO")
 } # fine else if ($fatto_libera == "SI")
 } # fine if ($num_app_agenzia != 0)
 
 else {
 # se non ci sono app_agenzia della regola di assegnazione 1
-unset($limiti_var);
 $profondita_ = "";
 unset($app_prenota_id_);
 unset($app_orig_prenota_id_);
@@ -463,14 +618,79 @@ unset($app_assegnabili_id_);
 unset($prenota_in_app_sett_);
 unset($dati_app_);
 unset($app_liberato);
-$limiti_var['lim_prenota_temp'] = $lim_prenota_temp;
+$limiti_var = array('lim_prenota_temp' => $lim_prenota_temp);
 
-liberasettimane($idinizioperiodo_vett,$idfineperiodo_vett,$limiti_var,$anno,$fatto_libera,$app_liberato,$profondita_,$app_richiesti,$app_prenota_id_,$app_orig_prenota_id_,$inizio_prenota_id_,$fine_prenota_id_,$app_assegnabili_id_,$prenota_in_app_sett_,$dati_app_,$PHPR_TAB_PRE."prenota");
+if ($spezza < 2) liberasettimane($idinizioperiodo_vett,$idfineperiodo_vett,$limiti_var,$anno,$fatto_libera,$app_liberato,$profondita_,$app_richiesti,$app_prenota_id_,$app_orig_prenota_id_,$inizio_prenota_id_,$fine_prenota_id_,$app_assegnabili_id_,$prenota_in_app_sett_,$dati_app_,$PHPR_TAB_PRE."prenota");
+if ($spezza and ($spezza > 1 or $fatto_libera == "NO")) {
+if (!function_exists('spezzaprenota')) include("./includes/spezzaprenota.php");
+if ($spezza < 2) {
+unset($app_prenota_id_);
+unset($app_orig_prenota_id_);
+unset($inizio_prenota_id_);
+unset($fine_prenota_id_);
+unset($app_assegnabili_id_);
+unset($prenota_in_app_sett_);
+$limiti_var = array('lim_prenota_temp' => $lim_prenota_temp);
+} # fine if ($spezza < 2)
+$n_tronchi_vett = array();
+$idinizio_vett = array();
+$idfine_vett = array();
+$app_liberato_vett = array();
+$app_liberato = array();
+if ($num_tipologie > 1) {
+$profondita_ = array();
+$limiti_var['n_ini'] = $idinizioperiodo_tot;
+$limiti_var['n_fine'] = $idfineperiodo_tot;
+$profondita_['iniziale'] = "";
+$profondita_['attuale'] = 1;
+$max_prenota = esegui_query("select max(idprenota) from $tableprenota");
+if (numlin_query($max_prenota) != 0) $tot_prenota = risul_query($max_prenota,0,0);
+else $tot_prenota = 0;
+$profondita_['tot_prenota_ini'] = $tot_prenota;
+$profondita_['tot_prenota_attuale'] = $tot_prenota;
+tab_a_var($limiti_var,$app_prenota_id_,$app_orig_prenota_id_,$inizio_prenota_id_,$fine_prenota_id_,$app_assegnabili_id_,$prenota_in_app_sett_,$anno,$dati_app_,$profondita_,$PHPR_TAB_PRE."prenota");
+} # fine if ($num_tipologie > 1)
+for ($n_t = 1 ; $n_t <= $num_tipologie ; $n_t++) {
+unset($vett_idinizio);
+unset($vett_idfine);
+$n_tronchi = 0;
+unset($app_lib);
+spezzaprenota($idinizioperiodo_vett[$n_t],$idfineperiodo_vett[$n_t],$anno,$limiti_var,$profondita_,$app_richiesti[$n_t],$n_tronchi,$app_lib,$vett_idinizio,$vett_idfine,0,$app_prenota_id_,$app_orig_prenota_id_,$inizio_prenota_id_,$fine_prenota_id_,$app_assegnabili_id_,$prenota_in_app_sett_,$dati_app_,$PHPR_TAB_PRE."prenota");
+if ($n_tronchi > 0) {
+$fatto_libera = "SI";
+if ($n_tronchi > $n_tronchi_max) $n_tronchi_max = $n_tronchi;
+$n_tronchi_vett[$n_t] = $n_tronchi;
+$idinizio_vett[$n_t] = $vett_idinizio;
+$idfine_vett[$n_t] = $vett_idfine;
+$app_liberato[$n_t] = $app_lib[1];
+$app_liberato_vett[$n_t] = $app_lib;
+if ($num_tipologie > 1) {
+for ($num1 = 1 ; $num1 <= $n_tronchi ; $num1++) {
+$profondita_['tot_prenota_attuale']++;
+$app_prenota_id_[$profondita_['tot_prenota_attuale']] = $app_lib[$num1];
+$inizio_prenota_id_[$profondita_['tot_prenota_attuale']] = $vett_idinizio[$num1];
+$fine_prenota_id_[$profondita_['tot_prenota_attuale']] = $vett_idfine[$num1];
+for ($num2 = $vett_idinizio[$num1] ; $num2 <= $vett_idfine[$num1] ; $num2++) $prenota_in_app_sett_[$app_lib[$num1]][$num2] = $profondita_['tot_prenota_attuale'];
+} # fine for $num1
+} # fine if ($num_tipologie > 1)
+} # fine if ($n_tronchi > 0)
+else {
+$fatto_libera = "NO";
+$n_tronchi_max = 0;
+break;
+} # fine else if ($n_tronchi > 0)
+} # fine for $n_t
+} # fine if ($spezza and ($spezza < 2 or $fatto_libera == "NO"))
+
+if ($fatto_libera != "NO" and $num_tipologie > 1) {
+$risul_agg = aggiorna_tableprenota($app_prenota_id_,$app_orig_prenota_id_,$tableprenota);
+if (!$risul_agg) $fatto_libera = "NO";
+} # fine if ($fatto_libera != "NO" and $num_tipologie > 1)
 
 if ($fatto_libera == "NO") {
 $inserire = "NO";
 $mess_errore .= mex("Nel periodo selezionato non è possibile ospitare il cliente in un appartamento tra quelli richiesti",'unit.php');
-if ($app_incomp_costi) $mess_errore .= " ".mex("con i costi aggiuntivi selezionati",'clienti.php');
+if (!empty($app_incomp_costi)) $mess_errore .= " ".mex("con i costi aggiuntivi selezionati",'clienti.php');
 $mess_errore .= ".<br>";
 for ($n_t = 1 ; $n_t <= $num_tipologie ; $n_t++) {
 $mess_prenota .= mex("Prenotazione","prenota.php")." ".mex("dal","prenota.php")." <b>".formatta_data($inizioperiodo_orig[$n_t],$stile_data)."</b> ".mex("al","prenota.php")." <b>".formatta_data($fineperiodo_orig[$n_t],$stile_data)."</b>";
@@ -489,6 +709,72 @@ else $appartamento = $app_liberato;
 
 
 if ($inserire != "NO") {
+
+# Se si è usato spezzaprenota
+$frase_da_sett = array();
+if ($n_tronchi_max > 1) {
+$num_tipologie_orig = $num_tipologie;
+for ($n_to = 1 ; $n_to <= $num_tipologie_orig ; $n_to++) {
+if ($n_tronchi_vett[$n_to] > 1) {
+$n_t_ini_agg = $num_tipologie + 1;
+$num_tipologie += $n_tronchi_vett[$n_to] - 1;
+$lungh_periodo_tot = $idfineperiodo_vett[$n_to] - $idinizioperiodo_vett[$n_to] + 1;
+$idfineperiodo_vett[$n_to] = $idfine_vett[$n_to][1];
+$fineperiodo_orig[$num_tipologie] = $fineperiodo_orig[$n_to];
+$lungh_periodo_corr = $idfineperiodo_vett[$n_to] - $idinizioperiodo_vett[$n_to] + 1;
+$pagato_t = floor((double) fix_set($pagato[$n_to]) / (double) $lungh_periodo_tot);
+$pagato[$n_to] = ($pagato_t * $lungh_periodo_corr) + ((double) $pagato[$n_to] - ($pagato_t * $lungh_periodo_tot));
+$caparra_t = floor((double) fix_set($caparra[$n_to]) / (double) $lungh_periodo_tot);
+$caparra[$n_to] = ($caparra_t * $lungh_periodo_corr) + ((double) $caparra[$n_to] - ($caparra_t * $lungh_periodo_tot));
+$sconto_t = floor((double) fix_set($sconto[$n_to]) / (double) $lungh_periodo_tot);
+$sconto[$n_to] = ($sconto_t * $lungh_periodo_corr) + ((double) $sconto[$n_to] - ($sconto_t * $lungh_periodo_tot));
+$commissioni_t = floor((double) fix_set($commissioni[$n_to]) / (double) $lungh_periodo_tot);
+$commissioni[$n_to] = ($commissioni_t * $lungh_periodo_corr) + ((double) $commissioni[$n_to] - ($commissioni_t * $lungh_periodo_tot));
+$frase_da_sett[$n_to] = mex("da","prenota.php")." $lungh_periodo_tot ".mex("$parola_settiman","prenota.php").mex("$lettera_e","prenota.php");
+$stato['spezzata'][($n_to - 1)] = ($n_t_ini_agg - 1)."-".($num_tipologie - 1);
+$n_tronco = 1;
+for ($n_t = $n_t_ini_agg ; $n_t <= $num_tipologie ; $n_t++) {
+$n_tronco++;
+$idinizioperiodo_vett[$n_t] = $idinizio_vett[$n_to][$n_tronco];
+$idfineperiodo_vett[$n_t] = $idfine_vett[$n_to][$n_tronco];
+$appartamento[$n_t] = $app_liberato_vett[$n_to][$n_tronco];
+$data_corr = esegui_query("select datainizio from $tableperiodi where idperiodi = '".$idinizioperiodo_vett[$n_t]."' ");
+$inizioperiodo_orig[$n_t] = risul_query($data_corr,0,'datainizio');
+if ($n_t == $n_t_ini_agg) $n_t_prec = $n_to;
+else $n_t_prec = ($n_t - 1);
+$fineperiodo_orig[$n_t_prec] = $inizioperiodo_orig[$n_t];
+$numpersone[$n_t] = $numpersone[$n_to];
+$numpersone_orig[$n_t] = $numpersone_orig[$n_to];
+$numpersone_orig2[$n_t] = fixset($numpersone_orig2[$n_to]);
+$assegnazioneapp[$n_t] = $assegnazioneapp[$n_to];
+$lista_app[$n_t] = $lista_app[$n_to];
+$tipotariffa[$n_t] = $tipotariffa[$n_to];
+$idclienti[$n_t] = $idclienti[$n_to];
+$tariffe_sett_imp[$n_t] = $tariffe_sett_imp[$n_to];
+$conferma[$n_t] = $conferma[$n_to];
+$lungh_periodo_corr = $idfineperiodo_vett[$n_t] - $idinizioperiodo_vett[$n_t] + 1;
+$pagato[$n_t] = ($pagato_t * $lungh_periodo_corr);
+$caparra[$n_t] = ($caparra_t * $lungh_periodo_corr);
+if ($costo_letto_imposto != "NO") $costo_letto_imposto[$n_t] = $costo_letto_imposto[$n_to];
+$app_eliminati_costi[$n_t] = fixset($app_eliminati_costi[$n_to]);
+$sconto[$n_t] = ($sconto_t * $lungh_periodo_corr);
+$commissioni[$n_t] = ($commissioni_t * $lungh_periodo_corr);
+$frase_da_sett[$n_t] = $frase_da_sett[$n_to];
+$met_paga_caparra[$n_t] = fixset($met_paga_caparra[$n_to]);
+$origine_prenota[$n_t] = fixset($origine_prenota[$n_to]);
+$giorno_stima_checkin[$n_t] = fixset($giorno_stima_checkin[$n_to]);
+$ora_stima_checkin[$n_t] = fixset($ora_stima_checkin[$n_to]);
+$min_stima_checkin[$n_t] = fixset($min_stima_checkin[$n_to]);
+$commento[$n_t] = fixset($commento[$n_to]);
+$commento['pers_esist'][$n_t] = fixset($commento['pers_esist'][$n_to]);
+$commento['ins_pers_tipo'][$n_t] = fixset($commento['ins_pers_tipo'][$n_to]);
+$commento['ins_pers_txt'][$n_t] = fixset($commento['ins_pers_txt'][$n_to]);
+} # fine for $n_t
+$inizioperiodo = $idinizioperiodo_vett;
+$fineperiodo = $idfineperiodo_vett;
+} # fine if ($n_tronchi_vett[$n_to] > 1)
+} # fine for $n_to
+} # fine if ($n_tronchi_max > 1)
 
 $metodi_pagamento = esegui_query("select valpersonalizza from $tablepersonalizza where idpersonalizza = 'metodi_pagamento' and idutente = '$id_utente'");
 $metodi_pagamento = risul_query($metodi_pagamento,0,'valpersonalizza');
@@ -510,8 +796,20 @@ if ($idprenota >= $max_idprenota) esegui_query("update $tablecostiprenota set nu
 $mess_prenota .= mex("Prenotazione","prenota.php")." $idprenota ".mex("dal","prenota.php")." <b>".formatta_data($inizioperiodo_orig[$n_t],$stile_data)."</b> ".mex("al","prenota.php")." <b>".formatta_data($fineperiodo_orig[$n_t],$stile_data)."</b> ($lunghezza_periodo ".mex("$parola_settiman","prenota.php");
 if ($lunghezza_periodo == 1) $mess_prenota .= mex("$lettera_a","prenota.php");
 else $mess_prenota .= mex("$lettera_e","prenota.php");
+if (!empty($frase_da_sett[$n_t])) $mess_prenota .= " <em>".$frase_da_sett[$n_t]."</em>";
 $mess_prenota .= ") ".mex("a nome di","prenota.php")." <b>$cognome</b> ";
-if ($numpersone[$n_t]) $mess_prenota .= mex("per",'prenota.php')." <b>".$numpersone[$n_t]."</b> ".mex("persone",'prenota.php')." ";
+if ($numpersone[$n_t]) {
+$mess_prenota .= mex("per",'prenota.php')." <b>".$numpersone[$n_t]."</b> ".mex("persone",'prenota.php')." ";
+if ($numpersone_orig[$n_t] != $numpersone[$n_t] or (!empty($numpersone_orig2[$n_t]) and $numpersone_orig2[$n_t] != $numpersone_orig[$n_t])) {
+$mess_prenota .= "(<em>".mex("da",'prenota.php')." <b>";
+if (!empty($numpersone_orig2[$n_t]) and $numpersone_orig2[$n_t] != $numpersone_orig[$n_t]) {
+$mess_prenota .= $numpersone_orig2[$n_t];
+if ($numpersone_orig[$n_t] != $numpersone[$n_t]) $mess_prenota .= " -> ";
+} # fine if (!empty($numpersone_orig2[$n_t]) and $numpersone_orig2[$n_t] != $numpersone_orig[$n_t])
+if ($numpersone_orig[$n_t] != $numpersone[$n_t]) $mess_prenota .= $numpersone_orig[$n_t];
+$mess_prenota .= "</b> ".mex("persone",'prenota.php')."</em>) ";
+} # fine if ($numpersone_orig[$n_t] != $numpersone[$n_t] or (!empty($numpersone_orig2[$n_t]) and
+} # fine if ($numpersone[$n_t])
 $mess_prenota .= mex("nell'appartamento",'unit.php')." <b>".$appartamento[$n_t]."</b>";
 if ($assegnazioneapp[$n_t] == "k") $mess_prenota .= " (".mex("fisso","unit.php").")";
 else {
@@ -528,13 +826,13 @@ $lista_tariffepo_sett = "";
 $tar_sett_imp = fixset($tariffe_sett_imp[$n_t]);
 for ($num2 = $inizioperiodo[$n_t] ; $num2 <= $fineperiodo[$n_t] ; $num2++) {
 $riga_tariffa = esegui_query("select * from  $tableperiodi where idperiodi = $num2");
-if (isset($tar_sett_imp[$num2]) and strcmp($tar_sett_imp[$num2],"")) $costo_tariffa = $tar_sett_imp[$num2];
+if (isset($tar_sett_imp[$num2]) and strcmp((string) $tar_sett_imp[$num2],"")) $costo_tariffa = $tar_sett_imp[$num2];
 else $costo_tariffa = risul_query($riga_tariffa,0,$tipotariffa[$n_t]);
 if ($dati_tariffe[$tipotariffa[$n_t]]['moltiplica'] == "p") {
-if (!strcmp($costo_tariffa,"")) $costo_tariffa = 0;
-if (isset($tar_sett_imp[$num2]) and strcmp($tar_sett_imp[$num2],"")) $costo_tariffap = 0;
+if (!strcmp((string) $costo_tariffa,"")) $costo_tariffa = 0;
+if (isset($tar_sett_imp[$num2]) and strcmp((string) $tar_sett_imp[$num2],"")) $costo_tariffap = 0;
 else $costo_tariffap = risul_query($riga_tariffa,0,$tipotariffa[$n_t]."p");
-if (!strcmp($costo_tariffap,"")) $costo_tariffap = 0;
+if (!strcmp((string) $costo_tariffap,"")) $costo_tariffap = 0;
 $lista_tariffepo_sett .= ",".$costo_tariffap;
 $costo_tariffap = (double) $costo_tariffap * (double) $numpersone[$n_t];
 $lista_tariffep_sett .= ",".$costo_tariffap;
@@ -666,7 +964,7 @@ $variazione_ca .= $dati_ca[$num_costo]['escludi_tot_perc'];
 esegui_query("insert into $tablecostiprenota (idcostiprenota,idprenota,tipo,nome,valore,associasett,settimane,moltiplica,letto,idntariffe,variazione,varmoltiplica,varnumsett,varperiodipermessi,varbeniinv,varappincompatibili,vartariffeassociate,vartariffeincomp,datainserimento,hostinserimento,utente_inserimento) values ('$idcostiprenota','$idprenota','$tipo_ca','".aggslashdb($dati_ca[$num_costo]['nome'])."','$valore_ca','$associasett_ca','$settimane_costo','$moltiplica','".$dati_ca[$num_costo]['letto']."','".$dati_ca[$num_costo]['id']."','$variazione_ca','$varmoltiplica_ca','$varnumsett_ca','$varperiodipermessi_ca','$varbeniinv_ca','$varappincompatibili_ca','$vartariffeassociate_ca','$vartariffeincomp_ca','$datainserimento','$HOSTNAME','$id_utente_ins')");
 if (substr($tipo_ca,1,1) != "f") esegui_query("update $tablecostiprenota set valore_perc = '$valore_perc_ca', arrotonda = '".$dati_ca[$num_costo]['arrotonda']."' where idcostiprenota = '$idcostiprenota'");
 if ($dati_ca[$num_costo]['tasseperc']) esegui_query("update $tablecostiprenota set tasseperc = '".$dati_ca[$num_costo]['tasseperc']."' where idcostiprenota = '$idcostiprenota'");
-if (strcmp($dati_ca[$num_costo]['categoria'],"")) esegui_query("update $tablecostiprenota set categoria = '".$dati_ca[$num_costo]['categoria']."' where idcostiprenota = '$idcostiprenota'");
+if (strcmp((string) $dati_ca[$num_costo]['categoria'],"")) esegui_query("update $tablecostiprenota set categoria = '".$dati_ca[$num_costo]['categoria']."' where idcostiprenota = '$idcostiprenota'");
 if ($prezzo_costo_tot) {
 $prezzo_costo_tot_p = punti_in_num($prezzo_costo_tot,$stile_soldi);
 $mess_prenota .= "$prezzo_costo_tot_p $Euro &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ";
@@ -708,7 +1006,7 @@ $mess_prenota .= "$sconto_p $Euro &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ".mex("Sconto",
 $costo_tariffa_tot = (double) $costo_tariffa_tot - (double) $sconto[$n_t];
 } # fine if ($sconto[$n_t] and...
 
-$commissioni[$n_t] = formatta_soldi($commissioni[$n_t]);
+$commissioni[$n_t] = formatta_soldi(fixset($commissioni[$n_t]));
 if (controlla_soldi($commissioni[$n_t],"pos") == "NO") $commissioni[$n_t] = "";
 if (!$commissioni[$n_t]) $commissioni[$n_t] = calcola_commissioni($dati_tariffe,$tipotariffa[$n_t],$inizioperiodo[$n_t],$fineperiodo[$n_t],$lista_tariffe_sett,$sconto[$n_t],0);
 
@@ -786,15 +1084,39 @@ $mess_prenota .= "<br>".mex("Orario stimato di entrata","prenota.php").": <b>".s
 } # fine if (controlla_num_pos($giorno_stima_checkin) == "SI" and...
 } # fine if (!empty($giorno_stima_checkin[$n_t]) and !empty($ora_stima_checkin[$n_t]) and...
 
-if (strcmp($commento[$n_t],"") or $commento['pers'][$n_t]) {
-$commento[$n_t] = htmlspecialchars($commento[$n_t]);
-if (strcmp($commento[$n_t],"")) $mess_prenota .= "<br>".mex("Commento","prenota.php").": ".$commento[$n_t]."<br>";
-if (!empty($commento['pers'][$n_t])) $commento[$n_t] .= $commento['pers'][$n_t];
-$commento[$n_t] = aggslashdb($commento[$n_t]);
-esegui_query("update $tableprenota set commento = '".$commento[$n_t]."' where idprenota = '$idprenota' ");
-} # fine if (strcmp($commento[$n_t],"") or $commento['pers'][$n_t])
+if ($numpersone[$n_t] and ($numpersone_orig[$n_t] != $numpersone[$n_t] or (!empty($numpersone_orig2[$n_t]) and $numpersone_orig2[$n_t] != $numpersone_orig[$n_t]))) {
+if (strcmp(fixstr($commento[$n_t]),"")) $commento[$n_t] .= " - ";
+else $commento[$n_t] = "";
+$commento[$n_t] .= "*".mex("Prenotazione","prenota.php")." ".mex("per",'prenota.php')." ";
+if (!empty($numpersone_orig2[$n_t]) and $numpersone_orig2[$n_t] != $numpersone_orig[$n_t]) {
+$commento[$n_t] .= $numpersone_orig2[$n_t];
+if ($numpersone_orig[$n_t] != $numpersone[$n_t]) $commento[$n_t] .= " -> ";
+} # fine if (!empty($numpersone_orig2[$n_t]) and $numpersone_orig2[$n_t] != $numpersone_orig[$n_t])
+if ($numpersone_orig[$n_t] != $numpersone[$n_t]) $commento[$n_t] .= $numpersone_orig[$n_t];
+$commento[$n_t] .= " ".mex("persone",'prenota.php')."*";
+} # fine if ($numpersone[$n_t] and $numpersone_orig[$n_t] != $numpersone[$n_t]) 
+if (strcmp(fixstr($commento[$n_t]),"") or !empty($commento['pers_esist'][$n_t]) or !empty($commento['ins_pers_tipo'][$n_t])) {
+$commento[$n_t] = htmlspecialchars(fixstr($commento[$n_t]));
+if (strcmp($commento[$n_t],"")) {
+$mess_prenota .= "<br>".mex("Commento",'prenota.php').": ".$commento[$n_t];
+if (empty($commento['ins_pers_tipo'][$n_t])) $mess_prenota .= "<br>";
+} # fine if (strcmp($commento[$n_t],""))
+if (!empty($commento['pers_esist'][$n_t])) {
+$commento[$n_t] .= $commento['pers_esist'][$n_t];
+if (!empty($commento['ins_pers_tipo'][$n_t]) and strstr($commento[$n_t],">".$commento['ins_pers_tipo'][$n_t]."<")) {
+$commento[$n_t] = explode(">".$commento['ins_pers_tipo'][$n_t]."<",$commento[$n_t]);
+$commento[$n_t] = $commento[$n_t][0].strstr(fixstr($commento[$n_t][1]),">");
+} # fine if (!empty($commento['pers_esist'][$n_t]) and...
+} # fine if (!empty($commento['pers_esist'][$n_t]))
+elseif (!empty($commento['ins_pers_tipo'][$n_t])) $commento[$n_t] .= ">>";
+if (!empty($commento['ins_pers_tipo'][$n_t])) {
+$commento[$n_t] .= ">".$commento['ins_pers_tipo'][$n_t]."<".htmlspecialchars($commento['ins_pers_txt'][$n_t]);
+$mess_prenota .= "<br>".mex("Commento","prenota.php")." \"".$commento['ins_pers_tipo'][$n_t]."\": ".htmlspecialchars($commento['ins_pers_txt'][$n_t])."<br>";
+} # fine if (!empty($commento['ins_pers_tipo'][$n_t]))
+esegui_query("update $tableprenota set commento = '".aggslashdb($commento[$n_t])."' where idprenota = '$idprenota' ");
+} # fine if (strcmp((string) $commento[$n_t],"") or !empty($commento['pers_esist'][$n_t] or..
 
-$mess_prenota .= "<br>".mex("Prenotazione","prenota.php")." $idprenota ".mex("inserita","prenota.php")."!<br>";
+$mess_prenota .= "<br>".mex("Prenotazione","prenota.php")." $idprenota ".mex("inserita",'prenota.php')."!<br>";
 if ($n_t != $num_tipologie) $mess_prenota .= "<hr style=\"width: 95%\">";
 
 $lista_idprenota .= ",$idprenota";
@@ -843,7 +1165,7 @@ $stato['inserita'] = "SI";
 
 } # fine if ($inserire != "NO")
 
-if (!@is_array($stato) or $stato['inserita'] != "SI") $stato['inserita'] = "NO";
+if (!isset($stato) or !is_array($stato) or fixset($stato['inserita']) != "SI") $stato['inserita'] = "NO";
 $stato['mess_errore'] = $mess_errore;
 $stato['mess_regola1'] = $mess_regola1;
 $stato['mess_prenota'] = $mess_prenota;

@@ -1,8 +1,105 @@
+3.0.6 (03/11/2023)
+======================
+-when using a remote server smtp.gmail.com suggest to create an app password
+-if email in structure data has a public provider suggest to use their remote server
+-don't pass anymore unregistered _REQUEST variables (register globals off)
+-when changing reservation client, possibility to replace him also in payments made
+-added "doesn't contain" to "if" comparisons in document conditions
+-new privilege for normal users to change their password
+-updated Italian document ROSS1000 to use residence data from main guest if missing
+-insert from modification page a copy of the reservation(s), also for deleted ones
+-fixed bugs: XSS vulnerabilities (CVE-2023-43375) (CVE-2023-43376) (CVE-2023-43377)
+-fixed bug: possible SQL injection in personalizza.php (CVE-2023-43374)
+-fixed bug: possible SQL injection in interconnessioni.php (CVE-2023-43373)
+-customization of upper/lower case format in names, surnames, nations, etc.
+-don't upload files in documents table if user can't modify any document, no html
+ suffix if he can't mofify html documents (CVE-2022-45592)
+-global privilege to don't allow users to modify documents in html format
+-fixed bug: avoid cross site scripting in errors from database (CVE-2023-47164)
+-fixed bug: custom comments deleted when inserting check-out and sometimes check-in
+-fixed bug: remote code execution in backup from administrator user (CVE-2023-34854)
+ as disclosed by Glen Husman and Donovan Jasper
+-fixed bugs: some cross site scripting vulnerabilities in backend (CVE-2023-34537)
+-fixed bug: SQL injection in creaprezzi.php (CVE-2023-33817) (CVE-2023-43371)
+-fixed bug: sometimes extra bed not added when searching availability from main menu
+-fixed bug: possible SQL injection from administrator user in privilegi_utente.php
+-fixed bug: identity document type not inserted in clients data
+-fixed bug: wrong update of api documents from 3.0.4
+
+
+3.0.5 (16/03/2023)
+======================
+-in rules 1 table show rates in natural order
+-insert deposits and commissions for "all rates" or all rates with existing value
+-encode html characters in predefined variables in HTML documents (CVE-2023-29839)
+-optional "transaction date" for reservations and cashbox payments
+-optional "notes" when inserting reservation payments
+-optional "payment id" when inserting a reservation or cashbox payment
+-fixed bug: costs non added to reservations from pos with sqlite or postgres
+-removed document last_payment_* variables, added last_payment (1 or empty) in [r5]
+-for documents as API possibility to allow access only from some IPs
+-for parts under condition in documents added & (and) or | (or) to conditions and >,
+ <, % (contains) or !% to comparisons
+-new variables for attachments and don't select attachment if variable empty
+-possibility to attach multiple files and in different languages to email documents
+-when assigning a variable in document conditions added encode/decode in MIME
+ base64, in HTML and convertions between bases 10 and 2, 16 or 36
+-added new variable [last_reservation_for_client] set to 1 only for last reservation
+ of current client in reservations repetitions
+-added [client_number] to documents variables, also for guests
+-added document variable [confirmation] equal to 1 if reservation is confirmed
+-possibility to use a variable of the document as the name of the downloaded file
+-multilingual subjects in email documents when the document is multi-lingual
+-variable [extra_cost_days] set to number of days for costs not associated to days
+-create future years only automatically on set date (new constant to change default)
+-don't allow deleting current year if no constant set in includes/costanti.php
+-added rule 3 for minimum number of people for each rate
+-fixed bug: incompatible units were not registered from extra costs automatically
+ added as extra beds when inserting and modifying reservations
+-fixed bug: sometimes it was not possible to change the list of units assigned to
+ reservations
+-in document conditions variables are now always compared as strings
+-fixed bug: arrays in conditions inside document text wrongly initialitiated with
+ null value
+-when possible use mbstring functions instead of utf8_encode (deprecated in php 8.2)
+-fixed bug: sometimes wrong total price in documents called from "check
+ availability" page
+-fixed bug: documents variable [occupied_unit] not defined in web pages
+-fixed bug: empty menus dates updated wrongly when adding periods with multiple
+ users
+-when a backup is restored check that selectperiodi file is present for each year
+-fixed bug: could not configure an external SMTP server
+
+
+3.0.4 (16/04/2022)
+======================
+-New default Italian document "Dati per ISA" with total daily presences in period
+-added constant C_MASSIMO_NUM_EMAIL_GIORNALIERE to limit emails sent in 24h from documents
+-availability webpage now follows general value for email masquerading (option removed)
+-if constant C_MASCHERA_EMAIL set to spf records, check spf before sending email with maquerading
+-sent email subjects are now encoded in utf-8 with base64
+-possibility to use external smtp server instead of php mail() function, using phpmailer
+-when insering dates for users and for webpages accept when periods are not ordered in time
+-possibility to select years older than 5 in statistics (limit to 8 years simultaneously)
+-new default Italian document for ROSS1000
+-when periods are added also import rules 1, dates in menus and periods of imported rates
+-fixed bugs: some cross site scripting vulnerabilities in backend (CVE-2022-26564)
+-possibility for normal users to split a reservation when it can't be inserted in one unit
+-use single quotes in dati/selectappartamenti.php (CVE-2022-22909)
+-possibility to use cookies for session handling (CVE-2021-42948)
+-better handling of session and transaction IDs (CVE-2021-42949)
+-better handling of inconsistent sql logs, also when restoring backup
+-don't make indicative availability table overflow in mobile and first row/column are now sticky
+-better order of internal id number for variables of restored documents
+-fixed bug: document arrays wrongly initialitiated with null value when present in conditions
+-fixed more php 8 and 8.1 WARNINGs
+
+
 3.0.3 (20/08/2021)
 ======================
 -added a default document to export reservations data in csv
 -added 2nd email, certified email, 2nd and 3rd telephone to "export clients data" document
--fixed vulnerabilities CVE-2021-32832, CVE-2021-38733 and CVE-2021-38559
+-fixed vulnerabilities CVE-2021-37832, CVE-2021-37833 and CVE-2021-38559
 -fixed more php8 WARNINGs
 
 
@@ -14,7 +111,7 @@
 -fixed bug: documents not updated correctly in website pages when documents order changed
 -fixed bug: in web pages the input that contaied a slash kept adding slashes at each creation
 -in availability page consider minimum stay for dates selected by default
--fixed problem: in new chrome browser  the month table columns were not aligned correctly sometimes
+-fixed problem: in new chrome browser the month table columns were not aligned correctly sometimes
 -added to availability webpage theme the javascript to open calendar when clicking on dates menus
 -default themes and framed mode in web pages now can load an external javascript file
 -save documents with long names inserting reservation numbers in another ".dat" file

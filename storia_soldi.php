@@ -2,7 +2,7 @@
 
 ##################################################################################
 #    HOTELDRUID
-#    Copyright (C) 2001-2021 by Marco Maria Francesco De Santis (marco@digitaldruid.net)
+#    Copyright (C) 2001-2023 by Marco Maria Francesco De Santis (marco@digitaldruid.net)
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published by
@@ -24,7 +24,22 @@ $pag = "storia_soldi.php";
 $titolo = "HotelDruid: Storico Entrate";
 
 $var_pag = array();
-$n_var_pag = 0;
+$var_pag[0] = 'senza_colori';
+$var_pag[1] = 'metodo_selezionato';
+$var_pag[2] = 'cerca_prenota';
+$var_pag[3] = 'cerca_inizioperiodo';
+$var_pag[4] = 'cerca_anno_inizioperiodo';
+$var_pag[5] = 'cerca_fineperiodo';
+$var_pag[6] = 'cerca_anno_fineperiodo';
+$var_pag[7] = 'azzera_soldi';
+$var_pag[8] = 'continua';
+$var_pag[9] = 'id_transazione';
+$var_pag[10] = 'pagina_prenota';
+$var_pag[11] = 'cambia_colori';
+$var_pag[12] = 'tipo_tabella';
+$var_pag[13] = 'torna_indietro';
+$var_pag[14] = 'show_bar';
+$n_var_pag = 15;
 
 include("./costanti.php");
 include(C_DATI_PATH."/dati_connessione.php");
@@ -50,6 +65,7 @@ if ($id_utente) {
 if ($id_utente != 1) {
 $tableprivilegi = $PHPR_TAB_PRE."privilegi";
 $tablerelgruppi = $PHPR_TAB_PRE."relgruppi";
+$prendi_gruppi = "";
 $privilegi_annuali_utente = esegui_query("select * from $tableprivilegi where idutente = '$id_utente' and anno = '$anno'");
 if (numlin_query($privilegi_annuali_utente) == 0) $anno_utente_attivato = "NO";
 else {
@@ -117,24 +133,20 @@ $stile_data = stile_data();
 $Euro = nome_valuta();
 
 if (!empty($senza_colori)) $senza_colori = "SI";
+else $senza_colori = "";
 if (!empty($pagina_prenota) and controlla_num_pos($pagina_prenota) != "SI") $pagina_prenota = "";
 
 
 if (isset($azzera_soldi) and $azzera_soldi == "SI" and $id_utente == 1) {
 if (empty($continua)) {
 $mostra_tabella = "NO";
-$tabelle_lock = array("$tableversioni","$tabletransazioni");
-$altre_tab_lock = array("$tablepersonalizza");
+$tabelle_lock = array($tableversioni,$tabletransazioni);
+$altre_tab_lock = array($tablepersonalizza);
 $tabelle_lock = lock_tabelle($tabelle_lock,$altre_tab_lock);
-$versione_transazione = prendi_numero_versione($tableversioni);
-$adesso = date("YmdHis",(time() + (C_DIFF_ORE * 3600)));
-list($usec, $sec) = explode(' ', microtime());
-mt_srand((float) $sec + ((float) $usec * 100000));
-$val_casuale = mt_rand(100000,999999);
+$id_transazione = crea_id_sessione("",$tableversioni,8);
 $ultimo_accesso = date("Y-m-d H:i:s",(time() + (C_DIFF_ORE * 3600)));
 global $REMOTE_ADDR;
 $REMOTE_ADDR = aggslashdb($REMOTE_ADDR);
-$id_transazione = $adesso.$val_casuale.$versione_transazione;
 esegui_query("insert into $tabletransazioni (idtransazioni,idsessione,tipo_transazione,ultimo_accesso) values ('$id_transazione','$id_sessione','can_s','$ultimo_accesso')");
 unlock_tabelle($tabelle_lock);
 echo "<form accept-charset=\"utf-8\" method=\"post\" action=\"storia_soldi.php\"><div>
@@ -184,8 +196,8 @@ echo "<table class=\"buttonbar\"><tr><td align=\"left\">
 <form accept-charset=\"utf-8\" method=\"post\" action=\"storia_soldi.php\"><div>
 <input type=\"hidden\" name=\"anno\" value=\"$anno\">
 <input type=\"hidden\" name=\"id_sessione\" value=\"$id_sessione\">
-<input type=\"hidden\" name=\"senza_colori\" value=\"".htmlspecialchars(fixset($senza_colori))."\">
-<input type=\"hidden\" name=\"metodo_selezionato\" value=\"".htmlspecialchars(fixset($metodo_selezionato))."\">
+<input type=\"hidden\" name=\"senza_colori\" value=\"$senza_colori\">
+<input type=\"hidden\" name=\"metodo_selezionato\" value=\"".htmlspecialchars(fixstr($metodo_selezionato))."\">
 <input class=\"sbutton\" type=\"submit\" name=\"cerca_prenota\" value=\"".mex("Vedi le modifiche",$pag)."\">
  ".mex("dal",$pag)." <select name=\"cerca_inizioperiodo\">
 <option value=\"\">----</option>";
@@ -241,8 +253,8 @@ echo "<td align=\"right\">
 <form accept-charset=\"utf-8\" method=\"post\" action=\"storia_soldi.php\"><div>
 <input type=\"hidden\" name=\"anno\" value=\"$anno\">
 <input type=\"hidden\" name=\"id_sessione\" value=\"$id_sessione\">
-<input type=\"hidden\" name=\"pagina_prenota\" value=\"".htmlspecialchars(fixset($pagina_prenota))."\">
-<input type=\"hidden\" name=\"metodo_selezionato\" value=\"".htmlspecialchars(fixset($metodo_selezionato))."\">";
+<input type=\"hidden\" name=\"pagina_prenota\" value=\"".htmlspecialchars(fixstr($pagina_prenota))."\">
+<input type=\"hidden\" name=\"metodo_selezionato\" value=\"".htmlspecialchars(fixstr($metodo_selezionato))."\">";
 if (!$senza_colori) {
 echo "<input type=\"hidden\" name=\"senza_colori\" value=\"SI\">
 <input class=\"sbutton\" type=\"submit\" name=\"cambia_colori\" value=\"".mex("Senza colori",$pag)."\">";
@@ -284,7 +296,7 @@ $frase_periodo .= " ".mex("fino al",$pag)." $cerca_fineperiodo_f";
 
 $saldo_prenota_TOT = 0;
 $saldo_valuta_TOT = array();
-if (!isset($senza_colori)) $class = "t1 t1color";
+if (!$senza_colori) $class = "t1 t1color";
 else $class = "t1wc";
 
 $tutti_utenti = esegui_query("select * from $tableutenti order by idutenti");
@@ -339,7 +351,7 @@ else $stringa_pagine .= "</b>";
 } # fine for $num1
 $stringa_pagine .= "</div>";
 echo $stringa_pagine;
-$colonne = 10;
+$colonne = 11;
 if ($num_tutti_utenti > 1) $colonne++;
 $stringa_puntini_tab = "<tr><td colspan=\"$colonne\">...</td></tr>";
 } # fine if ($num_storia_soldi_prenota > $num_vedi_in_tab)
@@ -352,10 +364,11 @@ echo "<div class=\"tab_cont\">
 <td class=\"t1top\" rowspan=2>".mex("Pagato prima",$pag)."</td>
 <td class=\"t1top\" rowspan=2>".mex("Pagato dopo",$pag)."</td>
 <td class=\"t1top\" rowspan=2>".mex("Saldo",$pag)."</td>
+<td class=\"t1top\" rowspan=2>".mex("Metodo",$pag)."</td>
 <td class=\"t1top\" rowspan=2>".mex("Id",$pag)."</td>
-<td class=\"t1top\" rowspan=2>".mex("Metodo",$pag)."</td>";
+<td class=\"t1top\" rowspan=2>".mex("Note",$pag)."</td>";
 if ($num_tutti_utenti > 1) echo "<td class=\"t1top\" rowspan=2>".mex("Utente",$pag)."</td>";
-echo "<td class=\"t1top\" rowspan=2>".mex("Data_della modifica",$pag)."</td></tr>
+echo "<td class=\"t1top\" rowspan=2>".str_replace("_","&nbsp;",mex("Data_della modifica",$pag))."</td></tr>
 <tr><td>".mex("N°",$pag)."</td>
 <td>".str_replace("_","&nbsp;",mex("Cognome_cliente",$pag))."</td>
 <td class=\"t1top\">".str_replace("_","&nbsp;",mex("Data_iniziale",$pag))."</td>
@@ -364,11 +377,10 @@ echo "<td class=\"t1top\" rowspan=2>".mex("Data_della modifica",$pag)."</td></tr
 if (!$cerca_prenota and $num_storia_soldi_prenota > $num_vedi_in_tab and $pagina_prenota != 1) echo $stringa_puntini_tab;
 
 for ($num1 = 0 ; $num1 < $num_storia_soldi_prenota ; $num1 = $num1 + 1) {
-$data_inserimento = risul_query($storia_soldi_prenota,$num1,'data_inserimento');
-$data_inserimento = substr($data_inserimento, 0, 10);
+$data_inserimento = substr(risul_query($storia_soldi_prenota,$num1,'data_inserimento'),0,10);
 $data_inserimento_f = formatta_data($data_inserimento,$stile_data);
-#$string = substr($data_inserimento, 6, 9);
-#$data_inserimento = preg_replace("/$string/","",$data_inserimento);
+$data_transazione = substr(risul_query($storia_soldi_prenota,$num1,'data_transazione'),0,10);
+if ($data_inserimento != $data_transazione) $data_inserimento_f .= " <small>(".formatta_data($data_transazione,$stile_data).")</small>";
 $motivazione = risul_query($storia_soldi_prenota,$num1,'motivazione');
 $motivazione = explode(";",$motivazione);
 $cognome = esegui_query("select cognome,utente_inserimento from $tableclienti where idclienti = '".$motivazione[0]."'");
@@ -417,7 +429,7 @@ if ($priv_mod_prenota_iniziate != "s" and $id_periodo_corrente >= $iddatainizio)
 if ($priv_mod_prenota_ore != "000") {
 $adesso = date("YmdHis",(time() + (C_DIFF_ORE * 3600)));
 $data_ins = risul_query($prenota_esist,0,'datainserimento');
-$limite = date("YmdHis",mktime((substr($data_ins,11,2) + $priv_mod_prenota_ore),substr($data_ins,14,2),substr($data_ins,17,2),substr($data_ins,5,2),substr($data_ins,8,2),substr($data_ins,0,4)));
+$limite = date("YmdHis",mktime((substr($data_ins,11,2) + (int) $priv_mod_prenota_ore),substr($data_ins,14,2),substr($data_ins,17,2),substr($data_ins,5,2),substr($data_ins,8,2),substr($data_ins,0,4)));
 if ($adesso > $limite) $link_modifica = 0;
 } # fine if ($priv_mod_prenota_ore != "000")
 if ($link_modifica) $num_prenota = "<a$stilebarrato href=\"modifica_prenota.php?id_prenota=$num_prenota$pcanc&amp;anno=$anno&amp;id_sessione=$id_sessione&amp;origine=storia_soldi.php\">$num_prenota</a>";
@@ -432,8 +444,18 @@ $soldi_dopo = $soldi_prima + $saldo_prenota;
 $saldo_prenota_TOT = $saldo_prenota_TOT + $saldo_prenota;
 $id_pagamento = risul_query($storia_soldi_prenota,$num1,'id_pagamento');
 if (!$id_pagamento) $id_pagamento = "&nbsp;";
+else {
+if (strlen($id_pagamento) > 36) $id_pagamento = "<small><small>$id_pagamento</small></small>";
+elseif (strlen($id_pagamento) > 24) $id_pagamento = "<small>$id_pagamento</small>";
+} # fine else if (!$id_pagamento)
 $metodo_pagamento = risul_query($storia_soldi_prenota,$num1,'metodo_pagamento');
 if (!$metodo_pagamento) $metodo_pagamento = "&nbsp;";
+$note_pagamento = risul_query($storia_soldi_prenota,$num1,'note');
+if (!$note_pagamento) $note_pagamento = "&nbsp;";
+else {
+if (strlen($note_pagamento) > 36) $note_pagamento = "<small><small>$note_pagamento</small></small>";
+elseif (strlen($note_pagamento) > 24) $note_pagamento = "<small>$note_pagamento</small>";
+} # fine else if (!$note_pagamento)
 $utente_inserimento = risul_query($storia_soldi_prenota,$num1,'utente_inserimento');
 $nome_utente_inserimento = $nome_utente_id[$utente_inserimento];
 
@@ -464,10 +486,11 @@ echo "<tr><td>$num_prenota</td>
 <td>$soldi_prima_p</td>
 <td>$soldi_dopo_p</td>
 <td>$saldo_prenota_vedi</td>
+<td>$metodo_pagamento</td>
 <td>$id_pagamento</td>
-<td>$metodo_pagamento</td>";
+<td>$note_pagamento</td>";
 if ($num_tutti_utenti > 1) echo "<td><small>$nome_utente_inserimento</small></td>";
-echo "<td><small>$data_inserimento_f</small></td></tr>";
+echo "<td>$data_inserimento_f</td></tr>";
 
 } # fine if ($cerca_prenota or (...
 
@@ -490,6 +513,7 @@ echo "<tr><td colspan=6><b>".mex("TOTALE",$pag)."</b></td>
 if ($num_tutti_utenti > 1) echo "<td>&nbsp;</td>";
 echo "<td>&nbsp;</td>
 <td>&nbsp;</td>
+<td>&nbsp;</td>
 <td>&nbsp;</td></tr>";
 
 $costo_cassa = esegui_query("select * from $tablecosti where idcosti = 0");
@@ -503,11 +527,13 @@ echo "<tr><td colspan=\"6\"><b><i>".mex("Trasferito in cassa",$pag).":</i></b></
 if ($num_tutti_utenti > 1) echo "<td>&nbsp;</td>";
 echo "<td>&nbsp;</td>
 <td>&nbsp;</td>
+<td>&nbsp;</td>
 <td>&nbsp;</td></tr>
 <tr><td colspan=\"6\"><b><i>".mex("RESTO",$pag)."</i></b></td>
 <td>$resto_tot_p</td>";
 if ($num_tutti_utenti > 1) echo "<td>&nbsp;</td>";
 echo "<td>&nbsp;</td>
+<td>&nbsp;</td>
 <td>&nbsp;</td>
 <td>&nbsp;</td></tr>";
 } # fine if ($costo_cassa and !$cerca_prenota)

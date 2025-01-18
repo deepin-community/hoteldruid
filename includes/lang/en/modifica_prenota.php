@@ -269,6 +269,17 @@ case "Prenotazioni cancellate":  		$messaggio = "Deleted reservations"; break;
 case "Data o orario stimato di entrata <span class=\"colred\">errato</span>":	$messaggio = "<span class=\"colred\">Wrong</span> estimated check-in time or date"; break;
 case "Data cancellazione":  			$messaggio = "Deletion date"; break;
 case "Cancellata dall'utente":  		$messaggio = "Deleted by user"; break;
+case "Per la tariffa selezionata si deve inserire un <span class=\"colred\">numero minimo</span> di":	$messaggio = "For selected rate you have to insert a <span class=\"colred\">minimum number</span> of"; break;
+case "persona":  				$messaggio = "person"; break;
+case "id operazione":  				$messaggio = "transaction id"; break;
+case "id op.":  				$messaggio = "id"; break;
+case "Data operazione":  			$messaggio = "Transaction date"; break;
+case "Data":  					$messaggio = "Date"; break;
+case "Note":  					$messaggio = "Notes"; break;
+case "Informazioni extra":  			$messaggio = "Extra info"; break;
+case "Inserisci una prenotazione uguale":  	$messaggio = "Insert a reservation like this"; break;
+case "Inserisci prenotazioni uguali":  		$messaggio = "Insert reservations like these"; break;
+case "Cambia il cliente anche nei pagamenti effettuati":	$messaggio = "Change client also in payments already made"; break;
 case "":  		$messaggio = ""; break;
 case "":  		$messaggio = ""; break;
 

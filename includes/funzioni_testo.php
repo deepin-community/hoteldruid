@@ -2,7 +2,7 @@
 
 ##################################################################################
 #    HOTELDRUID
-#    Copyright (C) 2001-2016 by Marco Maria Francesco De Santis (marco@digitaldruid.net)
+#    Copyright (C) 2001-2021 by Marco Maria Francesco De Santis (marco@digitaldruid.net)
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published by
@@ -21,12 +21,35 @@
 ##################################################################################
 
 
-
+if (function_exists('mb_strlen')) {
 function num_caratteri_testo ($testo) {
 
-return strlen(utf8_decode($testo));
+return mb_strlen((string) $testo);
 
 } # fine function num_caratteri_testo
+
+function sottostringa ($testo,$ini,$lung=null) {
+
+return mb_substr((string) $testo,$ini,$lung);
+
+} # fine function num_caratteri_testo
+} # fine if (function_exists('mb_strlen'))
+
+else {
+function num_caratteri_testo ($testo) {
+
+if (function_exists('utf8_decode')) return strlen(@utf8_decode((string) $testo));
+else return strlen((string) $testo);
+
+} # fine function num_caratteri_testo
+
+function sottostringa ($testo,$ini,$lung=null) {
+
+if (function_exists('utf8_encode')) return substr(@utf8_encode((string) $testo),$ini,$lung);
+else return substr((string) $testo,$ini,$lung);
+
+} # fine function num_caratteri_testo
+} # fine else if (function_exists('mb_strlen'))
 
 
 
@@ -245,7 +268,7 @@ $numero = 0;
 $dist_dopo = 0;
 $dist_prima = 0;
 $testo_vett = preg_split("/$parola"."[^0-9a-z]/i",$testo);
-if ($testo_vett[1]) {
+if (!empty($testo_vett[1])) {
 $testo_vett[1] = " ".$testo_vett[1];
 # Numero dopo la parola cercata
 $num = preg_split("/[^0-9a-z][0-9]{1,2}[^0-9a-z]/i",substr($testo_vett[1],0,16));
@@ -263,11 +286,66 @@ $numero = substr($testo_vett[0],(($dist_prima * -1) - 1),1);
 if (preg_match("/[0-9]/",substr($testo_vett[0],(($dist_prima * -1) - 2),1))) $numero = substr($testo_vett[0],(($dist_prima * -1) - 2),1).$numero;
 } # fine if (!$numero or $dist_prima < $dist_dopo)
 } # fine if (count($num) > 1)
-} # fine if ($testo_vett[1])
+} # fine if (!empty($testo_vett[1]))
 
 return $numero;
 
 } # fine function trova_numero_vicino
+
+
+
+function ricava_val_json ($json,$val,$contenuto="") {
+$risul = "";
+if ($contenuto) {
+if (substr($contenuto,0,1) == "-") {
+$non_contenuto = 1;
+$contenuto = substr($contenuto,1);
+$prima_parte = $json;
+} # fine if (substr($contenuto,0,1) == "-")
+else $non_contenuto = 0;
+if (strstr($json,"\"$contenuto\":")) { $json = strstr($json,"\"$contenuto\":"); $contenuto = ""; }
+else {
+if (strstr($json,",$contenuto:")) { $json = strstr($json,",$contenuto:"); $contenuto = ""; }
+elseif (strstr($json,"{"."$contenuto:")) { $json = strstr($json,"{"."$contenuto:"); $contenuto = ""; }
+if ($non_contenuto) {
+if ($contenuto) $contenuto = "";
+else {
+$prima_parte = substr($prima_parte,0,(-1 * strlen($json)));
+if (substr(trim($json),0,1) == "{") {
+$json = substr(trim($json),1);
+$prof = 1;
+while ($prof > 0 and strstr($json,"}")) {
+if (strlen(strstr($json,"{")) > strlen(strstr($json,"}"))) {
+$json = substr(strstr($json,"{"),1);
+$prof++;
+} # fine if (strlen(strstr($json,"{")) > strlen(strstr($json,"}")))
+else {
+$json = substr(strstr($json,"}"),1);
+$prof--;
+} # fine else if (strlen(strstr($json,"{")) > strlen(strstr($json,"}")))
+} # fine while ($prof > 0 and strstr($json,"}"))
+} # fine if (substr(trim($json),0,1) == "{")
+$json = $prima_parte.$json;
+} # fine else if ($contenuto)
+unset($prima_parte);
+} # fine if ($non_contenuto)
+} # fine else if (strstr($json,"\"$contenuto\":"))
+} # fine if ($contenuto)
+if (!$contenuto) {
+if (strstr($json,"\"$val\":")) $risul = explode("\"$val\":",$json);
+else {
+if (strstr($json,",$val:")) $risul = explode(",$val:",$json);
+elseif (strstr($json,"{"."$val:")) $risul = explode("{"."$val:",$json);
+} # fine else if (strstr($json,"\"$val\":"))
+if ($risul) {
+if (strlen(strstr($risul[1],",")) > strlen(strstr($risul[1],"}"))) $risul = explode(",",$risul[1]);
+else $risul = explode("}",$risul[1]);
+$risul = trim($risul[0]);
+if ((substr($risul,0,1) == '"' and substr($risul,-1) == '"') or (substr($risul,0,1) == "'" and substr($risul,-1) == "'")) $risul = substr($risul,1,-1);
+} # fine if ($risul)
+} # fine if (!$contenuto)
+return $risul;
+} # fine function ricava_val_json
 
 
 

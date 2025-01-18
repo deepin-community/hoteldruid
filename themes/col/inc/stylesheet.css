@@ -144,7 +144,7 @@ button.intc, button.bkup, button.xusr, button.musr, button.ausr, button.abkp, bu
 button.ubkp, button.rbkp, button.dcbk, button.rdbk, button.snml, button.cdoc, button.xdoc, button.adoc, 
 button.crep, button.iinc, button.iexp, button.exin, button.rlpe, button.rule, button.ainv, button.cinv, 
 button.xavl, button.cusr, button.pasw, button.login {
-background: #ffffff url("../img/button28.gif") repeat-x bottom; min-height: 36px; }
+background: #ffffff url("../img/button28.gif") repeat-x bottom; min-height: 36px; color: #000000; }
 
 
 button.login div { background: url("../img/key.png") no-repeat left center; padding: 8px 2px 8px 36px; margin: 0 0 0 1px; }

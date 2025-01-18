@@ -2,7 +2,7 @@
 
 ##################################################################################
 #    HOTELDRUID
-#    Copyright (C) 2001-2021 by Marco Maria Francesco De Santis (marco@digitaldruid.net)
+#    Copyright (C) 2001-2023 by Marco Maria Francesco De Santis (marco@digitaldruid.net)
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published by
@@ -26,7 +26,7 @@ function trova_codice_rel ($rel,&$rel_esist,$rel_sing,$rel_plur,&$cod2,&$cod3,$t
 $cod = "";
 $cod2 = "";
 $cod3 = "";
-if (strcmp($rel,"")) {
+if (strcmp((string) $rel,"")) {
 if (empty($rel_esist['e'][$rel_sing][$rel])) {
 $cod = esegui_query("select distinct $tablerel.codice_$rel_sing,$tablerel.codice2_$rel_sing,$tablerel.codice3_$rel_sing from $tablerelutenti inner join $tablerel on $tablerelutenti.id$rel_sing = $tablerel.id$rel_plur where $tablerelutenti.idutente = '$id_utente' and $tablerel.nome_$rel_sing = '".aggslashdb($rel)."'");
 if (numlin_query($cod)) {
@@ -57,7 +57,7 @@ $cod = $rel_esist[$rel_sing][$rel][1];
 $cod2 = $rel_esist[$rel_sing][$rel][2];
 $cod3 = $rel_esist[$rel_sing][$rel][3];
 } # fine else if (empty($rel_esist['e'][$rel_sing][$rel]))
-} # fine if (strcmp($rel,""))
+} # fine if (strcmp((string) $rel,""))
 return $cod;
 } # fine function trova_codice_rel
 
@@ -77,7 +77,7 @@ return $cache_date_contr[$data];
 function formatta_dir_salva_doc ($dir_salva) {
 if ($dir_salva == "~") {
 if (defined("C_CARTELLA_CREA_MODELLI") and C_CARTELLA_CREA_MODELLI != "") {
-if (C_CARTELLA_DOC != "" and @is_dir(C_CARTELLA_CREA_MODELLI."/".C_CARTELLA_DOC)) $dir_salva = C_CARTELLA_DOC;
+if (defined('C_CARTELLA_DOC') and C_CARTELLA_DOC != "" and @is_dir(C_CARTELLA_CREA_MODELLI."/".C_CARTELLA_DOC)) $dir_salva = C_CARTELLA_DOC;
 else $dir_salva = "";
 } # fine if (defined("C_CARTELLA_CREA_MODELLI") and C_CARTELLA_CREA_MODELLI != "")
 else {
@@ -86,7 +86,7 @@ else $dir_salva = "";
 } # fine else if (defined("C_CARTELLA_CREA_MODELLI") and C_CARTELLA_CREA_MODELLI != "")
 } # fine if ($dir_salva == "~")
 if (defined("C_CARTELLA_CREA_MODELLI") and C_CARTELLA_CREA_MODELLI != "") $dir_salva = C_CARTELLA_CREA_MODELLI."/".str_replace("..","",$dir_salva);
-if (strcmp($dir_salva,"") and !@is_dir($dir_salva)) $dir_salva = "";
+if (strcmp((string) $dir_salva,"") and !@is_dir($dir_salva)) $dir_salva = "";
 return $dir_salva;
 } # fine function formatta_dir_salva_doc
 
@@ -97,14 +97,16 @@ function trova_nomi_contratti (&$max_contr,$id_utente,$tablecontratti,$tablepers
 $nomi_contratti = array();
 $max_contr = esegui_query("select max(numero) from $tablecontratti where tipo $LIKE 'contr%'");
 $max_contr = risul_query($max_contr,0,0);
-for ($num1 = 1 ; $num1 <= $max_contr ; $num1++) $nomi_contratti[$num1] = mex("documento",$pag)."$num1";
+global $lingua_mex;
+if (empty($lingua_mex)) for ($num1 = 1 ; $num1 <= $max_contr ; $num1++) $nomi_contratti[$num1] = "documento$num1";
+else for ($num1 = 1 ; $num1 <= $max_contr ; $num1++) $nomi_contratti[$num1] = mex("documento",$pag)."$num1";
 $nomi_contr = esegui_query("select valpersonalizza from $tablepersonalizza where idpersonalizza = 'nomi_contratti' and idutente = '$id_utente'");
 $nomi_contr = risul_query($nomi_contr,0,'valpersonalizza');
 $nomi_contr = explode("#@&",$nomi_contr);
 $num_nomi_contr = count($nomi_contr);
 for ($num1 = 0 ; $num1 < $num_nomi_contr ; $num1++) {
 $dati_nome_contr = explode("#?&",$nomi_contr[$num1]);
-$nome_contr = str_replace("..","",str_replace("/","_",str_replace("\\","_",$dati_nome_contr[1])));
+$nome_contr = str_replace("..","",str_replace("/","_",str_replace("\\","_",fixstr($dati_nome_contr[1]))));
 if (strcmp(trim($nome_contr),"")) {
 $nomi_contratti[$dati_nome_contr[0]] = $nome_contr;
 $nomi_contratti['pers'][$dati_nome_contr[0]] = $nome_contr;
@@ -130,6 +132,13 @@ $nomi_contr_np[$nomi_contratti['dir'][$num_prog]."/".$nomi_contratti['salv'][$nu
 } # fine if (numlin_query($num_prog))
 $compress = esegui_query("select testo from $tablecontratti where numero = '$num1' and tipo = 'compress' ");
 if (numlin_query($compress)) $nomi_contratti['compress'][$num1] = risul_query($compress,0,'testo');
+$dati_download = esegui_query("select testo from $tablecontratti where numero = '$num1' and tipo = 'datdownl'");
+if (numlin_query($dati_download)) {
+$nomi_contratti['datdownl'][$num1] = (string) risul_query($dati_download,0,'testo');
+$dati_download = explode(">",$nomi_contratti['datdownl'][$num1]);
+if (!empty($dati_download[0])) $nomi_contratti['suff'][$num1] = $dati_download[0];
+} # fine if (numlin_query($dati_download))
+else $nomi_contratti['datdownl'][$num1] = "";
 } # fine if (!empty($nomi_contratti['dir'][$num1]))
 } # fine for $num1
 if (!empty($nomi_contr_np)) {
@@ -199,7 +208,7 @@ $resto_tasse_p = punti_in_num($resto_tasse,$stile_soldi);
 
 function trasforma_id_in_date ($stringa_date,&$date_id,$tableperiodi) {
 
-if ($stringa_date) {
+if ($stringa_date and $stringa_date != "," and strstr((string) $stringa_date,",")) {
 $stringa_date_vett = explode(",",$stringa_date);
 $n_date = count($stringa_date_vett);
 for ($num1 = 0 ; $num1 < $n_date ; $num1++) {
@@ -212,7 +221,7 @@ if (isset($date_id[$stringa_date_vett[$num1]])) $stringa_date_vett[$num1] = $dat
 } # fine if ($stringa_date_vett[$num1])
 } # fine for $num1
 $stringa_date = implode(",",$stringa_date_vett);
-} # fine if ($stringa_date)
+} # fine if ($stringa_date and $stringa_date != "," and...
 
 return $stringa_date;
 
@@ -230,7 +239,7 @@ if (!@is_array($nomi_contratti)) $nomi_contratti = trova_nomi_contratti($max_con
 if (@is_array($nomi_contratti['dir'])) {
 reset($nomi_contratti['dir']);
 foreach ($nomi_contratti['dir'] as $num_contr => $dir_salva) {
-if (strcmp($dir_salva,"") and ($attiva_contratti_consentiti == "n" or $contratti_consentiti_vett[$num_contr] == "SI")) {
+if (strcmp((string) $dir_salva,"") and ($attiva_contratti_consentiti == "n" or $contratti_consentiti_vett[$num_contr] == "SI")) {
 $nome_contr = $nomi_contratti['salv'][$num_contr];
 if (empty($contratti_visti[$dir_salva."/".$nome_contr])) {
 $contratti_visti[$dir_salva."/".$nome_contr] = 1;
@@ -259,12 +268,19 @@ $num_pren_esist = substr($num_pren_esist,4);
 $file_dat_ext = 1;
 } # fine if (substr($num_pren_esist,0,3) == "1+1")
 else $file_dat_ext = 0;
-if ($file_dat_ext and !$num_pren_esist and is_file($dir_salva."/".substr($contr_corr,0,(-1 * (strlen($suff_file_corr) + 1))).".dat")) {
+$nome_downl = "";
+if ($file_dat_ext and is_file($dir_salva."/".substr($contr_corr,0,(-1 * (strlen($suff_file_corr) + 1))).".dat")) {
 $file_dat = file($dir_salva."/".substr($contr_corr,0,(-1 * (strlen($suff_file_corr) + 1))).".dat");
 for ($num1 = 0 ; $num1 < count($file_dat) ; $num1++) {
-if (substr($file_dat[$num1],0,3) == "rn:") $num_pren_esist = trim(substr($file_dat[$num1],3));
+if (!$num_pren_esist and substr($file_dat[$num1],0,3) == "rn:") $num_pren_esist = trim(substr($file_dat[$num1],3));
+if (substr($file_dat[$num1],0,3) == "dn:") $nome_downl = "/".trim(substr($file_dat[$num1],3));
 } # fine for $num1
-} # fine if ($file_dat_ext and !$num_pren_esist and...
+if ($nome_downl) {
+if (!empty($nomi_contratti['suff'][$num_contr])) $nome_downl .= ".".$nomi_contratti['suff'][$num_contr];
+else $nome_downl .= ".$suff_file_corr";
+} # fine if ($nome_downl)
+} # fine if ($file_dat_ext and is_file($dir_salva."/".substr($contr_corr,0,(-1 * (strlen($suff_file_corr) + 1))).".dat"))
+elseif (!empty($nomi_contratti['suff'][$num_contr])) $nome_downl = "/".substr($contr_corr,0,(-1 * (strlen($suff_file_corr) + 1))).".".$nomi_contratti['suff'][$num_contr];
 if ($num_pren_esist) {
 $num_pren_esist = explode("_",$num_pren_esist);
 for ($num1 = 0 ; $num1 < count($num_pren_esist) ; $num1++) {
@@ -284,7 +300,7 @@ if ($num_pren_esist[$num1]) {
 $num_pren_esist2 = explode("-",$num_pren_esist[$num1]);
 $fine_for = $num_pren_esist2[(count($num_pren_esist2) - 1)];
 $data_creazione = date("Y-m-d",filectime($dir_salva."/".$contr_corr_orig) + (C_DIFF_ORE * 3600));
-for ($num2 = $num_pren_esist2[0] ; $num2 <= $fine_for ; $num2++) $contratti_prenota[$anno_pren][$num2][$num_contr."-".$n_contr_corr] = $data_creazione.$contr_corr_orig;
+for ($num2 = $num_pren_esist2[0] ; $num2 <= $fine_for ; $num2++) $contratti_prenota[$anno_pren][$num2][$num_contr."-".$n_contr_corr] = $data_creazione.$contr_corr_orig.$nome_downl;
 } # fine if ($num_pren_esist[$num1]) 
 } # fine for $num1
 } # fine if ($num_pren_esist)
@@ -296,7 +312,7 @@ for ($num2 = $num_pren_esist2[0] ; $num2 <= $fine_for ; $num2++) $contratti_pren
 } # fine while ($fattura_corr = readdir($fatture_dir))
 closedir($contr_dir);
 } # fine if (empty($contratti_visti[$dir_salva."/".$nome_contr]))
-} # fine if (strcmp($dir_salva,"") and...
+} # fine if (strcmp((string) $dir_salva,"") and...
 } # fine foreach ($nomi_contratti['dir'] as $num_contr => $dir_salva)
 } # fine if (@is_array($nomi_contratti['dir']))
 
@@ -458,13 +474,18 @@ return $val;
 function crea_contratto ($numero_contratto,&$tipo_contratto,$id_utente,$id_sessione,$origine,$origine_vecchia,$trad_var_vett=array(),$set_glob="") {
 
 global $var_predef,$num_var_predef,$num_var_predef_ripeti,$num_ripeti,$tariffa_selezionata,$num_costo_agg_sel,$anno,$pag,$lingua_mex,$LIKE,$ILIKE,$modifica_pers,$vedi_clienti,$dir_salva,$nome_file_contr,$utenti_gruppi,$nomi_contratti;
-global $tablecontratti,$tableclienti,$tablerclientiprenota,$tablepersonalizza,$tableutenti,$tablerelutenti,$tablenazioni,$tableregioni,$tablecitta,$tabledocumentiid,$tableparentele,$tableappartamenti,$tableperiodi,$dati_cat_pers;
-global $data_inizio_selezione,$data_fine_selezione,$var_riserv,$var_predef_data,$messaggio_di_errore,$testo_email_richiesta,$num_commenti_pers,$numero_ins_comm_pers,$num_campi_pers_cliente,$numero_inserimento_pers,$numero_ins_cat_pers;
+global $tablecontratti,$tableclienti,$tablerclientiprenota,$tablepersonalizza,$tableutenti,$tablerelutenti,$tablenazioni,$tableregioni,$tablecitta,$tabledocumentiid,$tableparentele,$tableappartamenti,$tableperiodi,$dati_cat_pers,$dati_allegato;
+global $data_inizio_selezione,$data_fine_selezione,$var_riserv,$var_predef_data,$messaggio_di_errore,$testo_email_richiesta,$num_commenti_pers,$numero_ins_comm_pers,$num_campi_pers_cliente,$numero_inserimento_pers,$numero_ins_cat_pers,$numero_inserimento_alleg;
 
 $contratto = "";
 $n_utenti = esegui_query("select idutenti,nome_utente from $tableutenti ");
 for ($num1 = 0 ; $num1 < numlin_query($n_utenti) ; $num1++) $n_utente_contr[risul_query($n_utenti,$num1,'idutenti')] = risul_query($n_utenti,$num1,'nome_utente');
 if (!defined('C_ID_UTENTE_CONTR')) define('C_ID_UTENTE_CONTR',$id_utente);
+
+$dati_contratto = esegui_query("select * from $tablecontratti where numero = '$numero_contratto' and tipo $LIKE 'contr%'");
+$tipo_contratto = risul_query($dati_contratto,0,'tipo');
+$contratto_orig = (string) risul_query($dati_contratto,0,'testo');
+chiudi_query($dati_contratto);
 
 if (!$set_glob and $num_ripeti > 40) $unset_glob = 1;
 if (!empty($data_inizio_selezione) and preg_replace("/[0-9]{4,4}-[0-9]{2,2}-[0-9]{2,2}/","",$data_inizio_selezione) != "") $data_inizio_selezione = "";
@@ -473,7 +494,10 @@ $data_inizio_selezione_orig = $data_inizio_selezione;
 $data_fine_selezione_orig = $data_fine_selezione;
 for ($n_r = 1 ; $n_r <= $num_ripeti ; $n_r++) {
 for ($num1 = 0 ; $num1 < $num_var_predef_ripeti ; $num1++) {
-if (isset($GLOBALS[$var_predef[$num1]."_".$n_r]) and strcmp($GLOBALS[$var_predef[$num1]."_".$n_r],"")) ${$var_predef[$num1]."_".$n_r} = $GLOBALS[$var_predef[$num1]."_".$n_r];
+if (isset($GLOBALS[$var_predef[$num1]."_".$n_r]) and strcmp((string) $GLOBALS[$var_predef[$num1]."_".$n_r],"")) {
+if ($tipo_contratto == "contrhtm") ${$var_predef[$num1]."_".$n_r} = htmlspecialchars($GLOBALS[$var_predef[$num1]."_".$n_r]);
+else ${$var_predef[$num1]."_".$n_r} = $GLOBALS[$var_predef[$num1]."_".$n_r];
+} # fine if (isset($GLOBALS[$var_predef[$num1]."_".$n_r]) and...
 if (isset($unset_glob)) unset($GLOBALS[$var_predef[$num1]."_".$n_r]);
 } # fine for $num1
 if (isset(${"data_inizio_".$n_r}) and (empty($data_primo_arrivo) or ${"data_inizio_".$n_r} < $data_primo_arrivo)) $data_primo_arrivo = ${"data_inizio_".$n_r};
@@ -485,6 +509,7 @@ if (empty($data_inizio_selezione_orig)) $data_inizio_selezione = fixset($data_pr
 if (empty($data_fine_selezione_orig)) $data_fine_selezione = fixset($data_ultima_partenza);
 if (isset($unset_glob)) for ($num1 = $num_var_predef_ripeti ; $num1 < $num_var_predef ; $num1++) unset($var_predef[$num1]);
 $messaggio_di_errore = "";
+$nome_documento_scaricato = "";
 
 
 $formati_contr = esegui_query("select * from $tablecontratti where numero = '$numero_contratto' and tipo = 'formati'");
@@ -502,12 +527,19 @@ if (!$stile_data) $stile_data = stile_data(C_ID_UTENTE_CONTR);
 
 $dati_app = esegui_query("select * from $tableappartamenti order by idappartamenti ");
 $num_unita = numlin_query($dati_app);
+#global $dati_app_contr;
+$dati_app_contr = array('num' => $num_unita);
 for ($num1 = 1 ; $num1 <= $num_unita ; $num1++) {
 $dati_app_contr[$num1]['nome'] = risul_query($dati_app,($num1 - 1),'idappartamenti');
 $dati_app_contr[$num1]['casa'] = risul_query($dati_app,($num1 - 1),'numcasa');
 $dati_app_contr[$num1]['piano'] = risul_query($dati_app,($num1 - 1),'numpiano');
 $dati_app_contr[$num1]['capacita'] = risul_query($dati_app,($num1 - 1),'maxoccupanti');
 $dati_app_contr[$num1]['priorita'] = risul_query($dati_app,($num1 - 1),'priorita');
+if ($tipo_contratto == "contrhtm") {
+$dati_app_contr[$num1]['nome'] = htmlspecialchars($dati_app_contr[$num1]['nome']);
+$dati_app_contr[$num1]['casa'] = htmlspecialchars((string) $dati_app_contr[$num1]['casa']);
+$dati_app_contr[$num1]['piano'] = htmlspecialchars((string) $dati_app_contr[$num1]['piano']);
+} # fine if ($tipo_contratto == "contrhtm")
 } # fine for $num1
 unset($dati_app);
 
@@ -592,7 +624,7 @@ if (substr($percorso_cartella_modello,0,strlen(C_CARTELLA_CREA_MODELLI)) != C_CA
 else $percorso_cartella_modello = substr($percorso_cartella_modello,strlen(C_CARTELLA_CREA_MODELLI));
 } # fine if (defined("C_CARTELLA_CREA_MODELLI") and C_CARTELLA_CREA_MODELLI != "")
 if (substr($percorso_cartella_modello,0,1) == "/") $percorso_cartella_modello = substr($percorso_cartella_modello,1);
-if (strcmp($percorso_cartella_modello,"") and substr($percorso_cartella_modello,-1) != "/") $percorso_cartella_modello .= "/";
+if (strcmp((string) $percorso_cartella_modello,"") and substr($percorso_cartella_modello,-1) != "/") $percorso_cartella_modello .= "/";
 if (substr($percorso_cartella_modello,0,2) == "./") $percorso_cartella_modello = substr($percorso_cartella_modello,2);
 $url_base_pagine_web = "https://".trim($altri_domini[0])."/$percorso_cartella_modello";
 } # fine if ($altri_domini)
@@ -638,13 +670,10 @@ if (numlin_query($dir_salva) == 1) {
 $dir_salva = formatta_dir_salva_doc(risul_query($dir_salva,0,'testo'));
 } # fine if (numlin_query($dir_salva) == 1)
 else $dir_salva = "";
-$dati_contratto = esegui_query("select * from $tablecontratti where numero = '$numero_contratto' and tipo $LIKE 'contr%'");
-$tipo_contratto = risul_query($dati_contratto,0,'tipo');
-$contratto_orig = risul_query($dati_contratto,0,'testo');
 
 $contr_multilingua = 0;
-unset($contratti_orig_mln);
-unset($lingue_contr);
+$contratti_orig_mln = array();
+$lingue_contr = array();
 $num_contr_mln = 1;
 if (substr($contratto_orig,0,7) == "#!mln!#") {
 $contr_multilingua = 1;
@@ -656,6 +685,7 @@ $lingua_contr = substr(risul_query($dati_contratti_mln,$num1,'tipo'),4);
 $lingue_contr[$num1] = $lingua_contr;
 $contratti_orig_mln[$lingua_contr] = risul_query($dati_contratti_mln,$num1,'testo');
 } # fine for $num1
+unset($dati_contratti_mln);
 $contratto_orig = $contratti_orig_mln[$contratti_orig_mln['predef']];
 } # fine if (substr($contratto_orig,0,7) == "#!mln!#")
 
@@ -667,23 +697,28 @@ $tag_no_b = "</b>";
 $tag_spazio = "&nbsp;";
 $tag_acapo = "<br>";
 } # fine if ($tipo_contratto == "contrhtm")
+
 if ($tipo_contratto == "contreml") {
 $tag_spazio = " ";
 $tag_acapo = "\n";
 $oggetto_email = esegui_query("select * from $tablecontratti where numero = '$numero_contratto' and tipo = 'oggetto'");
-$oggetto_email = risul_query($oggetto_email,0,'testo');
-$allegato_email = esegui_query("select * from $tablecontratti where numero = '$numero_contratto' and tipo = 'allegato'");
-$allegato_email = risul_query($allegato_email,0,'testo');
-if ($allegato_email) {
-$allegato_email = esegui_query("select * from $tablecontratti where numero = '$allegato_email' and tipo = 'file_all'");
-$allegato_email = risul_query($allegato_email,0,'testo');
-$allegato_email = explode(",",$allegato_email);
-$allegato_email = $allegato_email[0];
-} # fine if ($allegato_email)
+$oggetto_email = (string) risul_query($oggetto_email,0,'testo');
+$oggetti_email_mln = array();
+if ($contr_multilingua) {
+$oggetto_email = explode(">",$oggetto_email);
+for ($num1 = 0 ; $num1 < count($oggetto_email) ; $num1++) {
+$ln_corr = explode(":",$oggetto_email[$num1]);
+$oggetti_email_mln[substr($ln_corr[0],4)] = substr(strstr($oggetto_email[$num1],":"),1);
+} # fine for $num1
+unset($ln_corr);
+if (!isset($oggetti_email_mln[$contratti_orig_mln['predef']])) $oggetti_email_mln[$contratti_orig_mln['predef']] = "";
+} # fine if ($contr_multilingua)
+
 $nome_mittente_email = $nome_contatto_struttura;
 $mittente_email = $email_struttura;
 if ($nome_mittente_email) $mittente_email = "$nome_mittente_email &lt;$mittente_email&gt;";
 } # fine if ($tipo_contratto == "contreml")
+
 if ($tipo_contratto == "contrrtf") {
 $tag_spazio = " ";
 $tag_acapo = "}
@@ -707,11 +742,13 @@ else $ripeti_tutto = 0;
 
 
 $nome_file_contr = array();
+$nome_file_downl = array('a' => 0);
 $dati_file_dat = array();
 $filecontr = array();
 $num_prog_contr = array();
 $num_prog_contr_max = "";
 $incr_np = 0;
+$crea_file_dopo = 0;
 if ($dir_salva) {
 global $num_contr_esist,$nome_file_contr_esist,$cont_salva,$lista_var_form,$num_file_salva,$sovrascrivi,$priv_cancella_contratti;
 $nome_contratto = $nomi_contratti['salv'][$numero_contratto];
@@ -721,8 +758,24 @@ if ($ripeti_tutto) $num_file_salva = $num_ripeti;
 else $num_file_salva = 1;
 $anno_corr = date("Y");
 if ($anno_corr != ($anno + 1) or @is_file(C_DATI_PATH."/selectperiodi$anno_corr.1.php")) $anno_corr = $anno;
-$incrementa_num_prog = esegui_query("select * from $tablecontratti where numero = '$numero_contratto' and tipo = 'incr_np'");
-if (numlin_query($incrementa_num_prog)) $incr_np = risul_query($incrementa_num_prog,0,'testo');
+$val_if = esegui_query("select testo from $tablecontratti where numero = '$numero_contratto' and tipo = 'incr_np'");
+if (numlin_query($val_if)) $incr_np = risul_query($val_if,0,'testo');
+if ($tipo_contratto != "contreml") {
+if (isset($nomi_contratti['datdownl'][$numero_contratto])) $val_if = $nomi_contratti['datdownl'][$numero_contratto];
+else {
+$val_if = esegui_query("select testo from $tablecontratti where numero = '$numero_contratto' and tipo = 'datdownl'");
+if (numlin_query($val_if)) $val_if = (string) risul_query($val_if,0,'testo');
+else $val_if = "";
+} # fine else if (isset($nomi_contratti['datdownl'][$numero_contratto]))
+if ($val_if) {
+$nome_file_downl['datdownl'] = $val_if;
+$val_if = explode(">",$nome_file_downl['datdownl']);
+if (isset($val_if[1]) and $val_if[1] == 'var') $nome_file_downl['a'] = 1;
+} # fine if ($val_if)
+else $nome_file_downl['datdownl'] = ">";
+} # fine if ($tipo_contratto != "contreml")
+unset($nomi_contratti['datdownl']);
+if ($incr_np or $nome_file_downl['a']) $crea_file_dopo = 1;
 
 $lista_var_form = "";
 if (@is_array($_POST)) reset($_POST);
@@ -809,15 +862,10 @@ $num_pren_esist2 = explode("-",$num_pren_esist[$num1]);
 $fine_for = $num_pren_esist2[(count($num_pren_esist2) - 1)];
 for ($num2 = $num_pren_esist2[0] ; $num2 <= $fine_for ; $num2++) {
 for ($num3 = 1 ; $num3 <= $num_ripeti ; $num3++) {
-if (($num2 == $id_pren[$num3] and ($anno_pren == $anno or $anno_pren == $anno_corr)) or (str_replace(";$anno_contr,$num2;","",${"id_anni_prec_".$num3}) != ${"id_anni_prec_".$num3} and $anno_contr != $anno and $anno_contr != $anno_corr)) {
+if (($num2 == $id_pren[$num3] and ($anno_pren == $anno or $anno_pren == $anno_corr)) or (str_replace(";$anno_contr,$num2;","",(string) ${"id_anni_prec_".$num3}) != ${"id_anni_prec_".$num3} and $anno_contr != $anno and $anno_contr != $anno_corr)) {
 $num_contr_esist++;
 $nome_file_contr_esist[$num_contr_esist] = $contr_corr_orig;
-if ($contr_corr_orig == $sovrascrivi and $num_file_salva == 1) {
-$num_sovrascrivi_max = $n_contr_corr;
-if ($n_contr_ini_corr) $num_sovrascrivi = $n_contr_ini_corr;
-else $num_sovrascrivi = $n_contr_corr;
-$anno_corr = $anno_contr;
-unlink($dir_salva."/".$contr_corr_orig);
+$nome_file_contr_esist['num'] = $num_contr_esist;
 if (substr($contr_corr_orig,-3) == ".gz") {
 $val_if = explode(".",substr($contr_corr_orig,0,-3));
 $val_then = 4;
@@ -828,7 +876,23 @@ $val_then = 1;
 } # fine else if (substr($contr_corr_orig,-3) == ".gz")
 $val_if = $val_if[(count($val_if) - 1)];
 $val_if = substr($contr_corr_orig,0,(-1 * (strlen($val_if) + $val_then)));
-if (is_file($dir_salva."/".$val_if.".dat")) unlink($dir_salva."/".$val_if.".dat");
+if (is_file("$dir_salva/$val_if.dat")) {
+$val_then = file("$dir_salva/$val_if.dat");
+for ($num1 = 0 ; $num1 < count($val_then) ; $num1++) {
+if (substr($val_then[$num1],0,3) == "dn:") {
+$nome_file_contr_esist['downl'][$num_contr_esist] = trim(substr($val_then[$num1],3));
+$nome_file_contr_esist['downl']['num'] = $num_contr_esist;
+} # fine if (substr($val_then[$num1],0,3) == "dn:")
+} # fine for $num1
+} # fine if (is_file("$dir_salva/$val_if.dat"))
+else $val_if = 0;
+if ($contr_corr_orig == $sovrascrivi and $num_file_salva == 1) {
+$num_sovrascrivi_max = $n_contr_corr;
+if ($n_contr_ini_corr) $num_sovrascrivi = $n_contr_ini_corr;
+else $num_sovrascrivi = $n_contr_corr;
+$anno_corr = $anno_contr;
+unlink($dir_salva."/".$contr_corr_orig);
+if ($val_if) unlink("$dir_salva/$val_if.dat");
 if ($id_pren[$num3] != $num2) ${"numero_prenotazione_".$num3} = $num2;
 } # fine if ($contr_corr_orig == $sovrascrivi and...
 break 3;
@@ -949,25 +1013,25 @@ $dati_file_dat[$num1]['nome'] = $nome_contratto."_".$anno_corr."_".$nome_file_co
 $dati_file_dat[$num1]['n_pren'] = substr($num3,1);
 $nome_file_contr[$num1] = $dati_file_dat[$num1]['nome'].".$suff_file";
 } # fine else if (strlen($nome_contratto."_".$anno_corr."_".$nome_file_contr[$num1].$num3.".$suff_file") < 235)
-if (!$incr_np) {
-if ($nomi_contratti['compress'][$numero_contratto]) {
+if (!$crea_file_dopo) {
+if (!empty($nomi_contratti['compress'][$numero_contratto])) {
 $nome_file_contr[$num1] .= ".gz";
 $lock_compress[$num1] = crea_lock_file($dir_salva."/".$nome_file_contr[$num1]);
 $filecontr[$num1] = gzopen($dir_salva."/".$nome_file_contr[$num1],"wb9");
-} # fine if ($nomi_contratti['compress'][$numero_contratto])
+} # fine if (!empty($nomi_contratti['compress'][$numero_contratto]))
 else {
 $filecontr[$num1] = fopen($dir_salva."/".$nome_file_contr[$num1],"w+");
 flock($filecontr[$num1],2);
-} # fine else if ($nomi_contratti['compress'][$numero_contratto])
-} # fine if (!$incr_np)
+} # fine else if (!empty($nomi_contratti['compress'][$numero_contratto]))
+} # fine if (!$crea_file_dopo)
 else $filecontr['esist'] = 1;
 } # fine for $num1
 
-if (!$incr_np) {
+if (!$crea_file_dopo) {
 flock($filelock,3);
 fclose($filelock);
 if (@is_file(C_DATI_PATH."/crea_contr.lock")) unlink(C_DATI_PATH."/crea_contr.lock");
-} # fine if (!$incr_np)
+} # fine if (!$crea_file_dopo)
 } # fine if ($dir_salva)
 
 
@@ -984,6 +1048,8 @@ if (!isset($var_riserv[$nome_var])) $variabile[$num_var] = $nome_var;
 } # fine for $num1
 $variabile['-1'] = "messaggio_di_errore";
 $variabile['-2'] = "errore_ripetizione";
+$variabile['-3'] = "nome_documento_scaricato";
+for ($num1 = 1 ; $num1 <= $dati_allegato['num'] ; $num1++) $variabile[(-100 - $num1)] = "allegato$num1";
 
 for ($num1 = 0 ; $num1 < $num_arrays ; $num1++) {
 $nome_arr = explode(";",risul_query($arrays,$num1,'testo'));
@@ -1176,6 +1242,12 @@ $var_trad_ita = $var_predef[($numero_ins_cat_pers + $num1)];
 $trad_var_vett[$var_trad_ext."_".substr($var_trad_ita,17)] = $var_trad_ita;
 } # fine for $num1
 } # fine if ($var_trad_ita == "num_persone_tipo")
+if ($var_trad_ita == "allegato") {
+for ($num1 = 0 ; $num1 < $dati_allegato['num'] ; $num1++) {
+$var_trad_ita = $var_predef[($numero_inserimento_alleg + $num1)];
+$trad_var_vett[$var_trad_ext.($num1 + 1)] = $var_trad_ita;
+} # fine for $num1
+} # fine if ($var_trad_ita == "allegato")
 } # fine foreach ($trad_var_vett as $var_trad_ext => $var_trad_ita)
 for ($num_mln = 0 ; $num_mln < $num_contr_mln ; $num_mln++) {
 if ($contr_multilingua) $contratto_orig = $contratti_orig_mln[$lingue_contr[$num_mln]];
@@ -1191,8 +1263,8 @@ $contratto_orig = str_replace("[".$array[$num_arr]."(".$var_trad_ext.")]","[".$a
 } # fine for $num1
 } # fine if (isset($arr_var_esist[$var_trad_ita]))
 } # fine foreach ($trad_var_vett as $var_trad_ext => $var_trad_ita)
-while (preg_match("/\\[c +[A-Za-z]+[A-Za-z0-9_]*(\\((('[^'\\]\\(]*')|([A-Za-z]+[A-Za-z0-9_]*))\\))? *!?= *\"[^\"]*\" *\\]/",$contratto_orig)) {
-$contr_vett = preg_split("/\\[c +[A-Za-z]+[A-Za-z0-9_]*(\\((('[^'\\]\\(]*')|([A-Za-z]+[A-Za-z0-9_]*))\\))? *!?= *\"[^\"]*\" *\\]/",$contratto_orig,2);
+while (preg_match("/\\[c +[A-Za-z]+[A-Za-z0-9_]*(\\((('[^'\\]\\(]*')|([A-Za-z]+[A-Za-z0-9_]*))\\))? *(!?=|!?%|>|<) *\"[^\"]*\" *((\\||&) *[A-Za-z]+[A-Za-z0-9_]*(\\((('[^'\\]\\(]*')|([A-Za-z]+[A-Za-z0-9_]*))\\))? *(!?=|!?%|>|<) *\"[^\"]*\" *)*\\]/",$contratto_orig)) {
+$contr_vett = preg_split("/\\[c +[A-Za-z]+[A-Za-z0-9_]*(\\((('[^'\\]\\(]*')|([A-Za-z]+[A-Za-z0-9_]*))\\))? *(!?=|!?%|>|<) *\"[^\"]*\" *((\\||&) *[A-Za-z]+[A-Za-z0-9_]*(\\((('[^'\\]\\(]*')|([A-Za-z]+[A-Za-z0-9_]*))\\))? *(!?=|!?%|>|<) *\"[^\"]*\" *)*\\]/",$contratto_orig,2);
 $contr_parziale = substr($contratto_orig,strlen($contr_vett[0]));
 $contratto_orig = $contr_vett[0];
 $condizione = preg_split("/\" *\\]/",$contr_parziale,2);
@@ -1200,20 +1272,42 @@ $condizione = $condizione[0];
 $contr_parziale = substr($contr_parziale,(strlen($condizione) + 1));
 while (substr($contr_parziale,0,1) == " ") $contr_parziale = substr($contr_parziale,1);
 $contr_parziale = substr($contr_parziale,1);
-$val_if = preg_split("/ *!?= *\"/",preg_replace("/^\\[c +/","",$condizione));
+$txt_sost1 = explode("&",preg_replace("/^\\[c +/","",$condizione));
+$condizione = "[[c]";
+for ($num1 = 0 ; $num1 < count($txt_sost1) ; $num1++) {
+if ($num1) $condizione .= " &";
+$txt_sost2 = explode("|",$txt_sost1[$num1]);
+for ($num2 = 0 ; $num2 < count($txt_sost2) ; $num2++) {
+if ($num2) $condizione .= " |";
+$val_if = preg_split("/ *(!?=|!?%|>|<) *\"/",$txt_sost2[$num2]);
 $var_if = trim($val_if[0]);
 if (str_replace("(","",$var_if) != $var_if) {
 $parti_arr = explode("(",substr($var_if,0,-1));
-$val_var_if = fixset(${$parti_arr[0]}[fixset(${$parti_arr[1]})]);
+#$val_var_if = ${$parti_arr[0]}[${$parti_arr[1]}];
 if (!empty($trad_var_vett[$parti_arr[1]])) $var_if = $parti_arr[0]."(".$trad_var_vett[$parti_arr[1]].")";
 } # fine if (str_replace("(","",$var_if) != $var_if)
 elseif (!empty($trad_var_vett[$var_if])) $var_if = $trad_var_vett[$var_if];
-$val_if = $val_if[1];
-if (preg_match("/!= *\"/",$condizione)) $condizione = "[[c] $var_if!=\"$val_if\"]";
-else $condizione = "[[c] $var_if=\"$val_if\"]";
-$contratto_orig .= $condizione;
+$val_if = preg_replace("/\" */","",$val_if[1]);
+$txt_sost2[$num2] = str_replace(" ","",$txt_sost2[$num2]);
+if (strstr($txt_sost2[$num2],"!=\"")) $condizione .= " $var_if!=\"$val_if\"";
+else {
+if (strstr($txt_sost2[$num2],">\"")) $condizione .= " $var_if>\"$val_if\"";
+else {
+if (strstr($txt_sost2[$num2],"<\"")) $condizione .= " $var_if<\"$val_if\"";
+else {
+if (strstr($txt_sost2[$num2],"!%\"")) $condizione .= " $var_if!%\"$val_if\"";
+else {
+if (strstr($txt_sost2[$num2],"%\"")) $condizione .= " $var_if%\"$val_if\"";
+else $condizione .= " $var_if=\"$val_if\"";
+} # fine else if (strstr($txt_sost2[$num2],"!%\""))
+} # fine else if (strstr($txt_sost2[$num2],"<\""))
+} # fine else if (strstr($txt_sost2[$num2],">\""))
+} # fine else if (strstr($txt_sost2[$num2],"!=\""))
+} # fine for $num2
+} # fine for $num1
+$contratto_orig .= $condizione."]";
 $contratto_orig .= $contr_parziale;
-} # fine while (preg_match("/\\[c +[A-Za-z]+[A-Za-z0-9_]* *!?= *\"[^\"]*\" *\\]/",$contratto_orig))
+} # fine while (preg_match("/\\[c +[A-Za-z]+[A-Za-z0-9_]*(\\((('[^'\\]\\(]*')|([A-Za-z]+[A-Za-z0-9_]*))\\))? *(!?=|!?%|>|<) *\"[^\"]*\" *((\\||&) *[A-Za-z]+[A-Za-z0-9_]*(\\((('[^'\\]\\(]*')|([A-Za-z]+[A-Za-z0-9_]*))\\))? *(!?=|!?%|>|<) *\"[^\"]*\" *)*\\]/",$contratto_orig))
 $contratto_orig = str_replace("[[c] ","[c ",$contratto_orig);
 if ($contr_multilingua) $contratti_orig_mln[$lingue_contr[$num_mln]] = $contratto_orig;
 } # fine for $num_mln
@@ -1228,12 +1322,13 @@ $contratto .= "<form accept-charset=\"utf-8\" method=\"post\" action=\"$pag\"><d
 <input type=\"hidden\" name=\"origine\" value=\"".htmlspecialchars($origine)."\">
 <input type=\"hidden\" name=\"origine_vecchia\" value=\"".htmlspecialchars($origine_vecchia)."\">
 <input type=\"hidden\" name=\"manda_mail\" value=\"SI\">";
+if ($dati_allegato['num']) $contratto .= "<input type=\"hidden\" name=\"num_all_passa\" value=\"".$dati_allegato['num']."\">";
 if ($ripeti_tutto) $contratto .= "<input type=\"hidden\" name=\"numero_email\" value=\"$num_ripeti\">";
 else {
 $email_gia_inviata = 0;
 for ($n_r = 1 ; $n_r <= $num_ripeti ; $n_r++) {
-$var_if = ${"email_".$n_r};
-if (!$var_if) $var_if = ${"email2_".$n_r};
+$var_if = fixset(${"email_".$n_r});
+if (!$var_if) $var_if = fixset(${"email2_".$n_r});
 if ($var_if) {
 $cliente = esegui_query("select idclienti,doc_inviati from $tableclienti where (email = '".aggslashdb($var_if)."' or email2 = '".aggslashdb($var_if)."') and cognome = '".aggslashdb(${"cognome_".$n_r})."' and doc_inviati $ILIKE '%".aggslashdb("#@?$oggetto_email#|?")."%' ");
 if (numlin_query($cliente) >= 1) {
@@ -1258,10 +1353,12 @@ if (substr($contratto,-1) == ",") $contratto = substr($contratto,0,-1);
 $contratto .= "\"></td></tr><tr><td align=\"right\">
 ".mex("Oggetto",$pag).":</td><td>
 <input type=\"text\" name=\"oggetto_email1\" size=\"60\" value=\"$oggetto_email\"></td></tr>";
-if ($allegato_email) {
-$contratto .= "<tr><td></td><td><label><input type=\"checkbox\" name=\"allega1\" value=\"SI\" checked>
-".mex("Allega",$pag)." <b>$allegato_email</b></label></td></tr>";
-} # fine if ($allegato_email)
+for ($num1 = 1 ; $num1 <= $dati_allegato['num'] ; $num1++) {
+if ($dati_allegato['corr'][$num1]) {
+$contratto .= "<tr><td></td><td><label><input type=\"checkbox\" value=\"".$dati_allegato['ln_corr'][$num1]."\" name=\"allega$num1"."_1\" checked>
+".mex("Allega",$pag)." <b>".$dati_allegato['corr'][$num1]."</b></label></td></tr>";
+} # fine if ($dati_allegato['corr'][$num1])
+} # fine for $num1
 $contratto .= "<tr><td style=\"height: 3px;\"></td></tr></table>
 &nbsp;&nbsp;<textarea name=\"testo_email1\" rows=32 cols=90>";
 } # fine else if ($ripeti_tutto)
@@ -1291,19 +1388,23 @@ $var_if = $se_cond_corr[0];
 if (substr($var_if,-1) != ")") $var_if = fixset($$var_if);
 else {
 $var_if = explode("(",substr($var_if,0,-1));
-$var_if = fixset(${$var_if[0]}[fixset(${$var_if[1]})]);
+if (isset(${$var_if[0]}[fixset(${$var_if[1]})])) $var_if = ${$var_if[0]}[fixset(${$var_if[1]})];
+else $var_if = null;
 } # fine else if (substr($var_if,-1) != ")")
 $val_if = $se_cond_corr[3];
 if ($se_cond_corr[2] == "var") {
-if (substr($val_if,-1) != ")") $val_if = $$val_if;
+if (substr($val_if,-1) != ")") $val_if = fixset($$val_if);
 else {
 $val_if = explode("(",substr($val_if,0,-1));
 $val_if = ${$val_if[0]}[${$val_if[1]}];
 } # fine else if (substr($val_if,-1) != ")")
 } # fine if ($se_cond_corr[2] == "var")
 $cond_verificata = 0;
+$var_if = (string) $var_if;
+$val_if = (string) $val_if;
 if (($se_cond_corr[1] == "=" and $var_if == $val_if) or ($se_cond_corr[1] == "!=" and $var_if != $val_if) or ($se_cond_corr[1] == ">" and $var_if > $val_if) or ($se_cond_corr[1] == "<" and $var_if < $val_if)) $cond_verificata = 1;
 if (($se_cond_corr[1] == "{}" and str_replace(strtolower($val_if),"",strtolower($var_if)) != strtolower($var_if)) or ($se_cond_corr[1] == "{A}" and str_replace($val_if,"",$var_if) != $var_if)) $cond_verificata = 1;
+if (($se_cond_corr[1] == "!{}" and str_replace(strtolower($val_if),"",strtolower($var_if)) == strtolower($var_if)) or ($se_cond_corr[1] == "!{A}" and str_replace($val_if,"",$var_if) == $var_if)) $cond_verificata = 1;
 if ($condizione[0] == "or" and $cond_verificata) break;
 if ($condizione[0] == "and" and !$cond_verificata) break;
 } # fine for $num2
@@ -1315,21 +1416,50 @@ if ($azione[0] == "set") {
 $val_then = $azione[4];
 if ($azione[3] == "var") {
 if (substr($val_then,-1) != ")") {
-if (!empty($var_predef_data[$val_then]) and $val_then != "data_inizio_selezione" and $val_then != "data_fine_selezione" and $val_then != "oggi") $val_then = formatta_data_contr($$val_then,$stile_data);
-else $val_then = $$val_then;
+if (!empty($var_predef_data[$val_then]) and $val_then != "data_inizio_selezione" and $val_then != "data_fine_selezione" and $val_then != "oggi") $val_then = formatta_data_contr(fixstr($$val_then),$stile_data);
+else $val_then = fixstr($$val_then);
 } # fine if (substr($val_then,-1) != ")")
 else {
 $val_then = explode("(",substr($val_then,0,-1));
-$val_then = ${$val_then[0]}[${$val_then[1]}];
+$val_then = fixstr(${$val_then[0]}[fixset(${$val_then[1]})]);
 } # fine else if (substr($val_then,-1) != ")")
+if ($azione[9]) {
 if ($azione[9] == "low") $val_then = strtolower($val_then);
 if ($azione[9] == "upp") $val_then = strtoupper($val_then);
 if ($azione[9] == "url" and function_exists('urlencode')) $val_then = urlencode($val_then);
 if ($azione[9] == "asc") $val_then = conv_ascii($val_then);
 if ($azione[9] == "eas") $val_then = conv_ascii($val_then,"e");
 if ($azione[9] == "md5") $val_then = md5($val_then);
+if ($azione[9] == "eht") $val_then = htmlspecialchars($val_then);
+if ($azione[9] == "dht") $val_then = str_replace("&amp;","&",str_replace("&quot;","\"",str_replace("&lt;","<",str_replace("&gt;",">",$val_then))));
+if ($azione[9] == "e64") $val_then = base64_encode($val_then);
+if ($azione[9] == "d64") $val_then = base64_decode($val_then);
+if (substr($azione[9],1,1) == "c") {
+if (substr($azione[9],0,1) == "0") {
+$txt_sost1 = 10;
+$val_then = preg_replace("/[^0-9]/","",$val_then);
+} # fine if (substr($azione[9],0,1) == "0")
+if (substr($azione[9],0,1) == "1") {
+$txt_sost1 = 16;
+$val_then = preg_replace("/[^0-9a-f]/","",strtolower($val_then));
+} # fine if (substr($azione[9],0,1) == "1")
+if (substr($azione[9],0,1) == "2") {
+$txt_sost1 = 2;
+$val_then = preg_replace("/[^0-1]/","",$val_then);
+} # fine if (substr($azione[9],0,1) == "2")
+if (substr($azione[9],0,1) == "3") {
+$txt_sost1 = 36;
+$val_then = preg_replace("/[^0-9a-z]/","",strtolower($val_then));
+} # fine if (substr($azione[9],0,1) == "3")
+if (substr($azione[9],2,1) == "0") $txt_sost2 = 10;
+if (substr($azione[9],2,1) == "1") $txt_sost2 = 16;
+if (substr($azione[9],2,1) == "2") $txt_sost2 = 2;
+if (substr($azione[9],2,1) == "3") $txt_sost2 = 36;
+$val_then = base_convert($val_then,$txt_sost1,$txt_sost2);
+} # fine if (substr($azione[9],1,1) == "c")
+} # fine if ($azione[9])
 } # fine if ($azione[3] == "var")
-if (strcmp($azione[6],"")) {
+if (strcmp((string) $azione[6],"")) {
 $txt_sost1 = $azione[6];
 if ($azione[5] == "var") {
 if (substr($txt_sost1,-1) != ")") $txt_sost1 = $$txt_sost1;
@@ -1346,47 +1476,61 @@ $txt_sost2 = explode("(",substr($txt_sost2,0,-1));
 $txt_sost2 = ${$txt_sost2[0]}[${$txt_sost2[1]}];
 } # fine else if (substr($txt_sost2,-1) != ")")
 } # fine if ($azione[7] == "var")
-$val_then = str_replace($txt_sost1,$txt_sost2,$val_then);
-} # fine if (strcmp($azione[6],""))
+$val_then = str_replace($txt_sost1,$txt_sost2,(string) $val_then);
+} # fine if (strcmp((string) $azione[6],""))
 if ($azione[2] == ".=") {
-if (substr($azione[1],0,1) != "a") $var_then_orig = ${$variabile[$azione[1]]};
-else $var_then_orig = ${$array[substr($azione[1],1)]}[${$var_arr[substr($azione[1],1)]}];
+if (substr($azione[1],0,1) != "a") $var_then_orig = fixset(${$variabile[$azione[1]]});
+else {
+if (isset(${$array[substr($azione[1],1)]}[${$var_arr[substr($azione[1],1)]}])) $var_then_orig = ${$array[substr($azione[1],1)]}[${$var_arr[substr($azione[1],1)]}];
+else $var_then_orig = null;
+} # fine else if (substr($azione[1],0,1) != "a")
 } # fine if ($azione[2] == ".=")
 else $var_then_orig = "";
 if (substr($azione[1],0,1) != "a") ${$variabile[$azione[1]]} = $var_then_orig.$val_then;
-elseif (strcmp(${$var_arr[substr($azione[1],1)]},"")) {
+elseif (strcmp((string) ${$var_arr[substr($azione[1],1)]},"")) {
 ${$array[substr($azione[1],1)]}[${$var_arr[substr($azione[1],1)]}] = $var_then_orig.$val_then;
 $array_date_contr[$array[substr($azione[1],1)]] = "";
-} # fine elseif (strcmp(${$var_arr[substr($azione[1],1)]},""))
+} # fine elseif (strcmp((string) ${$var_arr[substr($azione[1],1)]},""))
 } # fine if ($azione[0] == "set")
 
 if ($azione[0] == "trunc") {
 if (substr($azione[1],0,1) != "a") $var_da_assegnare = ${$variabile[$azione[1]]};
-else $var_da_assegnare = ${$array[substr($azione[1],1)]}[${$var_arr[substr($azione[1],1)]}];
-if (strcmp($azione[3],"")) {
+else {
+if (isset(${$array[substr($azione[1],1)]}[${$var_arr[substr($azione[1],1)]}])) $var_da_assegnare = ${$array[substr($azione[1],1)]}[${$var_arr[substr($azione[1],1)]}];
+else $var_da_assegnare = null;
+} # fine else if (substr($azione[1],0,1) != "a")
+$val_if = 0;
+if ($tipo_contratto == "contrhtm") {
+$val_then = (string) $var_da_assegnare;
+$var_da_assegnare = str_replace("&amp;","&",str_replace("&quot;","\"",str_replace("&lt;","<",str_replace("&gt;",">",(string) $var_da_assegnare))));
+if ($val_then != $var_da_assegnare) $val_if = 1;
+} # fine if ($tipo_contratto == "contrhtm")
+if (strcmp((string) $azione[3],"")) {
 while (num_caratteri_testo($var_da_assegnare) < $azione[2]) {
 if ($azione[4] == "ini") $var_da_assegnare = $azione[3].$var_da_assegnare;
 if ($azione[4] == "fin") $var_da_assegnare .= $azione[3];
 } # fine while (num_caratteri_testo($var_da_assegnare) < $azione[2])
-} # fine if (strcmp($azione[3],""))
-if (substr($azione[1],0,1) != "a") ${$variabile[$azione[1]]} = tronca_testo($var_da_assegnare,0,$azione[2]);
-elseif (strcmp(${$var_arr[substr($azione[1],1)]},"")) {
-${$array[substr($azione[1],1)]}[${$var_arr[substr($azione[1],1)]}] = tronca_testo($var_da_assegnare,0,$azione[2]);
+} # fine if (strcmp((string) $azione[3],""))
+$var_da_assegnare = tronca_testo($var_da_assegnare,0,$azione[2]);
+if ($val_if) $var_da_assegnare = htmlspecialchars($var_da_assegnare);
+if (substr($azione[1],0,1) != "a") ${$variabile[$azione[1]]} = $var_da_assegnare;
+elseif (strcmp((string) ${$var_arr[substr($azione[1],1)]},"")) {
+${$array[substr($azione[1],1)]}[${$var_arr[substr($azione[1],1)]}] = $var_da_assegnare;
 $array_date_contr[$array[substr($azione[1],1)]] = "";
-} # fine elseif (strcmp(${$var_arr[substr($azione[1],1)]},""))
+} # fine elseif (strcmp((string) ${$var_arr[substr($azione[1],1)]},""))
 } # fine if ($azione[0] == "trunc")
 
 if ($azione[0] == "oper") {
 $cont_oper = "SI";
 $var_con_punti = "NO";
-$var_da_oper = $azione[2];
+$var_da_oper = (string) $azione[2];
 if (substr($var_da_oper,-1) != ")") {
-if (substr($var_da_oper,-2) != "_p" or !isset(${substr($var_da_oper,0,-2)})) $var_da_oper = ${$var_da_oper};
+if (substr($var_da_oper,-2) != "_p" or !isset(${substr($var_da_oper,0,-2)})) $var_da_oper = fixset(${$var_da_oper});
 else $var_da_oper = ${substr($var_da_oper,0,-2)};
 } # fine if (substr($var_da_oper,-1) != ")")
 else {
 $var_da_oper = explode("(",substr($var_da_oper,0,-1));
-if (substr($var_da_oper[0],-2) != "_p" or !isset(${substr($var_da_oper[0],0,-2)}[${$var_da_oper[1]}])) $var_da_oper = ${$var_da_oper[0]}[${$var_da_oper[1]}];
+if (substr($var_da_oper[0],-2) != "_p" or !isset(${substr($var_da_oper[0],0,-2)}[${$var_da_oper[1]}])) $var_da_oper = fixset(${$var_da_oper[0]}[${$var_da_oper[1]}]);
 else $var_da_oper = ${substr($var_da_oper[0],0,-2)}[${$var_da_oper[1]}];
 } # fine else if (substr($var_da_oper,-1) != ")")
 $var_da_oper = formatta_soldi($var_da_oper);
@@ -1399,7 +1543,7 @@ else $var_da_oper2 = ${substr($var_da_oper2,0,-2)};
 } # fine if (substr($var_da_oper2,-1) != ")")
 else {
 $var_da_oper2 = explode("(",substr($var_da_oper2,0,-1));
-if (substr($var_da_oper2[0],-2) != "_p" or !isset(${substr($var_da_oper2[0],0,-2)}[${$var_da_oper2[1]}])) $var_da_oper2 = ${$var_da_oper2[0]}[${$var_da_oper2[1]}];
+if (substr($var_da_oper2[0],-2) != "_p" or !isset(${substr($var_da_oper2[0],0,-2)}[${$var_da_oper2[1]}])) $var_da_oper2 = fixset(${$var_da_oper2[0]}[${$var_da_oper2[1]}]);
 else $var_da_oper2 = ${substr($var_da_oper2[0],0,-2)}[${$var_da_oper2[1]}];
 } # fine else if (substr($var_da_oper2,-1) != ")")
 } # fine if ($azione[4] == "var")
@@ -1419,21 +1563,21 @@ if (substr($azione[1],0,1) != "a") {
 if (substr($variabile[$azione[1]],-2) != "_p") ${$variabile[$azione[1]]} = $var_da_assegnare;
 else ${$variabile[$azione[1]]} = punti_in_num($var_da_assegnare,$stile_soldi,2);
 } # fine if (substr($azione[1],0,1) != "a")
-elseif (strcmp(${$var_arr[substr($azione[1],1)]},"")) {
+elseif (strcmp((string) ${$var_arr[substr($azione[1],1)]},"")) {
 $array_date_contr[$array[substr($azione[1],1)]] = "";
 if (substr($array[substr($azione[1],1)],-2) != "_p") ${$array[substr($azione[1],1)]}[${$var_arr[substr($azione[1],1)]}] = $var_da_assegnare;
 else ${$array[substr($azione[1],1)]}[${$var_arr[substr($azione[1],1)]}] = punti_in_num($var_da_assegnare,$stile_soldi,2);
-} # fine elseif (strcmp(${$var_arr[substr($azione[1],1)]},""))
+} # fine elseif (strcmp((string) ${$var_arr[substr($azione[1],1)]},""))
 } # fine if ($cont_oper != "NO")
 } # fine if ($azione[0] == "oper")
 
 if ($azione[0] == "date") {
 $cont_oper = 1;
-$var_da_oper = $azione[2];
-if (substr($var_da_oper,-1) != ")") $var_da_oper = ${$var_da_oper};
+$var_da_oper = (string) $azione[2];
+if (substr($var_da_oper,-1) != ")") $var_da_oper = fixstr(${$var_da_oper});
 else {
 $var_da_oper = explode("(",substr($var_da_oper,0,-1));
-$var_da_oper = ${$var_da_oper[0]}[${$var_da_oper[1]}];
+$var_da_oper = fixstr(${$var_da_oper[0]}[${$var_da_oper[1]}]);
 } # fine else if (substr($var_da_oper,-1) != ")")
 $var_da_oper = substr($var_da_oper,0,10);
 if (preg_match("/[0-9]{2,2}-[0-9]{2,2}-[0-9]{4,4}/",$var_da_oper)) {
@@ -1459,20 +1603,20 @@ if ($azione[5] == "m") $num2 = $azione[4];
 if ($azione[5] == "a") $num3 = $azione[4];
 $var_da_assegnare = date($var_da_assegnare,mktime(0,0,0,(substr($var_da_oper,5,2) + $num2),(substr($var_da_oper,8,2) + $txt_sost1),(substr($var_da_oper,0,4) + $num3)));
 if (substr($azione[1],0,1) != "a") ${$variabile[$azione[1]]} = $var_da_assegnare;
-elseif (strcmp(${$var_arr[substr($azione[1],1)]},"")) {
+elseif (strcmp((string) ${$var_arr[substr($azione[1],1)]},"")) {
 if ($azione[3] != "is") $array_date_contr[$array[substr($azione[1],1)]] = "";
 ${$array[substr($azione[1],1)]}[${$var_arr[substr($azione[1],1)]}] = $var_da_assegnare;
-} # fine elseif (strcmp(${$var_arr[substr($azione[1],1)]},""))
+} # fine elseif (strcmp((string) ${$var_arr[substr($azione[1],1)]},""))
 } # fine if ($cont_oper)
 } # fine if ($azione[0] == "date")
 
 if ($azione[0] == "opdat") {
 $cont_oper = 1;
 $var_da_oper = $azione[3];
-if (substr($var_da_oper,-1) != ")") $var_da_oper = ${$var_da_oper};
+if (substr($var_da_oper,-1) != ")") $var_da_oper = fixstr(${$var_da_oper});
 else {
 $var_da_oper = explode("(",substr($var_da_oper,0,-1));
-$var_da_oper = ${$var_da_oper[0]}[${$var_da_oper[1]}];
+$var_da_oper = fixstr(${$var_da_oper[0]}[${$var_da_oper[1]}]);
 } # fine else if (substr($var_da_oper,-1) != ")")
 $var_da_oper = substr($var_da_oper,0,10);
 if (preg_match("/[0-9]{2,2}-[0-9]{2,2}-[0-9]{4,4}/",$var_da_oper)) {
@@ -1484,7 +1628,7 @@ $var_da_oper2 = $azione[4];
 if (substr($var_da_oper2,-1) != ")") $var_da_oper2 = ${$var_da_oper2};
 else {
 $var_da_oper2 = explode("(",substr($var_da_oper2,0,-1));
-$var_da_oper2 = ${$var_da_oper2[0]}[${$var_da_oper2[1]}];
+$var_da_oper2 = fixset(${$var_da_oper2[0]}[${$var_da_oper2[1]}]);
 } # fine else if (substr($var_da_oper2,-1) != ")")
 $var_da_oper2 = substr($var_da_oper2,0,10);
 if (preg_match("/[0-9]{2,2}-[0-9]{2,2}-[0-9]{4,4}/",$var_da_oper2)) {
@@ -1513,11 +1657,11 @@ if (substr($azione[1],0,1) != "a") {
 if (substr($variabile[$azione[1]],-2) != "_p") ${$variabile[$azione[1]]} = $var_da_assegnare;
 else ${$variabile[$azione[1]]} = punti_in_num($var_da_assegnare,$stile_soldi,2);
 } # fine if (substr($azione[1],0,1) != "a")
-elseif (strcmp(${$var_arr[substr($azione[1],1)]},"")) {
+elseif (strcmp((string) ${$var_arr[substr($azione[1],1)]},"")) {
 $array_date_contr[$array[substr($azione[1],1)]] = "";
 if (substr($array[substr($azione[1],1)],-2) != "_p") ${$array[substr($azione[1],1)]}[${$var_arr[substr($azione[1],1)]}] = $var_da_assegnare;
 else ${$array[substr($azione[1],1)]}[${$var_arr[substr($azione[1],1)]}] = punti_in_num($var_da_assegnare,$stile_soldi,2);
-} # fine elseif (strcmp(${$var_arr[substr($azione[1],1)]},""))
+} # fine elseif (strcmp((string) ${$var_arr[substr($azione[1],1)]},""))
 } # fine if ($cont_oper)
 } # fine if ($azione[0] == "opdat")
 
@@ -1598,9 +1742,9 @@ $chiusura = "";
 if (substr($parte,0,2) == "r]") $apertura = "r";
 if (substr($parte,0,10) == "r4 array=\"") {
 $parte_vett = explode("\"]",substr($parte,10));
-if (strcmp($parte_vett[0],"")) {
+if (strcmp((string) $parte_vett[0],"")) {
 if (!strcmp(preg_replace("/[A-Za-z]+[A-Za-z0-9_]*/","",$parte_vett[0]),"")) $apertura = "r4 array=\"".$parte_vett[0]."\"";
-} # fine if (strcmp($parte_vett[0],""))
+} # fine if (strcmp((string) $parte_vett[0],""))
 } # fine if (substr($parte,0,10) == "r4 array=\"")
 if (substr($parte,0,3) == "r6]") $apertura = "r6";
 if (substr($parte,0,3) == "/r]") $chiusura = "r";
@@ -1609,11 +1753,11 @@ if (substr($parte,0,4) == "/r6]") $chiusura = "r6";
 if ($apertura) {
 $livello++;
 if ($livello == 1 and (substr($apertura,0,2) == "r4" or $apertura == "r6")) {
-if (strcmp($contratto_presente,"")) {
+if (strcmp((string) $contratto_presente,"")) {
 $num_parti0_contr++;
 $contratto_parte0[$num_parti0_contr] = $contratto_presente;
 $ripeti_parte0[$num_parti0_contr] = "NO";
-} # fine if (strcmp($contratto_presente,""))
+} # fine if (strcmp((string) $contratto_presente,""))
 $contratto_presente = substr($contratto_vett[$num1],(strlen($apertura) + 1));
 $var_arr_presente = substr($apertura,10,-1);
 } # fine if ($livello == 1 and (substr($apertura,0,2) == "r4" or $apertura == "r6"))
@@ -1621,7 +1765,7 @@ else $apertura = "";
 } # fine ($apertura)
 if ($chiusura) {
 if ($livello == 1 and ($chiusura == "r4" or $chiusura == "r6")) {
-if (strcmp($contratto_presente,"")) {
+if (strcmp((string) $contratto_presente,"")) {
 $num_parti0_contr++;
 $contratto_parte0[$num_parti0_contr] = $contratto_presente;
 $ripeti_parte0[$num_parti0_contr] = "SI";
@@ -1630,7 +1774,7 @@ $tipo_parte0[$num_parti0_contr] = "4";
 $arr_parte0[$num_parti0_contr] = $var_arr_presente;
 } # fine if ($chiusura == "r4")
 if ($chiusura == "r6") $tipo_parte0[$num_parti0_contr] = "6";
-} # fine if (strcmp($contratto_presente,""))
+} # fine if (strcmp((string) $contratto_presente,""))
 $contratto_presente = substr($contratto_vett[$num1],(strlen($chiusura) + 2));
 } # fine if ($livello == 1 and ($chiusura == "r4" or $chiusura == "r6"))
 else $chiusura = "";
@@ -1638,11 +1782,11 @@ $livello--;
 } # fine if ($chiusura)
 if (!$apertura and !$chiusura) $contratto_presente .= "[".$contratto_vett[$num1];
 } # fine for $num1
-if (strcmp($contratto_presente,"")) {
+if (strcmp((string) $contratto_presente,"")) {
 $num_parti0_contr++;
 $contratto_parte0[$num_parti0_contr] = $contratto_presente;
 $ripeti_parte0[$num_parti0_contr] = "NO";
-} # fine if (strcmp($contratto_presente,""))
+} # fine if (strcmp((string) $contratto_presente,""))
 } # fine else if ($ripeti_tutto)
 
 
@@ -1718,7 +1862,7 @@ $priorita_unita = "";
 
 if ($tipo_parte0[$n_p0] == "4") {
 ${$var_arr_nome[$arr_parte0[$n_p0]]} = key(${$arr_parte0[$n_p0]});
-if ($array_date_contr[$arr_parte0[$n_p0]] == "SI") $ripeti_prenota_data = current(${$arr_parte0[$n_p0]});
+if (isset($array_date_contr[$arr_parte0[$n_p0]]) and $array_date_contr[$arr_parte0[$n_p0]] == "SI") $ripeti_prenota_data = current(${$arr_parte0[$n_p0]});
 next(${$arr_parte0[$n_p0]});
 if (!empty($num_condizioni_rip_a_vett[$arr_parte0[$n_p0]])) $condizioni_alternative0 = "a";
 } # fine if ($tipo_parte0[$n_p0] == "4")
@@ -1789,19 +1933,23 @@ $var_if = $se_cond_corr[0];
 if (substr($var_if,-1) != ")") $var_if = fixset($$var_if);
 else {
 $var_if = explode("(",substr($var_if,0,-1));
-$var_if = fixset(${$var_if[0]}[fixset(${$var_if[1]})]);
+if (isset(${$var_if[0]}[fixset(${$var_if[1]})])) $var_if = ${$var_if[0]}[fixset(${$var_if[1]})];
+else $var_if = null;
 } # fine else if (substr($var_if,-1) != ")")
 $val_if = $se_cond_corr[3];
 if ($se_cond_corr[2] == "var") {
-if (substr($val_if,-1) != ")") $val_if = $$val_if;
+if (substr($val_if,-1) != ")") $val_if = fixset($$val_if);
 else {
 $val_if = explode("(",substr($val_if,0,-1));
 $val_if = ${$val_if[0]}[${$val_if[1]}];
 } # fine else if (substr($val_if,-1) != ")")
 } # fine if ($se_cond_corr[2] == "var")
 $cond_verificata = 0;
+$var_if = (string) $var_if;
+$val_if = (string) $val_if;
 if (($se_cond_corr[1] == "=" and $var_if == $val_if) or ($se_cond_corr[1] == "!=" and $var_if != $val_if) or ($se_cond_corr[1] == ">" and $var_if > $val_if) or ($se_cond_corr[1] == "<" and $var_if < $val_if)) $cond_verificata = 1;
 if (($se_cond_corr[1] == "{}" and str_replace(strtolower($val_if),"",strtolower($var_if)) != strtolower($var_if)) or ($se_cond_corr[1] == "{A}" and str_replace($val_if,"",$var_if) != $var_if)) $cond_verificata = 1;
+if (($se_cond_corr[1] == "!{}" and str_replace(strtolower($val_if),"",strtolower($var_if)) == strtolower($var_if)) or ($se_cond_corr[1] == "!{A}" and str_replace($val_if,"",$var_if) == $var_if)) $cond_verificata = 1;
 if ($condizione[0] == "or" and $cond_verificata) break;
 if ($condizione[0] == "and" and !$cond_verificata) break;
 } # fine for $num2
@@ -1813,21 +1961,50 @@ if ($azione[0] == "set") {
 $val_then = $azione[4];
 if ($azione[3] == "var") {
 if (substr($val_then,-1) != ")") {
-if (!empty($var_predef_data[$val_then]) and $val_then != "data_inizio_selezione" and $val_then != "data_fine_selezione" and $val_then != "oggi") $val_then = formatta_data_contr($$val_then,$stile_data);
-else $val_then = $$val_then;
+if (!empty($var_predef_data[$val_then]) and $val_then != "data_inizio_selezione" and $val_then != "data_fine_selezione" and $val_then != "oggi") $val_then = formatta_data_contr(fixstr($$val_then),$stile_data);
+else $val_then = fixstr($$val_then);
 } # fine if (substr($val_then,-1) != ")")
 else {
 $val_then = explode("(",substr($val_then,0,-1));
-$val_then = ${$val_then[0]}[${$val_then[1]}];
+$val_then = fixstr(${$val_then[0]}[fixset(${$val_then[1]})]);
 } # fine else if (substr($val_then,-1) != ")")
+if ($azione[9]) {
 if ($azione[9] == "low") $val_then = strtolower($val_then);
 if ($azione[9] == "upp") $val_then = strtoupper($val_then);
 if ($azione[9] == "url" and function_exists('urlencode')) $val_then = urlencode($val_then);
 if ($azione[9] == "asc") $val_then = conv_ascii($val_then);
 if ($azione[9] == "eas") $val_then = conv_ascii($val_then,"e");
 if ($azione[9] == "md5") $val_then = md5($val_then);
+if ($azione[9] == "eht") $val_then = htmlspecialchars($val_then);
+if ($azione[9] == "dht") $val_then = str_replace("&amp;","&",str_replace("&quot;","\"",str_replace("&lt;","<",str_replace("&gt;",">",$val_then))));
+if ($azione[9] == "e64") $val_then = base64_encode($val_then);
+if ($azione[9] == "d64") $val_then = base64_decode($val_then);
+if (substr($azione[9],1,1) == "c") {
+if (substr($azione[9],0,1) == "0") {
+$txt_sost1 = 10;
+$val_then = preg_replace("/[^0-9]/","",$val_then);
+} # fine if (substr($azione[9],0,1) == "0")
+if (substr($azione[9],0,1) == "1") {
+$txt_sost1 = 16;
+$val_then = preg_replace("/[^0-9a-f]/","",strtolower($val_then));
+} # fine if (substr($azione[9],0,1) == "1")
+if (substr($azione[9],0,1) == "2") {
+$txt_sost1 = 2;
+$val_then = preg_replace("/[^0-1]/","",$val_then);
+} # fine if (substr($azione[9],0,1) == "2")
+if (substr($azione[9],0,1) == "3") {
+$txt_sost1 = 36;
+$val_then = preg_replace("/[^0-9a-z]/","",strtolower($val_then));
+} # fine if (substr($azione[9],0,1) == "3")
+if (substr($azione[9],2,1) == "0") $txt_sost2 = 10;
+if (substr($azione[9],2,1) == "1") $txt_sost2 = 16;
+if (substr($azione[9],2,1) == "2") $txt_sost2 = 2;
+if (substr($azione[9],2,1) == "3") $txt_sost2 = 36;
+$val_then = base_convert($val_then,$txt_sost1,$txt_sost2);
+} # fine if (substr($azione[9],1,1) == "c")
+} # fine if ($azione[9])
 } # fine if ($azione[3] == "var")
-if (strcmp($azione[6],"")) {
+if (strcmp((string) $azione[6],"")) {
 $txt_sost1 = $azione[6];
 if ($azione[5] == "var") {
 if (substr($txt_sost1,-1) != ")") $txt_sost1 = $$txt_sost1;
@@ -1844,47 +2021,61 @@ $txt_sost2 = explode("(",substr($txt_sost2,0,-1));
 $txt_sost2 = ${$txt_sost2[0]}[${$txt_sost2[1]}];
 } # fine else if (substr($txt_sost2,-1) != ")")
 } # fine if ($azione[7] == "var")
-$val_then = str_replace($txt_sost1,$txt_sost2,$val_then);
-} # fine if (strcmp($azione[6],""))
+$val_then = str_replace($txt_sost1,$txt_sost2,(string) $val_then);
+} # fine if (strcmp((string) $azione[6],""))
 if ($azione[2] == ".=") {
-if (substr($azione[1],0,1) != "a") $var_then_orig = ${$variabile[$azione[1]]};
-else $var_then_orig = ${$array[substr($azione[1],1)]}[${$var_arr[substr($azione[1],1)]}];
+if (substr($azione[1],0,1) != "a") $var_then_orig = fixset(${$variabile[$azione[1]]});
+else {
+if (isset(${$array[substr($azione[1],1)]}[${$var_arr[substr($azione[1],1)]}])) $var_then_orig = ${$array[substr($azione[1],1)]}[${$var_arr[substr($azione[1],1)]}];
+else $var_then_orig = null;
+} # fine else if (substr($azione[1],0,1) != "a")
 } # fine if ($azione[2] == ".=")
 else $var_then_orig = "";
 if (substr($azione[1],0,1) != "a") ${$variabile[$azione[1]]} = $var_then_orig.$val_then;
-elseif (strcmp(${$var_arr[substr($azione[1],1)]},"")) {
+elseif (strcmp((string) ${$var_arr[substr($azione[1],1)]},"")) {
 ${$array[substr($azione[1],1)]}[${$var_arr[substr($azione[1],1)]}] = $var_then_orig.$val_then;
 $array_date_contr[$array[substr($azione[1],1)]] = "";
-} # fine elseif (strcmp(${$var_arr[substr($azione[1],1)]},""))
+} # fine elseif (strcmp((string) ${$var_arr[substr($azione[1],1)]},""))
 } # fine if ($azione[0] == "set")
 
 if ($azione[0] == "trunc") {
 if (substr($azione[1],0,1) != "a") $var_da_assegnare = ${$variabile[$azione[1]]};
-else $var_da_assegnare = ${$array[substr($azione[1],1)]}[${$var_arr[substr($azione[1],1)]}];
-if (strcmp($azione[3],"")) {
+else {
+if (isset(${$array[substr($azione[1],1)]}[${$var_arr[substr($azione[1],1)]}])) $var_da_assegnare = ${$array[substr($azione[1],1)]}[${$var_arr[substr($azione[1],1)]}];
+else $var_da_assegnare = null;
+} # fine else if (substr($azione[1],0,1) != "a")
+$val_if = 0;
+if ($tipo_contratto == "contrhtm") {
+$val_then = (string) $var_da_assegnare;
+$var_da_assegnare = str_replace("&amp;","&",str_replace("&quot;","\"",str_replace("&lt;","<",str_replace("&gt;",">",(string) $var_da_assegnare))));
+if ($val_then != $var_da_assegnare) $val_if = 1;
+} # fine if ($tipo_contratto == "contrhtm")
+if (strcmp((string) $azione[3],"")) {
 while (num_caratteri_testo($var_da_assegnare) < $azione[2]) {
 if ($azione[4] == "ini") $var_da_assegnare = $azione[3].$var_da_assegnare;
 if ($azione[4] == "fin") $var_da_assegnare .= $azione[3];
 } # fine while (num_caratteri_testo($var_da_assegnare) < $azione[2])
-} # fine if (strcmp($azione[3],""))
-if (substr($azione[1],0,1) != "a") ${$variabile[$azione[1]]} = tronca_testo($var_da_assegnare,0,$azione[2]);
-elseif (strcmp(${$var_arr[substr($azione[1],1)]},"")) {
-${$array[substr($azione[1],1)]}[${$var_arr[substr($azione[1],1)]}] = tronca_testo($var_da_assegnare,0,$azione[2]);
+} # fine if (strcmp((string) $azione[3],""))
+$var_da_assegnare = tronca_testo($var_da_assegnare,0,$azione[2]);
+if ($val_if) $var_da_assegnare = htmlspecialchars($var_da_assegnare);
+if (substr($azione[1],0,1) != "a") ${$variabile[$azione[1]]} = $var_da_assegnare;
+elseif (strcmp((string) ${$var_arr[substr($azione[1],1)]},"")) {
+${$array[substr($azione[1],1)]}[${$var_arr[substr($azione[1],1)]}] = $var_da_assegnare;
 $array_date_contr[$array[substr($azione[1],1)]] = "";
-} # fine elseif (strcmp(${$var_arr[substr($azione[1],1)]},""))
+} # fine elseif (strcmp((string) ${$var_arr[substr($azione[1],1)]},""))
 } # fine if ($azione[0] == "trunc")
 
 if ($azione[0] == "oper") {
 $cont_oper = "SI";
 $var_con_punti = "NO";
-$var_da_oper = $azione[2];
+$var_da_oper = (string) $azione[2];
 if (substr($var_da_oper,-1) != ")") {
-if (substr($var_da_oper,-2) != "_p" or !isset(${substr($var_da_oper,0,-2)})) $var_da_oper = ${$var_da_oper};
+if (substr($var_da_oper,-2) != "_p" or !isset(${substr($var_da_oper,0,-2)})) $var_da_oper = fixset(${$var_da_oper});
 else $var_da_oper = ${substr($var_da_oper,0,-2)};
 } # fine if (substr($var_da_oper,-1) != ")")
 else {
 $var_da_oper = explode("(",substr($var_da_oper,0,-1));
-if (substr($var_da_oper[0],-2) != "_p" or !isset(${substr($var_da_oper[0],0,-2)}[${$var_da_oper[1]}])) $var_da_oper = ${$var_da_oper[0]}[${$var_da_oper[1]}];
+if (substr($var_da_oper[0],-2) != "_p" or !isset(${substr($var_da_oper[0],0,-2)}[${$var_da_oper[1]}])) $var_da_oper = fixset(${$var_da_oper[0]}[${$var_da_oper[1]}]);
 else $var_da_oper = ${substr($var_da_oper[0],0,-2)}[${$var_da_oper[1]}];
 } # fine else if (substr($var_da_oper,-1) != ")")
 $var_da_oper = formatta_soldi($var_da_oper);
@@ -1897,7 +2088,7 @@ else $var_da_oper2 = ${substr($var_da_oper2,0,-2)};
 } # fine if (substr($var_da_oper2,-1) != ")")
 else {
 $var_da_oper2 = explode("(",substr($var_da_oper2,0,-1));
-if (substr($var_da_oper2[0],-2) != "_p" or !isset(${substr($var_da_oper2[0],0,-2)}[${$var_da_oper2[1]}])) $var_da_oper2 = ${$var_da_oper2[0]}[${$var_da_oper2[1]}];
+if (substr($var_da_oper2[0],-2) != "_p" or !isset(${substr($var_da_oper2[0],0,-2)}[${$var_da_oper2[1]}])) $var_da_oper2 = fixset(${$var_da_oper2[0]}[${$var_da_oper2[1]}]);
 else $var_da_oper2 = ${substr($var_da_oper2[0],0,-2)}[${$var_da_oper2[1]}];
 } # fine else if (substr($var_da_oper2,-1) != ")")
 } # fine if ($azione[4] == "var")
@@ -1917,21 +2108,21 @@ if (substr($azione[1],0,1) != "a") {
 if (substr($variabile[$azione[1]],-2) != "_p") ${$variabile[$azione[1]]} = $var_da_assegnare;
 else ${$variabile[$azione[1]]} = punti_in_num($var_da_assegnare,$stile_soldi,2);
 } # fine if (substr($azione[1],0,1) != "a")
-elseif (strcmp(${$var_arr[substr($azione[1],1)]},"")) {
+elseif (strcmp((string) ${$var_arr[substr($azione[1],1)]},"")) {
 $array_date_contr[$array[substr($azione[1],1)]] = "";
 if (substr($array[substr($azione[1],1)],-2) != "_p") ${$array[substr($azione[1],1)]}[${$var_arr[substr($azione[1],1)]}] = $var_da_assegnare;
 else ${$array[substr($azione[1],1)]}[${$var_arr[substr($azione[1],1)]}] = punti_in_num($var_da_assegnare,$stile_soldi,2);
-} # fine elseif (strcmp(${$var_arr[substr($azione[1],1)]},""))
+} # fine elseif (strcmp((string) ${$var_arr[substr($azione[1],1)]},""))
 } # fine if ($cont_oper != "NO")
 } # fine if ($azione[0] == "oper")
 
 if ($azione[0] == "date") {
 $cont_oper = 1;
-$var_da_oper = $azione[2];
-if (substr($var_da_oper,-1) != ")") $var_da_oper = ${$var_da_oper};
+$var_da_oper = (string) $azione[2];
+if (substr($var_da_oper,-1) != ")") $var_da_oper = fixstr(${$var_da_oper});
 else {
 $var_da_oper = explode("(",substr($var_da_oper,0,-1));
-$var_da_oper = ${$var_da_oper[0]}[${$var_da_oper[1]}];
+$var_da_oper = fixstr(${$var_da_oper[0]}[${$var_da_oper[1]}]);
 } # fine else if (substr($var_da_oper,-1) != ")")
 $var_da_oper = substr($var_da_oper,0,10);
 if (preg_match("/[0-9]{2,2}-[0-9]{2,2}-[0-9]{4,4}/",$var_da_oper)) {
@@ -1957,20 +2148,20 @@ if ($azione[5] == "m") $num2 = $azione[4];
 if ($azione[5] == "a") $num3 = $azione[4];
 $var_da_assegnare = date($var_da_assegnare,mktime(0,0,0,(substr($var_da_oper,5,2) + $num2),(substr($var_da_oper,8,2) + $txt_sost1),(substr($var_da_oper,0,4) + $num3)));
 if (substr($azione[1],0,1) != "a") ${$variabile[$azione[1]]} = $var_da_assegnare;
-elseif (strcmp(${$var_arr[substr($azione[1],1)]},"")) {
+elseif (strcmp((string) ${$var_arr[substr($azione[1],1)]},"")) {
 if ($azione[3] != "is") $array_date_contr[$array[substr($azione[1],1)]] = "";
 ${$array[substr($azione[1],1)]}[${$var_arr[substr($azione[1],1)]}] = $var_da_assegnare;
-} # fine elseif (strcmp(${$var_arr[substr($azione[1],1)]},""))
+} # fine elseif (strcmp((string) ${$var_arr[substr($azione[1],1)]},""))
 } # fine if ($cont_oper)
 } # fine if ($azione[0] == "date")
 
 if ($azione[0] == "opdat") {
 $cont_oper = 1;
 $var_da_oper = $azione[3];
-if (substr($var_da_oper,-1) != ")") $var_da_oper = ${$var_da_oper};
+if (substr($var_da_oper,-1) != ")") $var_da_oper = fixstr(${$var_da_oper});
 else {
 $var_da_oper = explode("(",substr($var_da_oper,0,-1));
-$var_da_oper = ${$var_da_oper[0]}[${$var_da_oper[1]}];
+$var_da_oper = fixstr(${$var_da_oper[0]}[${$var_da_oper[1]}]);
 } # fine else if (substr($var_da_oper,-1) != ")")
 $var_da_oper = substr($var_da_oper,0,10);
 if (preg_match("/[0-9]{2,2}-[0-9]{2,2}-[0-9]{4,4}/",$var_da_oper)) {
@@ -1982,7 +2173,7 @@ $var_da_oper2 = $azione[4];
 if (substr($var_da_oper2,-1) != ")") $var_da_oper2 = ${$var_da_oper2};
 else {
 $var_da_oper2 = explode("(",substr($var_da_oper2,0,-1));
-$var_da_oper2 = ${$var_da_oper2[0]}[${$var_da_oper2[1]}];
+$var_da_oper2 = fixset(${$var_da_oper2[0]}[${$var_da_oper2[1]}]);
 } # fine else if (substr($var_da_oper2,-1) != ")")
 $var_da_oper2 = substr($var_da_oper2,0,10);
 if (preg_match("/[0-9]{2,2}-[0-9]{2,2}-[0-9]{4,4}/",$var_da_oper2)) {
@@ -2011,11 +2202,11 @@ if (substr($azione[1],0,1) != "a") {
 if (substr($variabile[$azione[1]],-2) != "_p") ${$variabile[$azione[1]]} = $var_da_assegnare;
 else ${$variabile[$azione[1]]} = punti_in_num($var_da_assegnare,$stile_soldi,2);
 } # fine if (substr($azione[1],0,1) != "a")
-elseif (strcmp(${$var_arr[substr($azione[1],1)]},"")) {
+elseif (strcmp((string) ${$var_arr[substr($azione[1],1)]},"")) {
 $array_date_contr[$array[substr($azione[1],1)]] = "";
 if (substr($array[substr($azione[1],1)],-2) != "_p") ${$array[substr($azione[1],1)]}[${$var_arr[substr($azione[1],1)]}] = $var_da_assegnare;
 else ${$array[substr($azione[1],1)]}[${$var_arr[substr($azione[1],1)]}] = punti_in_num($var_da_assegnare,$stile_soldi,2);
-} # fine elseif (strcmp(${$var_arr[substr($azione[1],1)]},""))
+} # fine elseif (strcmp((string) ${$var_arr[substr($azione[1],1)]},""))
 } # fine if ($cont_oper)
 } # fine if ($azione[0] == "opdat")
 
@@ -2126,7 +2317,7 @@ if ($$numpers_tariffa_selez) $num_persone = $$numpers_tariffa_selez;
 for ($num1 = 1 ; $num1 <= $dati_cat_pers['num'] ; $num1++) {
 $numpers_tipo_tariffa_selez = "numpers_tipo_$num1"."_tariffa_selez".$tariffa_selezionata."_".$n_r;
 global $$numpers_tipo_tariffa_selez;
-if (strcmp($$numpers_tipo_tariffa_selez,"")) ${"num_persone_tipo_$num1"} = $$numpers_tipo_tariffa_selez;
+if (strcmp((string) $$numpers_tipo_tariffa_selez,"")) ${"num_persone_tipo_$num1"} = $$numpers_tipo_tariffa_selez;
 } # fine for $num1
 $num_costi_aggiuntivi_tsel = "num_costi_aggiuntivi_tsel".$tariffa_selezionata."_".$n_r;
 global $$num_costi_aggiuntivi_tsel;
@@ -2153,19 +2344,19 @@ ${"tipo_persona_costo_agg".$numca."_".$n_r} = $$tipo_persona_costo_agg_tsel;
 } # fine if ($tariffa_selezionata)
 
 if ($ripeti_prenota_data) {
-if (!strcmp($tariffesettimanali[$n_r][$ripeti_prenota_data],"")) {
+if (!strcmp(fixstr($tariffesettimanali[$n_r][$ripeti_prenota_data]),"")) {
 global ${"tariffesettimanali_".$n_r};
 $var_if = explode(";",${"tariffesettimanali_".$n_r});
 $var_if = explode(",",$var_if[0]);
 $num2 = count($var_if);
 for ($num1 = 0 ; $num1 <= $num2 ; $num1++) {
 if (date("Y-m-d",mktime(0,0,0,substr($data_inizio,5,2),(substr($data_inizio,8,2) + $num1),(int) substr($data_inizio,0,4))) == $ripeti_prenota_data) {
-if (!$var_if[$num1]) $tariffesettimanali[$n_r][$ripeti_prenota_data] = 0;
+if (empty($var_if[$num1])) $tariffesettimanali[$n_r][$ripeti_prenota_data] = 0;
 else $tariffesettimanali[$n_r][$ripeti_prenota_data] = $var_if[$num1];
 break;
 } # fine if (date("Y-m-d",mktime(0,0,0,substr($data_inizio,5,2),(substr($data_inizio,8,2) + $num1),(int) substr($data_inizio,0,4))) == $ripeti_prenota_data)
 } # fine for $num1
-} # fine if (!strcmp($tariffesettimanali[$n_r][$ripeti_prenota_data],""))
+} # fine if (!strcmp(fixstr($tariffesettimanali[$n_r][$ripeti_prenota_data]),""))
 $costo_tariffa_giorno_array = $tariffesettimanali[$n_r][$ripeti_prenota_data];
 $costo_tariffa_giorno_array_p = punti_in_num($costo_tariffa_giorno_array,$stile_soldi);
 } # fine if ($ripeti_prenota_data)
@@ -2183,16 +2374,17 @@ $giorni_costo_agg = "giorni_costo_agg".$numca."_".$n_r;
 $tipo_persona_costo_agg = "tipo_persona_costo_agg".$numca."_".$n_r;
 $data_inserimento_costo_agg = "data_inserimento_costo_agg".$numca."_".$n_r;
 $utente_inserimento_costo_agg = "utente_inserimento_costo_agg".$numca."_".$n_r;
-if ((!isset($$nome_costo_agg) or !strcmp($$nome_costo_agg,"")) and (!isset($$val_costo_agg) or !strcmp($$val_costo_agg,""))) {
-$$nome_costo_agg = $GLOBALS[$nome_costo_agg];
+if ((!isset($$nome_costo_agg) or !strcmp((string) $$nome_costo_agg,"")) and (!isset($$val_costo_agg) or !strcmp((string) $$val_costo_agg,""))) {
+if ($tipo_contratto == "contrhtm") $$nome_costo_agg = htmlspecialchars($GLOBALS[$nome_costo_agg]);
+else $$nome_costo_agg = $GLOBALS[$nome_costo_agg];
 $$val_costo_agg = $GLOBALS[$val_costo_agg];
 $$percentuale_tasse_costo_agg = $GLOBALS[$percentuale_tasse_costo_agg];
 $$moltiplica_max_costo_agg = $GLOBALS[$moltiplica_max_costo_agg];
-$$valore_giornaliero_max_costo_agg = $GLOBALS[$valore_giornaliero_max_costo_agg];
-$$giorni_costo_agg = $GLOBALS[$giorni_costo_agg];
-$$tipo_persona_costo_agg = $GLOBALS[$tipo_persona_costo_agg];
-$$data_inserimento_costo_agg = $GLOBALS[$data_inserimento_costo_agg];
-if (isset($n_utente_contr[$GLOBALS[$utente_inserimento_costo_agg]])) $$utente_inserimento_costo_agg = $n_utente_contr[$GLOBALS[$utente_inserimento_costo_agg]];
+$$valore_giornaliero_max_costo_agg = fixset($GLOBALS[$valore_giornaliero_max_costo_agg]);
+$$giorni_costo_agg = fixset($GLOBALS[$giorni_costo_agg]);
+$$tipo_persona_costo_agg = fixset($GLOBALS[$tipo_persona_costo_agg]);
+$$data_inserimento_costo_agg = fixset($GLOBALS[$data_inserimento_costo_agg]);
+if (isset($n_utente_contr[fixset($GLOBALS[$utente_inserimento_costo_agg])])) $$utente_inserimento_costo_agg = $n_utente_contr[$GLOBALS[$utente_inserimento_costo_agg]];
 else $$utente_inserimento_costo_agg = "";
 if (isset($unset_glob)) {
 unset($GLOBALS[$nome_costo_agg]);
@@ -2205,7 +2397,7 @@ unset($GLOBALS[$tipo_persona_costo_agg]);
 unset($GLOBALS[$data_inserimento_costo_agg]);
 unset($GLOBALS[$utente_inserimento_costo_agg]);
 } # fine if (isset($unset_glob))
-} # fine if ((!isset($$nome_costo_agg) or !strcmp($$nome_costo_agg,"")) and (!isset($$val_costo_agg) or...
+} # fine if ((!isset($$nome_costo_agg) or !strcmp((string) $$nome_costo_agg,"")) and (!isset($$val_costo_agg) or...
 $nome_costo_agg = $$nome_costo_agg;
 $val_costo_agg = $$val_costo_agg;
 $percentuale_tasse_costo_agg = $$percentuale_tasse_costo_agg;
@@ -2214,8 +2406,8 @@ $valore_giornaliero_max_costo_agg = $$valore_giornaliero_max_costo_agg;
 $$giorni_costo_agg = trasforma_id_in_date($$giorni_costo_agg,$date_id,$tableperiodi);
 $giorni_costo_agg = $$giorni_costo_agg;
 $tipo_persona_costo_agg = $$tipo_persona_costo_agg;
-$data_inserimento_costo_agg = $$data_inserimento_costo_agg;
-$utente_inserimento_costo_agg = $$utente_inserimento_costo_agg;
+$data_inserimento_costo_agg = fixset($$data_inserimento_costo_agg);
+$utente_inserimento_costo_agg = fixset($$utente_inserimento_costo_agg);
 $val_costo_agg_p = punti_in_num($val_costo_agg,$stile_soldi);
 $tutti_i_costi_agg .= "$nome_costo_agg: $val_costo_agg$tag_acapo";
 $tutti_i_costi_agg_p .= "$nome_costo_agg: $val_costo_agg_p$tag_acapo";
@@ -2226,10 +2418,10 @@ $moltiplica_max_costo_agg = explode(",",$moltiplica_max_costo_agg);
 rsort($moltiplica_max_costo_agg);
 $moltiplica_max_costo_agg = $moltiplica_max_costo_agg[0];
 } # fine if (strstr($moltiplica_max_costo_agg,","))
-if (strstr($valore_giornaliero_max_costo_agg,",")) {
+if (strstr((string) $valore_giornaliero_max_costo_agg,",")) {
 $valore_giornaliero_max_costo_agg = explode(",",$valore_giornaliero_max_costo_agg);
 $valore_giornaliero_max_costo_agg = $valore_giornaliero_max_costo_agg[(count($valore_giornaliero_max_costo_agg) - 1)];
-} # fine if (strstr($valore_giornaliero_max_costo_agg,","))
+} # fine if (strstr((string) $valore_giornaliero_max_costo_agg,","))
 $valore_giornaliero_max_costo_agg_p = punti_in_num($valore_giornaliero_max_costo_agg,$stile_soldi);
 if ($num_costo_agg_sel == $numca) {
 $nome_costo_agg_sel = $nome_costo_agg;
@@ -2250,35 +2442,51 @@ $tutti_i_pagamenti_p = "";
 for ($num1 = 0 ; $num1 < $num_pagamenti ; $num1++) {
 $saldo_paga = "saldo_paga".$num1."_".$n_r;
 $data_paga = "data_paga".$num1."_".$n_r;
+$data_operazione_paga = "data_operazione_paga".$num1."_".$n_r;
 $utente_paga = "utente_paga".$num1."_".$n_r;
 $valuta_paga = "valuta_paga".$num1."_".$n_r;
 $tasso_cambio_paga = "tasso_cambio_paga".$num1."_".$n_r;
 $valore_valuta_paga = "valore_valuta_paga".$num1."_".$n_r;
 $metodo_paga = "metodo_paga".$num1."_".$n_r;
-if ((!isset($$saldo_paga) or !strcmp($$saldo_paga,"")) and (!isset($$data_paga) or !strcmp($$data_paga,"")) and (!isset($$metodo_paga) or !strcmp($$metodo_paga,""))) {
-$$saldo_paga = $GLOBALS[$saldo_paga];
-$$data_paga = $GLOBALS[$data_paga];
-$$utente_paga = $n_utente_contr[$GLOBALS[$utente_paga]];
-if (isset($GLOBALS[$valuta_paga]) and strcmp($GLOBALS[$valuta_paga],"")) {
+$id_paga = "id_paga".$num1."_".$n_r;
+$note_paga = "note_paga".$num1."_".$n_r;
+if ((!isset($$saldo_paga) or !strcmp((string) $$saldo_paga,"")) and (!isset($$data_paga) or !strcmp((string) $$data_paga,"")) and (!isset($$metodo_paga) or !strcmp((string) $$metodo_paga,""))) {
+if (isset($GLOBALS[$saldo_paga])) $$saldo_paga = $GLOBALS[$saldo_paga];
+if (isset($GLOBALS[$data_paga])) $$data_paga = $GLOBALS[$data_paga];
+if (isset($GLOBALS[$data_operazione_paga])) $$data_operazione_paga = $GLOBALS[$data_operazione_paga];
+if (isset($n_utente_contr[$GLOBALS[$utente_paga]])) $$utente_paga = $n_utente_contr[$GLOBALS[$utente_paga]];
+if (isset($GLOBALS[$valuta_paga]) and strcmp((string) $GLOBALS[$valuta_paga],"")) {
 $$valuta_paga = $GLOBALS[$valuta_paga];
-$$tasso_cambio_paga = $GLOBALS[$tasso_cambio_paga];
-$$valore_valuta_paga = $GLOBALS[$valore_valuta_paga];
-} # fine if (isset($GLOBALS[$valuta_paga]) and strcmp($GLOBALS[$valuta_paga],""))
-if (strcmp($GLOBALS[$metodo_paga],"")) $$metodo_paga = $GLOBALS[$metodo_paga];
+if (isset($GLOBALS[$tasso_cambio_paga])) $$tasso_cambio_paga = $GLOBALS[$tasso_cambio_paga];
+if (isset($GLOBALS[$valore_valuta_paga])) $$valore_valuta_paga = $GLOBALS[$valore_valuta_paga];
+} # fine if (isset($GLOBALS[$valuta_paga]) and strcmp((string) $GLOBALS[$valuta_paga],""))
+if ($tipo_contratto == "contrhtm") {
+if (isset($GLOBALS[$metodo_paga]) and strcmp((string) $GLOBALS[$metodo_paga],"")) $$metodo_paga = htmlspecialchars($GLOBALS[$metodo_paga]);
+if (isset($GLOBALS[$id_paga]) and strcmp((string) $GLOBALS[$id_paga],"")) $$id_paga = htmlspecialchars($GLOBALS[$id_paga]);
+if (isset($GLOBALS[$note_paga]) and strcmp((string) $GLOBALS[$note_paga],"")) $$note_paga = htmlspecialchars($GLOBALS[$note_paga]);
+} # fine if ($tipo_contratto == "contrhtm")
+else {
+if (isset($GLOBALS[$metodo_paga]) and strcmp((string) $GLOBALS[$metodo_paga],"")) $$metodo_paga = $GLOBALS[$metodo_paga];
+if (isset($GLOBALS[$id_paga]) and strcmp((string) $GLOBALS[$id_paga],"")) $$id_paga = $GLOBALS[$id_paga];
+if (isset($GLOBALS[$note_paga]) and strcmp((string) $GLOBALS[$note_paga],"")) $$note_paga = $GLOBALS[$note_paga];
+} # fine else if ($tipo_contratto == "contrhtm")
 if (isset($unset_glob)) {
 unset($GLOBALS[$saldo_paga]);
 unset($GLOBALS[$data_paga]);
+unset($GLOBALS[$data_operazione_paga]);
 unset($GLOBALS[$utente_paga]);
 unset($GLOBALS[$valuta_paga]);
 unset($GLOBALS[$tasso_cambio_paga]);
 unset($GLOBALS[$valore_valuta_paga]);
 unset($GLOBALS[$metodo_paga]);
+unset($GLOBALS[$id_paga]);
+unset($GLOBALS[$note_paga]);
 } # fine if (isset($unset_glob))
-} # fine if ((!isset($$saldo_paga) or !strcmp($$saldo_paga,"")) and (!isset($$data_paga) or...
-$data_paga_f = formatta_data_contr($$data_paga,$stile_data);
-$saldo_paga_p = punti_in_num($$saldo_paga,$stile_soldi);
-$tutti_i_pagamenti .= str_replace(" ","$tag_spazio",$data_paga_f."  ".$$saldo_paga." $nome_valuta  ".$$metodo_paga);
-$tutti_i_pagamenti_p .= str_replace(" ","$tag_spazio",$data_paga_f."  ".$saldo_paga_p." $nome_valuta  ".$$metodo_paga);
+} # fine if ((!isset($$saldo_paga) or !strcmp((string) $$saldo_paga,"")) and (!isset($$data_paga) or...
+$data_paga_f = formatta_data_contr(fixset($$data_operazione_paga),$stile_data);
+$saldo_paga_p = punti_in_num(fixset($$saldo_paga),$stile_soldi);
+$tutti_i_pagamenti .= str_replace(" ","$tag_spazio",$data_paga_f."  ".$$saldo_paga." $nome_valuta  ".fixset($$metodo_paga));
+$tutti_i_pagamenti_p .= str_replace(" ","$tag_spazio",$data_paga_f."  ".$saldo_paga_p." $nome_valuta  ".fixset($$metodo_paga));
 if (($num1 + 1) != $num_pagamenti) {
 $tutti_i_pagamenti .= $tag_acapo;
 $tutti_i_pagamenti_p .= $tag_acapo;
@@ -2374,10 +2582,29 @@ $apertura_rip_contr = "";
 $chiusura_rip_contr = "";
 $contratto_ripetizione = "";
 $errore_ripetizione = "";
-if ($ripeti_tutto) $email_gia_inviata = 0;
+if ($ripeti_tutto) {
+$email_gia_inviata = 0;
+$nome_documento_scaricato = "";
+} # fine if ($ripeti_tutto)
 $cond_non_ripetute_applicate = 0;
 
-if ($tipo_contratto == "contreml" and $ripeti_tutto) {
+if ($tipo_contratto == "contreml") {
+if ($ripeti_tutto) {
+if ($contr_multilingua) {
+if (!$codice_lingua or !strcmp(fixstr($oggetti_email_mln[$codice_lingua]),"")) $oggetto_email = $oggetti_email_mln[$contratti_orig_mln['predef']];
+else $oggetto_email = $oggetti_email_mln[$codice_lingua];
+for ($num1 = 1 ; $num1 <= $dati_allegato['num'] ; $num1++) {
+$dati_allegato['corr'][$num1] = "";
+if ($codice_lingua and !empty($dati_allegato["ln$codice_lingua"][$num1])) {
+$dati_allegato['corr'][$num1] = $dati_allegato["ln$codice_lingua"][$num1];
+$dati_allegato['ln_corr'][$num1] = $codice_lingua;
+} # fine if ($codice_lingua and !empty($dati_allegato["ln$codice_lingua"][$num1]))
+elseif (!empty($dati_allegato['ln'.$contratti_orig_mln['predef']][$num1])) {
+$dati_allegato['corr'][$num1] = $dati_allegato['ln'.$contratti_orig_mln['predef']][$num1];
+$dati_allegato['ln_corr'][$num1] = $contratti_orig_mln['predef'];
+} # fine elseif (!empty($dati_allegato['ln'.$contratti_orig_mln['predef']][$num1]))
+} # fine for $num1
+} # fine if ($contr_multilingua)
 $var_if = fixset(${"email_".$n_r});
 if (!$var_if) $var_if = fixset(${"email2_".$n_r});
 if ($var_if) {
@@ -2396,23 +2623,24 @@ $apertura_rip_contr .= "</td></tr><tr><td align=\"right\">
 </td></tr><tr><td align=\"right\">
 ".mex("Oggetto",$pag).":</td><td>
 <input type=\"text\" name=\"oggetto_email$n_r\" size=\"60\" value=\"$oggetto_email\"></td></tr>";
-if ($allegato_email) {
-$apertura_rip_contr .= "<tr><td></td><td><label><input type=\"checkbox\" name=\"allega$n_r\" value=\"SI\" checked>
-".mex("Allega",$pag)." <b>$allegato_email</b></label></td></tr>";
-} # fine if ($allegato_email)
+for ($num1 = 1 ; $num1 <= $dati_allegato['num'] ; $num1++) {
+if ($dati_allegato['corr'][$num1]) {
+$apertura_rip_contr .= "<tr><td></td><td><label><input type=\"checkbox\" value=\"".$dati_allegato['ln_corr'][$num1]."\" name=\"allega$num1"."_$n_r\" checked>
+".mex("Allega",$pag)." <b>".$dati_allegato['corr'][$num1]."</b></label></td></tr>";
+} # fine if ($dati_allegato['corr'][$num1])
+} # fine for $num1
 $apertura_rip_contr .= "<tr><td style=\"height: 3px;\"></td></tr></table>
 &nbsp;&nbsp;<textarea name=\"testo_email$n_r\" rows=32 cols=90>";
 $chiusura_rip_contr .= "</textarea><br>
 <table><tr><td style=\"height: 3px;\"></td></tr></table>
 <hr style=\"width: 95%; margin-left: 6px; text-align: left;\">";
-} # fine if ($tipo_contratto == "contreml" and $ripeti_tutto)
+} # fine if ($ripeti_tutto)
+for ($num1 = 1 ; $num1 <= $dati_allegato['num'] ; $num1++) ${"allegato$num1"} = $dati_allegato['corr'][$num1];
+} # fine if ($tipo_contratto == "contreml")
 
 if ($contr_multilingua) {
-if (!$codice_lingua) $contratto_parte[1] = $contratti_orig_mln[$contratti_orig_mln['predef']];
-else {
-if (!strcmp($contratti_orig_mln[$codice_lingua],"")) $contratto_parte[1] = $contratti_orig_mln[$contratti_orig_mln['predef']];
+if (!$codice_lingua or !strcmp(fixstr($contratti_orig_mln[$codice_lingua]),"")) $contratto_parte[1] = $contratti_orig_mln[$contratti_orig_mln['predef']];
 else $contratto_parte[1] = $contratti_orig_mln[$codice_lingua];
-} # fine else if (!$codice_lingua)
 } # fine if ($contr_multilingua)
 
 
@@ -2471,11 +2699,11 @@ $tipo_contr_vett = 2;
 } # fine else if ($l0_cv2 > $l0_cv5 and $l0_cv3 > $l0_cv5 and $l0_cv4 > $l0_cv5)
 } # fine else if ($l0_cv2 > $l0_cv6 and $l0_cv3 > $l0_cv6 and $l0_cv4 > $l0_cv6 and $l0_cv5 > $l0_cv6)
 } # fine else if ($l0_cv2 > $l0_cv7 and $l0_cv3 > $l0_cv7 and $l0_cv4 > $l0_cv7 and $l0_cv5 > $l0_cv7 and $l0_cv6 > $l0_cv7)
-if (strcmp($contr_vett[0],"")) {
+if (strcmp((string) $contr_vett[0],"")) {
 $num_parti2_contr++;
 $contratto_parte2[$num_parti2_contr] = $contr_vett[0];
 $ripeti_parte2[$num_parti2_contr] = "NO";
-} # fine if (strcmp($contr_vett[0],""))
+} # fine if (strcmp((string) $contr_vett[0],""))
 $contratto_restante = substr($contratto_restante,strlen($contr_vett[0]));
 if ($tipo_contr_vett == 4) {
 $arr_ripeti = explode("\"]",$contratto_restante,2);
@@ -2491,11 +2719,11 @@ $tipo_parte2[$num_parti2_contr] = $tipo_contr_vett;
 if ($tipo_contr_vett == 4) $arr_parte2[$num_parti2_contr] = $arr_ripeti;
 $contratto_restante = substr($contratto_restante,(strlen($contr_vett[0]) + 5));
 } # fine while (str_replace("[r2]","",$contratto_restante) != $contratto_restante or...
-if (strcmp($contratto_restante,"")) {
+if (strcmp((string) $contratto_restante,"")) {
 $num_parti2_contr++;
 $contratto_parte2[$num_parti2_contr] = $contratto_restante;
 $ripeti_parte2[$num_parti2_contr] = "NO";
-} # fine if (strcmp($contratto_restante,""))
+} # fine if (strcmp((string) $contratto_restante,""))
 } # fine else if (str_replace("[r2]","",$contratto_parte[$n_p]) == $contratto_parte[$n_p] and...
 
 # parti n_p2: parti del contratto se ci sono ripetizioni ospiti, costi agg o array interni
@@ -2535,9 +2763,9 @@ if ($ripeti_parte2[$n_p2] == "SI") {
 
 if ($tipo_parte2[$n_p2] == 2) {
 $numero_ospite = $n_r2;
-$idospite = risul_query($ospiti,($n_r2 - 1),'idclienti');
+$numero_cliente_ospite = risul_query($ospiti,($n_r2 - 1),'idclienti');
 $parentela_ospite = risul_query($ospiti,($n_r2 - 1),'parentela');
-$dati_osp = esegui_query("select * from $tableclienti where idclienti = '$idospite' ");
+$dati_osp = esegui_query("select * from $tableclienti where idclienti = '$numero_cliente_ospite' ");
 $utente_ospite = risul_query($dati_osp,0,'utente_inserimento');
 $cognome_ospite = "";
 $nome_ospite = "";
@@ -2615,6 +2843,36 @@ $codice_tipo_documento_ospite = trova_codice_rel($tipo_documento_ospite,$rel_esi
 $codice_citta_documento_ospite = trova_codice_rel($citta_documento_ospite,$rel_esist,"citta","citta",$codice2_citta_documento_ospite,$codice3_citta_documento_ospite,$tablecitta,$tablerelutenti,C_ID_UTENTE_CONTR);
 $codice_regione_documento_ospite = trova_codice_rel($regione_documento_ospite,$rel_esist,"regione","regioni",$codice2_regione_documento_ospite,$codice3_regione_documento_ospite,$tableregioni,$tablerelutenti,C_ID_UTENTE_CONTR);
 $codice_nazione_documento_ospite = trova_codice_rel($nazione_documento_ospite,$rel_esist,"nazione","nazioni",$codice2_nazione_documento_ospite,$codice3_nazione_documento_ospite,$tablenazioni,$tablerelutenti,C_ID_UTENTE_CONTR);
+if ($tipo_contratto == "contrhtm" and strcmp((string) $cognome_ospite,"")) {
+$cognome_ospite = htmlspecialchars((string) $cognome_ospite);
+$nome_ospite = htmlspecialchars((string) $nome_ospite);
+$soprannome_ospite = htmlspecialchars((string) $soprannome_ospite);
+$titolo_ospite = htmlspecialchars((string) $titolo_ospite);
+$citta_nascita_ospite = htmlspecialchars((string) $citta_nascita_ospite);
+$regione_nascita_ospite = htmlspecialchars((string) $regione_nascita_ospite);
+$nazione_nascita_ospite = htmlspecialchars((string) $nazione_nascita_ospite);
+$cittadinanza_ospite = htmlspecialchars((string) $cittadinanza_ospite);
+$nazione_ospite = htmlspecialchars((string) $nazione_ospite);
+$regione_ospite = htmlspecialchars((string) $regione_ospite);
+$citta_ospite = htmlspecialchars((string) $citta_ospite);
+$via_ospite = htmlspecialchars((string) $via_ospite);
+$numcivico_ospite = htmlspecialchars((string) $numcivico_ospite);
+$cap_ospite = htmlspecialchars((string) $cap_ospite);
+$documento_ospite = htmlspecialchars((string) $documento_ospite);
+$tipo_documento_ospite = htmlspecialchars((string) $tipo_documento_ospite);
+$citta_documento_ospite = htmlspecialchars((string) $citta_documento_ospite);
+$regione_documento_ospite = htmlspecialchars((string) $regione_documento_ospite);
+$nazione_documento_ospite = htmlspecialchars((string) $nazione_documento_ospite);
+$telefono_ospite = htmlspecialchars((string) $telefono_ospite);
+$telefono2_ospite = htmlspecialchars((string) $telefono2_ospite);
+$telefono3_ospite = htmlspecialchars((string) $telefono3_ospite);
+$fax_ospite = htmlspecialchars((string) $fax_ospite);
+$email_ospite = htmlspecialchars((string) $email_ospite);
+$email2_ospite = htmlspecialchars((string) $email2_ospite);
+$email_certificata_ospite = htmlspecialchars((string) $email_certificata_ospite);
+$codice_fiscale_ospite = htmlspecialchars((string) $codice_fiscale_ospite);
+$partita_iva_ospite = htmlspecialchars((string) $partita_iva_ospite);
+} # fine if ($tipo_contratto == "contrhtm" and strcmp((string) $cognome_ospite,""))
 if ($num_condizioni_rip_o) {
 $condizioni_alternative = 1;
 $num_condizioni_corr = $num_condizioni_rip_o;
@@ -2644,7 +2902,7 @@ $percentuale_tasse_costo_agg = $$percentuale_tasse_costo_agg;
 $moltiplica_max_costo_agg = $$moltiplica_max_costo_agg;
 $valore_giornaliero_max_costo_agg = $$valore_giornaliero_max_costo_agg;
 $giorni_costo_agg = $$giorni_costo_agg;
-if ($ripeti_prenota_data and $giorni_costo_agg and !strstr($giorni_costo_agg,",$ripeti_prenota_data,")) $mostra_ripetizione = 0;
+if ($ripeti_prenota_data and strstr($giorni_costo_agg,",") and !strstr($giorni_costo_agg,",$ripeti_prenota_data,")) $mostra_ripetizione = 0;
 $tipo_persona_costo_agg = $$tipo_persona_costo_agg;
 $data_inserimento_costo_agg = $$data_inserimento_costo_agg;
 $utente_inserimento_costo_agg = $$utente_inserimento_costo_agg;
@@ -2653,7 +2911,7 @@ calcola_tasse_contr($valore_costo_agg,$percentuale_tasse_costo_agg,$arrotond_tas
 if (str_replace(",","",$moltiplica_max_costo_agg) != $moltiplica_max_costo_agg and $mostra_ripetizione) {
 $moltiplica_max_costo_agg = explode(",",$moltiplica_max_costo_agg);
 $valore_giornaliero_max_costo_agg = explode(",",$valore_giornaliero_max_costo_agg);
-if ($ripeti_prenota_data and $giorni_costo_agg) {
+if ($ripeti_prenota_data and strstr($giorni_costo_agg,",")) {
 $var_if = explode(",",$giorni_costo_agg);
 $num2 = count($var_if);
 for ($num1 = 1 ; $num1 < $num2 ; $num1++) {
@@ -2663,19 +2921,19 @@ $valore_giornaliero_max_costo_agg = $valore_giornaliero_max_costo_agg[($num1 - 1
 break;
 } # fine if ($var_if[$num1] == $ripeti_prenota_data)
 } # fine for $num1
-} # fine if ($ripeti_prenota_data and $giorni_costo_agg)
+} # fine if ($ripeti_prenota_data and strstr($giorni_costo_agg,","))
 else {
 rsort($moltiplica_max_costo_agg);
 $moltiplica_max_costo_agg = $moltiplica_max_costo_agg[0];
 $valore_giornaliero_max_costo_agg = $valore_giornaliero_max_costo_agg[(count($valore_giornaliero_max_costo_agg) - 1)];
-} # fine else if ($ripeti_prenota_data and $giorni_costo_agg)
+} # fine else if ($ripeti_prenota_data and strstr($giorni_costo_agg,","))
 } # fine if (str_replace(",","",$moltiplica_max_costo_agg) != $moltiplica_max_costo_agg and $mostra_ripetizione)
 elseif ($mostra_ripetizione) {
-if (strstr($valore_giornaliero_max_costo_agg,",")) {
+if (strstr((string) $valore_giornaliero_max_costo_agg,",")) {
 $valore_giornaliero_max_costo_agg = explode(",",$valore_giornaliero_max_costo_agg);
 $var_if = $valore_giornaliero_max_costo_agg[0];
 $valore_giornaliero_max_costo_agg = $valore_giornaliero_max_costo_agg[(count($valore_giornaliero_max_costo_agg) - 1)];
-} # fine if (strstr($valore_giornaliero_max_costo_agg,","))
+} # fine if (strstr((string) $valore_giornaliero_max_costo_agg,","))
 else $var_if = "";
 if ($ripeti_prenota_data) {
 if ($ripeti_prenota_data == $data_fine) $valore_giornaliero_max_costo_agg = 0;
@@ -2734,10 +2992,10 @@ $utente_inserimento_costo_agg = "";
 if ($tipo_parte2[$n_p2] == 4) {
 $ripeti_prenota_data2 = "";
 ${$var_arr_nome[$arr_parte2[$n_p2]]} = key(${$arr_parte2[$n_p2]});
-if ($array_date_contr[$arr_parte2[$n_p2]] == "SI") $ripeti_prenota_data2 = current(${$arr_parte2[$n_p2]});
+if (isset($array_date_contr[$arr_parte2[$n_p2]]) and $array_date_contr[$arr_parte2[$n_p2]] == "SI") $ripeti_prenota_data2 = current(${$arr_parte2[$n_p2]});
 next(${$arr_parte2[$n_p2]});
 if ($ripeti_prenota_data2) {
-if (!strcmp($tariffesettimanali[$n_r][$ripeti_prenota_data2],"")) {
+if (!strcmp((string) $tariffesettimanali[$n_r][$ripeti_prenota_data2],"")) {
 global ${"tariffesettimanali_".$n_r};
 $var_if = explode(";",${"tariffesettimanali_".$n_r});
 $var_if = explode(",",$var_if[0]);
@@ -2749,7 +3007,7 @@ else $tariffesettimanali[$n_r][$ripeti_prenota_data2] = $var_if[$num1];
 break;
 } # fine if (date("Y-m-d",mktime(0,0,0,substr($data_inizio,5,2),(substr($data_inizio,8,2) + $num1),(int) substr($data_inizio,0,4))) == $ripeti_prenota_data2)
 } # fine for $num1
-} # fine if (!strcmp($tariffesettimanali[$n_r][$ripeti_prenota_data2],""))
+} # fine if (!strcmp((string) $tariffesettimanali[$n_r][$ripeti_prenota_data2],""))
 $costo_tariffa_giorno_array = $tariffesettimanali[$n_r][$ripeti_prenota_data2];
 $costo_tariffa_giorno_array_p = punti_in_num($costo_tariffa_giorno_array,$stile_soldi);
 } # fine if ($ripeti_prenota_data2)
@@ -2765,14 +3023,19 @@ $azione_vett_corr = $azione_rip_a_vett[$arr_parte2[$n_p2]];
 } # fine if ($tipo_parte2[$n_p2] == 4)
 
 if ($tipo_parte2[$n_p2] == 5) {
-$valore_pagamento = ${"saldo_paga".($n_r2 - 1)."_".$n_r};
+$valore_pagamento = fixset(${"saldo_paga".($n_r2 - 1)."_".$n_r});
 $valore_pagamento_p = punti_in_num($valore_pagamento,$stile_soldi);
-$data_pagamento = ${"data_paga".($n_r2 - 1)."_".$n_r};
-$utente_pagamento = ${"utente_paga".($n_r2 - 1)."_".$n_r};
-$valuta_pagamento = ${"valuta_paga".($n_r2 - 1)."_".$n_r};
-$tasso_cambio_pagamento = ${"tasso_cambio_paga".($n_r2 - 1)."_".$n_r};
-$valore_valuta_pagamento = ${"valore_valuta_paga".($n_r2 - 1)."_".$n_r};
-$metodo_pagamento = ${"metodo_paga".($n_r2 - 1)."_".$n_r};
+$data_pagamento = fixset(${"data_paga".($n_r2 - 1)."_".$n_r});
+$data_operazione_pagamento = fixset(${"data_operazione_paga".($n_r2 - 1)."_".$n_r});
+$utente_pagamento = fixset(${"utente_paga".($n_r2 - 1)."_".$n_r});
+$valuta_pagamento = fixset(${"valuta_paga".($n_r2 - 1)."_".$n_r});
+$tasso_cambio_pagamento = fixset(${"tasso_cambio_paga".($n_r2 - 1)."_".$n_r});
+$valore_valuta_pagamento = fixset(${"valore_valuta_paga".($n_r2 - 1)."_".$n_r});
+$metodo_pagamento = fixset(${"metodo_paga".($n_r2 - 1)."_".$n_r});
+$id_pagamento = fixset(${"id_paga".($n_r2 - 1)."_".$n_r});
+$note_pagamento = fixset(${"note_paga".($n_r2 - 1)."_".$n_r});
+if ($n_r2 == $num_ripeti2) $ultimo_pagamento = "1";
+else $ultimo_pagamento = "";
 if ($num_condizioni_rip_p) {
 $condizioni_alternative = 1;
 $num_condizioni_corr = $num_condizioni_rip_p;
@@ -2785,11 +3048,15 @@ else {
 $valore_pagamento = 0;
 $valore_pagamento_p = 0;
 $data_pagamento = "";
+$data_operazione_pagamento = "";
 $utente_pagamento = "";
 $valuta_pagamento = "";
 $tasso_cambio_pagamento = "";
 $valore_valuta_pagamento = "";
 $metodo_pagamento = "";
+$id_pagamento = "";
+$note_pagamento = "";
+$ultimo_pagamento = "";
 } # fine else if ($tipo_parte2[$n_p2] == 5)
 
 if ($tipo_parte2[$n_p2] == 6) {
@@ -2824,6 +3091,14 @@ $numero_progressivo_documento_salvato = $numero_progressivo_documento_salvato[1]
 $nome_file_documento_salvato = current($contratti_prenota[$anno][$numero_prenotazione_orig]);
 $data_creazione_documento_salvato = substr($nome_file_documento_salvato,0,10);
 $nome_file_documento_salvato = substr($nome_file_documento_salvato,10);
+if (strstr($nome_file_documento_salvato,"/")) {
+$nome_download_documento_salvato = substr(strstr($nome_file_documento_salvato,"/"),1);
+$nome_file_documento_salvato = str_replace("/$nome_download_documento_salvato","",$nome_file_documento_salvato);
+} # fine if (strstr($nome_file_documento_salvato,"/"))
+else {
+if (substr($nome_file_documento_salvato,-3) == ".gz") $nome_download_documento_salvato = substr($nome_file_documento_salvato,0,-3);
+else $nome_download_documento_salvato = $nome_file_documento_salvato;
+} # fine else if (strstr($nome_file_documento_salvato,"/"))
 next($contratti_prenota[$anno][$numero_prenotazione_orig]);
 if ($num_condizioni_rip_d) {
 $condizioni_alternative = 1;
@@ -2840,6 +3115,7 @@ $numero_progressivo_documento_salvato = "";
 $nome_documento_salvato = "";
 $data_creazione_documento_salvato = "";
 $nome_file_documento_salvato = "";
+$nome_download_documento_salvato = "";
 } # fine else if ($tipo_parte2[$n_p2] == 7)
 
 } # fine if ($ripeti_parte2[$n_p2] == "SI")
@@ -2862,15 +3138,20 @@ $numero_ospite = 0;
 $valore_pagamento = 0;
 $valore_pagamento_p = 0;
 $data_pagamento = "";
+$data_operazione_pagamento = "";
 $utente_pagamento = "";
 $valuta_pagamento = "";
 $tasso_cambio_pagamento = "";
 $valore_valuta_pagamento = "";
 $metodo_pagamento = "";
+$id_pagamento = "";
+$note_pagamento = "";
+$ultimo_pagamento = "";
 $numero_progressivo_documento_salvato = "";
 $nome_documento_salvato = "";
 $data_creazione_documento_salvato = "";
 $nome_file_documento_salvato = "";
+$nome_download_documento_salvato = "";
 if (!isset($tipo_parte0[$n_p0]) or $tipo_parte0[$n_p0] != "6") {
 $nome_unita = "";
 $casa_unita = "";
@@ -2885,6 +3166,12 @@ if ($mostra_ripetizione) {
 #for ($num1 = 0 ; $num1 < $num_variabili ; $num1++) ${$variabile[$num_var]} = "";
 if ($num_persone != "non specificato" and $num_persone != "") $num_persone_tot = (int) $num_persone + (int) $n_letti_agg;
 else $num_persone_tot = "";
+if ($costo_tot) $costo_tot_p = punti_in_num($costo_tot,$stile_soldi);
+if ($pagato) $pagato_p = punti_in_num($pagato,$stile_soldi);
+if ($sconto) $sconto_p = punti_in_num($sconto,$stile_soldi);
+if ($costo_tariffa) $costo_tariffa_p = punti_in_num($costo_tariffa,$stile_soldi);
+if ($commissioni) $commissioni_p = punti_in_num($commissioni,$stile_soldi);
+if ($caparra) $caparra_p = punti_in_num($caparra,$stile_soldi);
 
 
 if (!$condizioni_alternative) {
@@ -2921,19 +3208,23 @@ $var_if = $se_cond_corr[0];
 if (substr($var_if,-1) != ")") $var_if = fixset($$var_if);
 else {
 $var_if = explode("(",substr($var_if,0,-1));
-$var_if = fixset(${$var_if[0]}[fixset(${$var_if[1]})]);
+if (isset(${$var_if[0]}[fixset(${$var_if[1]})])) $var_if = ${$var_if[0]}[fixset(${$var_if[1]})];
+else $var_if = null;
 } # fine else if (substr($var_if,-1) != ")")
 $val_if = $se_cond_corr[3];
 if ($se_cond_corr[2] == "var") {
-if (substr($val_if,-1) != ")") $val_if = $$val_if;
+if (substr($val_if,-1) != ")") $val_if = fixset($$val_if);
 else {
 $val_if = explode("(",substr($val_if,0,-1));
 $val_if = ${$val_if[0]}[${$val_if[1]}];
 } # fine else if (substr($val_if,-1) != ")")
 } # fine if ($se_cond_corr[2] == "var")
 $cond_verificata = 0;
+$var_if = (string) $var_if;
+$val_if = (string) $val_if;
 if (($se_cond_corr[1] == "=" and $var_if == $val_if) or ($se_cond_corr[1] == "!=" and $var_if != $val_if) or ($se_cond_corr[1] == ">" and $var_if > $val_if) or ($se_cond_corr[1] == "<" and $var_if < $val_if)) $cond_verificata = 1;
 if (($se_cond_corr[1] == "{}" and str_replace(strtolower($val_if),"",strtolower($var_if)) != strtolower($var_if)) or ($se_cond_corr[1] == "{A}" and str_replace($val_if,"",$var_if) != $var_if)) $cond_verificata = 1;
+if (($se_cond_corr[1] == "!{}" and str_replace(strtolower($val_if),"",strtolower($var_if)) == strtolower($var_if)) or ($se_cond_corr[1] == "!{A}" and str_replace($val_if,"",$var_if) == $var_if)) $cond_verificata = 1;
 if ($condizione[0] == "or" and $cond_verificata) break;
 if ($condizione[0] == "and" and !$cond_verificata) break;
 } # fine for $num2
@@ -2945,21 +3236,50 @@ if ($azione[0] == "set") {
 $val_then = $azione[4];
 if ($azione[3] == "var") {
 if (substr($val_then,-1) != ")") {
-if (!empty($var_predef_data[$val_then]) and $val_then != "data_inizio_selezione" and $val_then != "data_fine_selezione" and $val_then != "oggi") $val_then = formatta_data_contr($$val_then,$stile_data);
-else $val_then = $$val_then;
+if (!empty($var_predef_data[$val_then]) and $val_then != "data_inizio_selezione" and $val_then != "data_fine_selezione" and $val_then != "oggi") $val_then = formatta_data_contr(fixstr($$val_then),$stile_data);
+else $val_then = fixstr($$val_then);
 } # fine if (substr($val_then,-1) != ")")
 else {
 $val_then = explode("(",substr($val_then,0,-1));
-$val_then = ${$val_then[0]}[${$val_then[1]}];
+$val_then = fixstr(${$val_then[0]}[fixset(${$val_then[1]})]);
 } # fine else if (substr($val_then,-1) != ")")
+if ($azione[9]) {
 if ($azione[9] == "low") $val_then = strtolower($val_then);
 if ($azione[9] == "upp") $val_then = strtoupper($val_then);
 if ($azione[9] == "url" and function_exists('urlencode')) $val_then = urlencode($val_then);
 if ($azione[9] == "asc") $val_then = conv_ascii($val_then);
 if ($azione[9] == "eas") $val_then = conv_ascii($val_then,"e");
 if ($azione[9] == "md5") $val_then = md5($val_then);
+if ($azione[9] == "eht") $val_then = htmlspecialchars($val_then);
+if ($azione[9] == "dht") $val_then = str_replace("&amp;","&",str_replace("&quot;","\"",str_replace("&lt;","<",str_replace("&gt;",">",$val_then))));
+if ($azione[9] == "e64") $val_then = base64_encode($val_then);
+if ($azione[9] == "d64") $val_then = base64_decode($val_then);
+if (substr($azione[9],1,1) == "c") {
+if (substr($azione[9],0,1) == "0") {
+$txt_sost1 = 10;
+$val_then = preg_replace("/[^0-9]/","",$val_then);
+} # fine if (substr($azione[9],0,1) == "0")
+if (substr($azione[9],0,1) == "1") {
+$txt_sost1 = 16;
+$val_then = preg_replace("/[^0-9a-f]/","",strtolower($val_then));
+} # fine if (substr($azione[9],0,1) == "1")
+if (substr($azione[9],0,1) == "2") {
+$txt_sost1 = 2;
+$val_then = preg_replace("/[^0-1]/","",$val_then);
+} # fine if (substr($azione[9],0,1) == "2")
+if (substr($azione[9],0,1) == "3") {
+$txt_sost1 = 36;
+$val_then = preg_replace("/[^0-9a-z]/","",strtolower($val_then));
+} # fine if (substr($azione[9],0,1) == "3")
+if (substr($azione[9],2,1) == "0") $txt_sost2 = 10;
+if (substr($azione[9],2,1) == "1") $txt_sost2 = 16;
+if (substr($azione[9],2,1) == "2") $txt_sost2 = 2;
+if (substr($azione[9],2,1) == "3") $txt_sost2 = 36;
+$val_then = base_convert($val_then,$txt_sost1,$txt_sost2);
+} # fine if (substr($azione[9],1,1) == "c")
+} # fine if ($azione[9])
 } # fine if ($azione[3] == "var")
-if (strcmp($azione[6],"")) {
+if (strcmp((string) $azione[6],"")) {
 $txt_sost1 = $azione[6];
 if ($azione[5] == "var") {
 if (substr($txt_sost1,-1) != ")") $txt_sost1 = $$txt_sost1;
@@ -2976,42 +3296,56 @@ $txt_sost2 = explode("(",substr($txt_sost2,0,-1));
 $txt_sost2 = ${$txt_sost2[0]}[${$txt_sost2[1]}];
 } # fine else if (substr($txt_sost2,-1) != ")")
 } # fine if ($azione[7] == "var")
-$val_then = str_replace($txt_sost1,$txt_sost2,$val_then);
-} # fine if (strcmp($azione[6],""))
+$val_then = str_replace($txt_sost1,$txt_sost2,(string) $val_then);
+} # fine if (strcmp((string) $azione[6],""))
 if ($azione[2] == ".=") {
-if (substr($azione[1],0,1) != "a") $var_then_orig = ${$variabile[$azione[1]]};
-else $var_then_orig = ${$array[substr($azione[1],1)]}[${$var_arr[substr($azione[1],1)]}];
+if (substr($azione[1],0,1) != "a") $var_then_orig = fixset(${$variabile[$azione[1]]});
+else {
+if (isset(${$array[substr($azione[1],1)]}[${$var_arr[substr($azione[1],1)]}])) $var_then_orig = ${$array[substr($azione[1],1)]}[${$var_arr[substr($azione[1],1)]}];
+else $var_then_orig = null;
+} # fine else if (substr($azione[1],0,1) != "a")
 } # fine if ($azione[2] == ".=")
 else $var_then_orig = "";
 if (substr($azione[1],0,1) != "a") ${$variabile[$azione[1]]} = $var_then_orig.$val_then;
-elseif (strcmp(${$var_arr[substr($azione[1],1)]},"")) {
+elseif (strcmp((string) ${$var_arr[substr($azione[1],1)]},"")) {
 ${$array[substr($azione[1],1)]}[${$var_arr[substr($azione[1],1)]}] = $var_then_orig.$val_then;
 $array_date_contr[$array[substr($azione[1],1)]] = "";
-} # fine elseif (strcmp(${$var_arr[substr($azione[1],1)]},""))
+} # fine elseif (strcmp((string) ${$var_arr[substr($azione[1],1)]},""))
 } # fine if ($azione[0] == "set")
 
 if ($azione[0] == "trunc") {
 if (substr($azione[1],0,1) != "a") $var_da_assegnare = ${$variabile[$azione[1]]};
-else $var_da_assegnare = ${$array[substr($azione[1],1)]}[${$var_arr[substr($azione[1],1)]}];
-if (strcmp($azione[3],"")) {
+else {
+if (isset(${$array[substr($azione[1],1)]}[${$var_arr[substr($azione[1],1)]}])) $var_da_assegnare = ${$array[substr($azione[1],1)]}[${$var_arr[substr($azione[1],1)]}];
+else $var_da_assegnare = null;
+} # fine else if (substr($azione[1],0,1) != "a")
+$val_if = 0;
+if ($tipo_contratto == "contrhtm") {
+$val_then = (string) $var_da_assegnare;
+$var_da_assegnare = str_replace("&amp;","&",str_replace("&quot;","\"",str_replace("&lt;","<",str_replace("&gt;",">",(string) $var_da_assegnare))));
+if ($val_then != $var_da_assegnare) $val_if = 1;
+} # fine if ($tipo_contratto == "contrhtm")
+if (strcmp((string) $azione[3],"")) {
 while (num_caratteri_testo($var_da_assegnare) < $azione[2]) {
 if ($azione[4] == "ini") $var_da_assegnare = $azione[3].$var_da_assegnare;
 if ($azione[4] == "fin") $var_da_assegnare .= $azione[3];
 } # fine while (num_caratteri_testo($var_da_assegnare) < $azione[2])
-} # fine if (strcmp($azione[3],""))
-if (substr($azione[1],0,1) != "a") ${$variabile[$azione[1]]} = tronca_testo($var_da_assegnare,0,$azione[2]);
-elseif (strcmp(${$var_arr[substr($azione[1],1)]},"")) {
-${$array[substr($azione[1],1)]}[${$var_arr[substr($azione[1],1)]}] = tronca_testo($var_da_assegnare,0,$azione[2]);
+} # fine if (strcmp((string) $azione[3],""))
+$var_da_assegnare = tronca_testo($var_da_assegnare,0,$azione[2]);
+if ($val_if) $var_da_assegnare = htmlspecialchars($var_da_assegnare);
+if (substr($azione[1],0,1) != "a") ${$variabile[$azione[1]]} = $var_da_assegnare;
+elseif (strcmp((string) ${$var_arr[substr($azione[1],1)]},"")) {
+${$array[substr($azione[1],1)]}[${$var_arr[substr($azione[1],1)]}] = $var_da_assegnare;
 $array_date_contr[$array[substr($azione[1],1)]] = "";
-} # fine elseif (strcmp(${$var_arr[substr($azione[1],1)]},""))
+} # fine elseif (strcmp((string) ${$var_arr[substr($azione[1],1)]},""))
 } # fine if ($azione[0] == "trunc")
 
 if ($azione[0] == "oper") {
 $cont_oper = "SI";
 $var_con_punti = "NO";
-$var_da_oper = $azione[2];
+$var_da_oper = (string) $azione[2];
 if (substr($var_da_oper,-1) != ")") {
-if (substr($var_da_oper,-2) != "_p" or !isset(${substr($var_da_oper,0,-2)})) $var_da_oper = ${$var_da_oper};
+if (substr($var_da_oper,-2) != "_p" or !isset(${substr($var_da_oper,0,-2)})) $var_da_oper = fixset(${$var_da_oper});
 else $var_da_oper = ${substr($var_da_oper,0,-2)};
 } # fine if (substr($var_da_oper,-1) != ")")
 else {
@@ -3029,7 +3363,7 @@ else $var_da_oper2 = ${substr($var_da_oper2,0,-2)};
 } # fine if (substr($var_da_oper2,-1) != ")")
 else {
 $var_da_oper2 = explode("(",substr($var_da_oper2,0,-1));
-if (substr($var_da_oper2[0],-2) != "_p" or !isset(${substr($var_da_oper2[0],0,-2)}[${$var_da_oper2[1]}])) $var_da_oper2 = ${$var_da_oper2[0]}[${$var_da_oper2[1]}];
+if (substr($var_da_oper2[0],-2) != "_p" or !isset(${substr($var_da_oper2[0],0,-2)}[${$var_da_oper2[1]}])) $var_da_oper2 = fixset(${$var_da_oper2[0]}[${$var_da_oper2[1]}]);
 else $var_da_oper2 = ${substr($var_da_oper2[0],0,-2)}[${$var_da_oper2[1]}];
 } # fine else if (substr($var_da_oper2,-1) != ")")
 } # fine if ($azione[4] == "var")
@@ -3049,21 +3383,21 @@ if (substr($azione[1],0,1) != "a") {
 if (substr($variabile[$azione[1]],-2) != "_p") ${$variabile[$azione[1]]} = $var_da_assegnare;
 else ${$variabile[$azione[1]]} = punti_in_num($var_da_assegnare,$stile_soldi,2);
 } # fine if (substr($azione[1],0,1) != "a")
-elseif (strcmp(${$var_arr[substr($azione[1],1)]},"")) {
+elseif (strcmp((string) ${$var_arr[substr($azione[1],1)]},"")) {
 $array_date_contr[$array[substr($azione[1],1)]] = "";
 if (substr($array[substr($azione[1],1)],-2) != "_p") ${$array[substr($azione[1],1)]}[${$var_arr[substr($azione[1],1)]}] = $var_da_assegnare;
 else ${$array[substr($azione[1],1)]}[${$var_arr[substr($azione[1],1)]}] = punti_in_num($var_da_assegnare,$stile_soldi,2);
-} # fine elseif (strcmp(${$var_arr[substr($azione[1],1)]},""))
+} # fine elseif (strcmp((string) ${$var_arr[substr($azione[1],1)]},""))
 } # fine if ($cont_oper != "NO")
 } # fine if ($azione[0] == "oper")
 
 if ($azione[0] == "date") {
 $cont_oper = 1;
-$var_da_oper = $azione[2];
-if (substr($var_da_oper,-1) != ")") $var_da_oper = ${$var_da_oper};
+$var_da_oper = (string) $azione[2];
+if (substr($var_da_oper,-1) != ")") $var_da_oper = fixstr(${$var_da_oper});
 else {
 $var_da_oper = explode("(",substr($var_da_oper,0,-1));
-$var_da_oper = ${$var_da_oper[0]}[${$var_da_oper[1]}];
+$var_da_oper = fixstr(${$var_da_oper[0]}[${$var_da_oper[1]}]);
 } # fine else if (substr($var_da_oper,-1) != ")")
 $var_da_oper = substr($var_da_oper,0,10);
 if (preg_match("/[0-9]{2,2}-[0-9]{2,2}-[0-9]{4,4}/",$var_da_oper)) {
@@ -3089,20 +3423,20 @@ if ($azione[5] == "m") $num2 = $azione[4];
 if ($azione[5] == "a") $num3 = $azione[4];
 $var_da_assegnare = date($var_da_assegnare,mktime(0,0,0,(substr($var_da_oper,5,2) + $num2),(substr($var_da_oper,8,2) + $txt_sost1),(substr($var_da_oper,0,4) + $num3)));
 if (substr($azione[1],0,1) != "a") ${$variabile[$azione[1]]} = $var_da_assegnare;
-elseif (strcmp(${$var_arr[substr($azione[1],1)]},"")) {
+elseif (strcmp((string) ${$var_arr[substr($azione[1],1)]},"")) {
 if ($azione[3] != "is") $array_date_contr[$array[substr($azione[1],1)]] = "";
 ${$array[substr($azione[1],1)]}[${$var_arr[substr($azione[1],1)]}] = $var_da_assegnare;
-} # fine elseif (strcmp(${$var_arr[substr($azione[1],1)]},""))
+} # fine elseif (strcmp((string) ${$var_arr[substr($azione[1],1)]},""))
 } # fine if ($cont_oper)
 } # fine if ($azione[0] == "date")
 
 if ($azione[0] == "opdat") {
 $cont_oper = 1;
 $var_da_oper = $azione[3];
-if (substr($var_da_oper,-1) != ")") $var_da_oper = ${$var_da_oper};
+if (substr($var_da_oper,-1) != ")") $var_da_oper = fixstr(${$var_da_oper});
 else {
 $var_da_oper = explode("(",substr($var_da_oper,0,-1));
-$var_da_oper = ${$var_da_oper[0]}[${$var_da_oper[1]}];
+$var_da_oper = fixstr(${$var_da_oper[0]}[${$var_da_oper[1]}]);
 } # fine else if (substr($var_da_oper,-1) != ")")
 $var_da_oper = substr($var_da_oper,0,10);
 if (preg_match("/[0-9]{2,2}-[0-9]{2,2}-[0-9]{4,4}/",$var_da_oper)) {
@@ -3114,7 +3448,7 @@ $var_da_oper2 = $azione[4];
 if (substr($var_da_oper2,-1) != ")") $var_da_oper2 = ${$var_da_oper2};
 else {
 $var_da_oper2 = explode("(",substr($var_da_oper2,0,-1));
-$var_da_oper2 = ${$var_da_oper2[0]}[${$var_da_oper2[1]}];
+$var_da_oper2 = fixset(${$var_da_oper2[0]}[${$var_da_oper2[1]}]);
 } # fine else if (substr($var_da_oper2,-1) != ")")
 $var_da_oper2 = substr($var_da_oper2,0,10);
 if (preg_match("/[0-9]{2,2}-[0-9]{2,2}-[0-9]{4,4}/",$var_da_oper2)) {
@@ -3143,11 +3477,11 @@ if (substr($azione[1],0,1) != "a") {
 if (substr($variabile[$azione[1]],-2) != "_p") ${$variabile[$azione[1]]} = $var_da_assegnare;
 else ${$variabile[$azione[1]]} = punti_in_num($var_da_assegnare,$stile_soldi,2);
 } # fine if (substr($azione[1],0,1) != "a")
-elseif (strcmp(${$var_arr[substr($azione[1],1)]},"")) {
+elseif (strcmp((string) ${$var_arr[substr($azione[1],1)]},"")) {
 $array_date_contr[$array[substr($azione[1],1)]] = "";
 if (substr($array[substr($azione[1],1)],-2) != "_p") ${$array[substr($azione[1],1)]}[${$var_arr[substr($azione[1],1)]}] = $var_da_assegnare;
 else ${$array[substr($azione[1],1)]}[${$var_arr[substr($azione[1],1)]}] = punti_in_num($var_da_assegnare,$stile_soldi,2);
-} # fine elseif (strcmp(${$var_arr[substr($azione[1],1)]},""))
+} # fine elseif (strcmp((string) ${$var_arr[substr($azione[1],1)]},""))
 } # fine if ($cont_oper)
 } # fine if ($azione[0] == "opdat")
 
@@ -3205,33 +3539,73 @@ if ($azione[0] == "cont") $break_cont = 0;
 
 
 $contratto_corr = $contratto_parte2[$n_p2];
-while (preg_match("/\\[c +[A-Za-z]+[A-Za-z0-9_]*(\\((('[^'\\]\\(]*')|([A-Za-z]+[A-Za-z0-9_]*))\\))? *!?= *\"[^\"]*\" *\\]/",$contratto_corr)) {
-$contr_vett = preg_split("/\\[c +[A-Za-z]+[A-Za-z0-9_]*(\\((('[^'\\]\\(]*')|([A-Za-z]+[A-Za-z0-9_]*))\\))? *!?= *\"[^\"]*\" *\\]/",$contratto_corr,2);
+while (preg_match("/\\[c +[A-Za-z]+[A-Za-z0-9_]*(\\((('[^'\\]\\(]*')|([A-Za-z]+[A-Za-z0-9_]*))\\))? *(!?=|!?%|>|<) *\"[^\"]*\" *((\\||&) *[A-Za-z]+[A-Za-z0-9_]*(\\((('[^'\\]\\(]*')|([A-Za-z]+[A-Za-z0-9_]*))\\))? *(!?=|!?%|>|<) *\"[^\"]*\" *)*\\]/",$contratto_corr)) {
+$contr_vett = preg_split("/\\[c +[A-Za-z]+[A-Za-z0-9_]*(\\((('[^'\\]\\(]*')|([A-Za-z]+[A-Za-z0-9_]*))\\))? *(!?=|!?%|>|<) *\"[^\"]*\" *((\\||&) *[A-Za-z]+[A-Za-z0-9_]*(\\((('[^'\\]\\(]*')|([A-Za-z]+[A-Za-z0-9_]*))\\))? *(!?=|!?%|>|<) *\"[^\"]*\" *)*\\]/",$contratto_corr,2);
 $contr_parziale = substr($contratto_corr,strlen($contr_vett[0]));
 $contratto_corr = $contr_vett[0];
 $condizione = preg_split("/\" *\\]/",$contr_parziale,2);
 $condizione = $condizione[0];
-$val_if = preg_split("/ *!?= *\"/",preg_replace("/^\\[c +/","",$condizione));
+$cond_verificata = 0;
+$cont_oper = "";
+$txt_sost1 = explode("&",preg_replace("/^\\[c +/","",$condizione));
+for ($num1 = 0 ; $num1 < count($txt_sost1) ; $num1++) {
+if ($num1) $cont_oper = "&";
+$txt_sost2 = explode("|",$txt_sost1[$num1]);
+for ($num2 = 0 ; $num2 < count($txt_sost2) ; $num2++) {
+if ($num2) $cont_oper = "|";
+$val_if = preg_split("/ *(!?=|!?%|>|<) *\"/",$txt_sost2[$num2]);
 $var_if = trim($val_if[0]);
-$val_if = $val_if[1];
+$val_if = preg_replace("/\" */","",$val_if[1]);
 if (str_replace("(","",$var_if) != $var_if) {
 $parti_arr = explode("(",substr($var_if,0,-1));
 if (substr($parti_arr[1],0,1) == "'") $val_var_if = substr($parti_arr[1],1,-1);
-else $val_var_if = ${$parti_arr[1]};
-$val_var_if = ${$parti_arr[0]}[$val_var_if];
+else $val_var_if = fixset(${$parti_arr[1]});
+$val_var_if = fixset(${$parti_arr[0]}[$val_var_if]);
 } # fine if (str_replace("(","",$var_if) != $var_if)
 else $val_var_if = fixset($$var_if);
-if (preg_match("/!= *\"/",$condizione)) $cond = "!=";
+$txt_sost2[$num2] = str_replace(" ","",$txt_sost2[$num2]);
+if (strstr($txt_sost2[$num2],"!=\"")) $cond = "!=";
+else {
+if (strstr($txt_sost2[$num2],">\"")) $cond = ">";
+else {
+if (strstr($txt_sost2[$num2],"<\"")) $cond = "<";
+else {
+if (strstr($txt_sost2[$num2],"!%\"")) $cond = "!%";
+else {
+if (strstr($txt_sost2[$num2],"%\"")) $cond = "%";
 else $cond = "=";
+} # fine else if (strstr($txt_sost2[$num2],"!%\""))
+} # fine else if (strstr($txt_sost2[$num2],"<\""))
+} # fine else if (strstr($txt_sost2[$num2],">\""))
+} # fine else if (strstr($txt_sost2[$num2],"!=\""))
+$se_cond_corr = 0;
+if ($cond == "=" and $val_var_if == $val_if) $se_cond_corr = 1;
+if ($cond == "!=" and $val_var_if != $val_if) $se_cond_corr = 1;
+if ($cond == ">" and $val_var_if > $val_if) $se_cond_corr = 1;
+if ($cond == "<" and $val_var_if < $val_if) $se_cond_corr = 1;
+if ($cond == "%" and strstr((string) $val_var_if,$val_if)) $se_cond_corr = 1;
+if ($cond == "!%" and !strstr((string) $val_var_if,$val_if)) $se_cond_corr = 1;
+if ($cont_oper == "&") {
+if ($cond_verificata and $se_cond_corr) $cond_verificata = 1;
+else $cond_verificata = 0;
+} # fine if ($cont_oper == "&")
+else {
+if ($cont_oper == "|") {
+if ($cond_verificata or $se_cond_corr) $cond_verificata = 1;
+else $cond_verificata = 0;
+} # fine if ($cont_oper == "|")
+else $cond_verificata = $se_cond_corr;
+} # fine else if ($cont_oper == "&")
+} # fine for $num2
+} # fine for $num1
 $contr_parziale = substr($contr_parziale,(strlen($condizione) + 1));
 while (substr($contr_parziale,0,1) == " ") $contr_parziale = substr($contr_parziale,1);
 $contr_parziale = substr($contr_parziale,1);
 $contr_vett = explode("[/c]",$contr_parziale,2);
 $contr_parziale = substr($contr_parziale,(strlen($contr_vett[0]) + 4));
-if ($cond == "=" and $val_var_if == $val_if) $contratto_corr .= $contr_vett[0];
-if ($cond == "!=" and $val_var_if != $val_if) $contratto_corr .= $contr_vett[0];
+if ($cond_verificata) $contratto_corr .= $contr_vett[0];
 $contratto_corr .= $contr_parziale;
-} # fine while (preg_match("/\\[c +[A-Za-z]+[A-Za-z0-9_]*(\\((('[A-Za-z]+[A-Za-z0-9_]*')|([A-Za-z]+[A-Za-z0-9_]*))\\))? *!?= *\"[^\"]*\" *\\]/",$contratto_corr))
+} # fine while (preg_match("/\\[c +[A-Za-z]+[A-Za-z0-9_]*(\\((('[^'\\]\\(]*')|([A-Za-z]+[A-Za-z0-9_]*))\\))? *(!?=|!?%|>|<) *\"[^\"]*\" *((\\||&) *[A-Za-z]+[A-Za-z0-9_]*(\\((('[^'\\]\\(]*')|([A-Za-z]+[A-Za-z0-9_]*))\\))? *(!?=|!?%|>|<) *\"[^\"]*\" *)*\\]/",$contratto_corr))
 
 
 if ($data_inizio) $data_inizio = formatta_data_contr($data_inizio,$stile_data);
@@ -3240,6 +3614,7 @@ if ($data_nascita) $data_nascita = formatta_data_contr($data_nascita,$stile_data
 if ($data_nascita_ospite) $data_nascita_ospite = formatta_data_contr($data_nascita_ospite,$stile_data);
 if ($data_inserimento_costo_agg) $data_inserimento_costo_agg = formatta_data_contr($data_inserimento_costo_agg,$stile_data);
 if ($data_pagamento) $data_pagamento = formatta_data_contr($data_pagamento,$stile_data);
+if ($data_operazione_pagamento) $data_operazione_pagamento = formatta_data_contr($data_operazione_pagamento,$stile_data);
 if ($data_inserimento_prenotazione) $data_inserimento_prenotazione = formatta_data_contr($data_inserimento_prenotazione,$stile_data);
 if ($data_creazione_documento_salvato) $data_creazione_documento_salvato = formatta_data_contr($data_creazione_documento_salvato,$stile_data);
 $data_inizio_selezione = $data_inizio_selezione_f;
@@ -3281,7 +3656,6 @@ if (!$caparra) {
 $caparra = "$tag_b"."___________$tag_no_b";
 $caparra_p = "$tag_b"."___________$tag_no_b";
 } # fine if (!$caparra)
-else $caparra_p = punti_in_num($caparra,$stile_soldi);
 if (!$costo_tot or !$commissioni) {
 $resto_commissioni = "$tag_b"."_____________$tag_no_b";
 $resto_commissioni_p = "$tag_b"."_____________$tag_no_b";
@@ -3290,7 +3664,6 @@ if (!$commissioni) {
 $commissioni = "$tag_b"."___________$tag_no_b";
 $commissioni_p = "$tag_b"."___________$tag_no_b";
 } # fine if (!$commissioni)
-else $commissioni_p = punti_in_num($commissioni,$stile_soldi);
 if (!$costo_tot) {
 $resto_da_pagare = "$tag_b"."_____________$tag_no_b";
 $resto_da_pagare_p = "$tag_b"."_____________$tag_no_b";
@@ -3304,12 +3677,10 @@ if (!$costo_tariffa) {
 $costo_tariffa = "$tag_b"."____________________$tag_no_b";
 $costo_tariffa_p = "$tag_b"."____________________$tag_no_b";
 } # fine if (!$costo_tariffa)
-else $costo_tariffa_p = punti_in_num($costo_tariffa,$stile_soldi);
 if (!$sconto) {
 $sconto = "$tag_b"."____________$tag_no_b";
 $sconto_p = "$tag_b"."____________$tag_no_b";
 } # fine if (!$sconto)
-else $sconto_p = punti_in_num($sconto,$stile_soldi);
 if (!$commento) $commento = "$tag_b"."______________________$tag_no_b";
 if (!$origine_prenotazione) $origine_prenotazione = "$tag_b"."_________________$tag_no_b";
 if (!$unita_occupata) $unita_occupata = "$tag_b"."____$tag_no_b";
@@ -3324,12 +3695,10 @@ if (!$pagato) {
 $pagato = "$tag_b"."_____________$tag_no_b";
 $pagato_p = "$tag_b"."_____________$tag_no_b";
 } # fine if (!$pagato)
-else $pagato_p = punti_in_num($pagato,$stile_soldi);
 if (!$costo_tot) {
 $costo_tot = "$tag_b"."_____________$tag_no_b";
 $costo_tot_p = "$tag_b"."_____________$tag_no_b";
 } # fine if (!$costo_tot)
-else $costo_tot_p = punti_in_num($costo_tot,$stile_soldi);
 if (!$n_letti_agg) $n_letti_agg = "$tag_b"."____$tag_no_b";
 if (!$numero_prenotazione) $numero_prenotazione = "$tag_b"."____$tag_no_b";
 if (!$nome_ospite) $nome_ospite = "$tag_b"."____________________$tag_no_b";
@@ -3382,15 +3751,15 @@ $val_if = strstr($contratto_r,"[numero_progressivo_documento]");
 $contratto_r = substr($contratto_r,0,(strlen($val_if) * -1)).$numero_progressivo_documento.substr($val_if,30);
 $numero_progressivo_documento++;
 } # fine if ($incr_np and $lettere_var == "numero_progressivo_documento")
-else $contratto_r = str_replace("[".$lettere_var."]",fixset(${$lettere_var}),$contratto_r);
+else $contratto_r = str_replace("[".$lettere_var."]",fixstr(${$lettere_var}),$contratto_r);
 } # fine if (str_replace("(","",str_replace(")","",str_replace("'","",$lettere_var))) == $lettere_var)
 else {
 $parti_arr = explode("(",substr($lettere_var,0,-1));
 if (preg_replace("/[A-Za-z]+[A-Za-z0-9_]*/","",$parti_arr[0]) == "" and preg_replace("/(('[^']*')|([A-Za-z]+[A-Za-z0-9_]*))/","",$parti_arr[1]) == "") {
 if (substr($parti_arr[1],0,1) == "'") $val_var_if = substr($parti_arr[1],1,-1);
-else $val_var_if = ${$parti_arr[1]};
-if ($array_date_contr[$parti_arr[0]] == "SI") $contratto_r = str_replace("[".$lettere_var."]",formatta_data_contr(${$parti_arr[0]}[$val_var_if],$stile_data),$contratto_r);
-else $contratto_r = str_replace("[".$lettere_var."]",${$parti_arr[0]}[$val_var_if],$contratto_r);
+else $val_var_if = fixset(${$parti_arr[1]});
+if (isset($array_date_contr[$parti_arr[0]]) and $array_date_contr[$parti_arr[0]] == "SI") $contratto_r = str_replace("[".$lettere_var."]",formatta_data_contr(${$parti_arr[0]}[$val_var_if],$stile_data),$contratto_r);
+else $contratto_r = str_replace("[".$lettere_var."]",fixstr(${$parti_arr[0]}[$val_var_if]),$contratto_r);
 } # fine if (preg_replace("/[A-Za-z]+[A-Za-z0-9_]*/","",$parti_arr[0]) == "" and...
 } # fine else if (str_replace("(","",str_replace(")","",str_replace("'","",$lettere_var))) == $lettere_var)
 } # fine if ($lettera == "]")
@@ -3446,6 +3815,7 @@ $data_fine_selezione = $data_fine_selezione_orig;
 $data_inserimento_prenotazione = $data_inserimento_prenotazione_orig;
 $oggi = $oggi_orig;
 
+$numero_cliente_ospite = "";
 $cognome_ospite = "";
 
 } # fine if ($mostra_ripetizione)
@@ -3453,9 +3823,24 @@ $cognome_ospite = "";
 } # fine for $n_p2
 
 
-if (empty($errore_ripetizione)) $contratto .= $apertura_rip_contr.$contratto_ripetizione.$chiusura_rip_contr;
+if (empty($errore_ripetizione)) {
+for ($num1 = 1 ; $num1 <= $dati_allegato['num'] ; $num1++) {
+if (empty(${"allegato$num1"})) {
+if ($ripeti_tutto) $apertura_rip_contr = str_replace("<b>".$dati_allegato['corr'][$num1]."</b>",$dati_allegato['corr'][$num1],str_replace(" name=\"allega$num1"."_$n_r\" checked>"," name=\"allega$num1"."_$n_r\">",$apertura_rip_contr));
+else $contratto = str_replace("<b>".$dati_allegato['corr'][$num1]."</b>",$dati_allegato['corr'][$num1],str_replace(" name=\"allega$num1"."_1\" checked>"," name=\"allega$num1"."_1\">",$contratto));
+} # fine if (empty(${"allegato$num1"}))
+} # fine for $num1
+$contratto .= $apertura_rip_contr.$contratto_ripetizione.$chiusura_rip_contr;
+} # fine if (empty($errore_ripetizione))
 
-if (!empty($filecontr) and $ripeti_tutto) {
+if ($ripeti_tutto) {
+if ($nome_file_downl['a'] and strcmp(trim($nome_documento_scaricato),"")) {
+$nome_file_downl[$n_r] = trim(str_replace("\r","_",str_replace("\n","_",str_replace("\"","_",str_replace("'","_",str_replace("..","_",str_replace("\\","_",str_replace("/","_",$nome_documento_scaricato))))))));
+$nome_file_downl['num'] = $n_r;
+$dati_file_dat[$n_r]['n_downl'] = $nome_file_downl[$n_r];
+if (!isset($dati_file_dat[$n_r]['nome'])) $dati_file_dat[$n_r]['ins_nome'] = 1;
+} # fine if ($nome_file_downl['a'] and strcmp(trim($nome_documento_scaricato),""))
+if (!empty($filecontr)) {
 if ($tipo_contratto == "contrrtf") {
 $contratto = str_replace("&quot;","\"",$contratto);
 $contratto = str_replace("&#039;","'",$contratto);
@@ -3581,6 +3966,16 @@ $contratto = str_replace("Ě","\u282\'3f",$contratto);
 $contratto = str_replace("Ů","\u366\'3f",$contratto);
 } # fine if ($tipo_contratto == "contrrtf")
 
+if (!isset($dati_file_dat[$n_r]['nome']) and isset($dati_file_dat[$n_r]['ins_nome'])) {
+$val_if = explode("_",substr($nome_file_contr[$n_r],strlen($nome_contratto)));
+$val_if[0] = $nome_contratto;
+$val_if[3] = "1+1_".$val_if[3];
+$nome_file_contr[$n_r] = implode("_",$val_if);
+$val_if = explode(".",$nome_file_contr[$n_r]);
+$val_if = $val_if[(count($val_if) - 1)];
+$dati_file_dat[$n_r]['nome'] = substr($nome_file_contr[$n_r],0,(-1 * (strlen($val_if) + 1)));
+} # fine if (!isset($dati_file_dat[$n_r]['nome']) and isset($dati_file_dat[$n_r]['ins_nome']))
+
 if ($incr_np and !$messaggio_di_errore) {
 if ($numero_progressivo_documento > ($num_prog_contr[$n_r] + 1)) {
 $val_if = $numero_progressivo_documento - 1;
@@ -3599,6 +3994,9 @@ else {
 $nome_file_contr[$n_r] = str_replace(" ","",$nome_file_contr[$n_r]);
 if (isset($dati_file_dat[$n_r]['nome'])) $dati_file_dat[$n_r]['nome'] = str_replace(" ","",$dati_file_dat[$n_r]['nome']);
 } # fine else if ($numero_progressivo_documento > ($num_prog_contr[$n_r] + 1))
+} # fine if ($incr_np and !$messaggio_di_errore)
+
+if ($crea_file_dopo and !$messaggio_di_errore) {
 if ($nomi_contratti['compress'][$numero_contratto]) {
 $nome_file_contr[$n_r] .= ".gz";
 $lock_compress[$n_r] = crea_lock_file($dir_salva."/".$nome_file_contr[$n_r]);
@@ -3608,9 +4006,9 @@ else {
 $filecontr[$n_r] = fopen($dir_salva."/".$nome_file_contr[$n_r],"w+");
 flock($filecontr[$n_r],2);
 } # fine else if ($nomi_contratti['compress'][$numero_contratto])
-} # fine if ($incr_np and !$messaggio_di_errore)
+} # fine if ($crea_file_dopo and !$messaggio_di_errore)
 
-if (!$messaggio_di_errore or !$incr_np) {
+if (!$messaggio_di_errore or !$crea_file_dopo) {
 if ($nomi_contratti['compress'][$numero_contratto]) {
 gzwrite($filecontr[$n_r],$contratto);
 gzclose($filecontr[$n_r]);
@@ -3625,13 +4023,15 @@ if ($messaggio_di_errore) unlink($dir_salva."/".$nome_file_contr[$n_r]);
 elseif (isset($dati_file_dat[$n_r]['nome'])) {
 $num1 = fopen($dir_salva."/".$dati_file_dat[$n_r]['nome'].".dat","w+");
 flock($num1,2);
-fwrite($num1,"rn:".$dati_file_dat[$n_r]['n_pren']."\n");
+if (isset($dati_file_dat[$n_r]['n_pren'])) fwrite($num1,"rn:".$dati_file_dat[$n_r]['n_pren']."\n");
+if (isset($dati_file_dat[$n_r]['n_downl'])) fwrite($num1,"dn:".$dati_file_dat[$n_r]['n_downl']."\n");
 flock($num1,3);
 fclose($num1);
 } # fine elseif (isset($dati_file_dat[$n_r]['nome']))
-} # fine if (!$messaggio_di_errore or !$incr_np)
+} # fine if (!$messaggio_di_errore or !$crea_file_dopo)
 $contratto = "";
-} # fine if (!empty($filecontr) and $ripeti_tutto)
+} # fine if (!empty($filecontr))
+} # fine if ($ripeti_tutto)
 
 } # fine if (!$ripeti_prenota_data or...
 } # fine for $n_r
@@ -3750,33 +4150,73 @@ $priorita_unita = "";
 
 
 $contratto_corr = $contratto_parte2[$n_p2];
-while (preg_match("/\\[c +[A-Za-z]+[A-Za-z0-9_]*(\\((('[^'\\]\\(]*')|([A-Za-z]+[A-Za-z0-9_]*))\\))? *!?= *\"[^\"]*\" *\\]/",$contratto_corr)) {
-$contr_vett = preg_split("/\\[c +[A-Za-z]+[A-Za-z0-9_]*(\\((('[^'\\]\\(]*')|([A-Za-z]+[A-Za-z0-9_]*))\\))? *!?= *\"[^\"]*\" *\\]/",$contratto_corr,2);
+while (preg_match("/\\[c +[A-Za-z]+[A-Za-z0-9_]*(\\((('[^'\\]\\(]*')|([A-Za-z]+[A-Za-z0-9_]*))\\))? *(!?=|!?%|>|<) *\"[^\"]*\" *((\\||&) *[A-Za-z]+[A-Za-z0-9_]*(\\((('[^'\\]\\(]*')|([A-Za-z]+[A-Za-z0-9_]*))\\))? *(!?=|!?%|>|<) *\"[^\"]*\" *)*\\]/",$contratto_corr)) {
+$contr_vett = preg_split("/\\[c +[A-Za-z]+[A-Za-z0-9_]*(\\((('[^'\\]\\(]*')|([A-Za-z]+[A-Za-z0-9_]*))\\))? *(!?=|!?%|>|<) *\"[^\"]*\" *((\\||&) *[A-Za-z]+[A-Za-z0-9_]*(\\((('[^'\\]\\(]*')|([A-Za-z]+[A-Za-z0-9_]*))\\))? *(!?=|!?%|>|<) *\"[^\"]*\" *)*\\]/",$contratto_corr,2);
 $contr_parziale = substr($contratto_corr,strlen($contr_vett[0]));
 $contratto_corr = $contr_vett[0];
 $condizione = preg_split("/\" *\\]/",$contr_parziale,2);
 $condizione = $condizione[0];
-$val_if = preg_split("/ *!?= *\"/",preg_replace("/^\\[c +/","",$condizione));
+$cond_verificata = 0;
+$cont_oper = "";
+$txt_sost1 = explode("&",preg_replace("/^\\[c +/","",$condizione));
+for ($num1 = 0 ; $num1 < count($txt_sost1) ; $num1++) {
+if ($num1) $cont_oper = "&";
+$txt_sost2 = explode("|",$txt_sost1[$num1]);
+for ($num2 = 0 ; $num2 < count($txt_sost2) ; $num2++) {
+if ($num2) $cont_oper = "|";
+$val_if = preg_split("/ *(!?=|!?%|>|<) *\"/",$txt_sost2[$num2]);
 $var_if = trim($val_if[0]);
-$val_if = $val_if[1];
+$val_if = preg_replace("/\" */","",$val_if[1]);
 if (str_replace("(","",$var_if) != $var_if) {
 $parti_arr = explode("(",substr($var_if,0,-1));
 if (substr($parti_arr[1],0,1) == "'") $val_var_if = substr($parti_arr[1],1,-1);
-else $val_var_if = ${$parti_arr[1]};
-$val_var_if = ${$parti_arr[0]}[$val_var_if];
+else $val_var_if = fixset(${$parti_arr[1]});
+$val_var_if = fixset(${$parti_arr[0]}[$val_var_if]);
 } # fine if (str_replace("(","",$var_if) != $var_if)
 else $val_var_if = fixset($$var_if);
-if (preg_match("/!= *\"/",$condizione)) $cond = "!=";
+$txt_sost2[$num2] = str_replace(" ","",$txt_sost2[$num2]);
+if (strstr($txt_sost2[$num2],"!=\"")) $cond = "!=";
+else {
+if (strstr($txt_sost2[$num2],">\"")) $cond = ">";
+else {
+if (strstr($txt_sost2[$num2],"<\"")) $cond = "<";
+else {
+if (strstr($txt_sost2[$num2],"!%\"")) $cond = "!%";
+else {
+if (strstr($txt_sost2[$num2],"%\"")) $cond = "%";
 else $cond = "=";
+} # fine else if (strstr($txt_sost2[$num2],"!%\""))
+} # fine else if (strstr($txt_sost2[$num2],"<\""))
+} # fine else if (strstr($txt_sost2[$num2],">\""))
+} # fine else if (strstr($txt_sost2[$num2],"!=\""))
+$se_cond_corr = 0;
+if ($cond == "=" and $val_var_if == $val_if) $se_cond_corr = 1;
+if ($cond == "!=" and $val_var_if != $val_if) $se_cond_corr = 1;
+if ($cond == ">" and $val_var_if > $val_if) $se_cond_corr = 1;
+if ($cond == "<" and $val_var_if < $val_if) $se_cond_corr = 1;
+if ($cond == "%" and strstr((string) $val_var_if,$val_if)) $se_cond_corr = 1;
+if ($cond == "!%" and !strstr((string) $val_var_if,$val_if)) $se_cond_corr = 1;
+if ($cont_oper == "&") {
+if ($cond_verificata and $se_cond_corr) $cond_verificata = 1;
+else $cond_verificata = 0;
+} # fine if ($cont_oper == "&")
+else {
+if ($cont_oper == "|") {
+if ($cond_verificata or $se_cond_corr) $cond_verificata = 1;
+else $cond_verificata = 0;
+} # fine if ($cont_oper == "|")
+else $cond_verificata = $se_cond_corr;
+} # fine else if ($cont_oper == "&")
+} # fine for $num2
+} # fine for $num1
 $contr_parziale = substr($contr_parziale,(strlen($condizione) + 1));
 while (substr($contr_parziale,0,1) == " ") $contr_parziale = substr($contr_parziale,1);
 $contr_parziale = substr($contr_parziale,1);
 $contr_vett = explode("[/c]",$contr_parziale,2);
 $contr_parziale = substr($contr_parziale,(strlen($contr_vett[0]) + 4));
-if ($cond == "=" and $val_var_if == $val_if) $contratto_corr .= $contr_vett[0];
-if ($cond == "!=" and $val_var_if != $val_if) $contratto_corr .= $contr_vett[0];
+if ($cond_verificata) $contratto_corr .= $contr_vett[0];
 $contratto_corr .= $contr_parziale;
-} # fine while (preg_match("/\\[c +[A-Za-z]+[A-Za-z0-9_]*(\\((('[A-Za-z]+[A-Za-z0-9_]*')|([A-Za-z]+[A-Za-z0-9_]*))\\))? *!?= *\"[^\"]*\" *\\]/",$contratto_corr))
+} # fine while (preg_match("/\\[c +[A-Za-z]+[A-Za-z0-9_]*(\\((('[^'\\]\\(]*')|([A-Za-z]+[A-Za-z0-9_]*))\\))? *(!?=|!?%|>|<) *\"[^\"]*\" *((\\||&) *[A-Za-z]+[A-Za-z0-9_]*(\\((('[^'\\]\\(]*')|([A-Za-z]+[A-Za-z0-9_]*))\\))? *(!?=|!?%|>|<) *\"[^\"]*\" *)*\\]/",$contratto_corr))
 
 
 $data_inizio_selezione = $data_inizio_selezione_f;
@@ -3811,15 +4251,15 @@ $val_if = strstr($contratto_r,"[numero_progressivo_documento]");
 $contratto_r = substr($contratto_r,0,(strlen($val_if) * -1)).$numero_progressivo_documento.substr($val_if,30);
 $numero_progressivo_documento++;
 } # fine if ($incr_np and $lettere_var == "numero_progressivo_documento")
-else $contratto_r = str_replace("[".$lettere_var."]",fixset(${$lettere_var}),$contratto_r);
+else $contratto_r = str_replace("[".$lettere_var."]",fixstr(${$lettere_var}),$contratto_r);
 } # fine if (str_replace("(","",str_replace(")","",str_replace("'","",$lettere_var))) == $lettere_var)
 else {
 $parti_arr = explode("(",substr($lettere_var,0,-1));
 if (preg_replace("/[A-Za-z]+[A-Za-z0-9_]*/","",$parti_arr[0]) == "" and preg_replace("/(('[^']*')|([A-Za-z]+[A-Za-z0-9_]*))/","",$parti_arr[1]) == "") {
 if (substr($parti_arr[1],0,1) == "'") $val_var_if = substr($parti_arr[1],1,-1);
-else $val_var_if = ${$parti_arr[1]};
-if ($array_date_contr[$parti_arr[0]] == "SI") $contratto_r = str_replace("[".$lettere_var."]",formatta_data_contr(${$parti_arr[0]}[$val_var_if],$stile_data),$contratto_r);
-else $contratto_r = str_replace("[".$lettere_var."]",${$parti_arr[0]}[$val_var_if],$contratto_r);
+else $val_var_if = fixset(${$parti_arr[1]});
+if (isset($array_date_contr[$parti_arr[0]]) and $array_date_contr[$parti_arr[0]] == "SI") $contratto_r = str_replace("[".$lettere_var."]",formatta_data_contr(${$parti_arr[0]}[$val_var_if],$stile_data),$contratto_r);
+else $contratto_r = str_replace("[".$lettere_var."]",fixstr(${$parti_arr[0]}[$val_var_if]),$contratto_r);
 } # fine if (preg_replace("/[A-Za-z]+[A-Za-z0-9_]*/","",$parti_arr[0]) == "" and...
 } # fine else if (str_replace("(","",str_replace(")","",str_replace("'","",$lettere_var))) == $lettere_var)
 } # fine if ($lettera == "]")
@@ -3856,6 +4296,13 @@ $contratto .= "</textarea><br>
 $contratto .= "&nbsp;&nbsp;".bottone_submit_contr(mex("Spedisci",$pag),"inse","","snml")."
 </div></form>";
 } # fine if ($tipo_contratto == "contreml")
+
+if (!$ripeti_tutto and $nome_file_downl['a'] and strcmp(trim($nome_documento_scaricato),"")) {
+$nome_file_downl[1] = trim(str_replace("\r","_",str_replace("\n","_",str_replace("\"","_",str_replace("'","_",str_replace("..","_",str_replace("\\","_",str_replace("/","_",$nome_documento_scaricato))))))));
+$nome_file_downl['num'] = 1;
+$dati_file_dat[1]['n_downl'] = $nome_file_downl[1];
+if (!isset($dati_file_dat[1]['nome'])) $dati_file_dat[1]['ins_nome'] = 1;
+} # fine if (!$ripeti_tutto and $nome_file_downl['a'] and...
 
 if ($tipo_contratto == "contrrtf") {
 $contratto = str_replace("&quot;","\"",$contratto);
@@ -3984,6 +4431,16 @@ $contratto = str_replace("Ů","\u366\'3f",$contratto);
 
 
 if (!empty($filecontr) and !$ripeti_tutto) {
+if (!isset($dati_file_dat[1]['nome']) and isset($dati_file_dat[1]['ins_nome'])) {
+$val_if = explode("_",substr($nome_file_contr[1],strlen($nome_contratto)));
+$val_if[0] = $nome_contratto;
+$val_if[3] = "1+1_".$val_if[3];
+$nome_file_contr[1] = implode("_",$val_if);
+$val_if = explode(".",$nome_file_contr[1]);
+$val_if = $val_if[(count($val_if) - 1)];
+$dati_file_dat[1]['nome'] = substr($nome_file_contr[1],0,(-1 * (strlen($val_if) + 1)));
+} # fine if (!isset($dati_file_dat[1]['nome']) and isset($dati_file_dat[1]['ins_nome']))
+
 if ($incr_np and !$messaggio_di_errore) {
 if ($numero_progressivo_documento > ($num_prog_contr[1] + 1)) {
 $val_if = $numero_progressivo_documento - 1;
@@ -3995,6 +4452,9 @@ else {
 $nome_file_contr[1] = str_replace(" ","",$nome_file_contr[1]);
 if (isset($dati_file_dat[1]['nome'])) $dati_file_dat[1]['nome'] = str_replace(" ","",$dati_file_dat[1]['nome']);
 } # fine else if ($numero_progressivo_documento > ($num_prog_contr[1] + 1))
+} # fine if ($incr_np and !$messaggio_di_errore)
+
+if ($crea_file_dopo and !$messaggio_di_errore) {
 if ($nomi_contratti['compress'][$numero_contratto]) {
 $nome_file_contr[1] .= ".gz";
 $lock_compress[1] = crea_lock_file($dir_salva."/".$nome_file_contr[1]);
@@ -4004,35 +4464,39 @@ else {
 $filecontr[1] = fopen($dir_salva."/".$nome_file_contr[1],"w+");
 flock($filecontr[1],2);
 } # fine else if ($nomi_contratti['compress'][$numero_contratto])
-} # fine if ($incr_np and !$messaggio_di_errore)
+} # fine if ($crea_file_dopo and !$messaggio_di_errore)
 
-if (!$messaggio_di_errore or !$incr_np) {
-if ($nomi_contratti['compress'][$numero_contratto]) {
+if (!$messaggio_di_errore or !$crea_file_dopo) {
+if (!empty($nomi_contratti['compress'][$numero_contratto])) {
 gzwrite($filecontr[1],$contratto);
 gzclose($filecontr[1]);
 distruggi_lock_file($lock_compress[1],$dir_salva."/".$nome_file_contr[1]);
-} # fine if ($nomi_contratti['compress'][$numero_contratto])
+} # fine if (!empty($nomi_contratti['compress'][$numero_contratto]))
 else {
 fwrite($filecontr[1],$contratto);
 flock($filecontr[1],3);
 fclose($filecontr[1]);
-} # fine else if ($nomi_contratti['compress'][$numero_contratto])
+} # fine else if (!empty($nomi_contratti['compress'][$numero_contratto]))
 if ($messaggio_di_errore) unlink($dir_salva."/".$nome_file_contr[1]);
 elseif (isset($dati_file_dat[1]['nome'])) {
 $num1 = fopen($dir_salva."/".$dati_file_dat[1]['nome'].".dat","w+");
 flock($num1,2);
-fwrite($num1,"rn:".$dati_file_dat[1]['n_pren']."\n");
+if (isset($dati_file_dat[1]['n_pren'])) fwrite($num1,"rn:".$dati_file_dat[1]['n_pren']."\n");
+if (isset($dati_file_dat[1]['n_downl'])) fwrite($num1,"dn:".$dati_file_dat[1]['n_downl']."\n");
 flock($num1,3);
 fclose($num1);
 } # fine elseif (isset($dati_file_dat[1]['nome']))
-} # fine if (!$messaggio_di_errore or !$incr_np)
+} # fine if (!$messaggio_di_errore or !$crea_file_dopo)
 } # fine if (!empty($filecontr) and !$ripeti_tutto)
 
-if ($incr_np) {
+if ($crea_file_dopo) {
 flock($filelock,3);
 fclose($filelock);
 if (@is_file(C_DATI_PATH."/crea_contr.lock")) unlink(C_DATI_PATH."/crea_contr.lock");
-} # fine if ($incr_np)
+} # fine if ($crea_file_dopo)
+
+$nome_file_contr['num'] = count($nome_file_contr);
+$nome_file_contr['downl'] = $nome_file_downl;
 
 
 return $contratto;
@@ -4050,17 +4514,12 @@ $nome_file_contr_orig = $nome_file_contr;
 $num_file_salva_orig = $num_file_salva;
 if ($num_contr_esist) {
 $nome_file_contr = $nome_file_contr_esist;
-$num_file_salva = count($nome_file_contr);
+$num_file_salva = $nome_file_contr['num'];
 } # fine if ($num_contr_esist)
 $tabelle_lock = array($tableversioni,$tabletransazioni);
 $tabelle_lock = lock_tabelle($tabelle_lock);
-$adesso = date("YmdHis",(time() + (C_DIFF_ORE * 3600)));
-list($usec, $sec) = explode(' ',microtime());
-mt_srand((float) $sec + ((float) $usec * 100000));
-$val_casuale = mt_rand(100000,999999);
-$versione_transazione = prendi_numero_versione($tableversioni);
 $ultimo_accesso = date("Y-m-d H:i:s",(time() + (C_DIFF_ORE * 3600)));
-$id_transazione = $adesso.$val_casuale.$versione_transazione;
+$id_transazione = crea_id_sessione("",$tableversioni,8);
 esegui_query("insert into $tabletransazioni (idtransazioni,idsessione,tipo_transazione,anno,dati_transazione1,dati_transazione2,dati_transazione3,dati_transazione4,dati_transazione5,ultimo_accesso) values ('$id_transazione','$id_sessione','con_s','$anno','".aggslashdb($dir_salva)."','".aggslashdb(serialize($nome_file_contr))."','$tipo_contratto','".aggslashdb($origine)."','".aggslashdb($origine_vecchia)."','$ultimo_accesso')");
 unlock_tabelle($tabelle_lock);
 if ($tipo_contratto == "contrrtf") $sec_aspetta = 2;

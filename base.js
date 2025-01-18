@@ -971,6 +971,7 @@ if (!CkIF[idapp]) stile_checkin = '';
 else stile_checkin = ' style=\"background-image:url(img/fr_sx_checkin.gif); background-repeat:no-repeat; background-position: right center;\"';
 if (CoIF[idapp] == '&nbsp;') {
 ncas.innerHTML = '<div style=\"visibility: hidden;\">'+cognome+'</div>';
+if (ClIF[idapp] == 'closed') ncas.classList.add("bcolclosed");
 ncas.style.backgroundColor = ClIF[idapp];
 }
 else {

@@ -1,25 +1,25 @@
 
 ##########################################################################################
-#    HOTELDRUID									         #
-#    Copyright (C) 2001-2021 by Marco Maria Francesco De Santis (marco@digitaldruid.net) #
-#										         #
-#    This program is free software: you can redistribute it and/or modify	         #
+#    HOTELDRUID                                                                          #
+#    Copyright (C) 2001-2023 by Marco Maria Francesco De Santis (marco@digitaldruid.net) #
+#                                                                                        #
+#    This program is free software: you can redistribute it and/or modify                #
 #    it under the terms of the GNU Affero General Public License as published by         #
-#    the Free Software Foundation, either version 3 of the License, or		         #
-#    any later version accepted by Marco Maria Francesco De Santis, which	         #
-#    shall act as a proxy as defined in Section 14 of version 3 of the		         #
-#    license.									         #
-#										         #
-#    This program is distributed in the hope that it will be useful,		         #
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of		         #
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the		         #
-#    GNU Affero General Public License for more details.			         #
-#										         #
-#    You should have received a copy of the GNU Affero General Public License	         #
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.	         #
+#    the Free Software Foundation, either version 3 of the License, or                   #
+#    any later version accepted by Marco Maria Francesco De Santis, which                #
+#    shall act as a proxy as defined in Section 14 of version 3 of the                   #
+#    license.                                                                            #
+#                                                                                        #
+#    This program is distributed in the hope that it will be useful,                     #
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of                      #
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the                       #
+#    GNU Affero General Public License for more details.                                 #
+#                                                                                        #
+#    You should have received a copy of the GNU Affero General Public License            #
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.               #
 ##########################################################################################
 
-HotelDruid version 3.0.3
+HotelDruid version 3.0.6
 Program for hotel rooms management or weekly and daily rental 
 of apartments.
 
@@ -43,7 +43,7 @@ hoteldruid.
 
 REQUIRED SOFTWARE
 -apache (>=1.3.26) or another web server that supports php
--php (>=3.0.18) with extension for postgresql, mysql or sqlite3
+-php (>=4.0.4) with extension for postgresql, mysql or sqlite3
 -postgresql (>=7.4.7) or mysql (>=4.1.11) or sqlite (>=3.7.9)
 -a browser that supports html 4.01 with utf-8 encoding
 

@@ -64,6 +64,7 @@ case "privilegi e gruppi":  			$messaggio = "privilegios y grupos"; break;
 case "personalizzazioni e gruppi":  		$messaggio = "personalizaciones y grupos"; break;
 case "solo i gruppi":  				$messaggio = "solo grupos"; break;
 case "Gruppi importati":  			$messaggio = "Grupos importados"; break;
+case "Password aggiornata":  			$messaggio = "Contraseña actualizada"; break;
 case "":  		$messaggio = ""; break;
 case "":  		$messaggio = ""; break;
 

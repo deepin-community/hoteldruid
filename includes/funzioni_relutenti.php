@@ -2,7 +2,7 @@
 
 ##################################################################################
 #    HOTELDRUID
-#    Copyright (C) 2001-2019 by Marco Maria Francesco De Santis (marco@digitaldruid.net)
+#    Copyright (C) 2001-2023 by Marco Maria Francesco De Santis (marco@digitaldruid.net)
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published by
@@ -29,7 +29,7 @@ esegui_query("delete from $tablerelutenti where idutente = '$id_utente_mod' and 
 $relutente_usata = esegui_query("select idutente from $tablerelutenti where id$rel_sing = '$num_rel'");
 $num_relutente_usata = numlin_query($relutente_usata);
 } # fine if (!$gia_canc)
-else $num_relutente_usata = $relutente_usate[$num_rel];
+else $num_relutente_usata = fixset($relutente_usate[$num_rel]);
 if (!$num_relutente_usata) esegui_query("delete from $tablerel where id$rel_plur = '$num_rel' ","",$nolog);
 } # fine function cancella_relutente
 
@@ -48,7 +48,7 @@ $nuova_rel = htmlspecialchars($nuova_rel);
 $cod_n_rel = htmlspecialchars($cod_n_rel);
 $cod2_n_rel = htmlspecialchars($cod2_n_rel);
 $cod3_n_rel = htmlspecialchars($cod3_n_rel);
-$sup_n_rel = htmlspecialchars($sup_n_rel);
+$sup_n_rel = htmlspecialchars((string) $sup_n_rel);
 if (!$aggiungi_rel or str_replace(" ","",$nuova_rel)) {
 echo "<div id=\"avanz_$rel_plur\"><br>";
 if ($tablerel_inf) $tabelle_lock = array($tablerel,$tablerel_inf,$tablerelutenti);
@@ -84,7 +84,7 @@ for ($num1 = 0 ; $num1 < $num_rel_canc ; $num1++) {
 if (substr($num1,-3) == "000") http_keep_alive(". ");
 if ($num1 > 20) $nolog = 1;
 else $nolog = 0;
-cancella_relutente(risul_query($rel_canc,$num1,"id$rel_sing"),$id_utente_mod,$rel_sing,$rel_plur,$tablerel,$tablerelutenti,$rel_inf_sing,$rel_inf_plur,$tablerel_inf,"SI",$relutente_usate,$nolog);
+cancella_relutente(risul_query($rel_canc,$num1,"id$rel_sing"),$id_utente_mod,$rel_sing,$rel_plur,$tablerel,$tablerelutenti,$rel_inf_sing,$rel_inf_plur,$tablerel_inf,"SI",fixset($relutente_usate),$nolog);
 } # fine for $num1
 unset($rel_canc);
 unset($rel_usate);
@@ -103,10 +103,10 @@ if (@is_array($lista_rel)) $num_rel = count($lista_rel);
 else $num_rel = 0;
 for ($num1 = 0 ; $num1 < $num_rel ; $num1++) {
 $lista_rel[$num1] = htmlspecialchars($lista_rel[$num1]);
-$cod_rel[$num1] = htmlspecialchars($cod_rel[$num1]);
-$cod2_rel[$num1] = htmlspecialchars($cod2_rel[$num1]);
-$cod3_rel[$num1] = htmlspecialchars($cod3_rel[$num1]);
-$cod_rel_sup[$num1] = htmlspecialchars($cod_rel_sup[$num1]);
+$cod_rel[$num1] = htmlspecialchars(fixstr($cod_rel[$num1]));
+$cod2_rel[$num1] = htmlspecialchars(fixstr($cod2_rel[$num1]));
+$cod3_rel[$num1] = htmlspecialchars(fixstr($cod3_rel[$num1]));
+$cod_rel_sup[$num1] = htmlspecialchars(fixstr($cod_rel_sup[$num1]));
 } # fine for $num1
 } # fine if ($rel_predefinite)
 else if ($importa_rel) {
@@ -156,16 +156,16 @@ else $nolog = 0;
 
 $id_rel_sup = "";
 if ($rel_sup_sing and $cod_rel_sup[$num1]) {
-if ($cod_sup_esist[$cod_rel_sup[$num1]]) $id_rel_sup = $cod_sup_esist[$cod_rel_sup[$num1]];
+if (!empty($cod_sup_esist[$cod_rel_sup[$num1]])) $id_rel_sup = $cod_sup_esist[$cod_rel_sup[$num1]];
 else {
 $rel_sup = esegui_query("select id$rel_sup_plur from $tablerel_sup where codice_$rel_sup_sing = '".aggslashdb($cod_rel_sup[$num1])."' ");
 if (numlin_query($rel_sup) > 0) {
 $id_rel_sup = risul_query($rel_sup,0,"id$rel_sup_plur");
 $cod_sup_esist[$cod_rel_sup[$num1]] = $id_rel_sup;
 } # fine if (numlin_query($rel_sup) > 0)
-} # fine else if ($cod_sup_esistente[$cod_rel_sup[$num1]])
+} # fine else if (!empty($cod_sup_esistente[$cod_rel_sup[$num1]]))
 } # fine if ($rel_sup_sing and $cod_rel_sup[$num1])
-if ($rel_sup_sing and $id_rel_sup_vett[$num1]) {
+if ($rel_sup_sing and !empty($id_rel_sup_vett[$num1])) {
 if ($id_sup_esist[$id_rel_sup_vett[$num1]]) $id_rel_sup = $id_sup_esist[$id_rel_sup_vett[$num1]];
 else {
 $rel_sup = esegui_query("select id$rel_sup_plur from $tablerel_sup where id$rel_sup_plur = '".aggslashdb($id_rel_sup_vett[$num1])."' ");
@@ -174,7 +174,7 @@ $id_rel_sup = $id_rel_sup_vett[$num1];
 $id_sup_esist[$id_rel_sup_vett[$num1]] = $id_rel_sup;
 } # fine if (numlin_query($rel_sup) > 0)
 } # fine else if ($cod_sup_esistente[$cod_rel_sup[$num1]])
-} # fine if ($rel_sup_sing and $id_rel_sup_vett[$num1])
+} # fine if ($rel_sup_sing and !empty($id_rel_sup_vett[$num1]))
 
 if ($num_rel_agg < $num_passa_a_var) {
 $rel_esistenti = esegui_query("select id$rel_plur,nome_$rel_sing,codice_$rel_sing from $tablerel where nome_$rel_sing = '".aggslashdb($lista_rel[$num1])."' ");
@@ -186,8 +186,8 @@ $cod_esistente[$nome_rel] = risul_query($rel_esistenti,0,"codice_$rel_sing");
 } # fine if (numlin_query($rel_esistenti))
 } # fine if ($num_rel_agg <= $num_passa_a_var)
 
-if (!$rel_esistente[$lista_rel[$num1]]) {
-if ($cod_rel[$num1] and $id_utente_mod != 1 and (!$cod2_rel[$num1] or !$cod3_rel[$num1])) {
+if (empty($rel_esistente[$lista_rel[$num1]])) {
+if ($cod_rel[$num1] and $id_utente_mod != 1 and (empty($cod2_rel[$num1]) or empty($cod3_rel[$num1]))) {
 $cod_esistenti = esegui_query("select id$rel_plur,codice2_$rel_sing,codice3_$rel_sing from $tablerel where codice_$rel_sing = '".aggslashdb($cod_rel[$num1])."' and (codice2_$rel_sing is not NULL or codice3_$rel_sing is not NULL) ");
 # Query con inner join è molto più lenta con molte città
 #$cod_admin = esegui_query("select distinct $tablerel.codice2_$rel_sing,codice3_$rel_sing from $tablerel inner join $tablerelutenti on $tablerel.id$rel_plur = $tablerelutenti.id$rel_sing where $tablerelutenti.idutente = '1' and $tablerel.codice_$rel_sing = '".aggslashdb($cod_rel[$num1])."' ");
@@ -195,29 +195,29 @@ for ($num2 = 0 ; $num2 < numlin_query($cod_esistenti) ; $num2++) {
 $id_rel_cod = risul_query($cod_esistenti,$num2,"id$rel_plur");
 $utente_cod = esegui_query("select id$rel_sing from $tablerelutenti where id$rel_sing = '$id_rel_cod' and idutente = '1' ");
 if (numlin_query($utente_cod)) {
-if (!$cod2_rel[$num1]) $cod2_rel[$num1] = risul_query($cod_esistenti,$num2,"codice2_$rel_sing");
-if (!$cod3_rel[$num1]) $cod3_rel[$num1] = risul_query($cod_esistenti,$num2,"codice3_$rel_sing");
+if (empty($cod2_rel[$num1])) $cod2_rel[$num1] = risul_query($cod_esistenti,$num2,"codice2_$rel_sing");
+if (empty($cod3_rel[$num1])) $cod3_rel[$num1] = risul_query($cod_esistenti,$num2,"codice3_$rel_sing");
 break;
 } # fine if (numlin_query($utente_cod))
 } # fine for $num2
 } # fine if ($cod_rel[$num1] and $id_utente_mod != 1 and (!$cod2_rel[$num1] or !$cod3_rel[$num1]))
-if (!$num_max) {
+if (empty($num_max)) {
 $num_max = esegui_query("select max(id$rel_plur) from $tablerel ");
 $num_max = risul_query($num_max,0,0) + 1;
-} # fine if (!$num_max)
+} # fine if (empty($num_max))
 else $num_max++;
 $num_n_rel = $num_max;
 esegui_query("insert into $tablerel (id$rel_plur,nome_$rel_sing,codice_$rel_sing,codice2_$rel_sing,codice3_$rel_sing) values ('$num_n_rel','".aggslashdb($lista_rel[$num1])."','".aggslashdb($cod_rel[$num1])."','".aggslashdb($cod2_rel[$num1])."','".aggslashdb($cod3_rel[$num1])."') ","",$nolog);
 $rel_esistente[$lista_rel[$num1]] = 1;
 $id_esistente[$lista_rel[$num1]] = $num_n_rel;
 $cod_esistente[$lista_rel[$num1]] = $cod_rel[$num1];
-} # fine if (!$rel_esistente[$lista_rel[$num1]])
+} # fine if (empty($rel_esistente[$lista_rel[$num1]]))
 else {
 $num_n_rel = $id_esistente[$lista_rel[$num1]];
 $r_cod = $cod_esistente[$lista_rel[$num1]];
 if ((!$r_cod or $rel_predefinite) and $cod_rel[$num1]) esegui_query("update $tablerel set codice_$rel_sing = '".aggslashdb($cod_rel[$num1])."' where id$rel_plur = '$num_n_rel' ","",$nolog);
-if ($cod2_rel[$num1]) esegui_query("update $tablerel set codice2_$rel_sing = '".aggslashdb($cod2_rel[$num1])."' where id$rel_plur = '$num_n_rel' ","",$nolog);
-if ($cod3_rel[$num1]) esegui_query("update $tablerel set codice3_$rel_sing = '".aggslashdb($cod3_rel[$num1])."' where id$rel_plur = '$num_n_rel' ","",$nolog);
+if (!empty($cod2_rel[$num1])) esegui_query("update $tablerel set codice2_$rel_sing = '".aggslashdb($cod2_rel[$num1])."' where id$rel_plur = '$num_n_rel' ","",$nolog);
+if (!empty($cod3_rel[$num1])) esegui_query("update $tablerel set codice3_$rel_sing = '".aggslashdb($cod3_rel[$num1])."' where id$rel_plur = '$num_n_rel' ","",$nolog);
 if ($num_rel_agg < $num_passa_a_var) {
 $rel_esistenti2 = esegui_query("select idsup from $tablerelutenti where idutente = '$id_utente_mod' and id$rel_sing = '$num_n_rel' ");
 if (numlin_query($rel_esistenti2)) {
@@ -225,14 +225,14 @@ $rel_esistente2[$num_n_rel] = 1;
 $idsup_esistente2[$num_n_rel] = risul_query($rel_esistenti2,0,'idsup');
 } # fine if (numlin_query($rel_esistenti2))
 } # fine if ($num_rel_agg < $num_passa_a_var)
-} # fine else if (!$rel_esistente[$lista_rel[$num1]])
+} # fine else if (empty($rel_esistente[$lista_rel[$num1]]))
 
-if (!$rel_esistente2[$num_n_rel]) {
+if (empty($rel_esistente2[$num_n_rel])) {
 if ($id_rel_sup) esegui_query("insert into $tablerelutenti (idutente,id$rel_sing,idsup) values ('$id_utente_mod','$num_n_rel','$id_rel_sup') ","",$nolog);
 else esegui_query("insert into $tablerelutenti (idutente,id$rel_sing) values ('$id_utente_mod','$num_n_rel') ","",$nolog);
 $rel_esistente2[$num_n_rel] = 1;
 $idsup_esistente2[$num_n_rel] = $id_rel_sup;
-} # fine (!$rel_esistente2[$num_n_rel])
+} # fine (empty($rel_esistente2[$num_n_rel]))
 elseif ($id_rel_sup) {
 $idsup = $idsup_esistente2[$num_n_rel];
 if (!$idsup) esegui_query("update $tablerelutenti set idsup = '$id_rel_sup' where idutente = '$id_utente_mod' and id$rel_sing = '$num_n_rel' ","",$nolog);

@@ -20,8 +20,8 @@ case "supera il numero totale di settimane della prenotazione":	$messaggio = "su
 case "supera il numero totale di giorni della prenotazione":	$messaggio = "supera el número total de días de la reserva"; break;
 case "persone":  				$messaggio = "personas"; break;
 case "Si dovrà occupare almeno un periodo della regola di assegnazione 1":	$messaggio = "Habrá que ocupar por lo menos un período de la regla de asignación 1"; break;
-case "Si devono fare i seguenti spostamenti nei periodi della <font color=\"blue\">regola di assegnazione 1</font>":	$messaggio = "Hay que hacer los siguientes movimientos en los períodos de la <font color=\"blue\">regla de asignación 1</font>"; break;
-case "Sono stati fatti i seguenti spostamenti nei periodi della <font color=\"blue\">regola di assegnazione 1</font>":	$messaggio = "Se han llevado a cabo los siguientes movimientos en los períodos de la <font color=\"blue\">regla de asignación 1</font>"; break;
+case "Si devono fare i seguenti spostamenti nei periodi della <div style=\"display: inline; color: blue;\">regola di assegnazione 1</div>":	$messaggio = "Hay que hacer los siguientes movimientos en los períodos de la <div style=\"display: inline; color: blue;\">regla de asignación 1</div>"; break;
+case "Sono stati fatti i seguenti spostamenti nei periodi della <div style=\"display: inline; color: blue;\">regola di assegnazione 1</div>":	$messaggio = "Se han llevado a cabo los siguientes movimientos en los períodos de la <div style=\"display: inline; color: blue;\">regla de asignación 1</div>"; break;
 case "La prenotazione dal":  			$messaggio = "La reserva desde el"; break;
 case "a nome di":  				$messaggio = "a nombre de"; break;
 case "Non si può procedere perchè la tabella prenotazioni è cambiata nel frattempo":	$messaggio = "No se puede continuar porque ha cambiado la tabla de reservas mientras tanto"; break;
@@ -137,6 +137,9 @@ case "E-mail certificata (PEC) o codice destinatario":	$messaggio = "E-mail cert
 case "email":  					$messaggio = "email"; break;
 case "2ª email":  				$messaggio = "2º email"; break;
 case "PEC/codice":  				$messaggio = "email certificado"; break;
+case "Per questa tariffa si deve inserire un numero minimo di":	$messaggio = "Para esta tarifa hay que insertar por lo menos"; break;
+case "persona":  				$messaggio = "persona"; break;
+case "Usa il cliente della prenotazione originale":	$messaggio = "Utilizar el cliente de la reserva original"; break;
 case "":  		$messaggio = ""; break;
 case "":  		$messaggio = ""; break;
 

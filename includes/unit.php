@@ -244,6 +244,11 @@ case "chiusura appartamenti e tariffe":  		$messaggio = "chiusura [units] e tari
 case "assegnazione appartamenti":  			$messaggio = "assegnazione [units]"; break;
 case "solo per appartamenti":  				$messaggio = "solo per [units]"; break;
 case "tipologie di appartamenti":  			$messaggio = "tipologie di [units]"; break;
+case "C'è comunque almeno un appartamento libero tra quelli richiesti per ogni giorno del periodo richiesto":	$messaggio = "C'è comunque almeno un [unit] libero tra quelli richiesti per ogni giorno del periodo richiesto"; break;
+case "Potrebbe essere possibile inserire la prenotazione con uno o più cambi di appartamento":	$messaggio = "Potrebbe essere possibile inserire la prenotazione con uno o più cambi di [unit]"; break;
+case "Continua provando a dividere la prenotazione tra due o più degli appartamenti richiesti":	$messaggio = "Continua provando a dividere la prenotazione tra due o più degli [units] richiesti"; break;
+case "Continua cercando in tutti gli appartamenti":  	$messaggio = "Continua cercando in tutti gli [units]"; break;
+case "Non si è potuto inserire la prenotazione in un <b>unico appartamento</b>, è stata <em>divisa</em> tra vari appartamenti in periodi successivi":	$messaggio = "Non si è potuto inserire la prenotazione in un <b>unico [unit]</b>, è stata <em>divisa</em> tra vari [units] in periodi successivi"; break;
 case "":  		$messaggio = ""; break;
 case "":  		$messaggio = ""; break;
 
@@ -461,6 +466,11 @@ case "chiusura appartamenti e tariffe":  		$messaggio = "chiusura [units] e tari
 case "assegnazione appartamenti":  			$messaggio = "assegnazione [units]"; break;
 case "solo per appartamenti":  				$messaggio = "solo per [units]"; break;
 case "tipologie di appartamenti":  			$messaggio = "tipologie di [units]"; break;
+case "C'è comunque almeno un appartamento libero tra quelli richiesti per ogni giorno del periodo richiesto":	$messaggio = "C'è comunque almeno un [unit] libero tra quelli richiesti per ogni giorno del periodo richiesto"; break;
+case "Potrebbe essere possibile inserire la prenotazione con uno o più cambi di appartamento":	$messaggio = "Potrebbe essere possibile inserire la prenotazione con uno o più cambi di [unit]"; break;
+case "Continua provando a dividere la prenotazione tra due o più degli appartamenti richiesti":	$messaggio = "Continua provando a dividere la prenotazione tra due o più dei [units] richiesti"; break;
+case "Continua cercando in tutti gli appartamenti":  	$messaggio = "Continua cercando in tutti i [units]"; break;
+case "Non si è potuto inserire la prenotazione in un <b>unico appartamento</b>, è stata <em>divisa</em> tra vari appartamenti in periodi successivi":	$messaggio = "Non si è potuto inserire la prenotazione in un <b>unico [unit]</b>, è stata <em>divisa</em> tra vari [units] in periodi successivi"; break;
 case "":  		$messaggio = ""; break;
 case "":  		$messaggio = ""; break;
 
@@ -680,6 +690,11 @@ case "chiusura appartamenti e tariffe":  		$messaggio = "chiusura [units] e tari
 case "assegnazione appartamenti":  			$messaggio = "assegnazione [units]"; break;
 case "solo per appartamenti":  				$messaggio = "solo per [units]"; break;
 case "tipologie di appartamenti":  			$messaggio = "tipologie di [units]"; break;
+case "C'è comunque almeno un appartamento libero tra quelli richiesti per ogni giorno del periodo richiesto":	$messaggio = "C'è comunque almeno un'[unit] libera tra quelle richieste per ogni giorno del periodo richiesto"; break;
+case "Potrebbe essere possibile inserire la prenotazione con uno o più cambi di appartamento":	$messaggio = "Potrebbe essere possibile inserire la prenotazione con uno o più cambi di [unit]"; break;
+case "Continua provando a dividere la prenotazione tra due o più degli appartamenti richiesti":	$messaggio = "Continua provando a dividere la prenotazione tra due o più delle [units] richieste"; break;
+case "Continua cercando in tutti gli appartamenti":  	$messaggio = "Continua cercando in tutte le [units]"; break;
+case "Non si è potuto inserire la prenotazione in un <b>unico appartamento</b>, è stata <em>divisa</em> tra vari appartamenti in periodi successivi":	$messaggio = "Non si è potuto inserire la prenotazione in una <b>unica [unit]</b>, è stata <em>divisa</em> tra varie [units] in periodi successivi"; break;
 case "":  		$messaggio = ""; break;
 case "":  		$messaggio = ""; break;
 
@@ -897,6 +912,11 @@ case "chiusura appartamenti e tariffe":  		$messaggio = "chiusura [units] e tari
 case "assegnazione appartamenti":  			$messaggio = "assegnazione [units]"; break;
 case "solo per appartamenti":  				$messaggio = "solo per [units]"; break;
 case "tipologie di appartamenti":  			$messaggio = "tipologie di [units]"; break;
+case "C'è comunque almeno un appartamento libero tra quelli richiesti per ogni giorno del periodo richiesto":	$messaggio = "C'è comunque almeno una [unit] libera tra quelle richieste per ogni giorno del periodo richiesto"; break;
+case "Potrebbe essere possibile inserire la prenotazione con uno o più cambi di appartamento":	$messaggio = "Potrebbe essere possibile inserire la prenotazione con uno o più cambi di [unit]"; break;
+case "Continua provando a dividere la prenotazione tra due o più degli appartamenti richiesti":	$messaggio = "Continua provando a dividere la prenotazione tra due o più delle [units] richieste"; break;
+case "Continua cercando in tutti gli appartamenti":  	$messaggio = "Continua cercando in tutte le [units]"; break;
+case "Non si è potuto inserire la prenotazione in un <b>unico appartamento</b>, è stata <em>divisa</em> tra vari appartamenti in periodi successivi":	$messaggio = "Non si è potuto inserire la prenotazione in una <b>unica [unit]</b>, è stata <em>divisa</em> tra varie [units] in periodi successivi"; break;
 case "":  		$messaggio = ""; break;
 case "":  		$messaggio = ""; break;
 
@@ -905,12 +925,12 @@ case "":  		$messaggio = ""; break;
 } # fine switch ($messaggio)
 } # fine else if ($unit['special'])
 } # fine if else if ($unit['gender'] == "m")
-$messaggio = str_replace("[unit]",$unit['s_n'],$messaggio);
-$messaggio = str_replace("[units]",$unit['p_n'],$messaggio);
-$messaggio = str_replace("[Unit]",ucfirst($unit['s_n']),$messaggio);
-$messaggio = str_replace("[Units]",ucfirst($unit['p_n']),$messaggio);
-$messaggio = str_replace("[UNIT]",strtoupper($unit['s_n']),$messaggio);
-$messaggio = str_replace("[UNITS]",strtoupper($unit['p_n']),$messaggio);
+$messaggio = str_replace("[unit]",(string) $unit['s_n'],$messaggio);
+$messaggio = str_replace("[units]",(string) $unit['p_n'],$messaggio);
+$messaggio = str_replace("[Unit]",ucfirst((string) $unit['s_n']),$messaggio);
+$messaggio = str_replace("[Units]",ucfirst((string) $unit['p_n']),$messaggio);
+$messaggio = str_replace("[UNIT]",strtoupper((string) $unit['s_n']),$messaggio);
+$messaggio = str_replace("[UNITS]",strtoupper((string) $unit['p_n']),$messaggio);
 
 
 

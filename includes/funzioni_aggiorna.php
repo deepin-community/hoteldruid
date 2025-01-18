@@ -2,7 +2,7 @@
 
 ##################################################################################
 #    HOTELDRUID
-#    Copyright (C) 2001-2021 by Marco Maria Francesco De Santis (marco@digitaldruid.net)
+#    Copyright (C) 2001-2023 by Marco Maria Francesco De Santis (marco@digitaldruid.net)
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published by
@@ -102,6 +102,44 @@ fclose($file_lock_update);
 return $aggiorna_files;
 
 } # fine function aggiorna_codice_sorgente_phpr
+
+
+
+
+
+
+function aggiorna_DB_character_set ($on,&$character_set_db_orig,&$collation_db_orig,$PHPR_DB_TYPE,$PHPR_DB_NAME) {
+if ($on) {
+$character_set_db_orig = "";
+$collation_db_orig = "";
+} # fine if ($on)
+if ($PHPR_DB_TYPE == "mysql" or $PHPR_DB_TYPE == "mysqli") {
+if ($on) {
+if ($PHPR_DB_TYPE == "mysql") {
+$character_set_db = "utf8";
+$collation_db = "utf8_general_ci";
+} # fine if ($PHPR_DB_TYPE == "mysql")
+if ($PHPR_DB_TYPE == "mysqli") {
+$character_set_db = "utf8mb4";
+$collation_db = "utf8mb4_unicode_520_ci";
+} # fine if ($PHPR_DB_TYPE == "mysqli")
+$character_set = esegui_query("SHOW VARIABLES LIKE 'character_set_database'");
+$collation = esegui_query("SHOW VARIABLES LIKE 'collation_database'");
+if (numlin_query($character_set) == 1 and numlin_query($collation) == 1) {
+$character_set_db_orig = risul_query($character_set,0,"Value");
+$collation_db_orig = risul_query($collation,0,"Value");
+if ($character_set_db != $character_set_db_orig or $collation_db != $collation_db_orig) {
+$disp_err_orig = ini_get('display_errors');
+if ($disp_err_orig) ini_set('display_errors','0');
+esegui_query("alter database $PHPR_DB_NAME default character set '$character_set_db' collate '$collation_db'");
+if ($disp_err_orig) ini_set('display_errors',$disp_err_orig);
+} # fine if ($character_set_db != $character_set_db_orig or $collation_db != $collation_db_orig)
+else $character_set_db_orig = "";
+} # fine if (numlin_query($character_set) == 1 and...
+} # fine if ($on)
+elseif ($character_set_db_orig) @esegui_query("alter database $PHPR_DB_NAME default character set '$character_set_db_orig' collate '$collation_db_orig'");
+} # fine if ($PHPR_DB_TYPE == "mysql" or $PHPR_DB_TYPE == "mysqli")
+} # fine function aggiorna_DB_character_set
 
 
 
@@ -1216,7 +1254,7 @@ if ($versione_corrente < "0.60") {
 $aggiornato = "SI";
 esegui_query("create table ".$PHPR_TAB_PRE."messaggi (idmessaggi integer primary key, tipo_messaggio varchar(8), idutenti text, idutenti_visto text, datavisione $DATETIME, mittente text, testo text, dati_messaggio1 text, dati_messaggio2 text, dati_messaggio3 text, dati_messaggio4 text, dati_messaggio5 text, dati_messaggio6 text, dati_messaggio7 text, dati_messaggio8 text, dati_messaggio9 text, dati_messaggio10 text, dati_messaggio11 text, dati_messaggio12 text, dati_messaggio13 text, dati_messaggio14 text, dati_messaggio15 text, dati_messaggio16 text, dati_messaggio17 text, dati_messaggio18 text, datainserimento $DATETIME )");
 function contr_utf8 ($testo) {
-if (utf8_encode(utf8_decode($testo)) == $testo) $risul = 1;
+if (!function_exists('utf8_encode') or @utf8_encode(@utf8_decode($testo)) == $testo) $risul = 1;
 else $risul = 0;
 return $risul;
 } # fine function contr_utf8
@@ -1230,14 +1268,14 @@ $contenuto_col = esegui_query("select distinct $nome_colonna from ".$PHPR_TAB_PR
 $num_righe = numlin_query($contenuto_col);
 for ($num2 = 0 ; $num2 < $num_righe ; $num2++) {
 $val = risul_query($contenuto_col,$num2,$nome_colonna);
-if (!contr_utf8($val)) esegui_query("update ".$PHPR_TAB_PRE."$tabella set $nome_colonna = '".addslashes(utf8_encode($val))."' where $nome_colonna = '".addslashes($val)."'");
+if (!contr_utf8($val)) esegui_query("update ".$PHPR_TAB_PRE."$tabella set $nome_colonna = '".addslashes(@utf8_encode($val))."' where $nome_colonna = '".addslashes($val)."'");
 } # fine for $num2
 } # fine for $num1
 } # fine function converti_encode_tabella
 function converti_encode_file ($file) {
 $contenuto_file = implode("",file($file));
 if (!contr_utf8($contenuto_file)) {
-$contenuto_file = utf8_encode($contenuto_file);
+$contenuto_file = @utf8_encode($contenuto_file);
 scrivi_file($contenuto_file,$file);
 } # fine if (!contr_utf8($contenuto_file))
 } # fine function converti_encode_file
@@ -1294,7 +1332,7 @@ for ($num1 = 1 ; $num1 <= 18 ; $num1++) {
 if (strlen($num1) == 1) $num_contr = "0".$num1;
 else $num_contr = $num1;
 $contratto = implode("",file("./contr/contr".$num_contr.".php"));
-if (!contr_utf8($contratto)) $contratto = utf8_encode($contratto);
+if (!contr_utf8($contratto)) $contratto = @utf8_encode($contratto);
 $contratto = preg_split("/[$]contratto *= *\"/",$contratto);
 $contratto = $contratto[1];
 $contratto_exp = explode("\"",$contratto);
@@ -2249,10 +2287,10 @@ if ($molt_tariffa == "p") {
 $prezzi = esegui_query("select idperiodi,tariffa$num2 from $tableperiodi order by idperiodi ");
 for ($num3 = 0 ; $num3 < numlin_query($prezzi) ; $num3++) {
 $prezzo = risul_query($prezzi,$num3,'tariffa'.$num2);
-if (strcmp($prezzo,"")) {
+if (strcmp((string) $prezzo,"")) {
 $idper = risul_query($prezzi,$num3,'idperiodi');
 esegui_query("update $tableperiodi set tariffa$num2 = NULL, tariffa$num2"."p = '$prezzo' where idperiodi = '$idper' ");
-} # fine if (strcmp($prezzo,""))
+} # fine if (strcmp((string) $prezzo,""))
 } # fine for $num3
 } # fine if ($molt_tariffa == "p")
 } # fine for $num2
@@ -2736,7 +2774,7 @@ $aggiornato = "SI";
 if ($versione_corrente < "3.00") {
 $aggiornato = "SI";
 #
-# Ricordarsi nelle versioni successive a 3.01 di passare qui db mysql a utf8mb4 se non lo è (come in creadb, funzioni_anno e backup)
+# Ricordarsi nelle versioni successive a 3.01 di passare qui db mysql a utf8mb4 se non lo è (funzione aggiorna_DB_character_set con 1)
 #
 for ($num1 = 0 ; $num1 < $num_anni ; $num1++) {
 $anno_mostra = risul_query($anni,$num1,'idanni');
@@ -2775,7 +2813,7 @@ esegui_query("create table $tableclienti (idclienti integer primary key, cognome
 esegui_query("insert into $tableclienti select idclienti,cognome,nome,soprannome,sesso,titolo,lingua,datanascita,cittanascita,regionenascita,nazionenascita,documento,scadenzadoc,tipodoc,cittadoc,regionedoc,nazionedoc,nazionalita,nazione,regione,citta,via,numcivico,cap,telefono,telefono2,telefono3,fax,email,email2,email3,cod_fiscale,partita_iva,commento,max_num_ordine,idclienti_compagni,doc_inviati,datainserimento,hostinserimento,utente_inserimento from $tableclienti_temp ");
 esegui_query("drop table $tableclienti_temp ");
 #
-# Ricordarsi nelle versioni successive a 3.01 di passare qui il db mysql a character set originale se lo si è cambiato
+# Ricordarsi nelle versioni successive a 3.01 di passare qui il db mysql a character set originale se lo si è cambiato (funzione aggiorna_DB_character_set con 0)
 #
 $priv_glob = esegui_query("select * from ".$PHPR_TAB_PRE."privilegi where anno = '1' ");
 for ($num1 = 0 ; $num1 < numlin_query($priv_glob) ; $num1++) {
@@ -3207,6 +3245,135 @@ if ($versione_corrente < "3.03") {
 $aggiornato = "SI";
 } # fine if ($versione_corrente < "3.03")
 
+if ($versione_corrente < "3.04") {
+$aggiornato = "SI";
+$colore_sfondo_quadro_disponibilita = "";
+aggiorna_DB_character_set(1,$character_set_db_orig,$collation_db_orig,$PHPR_DB_TYPE,$PHPR_DB_NAME);
+$tablesessioni = $PHPR_TAB_PRE."sessioni";
+$tablesessioni_temp = $PHPR_TAB_PRE."sessio";
+esegui_query("alter table $tablesessioni add column idcliente varchar(42) ");
+esegui_query("alter table $tablesessioni rename to $tablesessioni_temp ");
+esegui_query("create table $tablesessioni (idsessioni varchar(42) primary key, idcliente varchar(42), idutente integer, indirizzo_ip text, tipo_conn varchar(12), user_agent text, ultimo_accesso $DATETIME)");
+esegui_query("insert into $tablesessioni select idsessioni,idcliente,idutente,indirizzo_ip,tipo_conn,user_agent,ultimo_accesso from $tablesessioni_temp ");
+esegui_query("drop table $tablesessioni_temp ");
+$tabletransazioni = $PHPR_TAB_PRE."transazioni";
+$tabletransazioni_temp = $PHPR_TAB_PRE."transaz";
+esegui_query("alter table $tabletransazioni add column idcliente varchar(42) ");
+esegui_query("alter table $tabletransazioni rename to $tabletransazioni_temp ");
+esegui_query("create table $tabletransazioni (idtransazioni varchar(42) primary key, idcliente varchar(42), idsessione varchar(42), tipo_transazione varchar(5), anno integer, spostamenti text, dati_transazione1 text, dati_transazione2 text, dati_transazione3 text, dati_transazione4 text, dati_transazione5 text, dati_transazione6 text, dati_transazione7 text, dati_transazione8 text, dati_transazione9 text, dati_transazione10 text, dati_transazione11 text, dati_transazione12 text, dati_transazione13 text, dati_transazione14 text, dati_transazione15 text, dati_transazione16 text, dati_transazione17 text, dati_transazione18 text, dati_transazione19 text, dati_transazione20 text, dati_transazione21 text, dati_transazione22 text, ultimo_accesso $DATETIME)");
+esegui_query("insert into $tabletransazioni select idtransazioni,idcliente,idsessione,tipo_transazione,anno,spostamenti,dati_transazione1,dati_transazione2,dati_transazione3,dati_transazione4,dati_transazione5,dati_transazione6,dati_transazione7,dati_transazione8,dati_transazione9,dati_transazione10,dati_transazione11,dati_transazione12,dati_transazione13,dati_transazione14,dati_transazione15,dati_transazione16,dati_transazione17,dati_transazione18,dati_transazione19,dati_transazione20,dati_transazione21,dati_transazione22,ultimo_accesso from $tabletransazioni_temp ");
+esegui_query("drop table $tabletransazioni_temp ");
+$tabletransazioniweb = $PHPR_TAB_PRE."transazioniweb";
+$tabletransazioniweb_temp = $PHPR_TAB_PRE."transazw";
+esegui_query("alter table $tabletransazioniweb add column idcliente varchar(42) ");
+esegui_query("alter table $tabletransazioniweb rename to $tabletransazioniweb_temp ");
+esegui_query("create table $tabletransazioniweb (idtransazioni varchar(42) primary key, idcliente varchar(42), idsessione varchar(42), tipo_transazione varchar(5), anno integer, spostamenti text, dati_transazione1 text, dati_transazione2 text, dati_transazione3 text, dati_transazione4 text, dati_transazione5 text, dati_transazione6 text, dati_transazione7 text, dati_transazione8 text, dati_transazione9 text, dati_transazione10 text, dati_transazione11 text, dati_transazione12 text, dati_transazione13 text, dati_transazione14 text, dati_transazione15 text, dati_transazione16 text, dati_transazione17 text, dati_transazione18 text, dati_transazione19 text, dati_transazione20 text, dati_transazione21 text, dati_transazione22 text, ultimo_accesso $DATETIME)");
+esegui_query("insert into $tabletransazioniweb select idtransazioni,idcliente,idsessione,tipo_transazione,anno,spostamenti,dati_transazione1,dati_transazione2,dati_transazione3,dati_transazione4,dati_transazione5,dati_transazione6,dati_transazione7,dati_transazione8,dati_transazione9,dati_transazione10,dati_transazione11,dati_transazione12,dati_transazione13,dati_transazione14,dati_transazione15,dati_transazione16,dati_transazione17,dati_transazione18,dati_transazione19,dati_transazione20,dati_transazione21,dati_transazione22,ultimo_accesso from $tabletransazioniweb_temp ");
+esegui_query("drop table $tabletransazioniweb_temp ");
+aggiorna_DB_character_set(0,$character_set_db_orig,$collation_db_orig,$PHPR_DB_TYPE,$PHPR_DB_NAME);
+$minuti_durata_sessione = esegui_query("select valpersonalizza_num from ".$PHPR_TAB_PRE."personalizza where idpersonalizza = 'minuti_durata_sessione' and idutente = '1'");
+$minuti_durata_sessione = risul_query($minuti_durata_sessione,0,'valpersonalizza_num');
+if (!defined('C_MIN_SESSIONE')) define('C_MIN_SESSIONE',$minuti_durata_sessione);
+if (!defined('C_USA_COOKIES')) define('C_USA_COOKIES',0);
+esegui_query("insert into ".$PHPR_TAB_PRE."personalizza (idpersonalizza,idutente,valpersonalizza_num) values ('usa_cookies','1','0')");
+esegui_query("insert into ".$PHPR_TAB_PRE."personalizza (idpersonalizza,idutente,valpersonalizza) values ('modo_invio_email','1','locale')");
+$id_appartamenti = esegui_query("select idappartamenti from ".$PHPR_TAB_PRE."appartamenti order by idappartamenti ");
+$num_appartamenti = numlin_query($id_appartamenti);
+$fileaperto = fopen(C_DATI_PATH."/selectappartamenti.php","w+");
+flock($fileaperto,2);
+fwrite($fileaperto,"<?php \necho '\n");
+for ( $num = 0; $num < $num_appartamenti; $num = $num + 1) {
+$numapp = risul_query($id_appartamenti,$num,'idappartamenti');
+fwrite($fileaperto,"<option value=\"$numapp\">$numapp</option>
+");
+} # fine for $num
+fwrite($fileaperto,"';\n?>");
+flock($fileaperto,3);
+fclose($fileaperto);
+} # fine if ($versione_corrente < "3.04")
+
+if ($versione_corrente < "3.05") {
+$aggiornato = "SI";
+$mostra_bottone_payadv = "";
+esegui_query("delete from ".$PHPR_TAB_PRE."personalizza where idpersonalizza = '' ");
+esegui_query("delete from ".$PHPR_TAB_PRE."privilegi where idutente = '0' ");
+aggiorna_DB_character_set(1,$character_set_db_orig,$collation_db_orig,$PHPR_DB_TYPE,$PHPR_DB_NAME);
+for ($num1 = 0 ; $num1 < $num_anni ; $num1++) {
+$anno_mostra = risul_query($anni,$num1,'idanni');
+$tablecosti = $PHPR_TAB_PRE."costi".$anno_mostra;
+$tablecosti_temp = $PHPR_TAB_PRE."cost".$anno_mostra;
+esegui_query("alter table $tablecosti add column id_pagamento text ");
+esegui_query("alter table $tablecosti add column data_transazione $DATETIME ");
+esegui_query("alter table $tablecosti add column data_modifica $DATETIME ");
+esegui_query("alter table $tablecosti rename to $tablecosti_temp ");
+esegui_query("create table $tablecosti (idcosti integer unique, nome_costo text, val_costo float8, tipo_costo text, valuta text, costo_valuta float8, nome_cassa varchar(70), persona_costo text, provenienza_costo text, id_pagamento text, metodo_pagamento text, data_transazione $DATETIME, data_modifica $DATETIME, datainserimento $DATETIME, hostinserimento varchar(50), utente_inserimento integer)");
+esegui_query("insert into $tablecosti select idcosti,nome_costo,val_costo,tipo_costo,valuta,costo_valuta,nome_cassa,persona_costo,provenienza_costo,id_pagamento,metodo_pagamento,data_transazione,data_modifica,datainserimento,hostinserimento,utente_inserimento from $tablecosti_temp ");
+esegui_query("drop table $tablecosti_temp ");
+$tablesoldi = $PHPR_TAB_PRE."soldi".$anno_mostra;
+$tablesoldi_temp = $PHPR_TAB_PRE."sold".$anno_mostra;
+esegui_query("alter table $tablesoldi add column note text ");
+esegui_query("alter table $tablesoldi add column data_transazione $DATETIME ");
+esegui_query("alter table $tablesoldi add column data_modifica $DATETIME ");
+esegui_query("alter table $tablesoldi rename to $tablesoldi_temp ");
+esegui_query("create table $tablesoldi (idsoldi integer unique, motivazione text, id_pagamento text, metodo_pagamento text, note text, saldo_prenota float8, saldo_cassa float8, soldi_prima float8, valuta text, saldo_valuta float8, data_transazione $DATETIME, data_modifica $DATETIME, data_inserimento $DATETIME, utente_inserimento integer)");
+esegui_query("insert into $tablesoldi select idsoldi,motivazione,id_pagamento,metodo_pagamento,note,saldo_prenota,saldo_cassa,soldi_prima,valuta,saldo_valuta,data_transazione,data_modifica,data_inserimento,utente_inserimento from $tablesoldi_temp ");
+esegui_query("drop table $tablesoldi_temp ");
+esegui_query("update $tablecosti set data_transazione = datainserimento ");
+esegui_query("update $tablesoldi set data_transazione = data_inserimento ");
+} # fine for $num1
+aggiorna_DB_character_set(0,$character_set_db_orig,$collation_db_orig,$PHPR_DB_TYPE,$PHPR_DB_NAME);
+$contr_eml_ml = esegui_query("select * from ".$PHPR_TAB_PRE."contratti where tipo = 'contreml' and testo $LIKE '#!mln!#%' ");
+$num_contr_eml_ml = numlin_query($contr_eml_ml);
+for ($num1 = 0 ; $num1 < $num_contr_eml_ml ; $num1++) {
+$ln_def = substr(risul_query($contr_eml_ml,$num1,'testo'),7);
+$numc = risul_query($contr_eml_ml,$num1,'numero');
+$oggetto = esegui_query("select testo from ".$PHPR_TAB_PRE."contratti where numero = '$numc' and tipo = 'oggetto' ");
+$oggetto = risul_query($oggetto,0,'testo');
+esegui_query("update ".$PHPR_TAB_PRE."contratti set testo = '".aggslashdb("mln_$ln_def:$oggetto")."' where numero = '$numc' and tipo = 'oggetto' ");
+$allegato = esegui_query("select testo from ".$PHPR_TAB_PRE."contratti where numero = '$numc' and tipo = 'allegato' ");
+$allegato = risul_query($allegato,0,'testo');
+if ($allegato) esegui_query("update ".$PHPR_TAB_PRE."contratti set testo = '".aggslashdb("mln_$ln_def:$allegato")."' where numero = '$numc' and tipo = 'allegato' ");
+} # fine for $num1
+$allegati = esegui_query("select * from ".$PHPR_TAB_PRE."contratti where tipo = 'allegato' ");
+$num_allegati = numlin_query($allegati);
+for ($num1 = 0 ; $num1 < $num_allegati ; $num1++) {
+$numc = risul_query($allegati,$num1,'numero');
+$allegato = risul_query($allegati,$num1,'testo');
+if ($allegato) esegui_query("update ".$PHPR_TAB_PRE."contratti set testo = '".aggslashdb(",$allegato,")."' where numero = '$numc' and tipo = 'allegato' ");
+} # fine for $num1
+$api = esegui_query("select * from ".$PHPR_TAB_PRE."contratti where tipo = 'api' ");
+$num_api = numlin_query($api);
+for ($num1 = 0 ; $num1 < $num_api ; $num1++) {
+$numc = risul_query($api,$num1,'numero');
+$api_corr = risul_query($api,$num1,'testo');
+$pass_corr = strstr($api_corr,";");
+$api_corr = str_replace($pass_corr,";",$api_corr).$pass_corr;
+esegui_query("update ".$PHPR_TAB_PRE."contratti set testo = '".aggslashdb($api_corr)."' where numero = '$numc' and tipo = 'api' ");
+} # fine for $num1
+$contr_est_txt = esegui_query("select * from ".$PHPR_TAB_PRE."contratti where tipo = 'est_txt' ");
+$num_contr_est_txt = numlin_query($contr_est_txt);
+for ($num1 = 0 ; $num1 < $num_contr_est_txt ; $num1++) {
+$numc = risul_query($contr_est_txt,$num1,'numero');
+$est_txt = risul_query($contr_est_txt,$num1,'testo');
+esegui_query("update ".$PHPR_TAB_PRE."contratti set tipo = 'datdownl', testo = '".aggslashdb("$est_txt>")."' where numero = '$numc' and tipo = 'est_txt' ");
+} # fine for $num1
+} # fine if ($versione_corrente < "3.05")
+
+if ($versione_corrente < "3.06") {
+$aggiornato = "SI";
+for ($num1 = 0 ; $num1 < numlin_query($utenti) ; $num1++) {
+$idutente_mostra = risul_query($utenti,$num1,'idutenti');
+esegui_query("insert into ".$PHPR_TAB_PRE."personalizza (idpersonalizza,idutente,valpersonalizza) values ('stile_nomi','$idutente_mostra','ma1or')");
+} # fine for $num1
+$priv_glob = esegui_query("select * from ".$PHPR_TAB_PRE."privilegi where anno = '1' ");
+for ($num1 = 0 ; $num1 < numlin_query($priv_glob) ; $num1++) {
+$id_ut = risul_query($priv_glob,$num1,'idutente');
+$priv_mod_pers = risul_query($priv_glob,$num1,'priv_mod_pers');
+esegui_query("update ".$PHPR_TAB_PRE."privilegi set priv_mod_pers = '$priv_mod_pers"."sn' where anno = '1' and idutente = '$id_ut' ");
+} # fine for $num1
+} # fine if ($versione_corrente < "3.06")
+
+
 
 
 
@@ -3217,7 +3384,7 @@ if (!defined('C_NASCONDI_MARCA') or C_NASCONDI_MARCA != "SI") {
 if (@is_file("./COPYING")) $file_copying = "file <a href=\"COPYING\">COPYING</a>";
 else $file_copying = "<a href=\"http://www.gnu.org/licenses/agpl-3.0.html\">AGPLv3</a> License";
 echo "<div style=\"text-align: center;\">
-HOTELDRUID version ".C_PHPR_VERSIONE_TXT.", Copyright (C) 2001-2021 Marco M. F. De Santis<br>
+HOTELDRUID version ".C_PHPR_VERSIONE_TXT.", Copyright (C) 2001-2023 Marco M. F. De Santis<br>
 HotelDruid comes with ABSOLUTELY NO WARRANTY; <br>
 for details see the $file_copying.<br>
 This is free software, and you are welcome to redistribute it<br>
@@ -3231,6 +3398,8 @@ esegui_query("update ".$PHPR_TAB_PRE."versioni set num_versione = '".C_PHPR_VERS
 scrivi_file("<?php
 define('C_VERSIONE_ATTUALE',".C_PHPR_VERSIONE_NUM.");
 define('C_DIFF_ORE',".C_DIFF_ORE.");
+define('C_MIN_SESSIONE',".C_MIN_SESSIONE.");
+define('C_USA_COOKIES',".C_USA_COOKIES.");
 ?>",C_DATI_PATH."/versione.php");
 $testo_mess = "<big><big>".mex("Database aggiornato alla versione","aggiorna.php")." <b>".C_PHPR_VERSIONE_TXT."</b>!<br></big></big><br>";
 echo $testo_mess;
@@ -3267,7 +3436,7 @@ ${$fr_frase[$num_fr]} = mex2($frase[$num_fr],$pag,$lingua_modello);
 $num_periodi_date = "";
 $anno_modello = "";
 $id_utente = 1;
-recupera_var_modello_disponibilita($nome_file,$percorso_cartella_modello,$pag,$fr_frase,$num_frasi,$var_mod,$num_var_mod,$tipo_periodi,"SI",$anno_modello,$PHPR_TAB_PRE);
+recupera_var_modello_disponibilita($nome_file,$percorso_cartella_modello,$pag,$fr_frase,$frase,$num_frasi,$var_mod,$num_var_mod,$tipo_periodi,"SI",$anno_modello,$lingua_modello,$PHPR_TAB_PRE);
 $anno_modello = $anno_modello_presente;
 if (function_exists('aggiorna_var_modelli')) aggiorna_var_modelli($nome_file,$percorso_cartella_modello,$lingua_modello,$anno_modello,$PHPR_TAB_PRE,$tipo_periodi,$pag);
 crea_modello_disponibilita($percorso_cartella_modello,$anno_modello,$PHPR_TAB_PRE,$pag,$lingua_modello,"SI",$fr_frase,$frase,$num_frasi,$tipo_periodi);
@@ -3294,7 +3463,7 @@ ${$fr_frase[$num_fr]} = mex2($frase[$num_fr],$pag,$lingua_modello);
 $num_periodi_date = "";
 $anno_modello = "";
 $id_utente = 1;
-recupera_var_modello_disponibilita($nome_file,$percorso_cartella_modello,$pag,$fr_frase,$num_frasi,$var_mod,$num_var_mod,$tipo_periodi,"SI",$anno_modello,$PHPR_TAB_PRE);
+recupera_var_modello_disponibilita($nome_file,$percorso_cartella_modello,$pag,$fr_frase,$frase,$num_frasi,$var_mod,$num_var_mod,$tipo_periodi,"SI",$anno_modello,$lingua_modello,$PHPR_TAB_PRE);
 $anno_modello = $anno_modello_presente;
 if (function_exists('aggiorna_var_modelli')) aggiorna_var_modelli($nome_file,$percorso_cartella_modello,$lingua_modello,$anno_modello,$PHPR_TAB_PRE,$tipo_periodi,$pag);
 crea_modello_disponibilita($percorso_cartella_modello,$anno_modello,$PHPR_TAB_PRE,$pag,$lingua_modello,"SI",$fr_frase,$frase,$num_frasi,$tipo_periodi);
@@ -3330,7 +3499,7 @@ ${$fr_frase[$num_fr]} = $funz_mext($frase[$num_fr],$pag,$lingua_modello);
 $num_periodi_date = "";
 $anno_modello = "";
 $id_utente = 1;
-$funz_recupera_var_modello($nome_file,$percorso_cartella_modello,$pag,$fr_frase,$num_frasi,$var_mod,$num_var_mod,$tipo_periodi,"SI",$anno_modello,$PHPR_TAB_PRE);
+$funz_recupera_var_modello($nome_file,$percorso_cartella_modello,$pag,$fr_frase,$frase,$num_frasi,$var_mod,$num_var_mod,$tipo_periodi,"SI",$anno_modello,$lingua_modello,$PHPR_TAB_PRE);
 $anno_modello = $anno_modello_presente;
 if (function_exists('aggiorna_var_modelli')) aggiorna_var_modelli($nome_file,$percorso_cartella_modello,$lingua_modello,$anno_modello,$PHPR_TAB_PRE,$tipo_periodi,$pag);
 $funz_crea_modello($percorso_cartella_modello,$anno_modello,$PHPR_TAB_PRE,$pag,$lingua_modello,"SI",$fr_frase,$frase,$num_frasi,$tipo_periodi);
@@ -3361,7 +3530,7 @@ ${$fr_frase[$num_fr]} = $funz_mext($frase[$num_fr],$pag,$lingua_modello);
 $num_periodi_date = "";
 $anno_modello = "";
 $id_utente = 1;
-$funz_recupera_var_modello($nome_file,$percorso_cartella_modello,$pag,$fr_frase,$num_frasi,$var_mod,$num_var_mod,$tipo_periodi,"SI",$anno_modello,$PHPR_TAB_PRE);
+$funz_recupera_var_modello($nome_file,$percorso_cartella_modello,$pag,$fr_frase,$frase,$num_frasi,$var_mod,$num_var_mod,$tipo_periodi,"SI",$anno_modello,$lingua_modello,$PHPR_TAB_PRE);
 $anno_modello = $anno_modello_presente;
 if (function_exists('aggiorna_var_modelli')) aggiorna_var_modelli($nome_file,$percorso_cartella_modello,$lingua_modello,$anno_modello,$PHPR_TAB_PRE,$tipo_periodi,$pag);
 $funz_crea_modello($percorso_cartella_modello,$anno_modello,$PHPR_TAB_PRE,$pag,$lingua_modello,"SI",$fr_frase,$frase,$num_frasi,$tipo_periodi);

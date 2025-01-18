@@ -27,13 +27,48 @@ $var_pag = array();
 $var_pag[0] = 'origine';
 $var_pag[1] = 'tipo_tabella';
 $var_pag[2] = 'idmag';
-$var_pag[3] = 'url_enc';
-$var_pag[4] = 'origine_vecchia';
-$var_pag[5] = 'aggiorna_inventario';
-$var_pag[6] = 'manda_form_tab';
-$var_pag[7] = 'tipo_nuova_quantita';
-$var_pag[8] = 'modifica_quantita';
-$n_var_pag = 9;
+$var_pag[3] = 'origine_vecchia';
+$var_pag[4] = 'aggiorna_inventario';
+$var_pag[5] = 'manda_form_tab';
+$var_pag[6] = 'tipo_nuova_quantita';
+$var_pag[7] = 'modifica_quantita';
+$var_pag[8] = 'n_id';
+$var_pag[9] = 'n_quantita_min_predef';
+$var_pag[10] = 'n_quantita';
+$var_pag[11] = 'aggiungi_bene';
+$var_pag[12] = 'lista_id_beni_in_mag_passa';
+$var_pag[13] = 'id_bene';
+$var_pag[14] = 'elimina';
+$var_pag[15] = 'elimina_cont';
+$var_pag[16] = 'crea_ca';
+$var_pag[17] = 'continua';
+$var_pag[18] = 'nome_costo_agg';
+$var_pag[19] = 'n_categoria_ca';
+$var_pag[20] = 'prezzo_costo_agg';
+$var_pag[21] = 'tasseperc_ca';
+$var_pag[22] = 'tipo_categoria_ca';
+$var_pag[23] = 'categoria_esist_ca';
+$var_pag[24] = 'ric_checkin';
+$var_pag[25] = 'ricarica';
+$var_pag[26] = 'lista_magda_passa';
+$var_pag[27] = 'num_appda';
+$n_var_pag = 28;
+if (isset($_REQUEST['lista_id_beni_in_mag_passa'])) {
+$num2 = explode(",",$_REQUEST['lista_id_beni_in_mag_passa']);
+$num3 = count($num2);
+for ($num1 = 0 ; $num1 < $num3 ; $num1++) $var_pag[$n_var_pag++] = "n_quantita".(int) $num2[$num1];
+} # fine if (isset($_REQUEST['lista_id_beni_in_mag_passa']))
+if (isset($_REQUEST['lista_magda_passa'])) {
+$num2 = explode(",",$_REQUEST['lista_magda_passa']);
+$num3 = count($num2);
+for ($num1 = 0 ; $num1 < $num3 ; $num1++) $var_pag[$n_var_pag++] = "mag_da".(int) $num2[$num1];
+} # fine if (isset($_REQUEST['$lista_magda_passa']))
+if (isset($_REQUEST['num_appda'])) $num2 = (int) $_REQUEST['num_appda'];
+else $num2 = 0;
+for ($num1 = 1 ; $num1 <= $num2 ; $num1++) {
+$var_pag[$n_var_pag++] = "app_da$num1";
+$var_pag[$n_var_pag++] = "nome_app_da$num1";
+} # fine for $num2
 
 include("./costanti.php");
 include(C_DATI_PATH."/dati_connessione.php");
@@ -183,6 +218,7 @@ $attiva_regole1_consentite = "n";
 $attiva_tariffe_consentite = "n";
 $attiva_costi_agg_consentiti = "n";
 $priv_ins_costi_agg = "s";
+$utenti_gruppi = "";
 } # fine else if ($id_utente != 1)
 if ($anno_utente_attivato == "SI") {
 
@@ -208,9 +244,10 @@ else include("./includes/head.php");
 $Euro = nome_valuta();
 $frase_modifica = "";
 
-if (empty($url_enc)) $idmag = htmlspecialchars($idmag);
+#if (empty($url_enc)) $idmag = htmlspecialchars($idmag);
+$idmag_url = urlencode($idmag);
+$idmag_orig = htmlspecialchars($idmag);
 $idmag = aggslashdb($idmag);
-$idmag_orig = $idmag;
 if (substr($idmag,0,1) == "a") {
 $idmag = substr($idmag,1);
 $tipoid = "idappartamento";
@@ -228,7 +265,7 @@ $parola_mag = "magazzino";
 $priv_ins_beni = $priv_ins_beni_in_mag;
 $priv_mod_beni = $priv_mod_beni_in_mag;
 } # fine else if (substr($idmag,0,1) == "a")
-$tipo_tabella = htmlspecialchars($tipo_tabella);
+$tipo_tabella = htmlspecialchars(fixstr($tipo_tabella));
 
 $id_esist = esegui_query("select * from $tablemag where $tipoidmag = '$idmag' ");
 if (numlin_query($id_esist) and (($tipoid == "idappartamento" and $priv_vedi_inv_app != "n") or ($tipoid == "idmagazzino" and $priv_vedi_inv_mag != "n"))) {
@@ -291,14 +328,14 @@ if (!empty($manda_form_tab)) {
 
 if (!empty($aggiungi_bene)) {
 if ($priv_ins_beni != "n") {
-if (!strcmp($n_quantita_min_predef,"")) $n_quantita_min_predef = 0;
+if (!strcmp((string) $n_quantita_min_predef,"")) $n_quantita_min_predef = 0;
 if (controlla_num_pos($n_quantita_min_predef) == "SI") {
-if (!strcmp($n_quantita,"")) $n_quantita = $n_quantita_min_predef;
+if (!strcmp((string) $n_quantita,"")) $n_quantita = $n_quantita_min_predef;
 if (controlla_num_pos($n_quantita) == "SI") {
 $n_id = aggslashdb($n_id);
-if ($ric_checkin != "s" or $tipoid != "idappartamento" or $priv_mod_checkin != "s") $ric_checkin = "n";
+if (!isset($ric_checkin) or $ric_checkin != "s" or $tipoid != "idappartamento" or $priv_mod_checkin != "s") $ric_checkin = "n";
 if ($priv_ins_costi_agg == "n") $crea_ca = 0;
-if ($crea_ca) $tabelle_lock = array($tablenometariffe,$tableprivilegi,$tablerelinventario);
+if (!empty($crea_ca)) $tabelle_lock = array($tablenometariffe,$tableprivilegi,$tablerelinventario);
 else $tabelle_lock = array($tablerelinventario);
 $altre_tab_lock = array($tablebeniinventario);
 $tabelle_lock = lock_tabelle($tabelle_lock,$altre_tab_lock);
@@ -308,14 +345,14 @@ $n_id_in_mag = esegui_query("select idbeneinventario from $tablerelinventario wh
 if (!numlin_query($n_id_in_mag)) {
 $nome_bene = risul_query($n_id_esist,0,'nome_bene');
 
-if ($crea_ca and !$continua) {
+if (!empty($crea_ca) and empty($continua)) {
 $mostra_form_inventario = "NO";
 $nomi_esist = array();
 $nomecostoagg = $nome_bene;
 $costiagg_esist = esegui_query("select * from $tablenometariffe where nomecostoagg $LIKE '".aggslashdb($nomecostoagg)."%' and idntariffe > 10 ");
 for ($num1 = 0 ; $num1 < numlin_query($costiagg_esist) ; $num1++) $nomi_esist[risul_query($costiagg_esist,$num1,'nomecostoagg')] = 1;
-if ($nomi_esist[$nomecostoagg]) $nomecostoagg .= " *";
-while ($nomi_esist[$nomecostoagg]) $nomecostoagg .= "*";
+if (!empty($nomi_esist[$nomecostoagg])) $nomecostoagg .= " *";
+while (!empty($nomi_esist[$nomecostoagg])) $nomecostoagg .= "*";
 if ($tipoid == "idappartamento") $mag_esist = "app";
 else $mag_esist = "mag$idmag";
 $beniinv_ca_esist = esegui_query("select * from $tablenometariffe where beniinv_ca $LIKE '$mag_esist;%' and beniinv_ca $LIKE '%;$n_id,%' and idntariffe > 10 ");
@@ -328,9 +365,9 @@ echo "<br>
 <form accept-charset=\"utf-8\" method=\"post\" action=\"$pag#tab_inventario\"><div>
 <input type=\"hidden\" name=\"anno\" value=\"$anno\">
 <input type=\"hidden\" name=\"id_sessione\" value=\"$id_sessione\">
-<input type=\"hidden\" name=\"origine\" value=\"".htmlspecialchars($origine)."\">
-<input type=\"hidden\" name=\"origine_vecchia\" value=\"".htmlspecialchars($origine_vecchia)."\">
-<input type=\"hidden\" name=\"tipo_tabella\" value=\"$tipo_tabella\">
+<input type=\"hidden\" name=\"origine\" value=\"".htmlspecialchars(fixstr($origine))."\">
+<input type=\"hidden\" name=\"origine_vecchia\" value=\"".htmlspecialchars(fixstr($origine_vecchia))."\">
+<input type=\"hidden\" name=\"tipo_tabella\" value=\"".htmlspecialchars(fixstr($tipo_tabella))."\">
 <input type=\"hidden\" name=\"idmag\" value=\"$idmag_orig\">
 <input type=\"hidden\" name=\"aggiorna_inventario\" value=\"SI\">
 <input type=\"hidden\" name=\"manda_form_tab\" value=\"SI\">
@@ -359,7 +396,7 @@ echo "<div style=\"height: 5px;\"></div>
 ".mex("<em>Prezzo</em> del costo aggiuntivo",$pag).":
  <input type=\"text\" name=\"prezzo_costo_agg\" size=\"8\">$Euro<br>
 <div style=\"height: 5px;\"></div>
-<em>".mex("Tasse",'creaprezzi.php')."</em>: <input type=\"text\" name=\"tasseperc_ca\" value=\"$tasseperc_ca\" size=\"4\">%
+<em>".mex("Tasse",'creaprezzi.php')."</em>: <input type=\"text\" name=\"tasseperc_ca\" size=\"4\">%
  <small>(".mex("il valore del costo si intente con tasse già incluse",'creaprezzi.php').")</small><br>
 <div style=\"height: 5px;\"></div>
 <button class=\"aexc\" type=\"submit\"><div>".mex("Continua",$pag)."</div></button>
@@ -367,22 +404,22 @@ echo "<div style=\"height: 5px;\"></div>
 <form accept-charset=\"utf-8\" method=\"post\" action=\"$pag#tab_inventario\"><div>
 <input type=\"hidden\" name=\"anno\" value=\"$anno\">
 <input type=\"hidden\" name=\"id_sessione\" value=\"$id_sessione\">
-<input type=\"hidden\" name=\"origine\" value=\"".htmlspecialchars($origine)."\">
-<input type=\"hidden\" name=\"origine_vecchia\" value=\"".htmlspecialchars($origine_vecchia)."\">
-<input type=\"hidden\" name=\"tipo_tabella\" value=\"$tipo_tabella\">
+<input type=\"hidden\" name=\"origine\" value=\"".htmlspecialchars(fixstr($origine))."\">
+<input type=\"hidden\" name=\"origine_vecchia\" value=\"".htmlspecialchars(fixstr($origine_vecchia))."\">
+<input type=\"hidden\" name=\"tipo_tabella\" value=\"".htmlspecialchars(fixstr($tipo_tabella))."\">
 <input type=\"hidden\" name=\"idmag\" value=\"$idmag_orig\">
 <button class=\"gobk\" type=\"submit\"><div>".mex("Torna indietro",$pag)."</div></button>
 </div></form><br>";
-} # fine if ($crea_ca and !$continua)
+} # fine if (!empty($crea_ca) and empty($continua))
 
 else {
 $datainserimento = date("Y-m-d H:i:s",(time() + (C_DIFF_ORE * 3600)));
 esegui_query("insert into $tablerelinventario (idbeneinventario,$tipoid,quantita,quantita_min_predef,richiesto_checkin,datainserimento,hostinserimento,utente_inserimento) values ('$n_id','$idmag','$n_quantita','$n_quantita_min_predef','$ric_checkin','$datainserimento','$HOSTNAME','$id_utente') ");
 $frase_modifica .= "".mex("Nuovo bene",$pag)." \"<em>$nome_bene</em>\" ".mex("aggiunto",$pag).".<br>";
 
-if ($crea_ca) {
+if (!empty($crea_ca)) {
 $prezzo_costo_agg = formatta_soldi($prezzo_costo_agg);
-if (strcmp($prezzo_costo_agg,"") and controlla_soldi($prezzo_costo_agg) == "SI") {
+if (strcmp((string) $prezzo_costo_agg,"") and controlla_soldi($prezzo_costo_agg) == "SI") {
 if (@get_magic_quotes_gpc()) $nome_costo_agg = stripslashes($nome_costo_agg);
 $costiagg_esist = esegui_query("select * from $tablenometariffe where nomecostoagg = '".aggslashdb($nome_costo_agg)."' and idntariffe > 10 ");
 if (!numlin_query($costiagg_esist)) {
@@ -397,7 +434,7 @@ $tasseperc_ca = formatta_soldi($tasseperc_ca);
 if (controlla_soldi($tasseperc_ca) == "SI" and $tasseperc_ca <= 100 and $tasseperc_ca > 0) {
 esegui_query("update $tablenometariffe set tasseperc_ca = '".aggslashdb($tasseperc_ca)."' where idntariffe = '$idntariffe' ");
 } # fine if (controlla_soldi($tasseperc_ca) == "SI" and $tasseperc_ca <= 100 and $tasseperc_ca > 0)
-if ($tipo_categoria_ca != "ce") $categoria = $n_categoria_ca;
+if (!isset($tipo_categoria_ca) or $tipo_categoria_ca != "ce") $categoria = $n_categoria_ca;
 else $categoria = $categoria_esist_ca;
 if ($categoria) {
 if (@get_magic_quotes_gpc()) $categoria = stripslashes($categoria);
@@ -410,16 +447,16 @@ $frase_modifica .= "<form accept-charset=\"utf-8\" method=\"post\" action=\"modi
 <input type=\"hidden\" name=\"anno\" value=\"$anno\">
 <input type=\"hidden\" name=\"id_sessione\" value=\"$id_sessione\">
 <input type=\"hidden\" name=\"idntariffe\" value=\"".($idntariffe - 1)."\">
-<input type=\"hidden\" name=\"origine\" value=\"$pag?idmag=$idmag_orig&origine=visualizza_tabelle.php&tipo_tabella=inventario\">
+<input type=\"hidden\" name=\"origine\" value=\"$pag?idmag=$idmag_url&origine=visualizza_tabelle.php&tipo_tabella=inventario\">
 ".mex("Il costo aggiuntivo",'creaprezzi.php')." \"<em>$nome_costo_agg</em>\" ".mex("è stato inserito",'creaprezzi.php').".
  <button class=\"exco\" type=\"submit\"><div>".mex("Modifica il costo",'creaprezzi.php')."</div></button>
 </div></form>";
 } # fine if (!numlin_query($costiagg_esist))
 else $frase_modifica .= "<span class=\"colred\">".mex("Costo aggiuntivo non inserito",$pag)."</span>: ".mex("costo già esistente",$pag).".<br>";
-} # fine if (strcmp($prezzo_costo_agg,"") and controlla_soldi($prezzo_costo_agg) == "SI")
+} # fine if (strcmp((string) $prezzo_costo_agg,"") and controlla_soldi($prezzo_costo_agg) == "SI")
 else $frase_modifica .= "<span class=\"colred\">".mex("Costo aggiuntivo non inserito",$pag)."</span>: ".mex("prezzo sbagliato",$pag).".<br>";
-} # fine if ($crea_ca)
-} # fine else if ($crea_ca and !$continua)
+} # fine if (!empty($crea_ca))
+} # fine else if (!empty($crea_ca) and empty($continua))
 
 } # fine if (!numlin_query($n_id_in_mag))
 } # fine if (numlin_query($n_id_esist))
@@ -446,7 +483,7 @@ for ($num1 = 0 ; $num1 < $num_beni_in_mag ; $num1++) {
 $id_bene_in_mag = risul_query($beni_in_mag,$num1,'idbeneinventario',$tablerelinventario);
 if ($bene_permesso[$id_bene_in_mag]) {
 $n_quant = aggslashdb(${"n_quantita".$id_bene_in_mag});
-if (strcmp($n_quant,"") and controlla_num_pos($n_quant) == "SI") {
+if (strcmp((string) $n_quant,"") and controlla_num_pos($n_quant) == "SI") {
 $quantita = risul_query($beni_in_mag,$num1,'quantita',$tablerelinventario);
 if ($tipo_nuova_quantita == "piu") $n_quant = $quantita + $n_quant;
 if ($tipo_nuova_quantita == "meno") $n_quant = $quantita - $n_quant;
@@ -459,7 +496,7 @@ if ($diff < 0) $diff = "- ".substr($diff,1);
 else $diff = "+ $diff";
 $frasi_quantita .= "<b>$nome_bene</b>: $quantita $diff = $n_quant<br>";
 } # fine if ($quantita != $n_quant)
-} # fine if (strcmp($n_quant,"") and controlla_num_pos($n_quant) == "SI")
+} # fine if (strcmp((string) $n_quant,"") and controlla_num_pos($n_quant) == "SI")
 } # fine if ($bene_permesso[$id_bene_in_mag])
 } # fine for $num1
 unlock_tabelle($tabelle_lock);
@@ -536,9 +573,9 @@ mancanti_elem.innerHTML = mancanti_val;
 <form accept-charset=\"utf-8\" method=\"post\" action=\"$pag\"><div>
 <input type=\"hidden\" name=\"anno\" value=\"$anno\">
 <input type=\"hidden\" name=\"id_sessione\" value=\"$id_sessione\">
-<input type=\"hidden\" name=\"origine\" value=\"".htmlspecialchars($origine)."\">
-<input type=\"hidden\" name=\"origine_vecchia\" value=\"".htmlspecialchars($origine_vecchia)."\">
-<input type=\"hidden\" name=\"tipo_tabella\" value=\"$tipo_tabella\">
+<input type=\"hidden\" name=\"origine\" value=\"".htmlspecialchars(fixstr($origine))."\">
+<input type=\"hidden\" name=\"origine_vecchia\" value=\"".htmlspecialchars(fixstr($origine_vecchia))."\">
+<input type=\"hidden\" name=\"tipo_tabella\" value=\"".htmlspecialchars(fixstr($tipo_tabella))."\">
 <input type=\"hidden\" name=\"idmag\" value=\"$idmag_orig\">
 <input type=\"hidden\" name=\"aggiorna_inventario\" value=\"SI\">
 <input type=\"hidden\" name=\"id_bene\" value=\"$id_bene\">
@@ -549,6 +586,9 @@ else echo mex("del magazzino",$pag);
 echo " <b>$nome_mag</b> ".mex("da",$pag).":<br>
 <table><tr><td>";
 $luogo_da_trovato = "NO";
+$lista_magda_passa = "";
+$lista_appda = "";
+$num_appda = 0;
 for ($num1 = 0 ; $num1 < $num_mag ; $num1++) {
 $idmag_da = risul_query($magazzini,$num1,'idmagazzini');
 if ($tipoid != "idmagazzino" or $idmag_da != $idmag) {
@@ -557,6 +597,7 @@ if (numlin_query($bene_in_mag_da) == 1) {
 $quantita_da = risul_query($bene_in_mag_da,0,'quantita');
 if ($quantita_da > 0) {
 $luogo_da_trovato = "SI";
+$lista_magda_passa .= ",$idmag_da";
 $nome_mag_da = risul_query($magazzini,$num1,'nome_magazzino');
 echo "<br>".mex("magazzino",$pag)." <i>$nome_mag_da</i>:
  <select name=\"mag_da$idmag_da\" id=\"mag_da$idmag_da\" onchange=\"aggiorna_mancanti('mag','$idmag_da')\">
@@ -577,11 +618,13 @@ $quantita_min_predef_da = risul_query($bene_in_app_da,0,'quantita_min_predef');
 $num_diff_da = $quantita_da - $quantita_min_predef_da;
 if ($num_diff_da > 0) {
 $luogo_da_trovato = "SI";
+$num_appda++;
+$lista_appda .= ",$idapp_da";
 echo "<br>".mex("appartamento",'unit.php')." <i>$idapp_da</i>:
- <select name=\"app_da$idapp_da\" id=\"app_da$idapp_da\" onchange=\"aggiorna_mancanti('app','$idapp_da')\">
+ <select name=\"app_da$num_appda\" id=\"app_da$idapp_da\" onchange=\"aggiorna_mancanti('app','$idapp_da')\">
 <option value=\"0\" selected>0</option>";
 for ($num2 = 1 ; $num2 <= $num_diff_da ; $num2++) echo "<option value=\"$num2\">$num2</option>";
-echo "</select><br>";
+echo "</select><input type=\"hidden\" name=\"nome_app_da$num_appda\" value=\"$idapp_da\"><br>";
 } # fine if ($num_diff_da > 0)
 } # fine if (numlin_query($bene_in_app_da) == 1)
 } # fine if ($priv_vedi_inv_app == "s" or $appartamenti_consentiti[$idapp_da] != "NO")
@@ -590,13 +633,15 @@ if ($luogo_da_trovato != "SI") echo "<br>".mex("Nessun posto da cui ricaricare",
 echo "</td><td style=\"width: 50px;\"></td>
 <td valign=\"middle\">".mex("mancanti",$pag).": <span id=\"mancanti\">".($num_diff * -1)."</span></td></tr></table>";
 if ($luogo_da_trovato == "SI") echo "<br><button class=\"xinv\" type=\"submit\"><div>".mex("Continua",$pag)."</div></button>";
-echo "</div></form><br><hr style=\"width: 350px; margin-left: 0; text-align: left;\"><br><br>
+if ($lista_magda_passa) echo "<input type=\"hidden\" name=\"lista_magda_passa\" value=\"$lista_magda_passa\">";
+echo "<input type=\"hidden\" name=\"num_appda\" value=\"$num_appda\">
+</div></form><br><hr style=\"width: 350px; margin-left: 0; text-align: left;\"><br><br>
 <form accept-charset=\"utf-8\" method=\"post\" action=\"$pag\"><div>
 <input type=\"hidden\" name=\"anno\" value=\"$anno\">
 <input type=\"hidden\" name=\"id_sessione\" value=\"$id_sessione\">
-<input type=\"hidden\" name=\"origine\" value=\"".htmlspecialchars($origine)."\">
-<input type=\"hidden\" name=\"origine_vecchia\" value=\"".htmlspecialchars($origine_vecchia)."\">
-<input type=\"hidden\" name=\"tipo_tabella\" value=\"$tipo_tabella\">
+<input type=\"hidden\" name=\"origine\" value=\"".htmlspecialchars(fixstr($origine))."\">
+<input type=\"hidden\" name=\"origine_vecchia\" value=\"".htmlspecialchars(fixstr($origine_vecchia))."\">
+<input type=\"hidden\" name=\"tipo_tabella\" value=\"".htmlspecialchars(fixstr($tipo_tabella))."\">
 <input type=\"hidden\" name=\"idmag\" value=\"$idmag_orig\">
 <button class=\"gobk\" type=\"submit\"><div>".mex("Torna indietro",$pag)."</div></button>
 </div></form>";
@@ -606,7 +651,7 @@ else {
 $ricaricato = "NO";
 for ($num1 = 0 ; $num1 < $num_mag ; $num1++) {
 $idmag_da = risul_query($magazzini,$num1,'idmagazzini');
-if (${"mag_da".$idmag_da} and controlla_num_pos(${"mag_da".$idmag_da}) == "SI") {
+if (!empty(${"mag_da".$idmag_da}) and controlla_num_pos(${"mag_da".$idmag_da}) == "SI") {
 $bene_in_mag_da = esegui_query("select * from $tablerelinventario where idmagazzino = '$idmag_da' and idbeneinventario = '$id_bene' ");
 if (numlin_query($bene_in_mag_da) == 1) {
 $quantita_da = risul_query($bene_in_mag_da,0,'quantita');
@@ -621,25 +666,30 @@ esegui_query("update $tablerelinventario set quantita = '$quantita' where $tipoi
 } # fine if (numlin_query($bene_in_mag_da) == 1)
 } # fine if (${"mag_da".$idmag_da} and...
 } # fine for $num1
+if (!empty($num_appda)) {
+$num_appda = (int) $num_appda;
 for ($num1 = 0 ; $num1 < $num_appartamenti ; $num1++) {
 $idapp_da = risul_query($appartamenti,$num1,'idappartamenti');
-if (${"app_da".$idapp_da} and controlla_num_pos(${"app_da".$idapp_da}) == "SI") {
+$num_appda_corr = 0;
+for ($num2 = 1 ; $num2 <= $num_appda ; $num2++) if (htmlspecialchars(${"nome_app_da$num2"}) == $idapp_da) $num_appda_corr = $num2;
+if ($num_appda_corr and !empty(${"app_da$num_appda_corr"}) and controlla_num_pos(${"app_da$num_appda_corr"}) == "SI") {
 if ($priv_vedi_inv_app == "s" or $appartamenti_consentiti[$idapp] != "NO") {
 $bene_in_app_da = esegui_query("select * from $tablerelinventario where idappartamento = '$idapp_da' and idbeneinventario = '$id_bene' ");
 if (numlin_query($bene_in_app_da) == 1) {
 $quantita_da = risul_query($bene_in_app_da,0,'quantita');
 $quantita_min_predef_da = risul_query($bene_in_app_da,0,'quantita_min_predef');
 $num_diff_da = $quantita_da - $quantita_min_predef_da;
-if ($num_diff_da >= ${"app_da".$idapp_da}) {
+if ($num_diff_da >= ${"app_da$num_appda_corr"}) {
 $ricaricato = "SI";
-esegui_query("update $tablerelinventario set quantita = '".($quantita_da - ${"app_da".$idapp_da})."' where idappartamento = '$idapp_da' and idbeneinventario = '$id_bene' ");
-$quantita = $quantita + ${"app_da".$idapp_da};
+esegui_query("update $tablerelinventario set quantita = '".($quantita_da - ${"app_da$num_appda_corr"})."' where idappartamento = '$idapp_da' and idbeneinventario = '$id_bene' ");
+$quantita = $quantita + ${"app_da$num_appda_corr"};
 esegui_query("update $tablerelinventario set quantita = '$quantita' where $tipoid = '$idmag' and idbeneinventario = '$id_bene' ");
-} # fine if ($num_diff_da > ${"app_da".$idapp_da})
+} # fine if ($num_diff_da > ${"app_da$num_appda_corr"})
 } # fine if (numlin_query($bene_in_app_da) == 1)
 } # fine if ($priv_vedi_inv_app == "s" or $appartamenti_consentiti[$idapp] != "NO")
-} # fine if (${"app_da".$idapp_da} and...
+} # fine if ($num_appda_corr and ${"app_da$num_appda_corr"} and...
 } # fine for $num1
+} # fine if (!empty($num_appda))
 if ($ricaricato == "SI") $frase_modifica .= "<b>".mex("Bene ricaricato",$pag)."</b>.<br>";
 } # fine else if ($ricarica != "continua")
 
@@ -660,14 +710,14 @@ $id_bene_in_mag = esegui_query("select idbeneinventario from $tablerelinventario
 if (numlin_query($id_bene_in_mag)) {
 $nome_bene = esegui_query("select nome_bene from $tablebeniinventario where idbeniinventario = '$id_bene'");
 $nome_bene = risul_query($nome_bene,0,'nome_bene');
-if (!$elimina_cont) {
+if (empty($elimina_cont)) {
 $mostra_form_inventario = "NO";
 echo "<form accept-charset=\"utf-8\" method=\"post\" action=\"$pag\"><div>
 <input type=\"hidden\" name=\"anno\" value=\"$anno\">
 <input type=\"hidden\" name=\"id_sessione\" value=\"$id_sessione\">
-<input type=\"hidden\" name=\"origine\" value=\"".htmlspecialchars($origine)."\">
-<input type=\"hidden\" name=\"origine_vecchia\" value=\"".htmlspecialchars($origine_vecchia)."\">
-<input type=\"hidden\" name=\"tipo_tabella\" value=\"$tipo_tabella\">
+<input type=\"hidden\" name=\"origine\" value=\"".htmlspecialchars(fixstr($origine))."\">
+<input type=\"hidden\" name=\"origine_vecchia\" value=\"".htmlspecialchars(fixstr($origine_vecchia))."\">
+<input type=\"hidden\" name=\"tipo_tabella\" value=\"".htmlspecialchars(fixstr($tipo_tabella))."\">
 <input type=\"hidden\" name=\"idmag\" value=\"$idmag_orig\">
 <input type=\"hidden\" name=\"aggiorna_inventario\" value=\"SI\">
 <input type=\"hidden\" name=\"id_bene\" value=\"$id_bene\">
@@ -679,11 +729,11 @@ echo " <b>$nome_mag</b>?<br>
 <button class=\"cinv\" type=\"submit\" name=\"elimina\" value=\"1\"><div>".mex("SI",$pag)."</div></button>
 <button class=\"gobk\" type=\"submit\"><div>".mex("NO",$pag)."</div></button>
 </div></form>";
-} # fine if (!$elimina_cont)
+} # fine if (empty($elimina_cont))
 else {
 esegui_query("delete from $tablerelinventario where idbeneinventario = '$id_bene' and $tipoid = '$idmag' ");
 $frase_modifica .= "<b>".mex("Bene",$pag)." \"<em>$nome_bene</em>\" ".mex("cancellato",$pag)."</b>.<br>";
-} # fine else if (!$elimina_cont)
+} # fine else if (empty($elimina_cont))
 } # fine if (numlin_query($id_bene_in_mag))
 unlock_tabelle($tabelle_lock);
 } # fine if ($bene_permesso[$id_bene])
@@ -732,10 +782,10 @@ for (var n1 = 0; n1 < simb_nq.length; n1++) simb_nq[n1].innerHTML = n_simb;
 echo "<form accept-charset=\"utf-8\" method=\"post\" action=\"$pag#tab_inventario\"><div>
 <input type=\"hidden\" name=\"anno\" value=\"$anno\">
 <input type=\"hidden\" name=\"id_sessione\" value=\"$id_sessione\">
-<input type=\"hidden\" name=\"origine\" value=\"".htmlspecialchars($origine)."\">
-<input type=\"hidden\" name=\"origine_vecchia\" value=\"".htmlspecialchars(fixset($origine_vecchia))."\">
-<input type=\"hidden\" name=\"tipo_tabella\" value=\"".htmlspecialchars($tipo_tabella)."\">
-<input type=\"hidden\" name=\"idmag\" value=\"".htmlspecialchars($idmag_orig)."\">
+<input type=\"hidden\" name=\"origine\" value=\"".htmlspecialchars(fixstr($origine))."\">
+<input type=\"hidden\" name=\"origine_vecchia\" value=\"".htmlspecialchars(fixstr($origine_vecchia))."\">
+<input type=\"hidden\" name=\"tipo_tabella\" value=\"".htmlspecialchars(fixstr($tipo_tabella))."\">
+<input type=\"hidden\" name=\"idmag\" value=\"$idmag_orig\">
 <input type=\"hidden\" name=\"aggiorna_inventario\" value=\"SI\">
 <input type=\"hidden\" name=\"manda_form_tab\" value=\"SI\">
 <div class=\"tab_cont\">
@@ -771,10 +821,12 @@ $nomi_beni[$idinv] = risul_query($beni_inv,$num1,'nome_bene');
 $codici_beni[$idinv] = risul_query($beni_inv,$num1,'codice_bene');
 } # fine for $num1
 
-unset($id_in_mag);
+$id_in_mag = array();
+$lista_id_beni_in_mag_passa = "";
 for ($num1 = 0 ; $num1 < $num_beni_in_mag ; $num1++) {
 $id_bene_in_mag = risul_query($beni_in_mag,$num1,'idbeneinventario',$tablerelinventario);
 if ($bene_permesso[$id_bene_in_mag]) {
+$lista_id_beni_in_mag_passa .= ",$id_bene_in_mag";
 $quantita = risul_query($beni_in_mag,$num1,'quantita',$tablerelinventario);
 $quantita_min_predef = risul_query($beni_in_mag,$num1,'quantita_min_predef',$tablerelinventario);
 $richiesto_checkin = risul_query($beni_in_mag,$num1,'richiesto_checkin',$tablerelinventario);
@@ -793,7 +845,7 @@ else {
 if (substr($diff,0,1) != "-") $diff = "+".$diff;
 $diff = "<small><small> ($diff)</small></small>";
 } # fine else if (!$diff)
-if ($aggiungi_bene and ($num1 == ($num_beni_inv - 12) or ($num1 == 0 and ($num_beni_inv - 12) < 0))) $anchor = "<a name=\"tab_inventario\"></a>";
+if (!empty($aggiungi_bene) and ($num1 == ($num_beni_inv - 12) or ($num1 == 0 and ($num_beni_inv - 12) < 0))) $anchor = "<a name=\"tab_inventario\"></a>";
 else $anchor = "";
 echo "<tr><td class=\"t1left\">$anchor$nome_bene</td>
 <td>$quantita_min_predef</td>
@@ -805,9 +857,9 @@ if ($richiesto_checkin == "s") echo "<td>".ucfirst(mex("si",$pag))."</td>";
 else echo "<td>".ucfirst(mex("no",$pag))."</td>";
 } # fine if ($attiva_checkin == "SI")
 echo "<td>";
-if ($priv_mod_beni != "n" and $num_diff < 0) echo "<a href=\"inventario.php?anno=$anno&amp;id_sessione=$id_sessione&amp;origine=".urlencode($origine)."&amp;tipo_tabella=$tipo_tabella&amp;idmag=$idmag_orig&amp;aggiorna_inventario=SI&amp;id_bene=$id_bene_in_mag&amp;ricarica=SI\">".mex("ricarica",$pag)."</a>";
+if ($priv_mod_beni != "n" and $num_diff < 0) echo "<a href=\"inventario.php?anno=$anno&amp;id_sessione=$id_sessione&amp;origine=".urlencode($origine)."&amp;tipo_tabella=$tipo_tabella&amp;idmag=$idmag_url&amp;aggiorna_inventario=SI&amp;id_bene=$id_bene_in_mag&amp;ricarica=SI\">".mex("ricarica",$pag)."</a>";
 if ($priv_mod_beni != "n" and $num_diff < 0 and $priv_ins_beni != "n") echo "<br>";
-if ($priv_ins_beni != "n") echo "<a href=\"inventario.php?anno=$anno&amp;id_sessione=$id_sessione&amp;origine=".urlencode($origine)."&amp;tipo_tabella=$tipo_tabella&amp;idmag=$idmag_orig&amp;aggiorna_inventario=SI&amp;id_bene=$id_bene_in_mag&amp;elimina=SI\">".mex("cancella",$pag)."</a>";
+if ($priv_ins_beni != "n") echo "<a href=\"inventario.php?anno=$anno&amp;id_sessione=$id_sessione&amp;origine=".urlencode($origine)."&amp;tipo_tabella=$tipo_tabella&amp;idmag=$idmag_url&amp;aggiorna_inventario=SI&amp;id_bene=$id_bene_in_mag&amp;elimina=SI\">".mex("cancella",$pag)."</a>";
 if ($priv_ins_beni == "n" and ($num_diff >= 0 or $priv_mod_beni == "n")) echo "&nbsp;";
 echo "</td>";
 } # fine if ($priv_ins_beni != "n" or $priv_mod_beni != "n")
@@ -818,15 +870,15 @@ echo "</tr>";
 $opt_beni = "";
 for ($num1 = 0 ; $num1 < $num_beni_inv ; $num1++) {
 $idinv = risul_query($beni_inv,$num1,"idbeniinventario");
-if (!$id_in_mag[$idinv]) {
+if (empty($id_in_mag[$idinv])) {
 $opt_beni .= "<option value=\"$idinv\">".$nomi_beni[$idinv];
 if ($codici_beni[$idinv]) $opt_beni .= " (".$codici_beni[$idinv].")";
 $opt_beni .= "</option>";
-} # fine if (!$id_in_mag[$idinv])
+} # fine if (empty($id_in_mag[$idinv]))
 } # fine for $num1
 
 if ($opt_beni and $priv_ins_beni != "n") {
-if ($aggiungi_bene) $autofocus = " autofocus";
+if (!empty($aggiungi_bene)) $autofocus = " autofocus";
 else $autofocus = "";
 echo "<tr><td><select name=\"n_id\">$opt_beni</select></td>
 <td><input type=\"text\" name=\"n_quantita_min_predef\" size=\"5\"></td>
@@ -855,6 +907,7 @@ $a_bottom = "";
 } # fine else if ($num_beni_in_mag > 15)
 echo "</table></div><br><div style=\"text-align: center;\">";
 if ($priv_mod_beni != "n") echo "<button$id_modi class=\"ainv\" type=\"submit\" name=\"modifica_quantita\" value=\"".mex("Modifica le quantità attuali",$pag)."\"><div>".mex("Modifica le quantità attuali",$pag)."</div></button>";
+if ($lista_id_beni_in_mag_passa) echo "<input type=\"hidden\" name=\"lista_id_beni_in_mag_passa\" value=\"".substr($lista_id_beni_in_mag_passa,1)."\">";
 echo "</div></div></form>
 $frase_modifica<br>";
 

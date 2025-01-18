@@ -2,7 +2,7 @@
 
 ##################################################################################
 #    HOTELDRUID
-#    Copyright (C) 2001-2021 by Marco Maria Francesco De Santis (marco@digitaldruid.net)
+#    Copyright (C) 2001-2023 by Marco Maria Francesco De Santis (marco@digitaldruid.net)
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published by
@@ -134,6 +134,7 @@ $fr_frase[104] = "fr_con_posizioni_vicine";
 $fr_frase[105] = "fr_Codice_promozionale";
 $fr_frase[106] = "fr_Codice_promozionale_applicato";
 $fr_frase[107] = "fr_Si_deve_inserire_almeno_una_persona_che_possa_ecc";
+$fr_frase[108] = "fr_Per_questa_tariffa_si_deve_inserire_un_minimo_di";
 
 
 $frase[0] = "in";
@@ -244,6 +245,7 @@ $frase[104] = "con posizioni vicine";
 $frase[105] = "Codice promozionale";
 $frase[106] = "Codice promozionale applicato";
 $frase[107] = "Si deve inserire almeno una persona che possa essere legalmente responsabile";
+$frase[108] = "Per questa tariffa si deve inserire un minimo di";
 
 $num_frasi = count($fr_frase);
 

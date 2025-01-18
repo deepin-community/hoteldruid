@@ -1,6 +1,6 @@
 <?php
 
-if (substr($messaggio,0,4) != "var_") {
+if (substr((string) $messaggio,0,4) != "var_") {
 switch ($messaggio) {
 
 # translate YES and NO in upper case
@@ -67,8 +67,6 @@ case "Mostrare la caparra se presente?":  	$messaggio = "Enseñar la fianza si e
 case "Mostrare quali sono i giorni pieni all'interno dei periodi dove non c'è più disponibilità?":	$messaggio = "Enseñar cuáles son los días llenos al interior de los períodos en los que ya no hay disponibilidad?"; break;
 case "Mostrare la form di richiesta prenotazione?":	$messaggio = "Enseñar el formulario para pedir reservar?"; break;
 case "Indirizzo email a cui inviare le richieste di prenotazione":	$messaggio = "Dirección de correo electrónico a la que enviar el pedido de reserva"; break;
-case "Mascherare la provenienza dell'email sull'envelope?":	$messaggio = "Enmascarar la proveniencia del email en el envelope?"; break;
-case "provare a cambiare se non si riescono a spedire le email":	$messaggio = "intentar cambiarlo si no es posible enviar las emails"; break;
 case "Tag html di apertura per la formattazione delle font":	$messaggio = "Elemento html de apertura para dar formato a las letras"; break;
 case "Tag html di chiusura per la formattazione delle font":	$messaggio = "Elemento html de cierre para dar formato a las letras"; break;
 case "Tag html di apertura per la formattazione delle font rosse":	$messaggio = "Elemento html de apertura para dar formato a las letras rojas"; break;
@@ -317,10 +315,10 @@ case "Il codice":  				$messaggio = "El código"; break;
 case "aggiunge":  				$messaggio = "añade"; break;
 case "rimuove":  				$messaggio = "elimina"; break;
 case "il":  					$messaggio = "el"; break;
-case "Codice promozionale":  			$messaggio = "Código promicional"; break;
+case "Codice promozionale":  			$messaggio = "Código promocional"; break;
 case "Solo quelli selezionati per essere mostrati":	$messaggio = "Solo los seleccionados para enseñar"; break;
-case "Codice promozionale applicato":  		$messaggio = "Código promicional aplicado"; break;
-case "alcuni costi aggiuntivi con codice promozionale":	$messaggio = "algunos costes añadidos con código promicional"; break;
+case "Codice promozionale applicato":  		$messaggio = "Código promocional aplicado"; break;
+case "alcuni costi aggiuntivi con codice promozionale":	$messaggio = "algunos costes añadidos con código promocional"; break;
 case "non sono associati a tariffe, alcune loro caratteristiche potrebbero venir modificate se non compatibili":	$messaggio = "no están asociados a tarifas, algunas de sus características podrían ser modificadas si no son compatibles"; break;
 case "Mostrare le date passate?":  		$messaggio = "Enseñar las fechas pasadas?"; break;
 case "titolo html":  				$messaggio = "Título html"; break;
@@ -333,6 +331,10 @@ case "Valuta della caparra":  			$messaggio = "Divisa de la fianza"; break;
 case "Seconda email":  				$messaggio = "Segunda email"; break;
 case "PEC o codice destinatario":  		$messaggio = "Email certificada"; break;
 case "non deve contenere \"php\" e deve terminare con \".js\"":	$messaggio = "no debe contener \"php\" y debe terminar con \".js\""; break;
+case "notte":  					$messaggio = "noche"; break;
+case "notti":  					$messaggio = "noches"; break;
+case "cambia date":  				$messaggio = "cambiar fechas"; break;
+case "Per questa tariffa si deve inserire un minimo di":	$messaggio = "Para esta tarifa hay que insertar por lo menos"; break;
 case "":  		$messaggio = ""; break;
 case "":  		$messaggio = ""; break;
 
@@ -340,7 +342,7 @@ case "":  		$messaggio = ""; break;
 case "mdl_disponibilita":  			$messaggio = "mdl_disponibilidad"; break;
 
 } # fine switch ($messaggio)
-} # fine if (substr($messaggio,0,4) != "var_")
+} # fine if (substr((string) $messaggio,0,4) != "var_")
 
 
 else {
@@ -381,7 +383,6 @@ case "var_mostra_frase_alternativa_regola1":  	$messaggio = "var_muestra_frase_a
 case "var_mostra_caparra":  			$messaggio = "var_muestra_fianza"; break;
 case "var_mostra_richiesta_via_mail":  		$messaggio = "var_muestra_pedido_por_mail"; break;
 case "var_indirizzo_email":  			$messaggio = "var_direccion_email"; break;
-case "var_maschera_email":  			$messaggio = "var_enmascara_email"; break;
 case "var_mostra_giorni_pieni":  		$messaggio = "var_muestra_dias_llenos"; break;
 case "var_mostra_bottone_paypal":  		$messaggio = "var_muestra_boton_paypal"; break;
 case "var_nome_modello_paypal":  		$messaggio = "var_nombre_modelo_paypal"; break;
@@ -617,11 +618,15 @@ case "var_fr_con_posizioni_vicine":  		$messaggio = "var_fr_con_posiciones_cerca
 case "var_fr_Codice_promozionale":  		$messaggio = "var_fr_Codigo_promocional"; break;
 case "var_fr_Codice_promozionale_applicato":  	$messaggio = "var_fr_Codigo_promocional_aplicado"; break;
 case "var_fr_Si_deve_inserire_almeno_una_persona_che_possa_ecc":	$messaggio = "var_fr_Hay_que_incluir_al_menos_una_persona_que_pueda_etc"; break;
+case "var_fr_notte":  				$messaggio = "var_fr_noche"; break;
+case "var_fr_notti":  				$messaggio = "var_fr_noches"; break;
+case "var_fr_cambia_date":  			$messaggio = "var_fr_cambiar_fechas"; break;
+case "var_fr_Per_questa_tariffa_si_deve_inserire_un_minimo_di":	$messaggio = "var_fr_Para_esta_tarifa_hay_que_insertar_por_lo_menos"; break;
 case "var_":  		$messaggio = "var_"; break;
 case "var_":  		$messaggio = "var_"; break;
 
 } # fine switch ($messaggio)
-} # fine else if (substr($messaggio,0,4) != "var_")
+} # fine else if (substr((string) $messaggio,0,4) != "var_")
 
 
 

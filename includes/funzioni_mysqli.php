@@ -2,7 +2,7 @@
 
 ##################################################################################
 #    HOTELDRUID
-#    Copyright (C) 2001-2020 by Marco Maria Francesco De Santis (marco@digitaldruid.net)
+#    Copyright (C) 2001-2023 by Marco Maria Francesco De Santis (marco@digitaldruid.net)
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published by
@@ -39,7 +39,7 @@ function connetti_db ($database,$host,$port,$user,$password,$estensione) {
 global $link_mysqli;
 if ($estensione == "SI") dl("mysqli.so");
 $link_mysqli = mysqli_connect($host,$user,$password,$database,$port);
-@mysqli_query($link_mysqli,"SET NAMES 'utf8mb4'");
+if ($link_mysqli) @mysqli_query($link_mysqli,"SET NAMES 'utf8mb4'");
 
 return $link_mysqli;
 
@@ -74,7 +74,7 @@ if (!$risul[-1]) {
 $risul = $risul[-1];
 if ($silenzio != "totale") {
 global $PHPR_TAB_PRE;
-if (!$silenzio) echo "<br>ERROR IN: ".str_replace(" ".$PHPR_TAB_PRE," ",$query)." <br>".mysqli_errno($link_mysqli).": ".mysqli_error($link_mysqli)."<br>";
+if (!$silenzio) echo "<br>ERROR IN: ".htmlspecialchars(str_replace(" ".$PHPR_TAB_PRE," ",$query))." <br>".htmlspecialchars(mysqli_errno($link_mysqli).": ".mysqli_error($link_mysqli))."<br>";
 error_log("IN ".$_SERVER['PHP_SELF']." MYSQL ERROR: ".substr(str_replace(" ".$PHPR_TAB_PRE," ",$query),0,25)."... - ".mysqli_errno($link_mysqli).": ".mysqli_error($link_mysqli));
 } # fine if ($silenzio != "totale")
 } # fine if (!$risul[-1])
@@ -106,7 +106,7 @@ if (!$risul[-1]) {
 $risul = $risul[-1];
 if ($silenzio != "totale") {
 global $PHPR_TAB_PRE;
-if (!$silenzio) echo "<br>ERROR IN: ".str_replace(" ".$PHPR_TAB_PRE," ",$query)." <br>".mysqli_errno($link_mysqli).": ".mysqli_error($link_mysqli)."<br>";
+if (!$silenzio) echo "<br>ERROR IN: ".htmlspecialchars(str_replace(" ".$PHPR_TAB_PRE," ",$query))." <br>".htmlspecialchars(mysqli_errno($link_mysqli).": ".mysqli_error($link_mysqli))."<br>";
 error_log("IN ".$_SERVER['PHP_SELF']." MYSQL ERROR: ".substr(str_replace(" ".$PHPR_TAB_PRE," ",$query),0,25)."... - ".mysqli_errno($link_mysqli).": ".mysqli_error($link_mysqli));
 } # fine if ($silenzio != "totale")
 } # fine if (!$risul[-1])
@@ -159,7 +159,7 @@ return $risul;
 
 function aggslashdb ($stringa) {
 
-$risul = addslashes($stringa);
+$risul = addslashes((string) $stringa);
 return $risul;
 
 } # fine function aggslashdb
@@ -239,7 +239,7 @@ $lista_tabelle = substr($lista_tabelle,0,-1);
 global $link_mysqli;
 $risul = mysqli_query($link_mysqli,"lock tables $lista_tabelle");
 if (!$risul) {
-echo "<br>ERROR IN: lock tables $lista_tabelle<br>".mysqli_errno($link_mysqli).": ".mysqli_error($link_mysqli)."<br>";
+echo "<br>ERROR IN: lock tables ".htmlspecialchars($lista_tabelle)."<br>".htmlspecialchars(mysqli_errno($link_mysqli).": ".mysqli_error($link_mysqli))."<br>";
 error_log("IN ".$_SERVER['PHP_SELF']." MYSQL ERROR: lock tables $lista_tabelle - ".mysqli_errno($link_mysqli).": ".mysqli_error($link_mysqli));
 } # fine if (!$risul)
 
@@ -248,10 +248,11 @@ return $risul;
 } # fine function lock_tabelle
 
 
-function unlock_tabelle ($tabelle_lock,$azione = "") {
+function unlock_tabelle (&$tabelle_lock,$azione = "") {
 
 global $link_mysqli;
 $risul = mysqli_query($link_mysqli,"unlock tables");
+$tabelle_lock = null;
 
 } # fine function unlock_tabelle
 

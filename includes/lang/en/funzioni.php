@@ -24,6 +24,8 @@ case "orario del server":  			$messaggio = "server time"; break;
 case "Avviso":  				$messaggio = "Warning"; break;
 case "Mancano meno di":  			$messaggio = "Less than"; break;
 case "giorni alla scadenza dell'account":  	$messaggio = "days left until the account expires"; break;
+case "Numero eccesivo di sessioni <span style=\"color: red;\">errate</span> originate dal tuo indirizzo IP negli ultimi":	$messaggio = "Excessive number of <span style=\"color: red;\">incorrect</span> sessions from your IP address in the last"; break;
+case "È possibile che qualcuno dalla tua stessa rete stia tentando di rubare il tuo accesso":	$messaggio = "It is possible that someone from your same network is trying to steal your access"; break;
 case "":  		$messaggio = ""; break;
 case "":  		$messaggio = ""; break;
 

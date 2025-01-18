@@ -22,6 +22,7 @@
 
 
 
+if (!function_exists('mext_cal')) {
 function mext_cal ($messaggio,$pag,$lingua="") {
 if ($lingua) $lingua_mex = $lingua;
 else global $lingua_mex;
@@ -92,6 +93,7 @@ else $messaggio = mex($messaggio,$pag);
 
 return $messaggio;
 } # fine function mext_cal
+} # fine if (!function_exists('mext_cal'))
 
 
 

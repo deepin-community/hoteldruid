@@ -181,7 +181,7 @@ case "Combinazioni predefinite di appartamenti":	$messaggio = "Predefined [units
 case "lista appartamenti":  				$messaggio = "[units] list"; break;
 case "Nuova combinazione di appartamenti aggiunta":	$messaggio = "New [units] combination added"; break;
 case "Combinazione di appartamenti eliminata":		$messaggio = "[Units] combination deleted"; break;
-case "Metodo per l'assegnazione dell'appartamento":	$messaggio = "Method for the [unit] assignment"; break;
+case "Metodo per l'assegnazione dell'appartamento":	$messaggio = "Method for [unit] assignment"; break;
 case "Non si può inserire la prenozione senza utilizzare gli appartamenti della regola di assegnazione 1":	$messaggio = "The reservation can't be inserted without using [units] from the assignment rule 1"; break;
 case "Utilizza anche gli appartamenti della regola 1":	$messaggio = "Use also [units] from rule 1"; break;
 case "senza utilizzare gli appartamenti della regola 1":	$messaggio = "without using [units] from rule 1"; break;
@@ -245,6 +245,11 @@ case "chiusura appartamenti e tariffe":  		$messaggio = "closure of [units] and 
 case "assegnazione appartamenti":  			$messaggio = "[units] assignement"; break;
 case "solo per appartamenti":  				$messaggio = "only for [units]"; break;
 case "tipologie di appartamenti":  			$messaggio = "[unit] types"; break;
+case "C'è comunque almeno un appartamento libero tra quelli richiesti per ogni giorno del periodo richiesto":	$messaggio = "There is, however, at least one free [unit] among those requested for each day of the requested period"; break;
+case "Potrebbe essere possibile inserire la prenotazione con uno o più cambi di appartamento":	$messaggio = "It may be possible to insert the reservation with one or more [unit] changes"; break;
+case "Continua provando a dividere la prenotazione tra due o più degli appartamenti richiesti":	$messaggio = "Continue trying to split the reservation between two or more of the requested [units]"; break;
+case "Continua cercando in tutti gli appartamenti":  	$messaggio = "Continue searching all the [units]"; break;
+case "Non si è potuto inserire la prenotazione in un <b>unico appartamento</b>, è stata <em>divisa</em> tra vari appartamenti in periodi successivi":	$messaggio = "It was not possible to place the reservation in a <b>single [unit]</b>, it has been <em>divided</em> between different [units] in successive periods"; break;
 case "":  		$messaggio = ""; break;
 case "":  		$messaggio = ""; break;
 
@@ -399,7 +404,7 @@ case "Combinazioni predefinite di appartamenti":	$messaggio = "Predefined [units
 case "lista appartamenti":  				$messaggio = "[units] list"; break;
 case "Nuova combinazione di appartamenti aggiunta":	$messaggio = "New [units] combination added"; break;
 case "Combinazione di appartamenti eliminata":		$messaggio = "[Units] combination deleted"; break;
-case "Metodo per l'assegnazione dell'appartamento":	$messaggio = "Method for the [unit] assignment"; break;
+case "Metodo per l'assegnazione dell'appartamento":	$messaggio = "Method for [unit] assignment"; break;
 case "Non si può inserire la prenozione senza utilizzare gli appartamenti della regola di assegnazione 1":	$messaggio = "The reservation can't be inserted without using [units] from the assignment rule 1"; break;
 case "Utilizza anche gli appartamenti della regola 1":	$messaggio = "Use also [units] from rule 1"; break;
 case "senza utilizzare gli appartamenti della regola 1":	$messaggio = "without using [units] from rule 1"; break;
@@ -463,6 +468,11 @@ case "chiusura appartamenti e tariffe":  		$messaggio = "closure of [units] and 
 case "assegnazione appartamenti":  			$messaggio = "[units] assignement"; break;
 case "solo per appartamenti":  				$messaggio = "only for [units]"; break;
 case "tipologie di appartamenti":  			$messaggio = "[unit] types"; break;
+case "C'è comunque almeno un appartamento libero tra quelli richiesti per ogni giorno del periodo richiesto":	$messaggio = "There is, however, at least one free [unit] among those requested for each day of the requested period"; break;
+case "Potrebbe essere possibile inserire la prenotazione con uno o più cambi di appartamento":	$messaggio = "It may be possible to insert the reservation with one or more [unit] changes"; break;
+case "Continua provando a dividere la prenotazione tra due o più degli appartamenti richiesti":	$messaggio = "Continue trying to split the reservation between two or more of the requested [units]"; break;
+case "Continua cercando in tutti gli appartamenti":  	$messaggio = "Continue searching all the [units]"; break;
+case "Non si è potuto inserire la prenotazione in un <b>unico appartamento</b>, è stata <em>divisa</em> tra vari appartamenti in periodi successivi":	$messaggio = "It was not possible to place the reservation in a <b>single [unit]</b>, it has been <em>divided</em> between different [units] in successive periods"; break;
 case "":  		$messaggio = ""; break;
 case "":  		$messaggio = ""; break;
 
@@ -619,7 +629,7 @@ case "Combinazioni predefinite di appartamenti":	$messaggio = "Predefined [units
 case "lista appartamenti":  				$messaggio = "[units] list"; break;
 case "Nuova combinazione di appartamenti aggiunta":	$messaggio = "New [units] combination added"; break;
 case "Combinazione di appartamenti eliminata":		$messaggio = "[Units] combination deleted"; break;
-case "Metodo per l'assegnazione dell'appartamento":	$messaggio = "Method for the [unit] assignment"; break;
+case "Metodo per l'assegnazione dell'appartamento":	$messaggio = "Method for [unit] assignment"; break;
 case "Non si può inserire la prenozione senza utilizzare gli appartamenti della regola di assegnazione 1":	$messaggio = "The reservation can't be inserted without using [units] from the assignment rule 1"; break;
 case "Utilizza anche gli appartamenti della regola 1":	$messaggio = "Use also [units] from rule 1"; break;
 case "senza utilizzare gli appartamenti della regola 1":	$messaggio = "without using [units] from rule 1"; break;
@@ -683,6 +693,11 @@ case "chiusura appartamenti e tariffe":  		$messaggio = "closure of [units] and 
 case "assegnazione appartamenti":  			$messaggio = "[units] assignement"; break;
 case "solo per appartamenti":  				$messaggio = "only for [units]"; break;
 case "tipologie di appartamenti":  			$messaggio = "[unit] types"; break;
+case "C'è comunque almeno un appartamento libero tra quelli richiesti per ogni giorno del periodo richiesto":	$messaggio = "There is, however, at least one free [unit] among those requested for each day of the requested period"; break;
+case "Potrebbe essere possibile inserire la prenotazione con uno o più cambi di appartamento":	$messaggio = "It may be possible to insert the reservation with one or more [unit] changes"; break;
+case "Continua provando a dividere la prenotazione tra due o più degli appartamenti richiesti":	$messaggio = "Continue trying to split the reservation between two or more of the requested [units]"; break;
+case "Continua cercando in tutti gli appartamenti":  	$messaggio = "Continue searching all the [units]"; break;
+case "Non si è potuto inserire la prenotazione in un <b>unico appartamento</b>, è stata <em>divisa</em> tra vari appartamenti in periodi successivi":	$messaggio = "It was not possible to place the reservation in a <b>single [unit]</b>, it has been <em>divided</em> between different [units] in successive periods"; break;
 case "":  		$messaggio = ""; break;
 case "":  		$messaggio = ""; break;
 
@@ -837,7 +852,7 @@ case "Combinazioni predefinite di appartamenti":	$messaggio = "Predefined [units
 case "lista appartamenti":  				$messaggio = "[units] list"; break;
 case "Nuova combinazione di appartamenti aggiunta":	$messaggio = "New [units] combination added"; break;
 case "Combinazione di appartamenti eliminata":		$messaggio = "[Units] combination deleted"; break;
-case "Metodo per l'assegnazione dell'appartamento":	$messaggio = "Method for the [unit] assignment"; break;
+case "Metodo per l'assegnazione dell'appartamento":	$messaggio = "Method for [unit] assignment"; break;
 case "Non si può inserire la prenozione senza utilizzare gli appartamenti della regola di assegnazione 1":	$messaggio = "The reservation can't be inserted without using [units] from the assignment rule 1"; break;
 case "Utilizza anche gli appartamenti della regola 1":	$messaggio = "Use also [units] from rule 1"; break;
 case "senza utilizzare gli appartamenti della regola 1":	$messaggio = "without using [units] from rule 1"; break;
@@ -901,6 +916,11 @@ case "chiusura appartamenti e tariffe":  		$messaggio = "closure of [units] and 
 case "assegnazione appartamenti":  			$messaggio = "[units] assignement"; break;
 case "solo per appartamenti":  				$messaggio = "only for [units]"; break;
 case "tipologie di appartamenti":  			$messaggio = "[unit] types"; break;
+case "C'è comunque almeno un appartamento libero tra quelli richiesti per ogni giorno del periodo richiesto":	$messaggio = "There is, however, at least one free [unit] among those requested for each day of the requested period"; break;
+case "Potrebbe essere possibile inserire la prenotazione con uno o più cambi di appartamento":	$messaggio = "It may be possible to insert the reservation with one or more [unit] changes"; break;
+case "Continua provando a dividere la prenotazione tra due o più degli appartamenti richiesti":	$messaggio = "Continue trying to split the reservation between two or more of the requested [units]"; break;
+case "Continua cercando in tutti gli appartamenti":  	$messaggio = "Continue searching all the [units]"; break;
+case "Non si è potuto inserire la prenotazione in un <b>unico appartamento</b>, è stata <em>divisa</em> tra vari appartamenti in periodi successivi":	$messaggio = "It was not possible to place the reservation in a <b>single [unit]</b>, it has been <em>divided</em> between different [units] in successive periods"; break;
 case "":  		$messaggio = ""; break;
 case "":  		$messaggio = ""; break;
 
@@ -909,12 +929,12 @@ case "":  		$messaggio = ""; break;
 } # fine switch ($messaggio)
 } # fine else if ($unit['special'])
 } # fine if else if ($unit['gender'] == "m")
-$messaggio = str_replace("[unit]",$unit['s_n'],$messaggio);
-$messaggio = str_replace("[units]",$unit['p_n'],$messaggio);
-$messaggio = str_replace("[Unit]",ucfirst($unit['s_n']),$messaggio);
-$messaggio = str_replace("[Units]",ucfirst($unit['p_n']),$messaggio);
-$messaggio = str_replace("[UNIT]",strtoupper($unit['s_n']),$messaggio);
-$messaggio = str_replace("[UNITS]",strtoupper($unit['p_n']),$messaggio);
+$messaggio = str_replace("[unit]",(string) $unit['s_n'],$messaggio);
+$messaggio = str_replace("[units]",(string) $unit['p_n'],$messaggio);
+$messaggio = str_replace("[Unit]",ucfirst((string) $unit['s_n']),$messaggio);
+$messaggio = str_replace("[Units]",ucfirst((string) $unit['p_n']),$messaggio);
+$messaggio = str_replace("[UNIT]",strtoupper((string) $unit['s_n']),$messaggio);
+$messaggio = str_replace("[UNITS]",strtoupper((string) $unit['p_n']),$messaggio);
 
 
 

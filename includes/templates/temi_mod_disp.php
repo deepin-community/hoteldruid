@@ -57,7 +57,8 @@ $template_theme_values[1][5]['null'] = "[theme_value_6]";
 $template_theme_values[1][6]['name'] = mex("titolo",$pag);
 $template_theme_values[1][6]['default'] = mex2("Controlla la disponibilità",$pag,$lingua_modello);
 #rimuovere questo null dopo versione 2.2.2?
-$template_theme_values[1][6]['null'] = mex2("Controlla la disponibilità",$pag,$lingua_modello);
+#$template_theme_values[1][6]['null'] = mex2("Controlla la disponibilità",$pag,$lingua_modello);
+$template_theme_values[1][6]['replace'] = "<big><big>[theme_value_6]</big></big><br>";
 $template_theme_values[1][7]['name'] = mex("URL file javascript",$pag);
 $template_theme_values[1][7]['default'] = "";
 $template_theme_values[1][7]['replace'] = "
@@ -98,6 +99,8 @@ $template_theme_html_pre[1] = "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01//EN
  .caltitle { font-size: 12px; display: inline-block; padding-bottom: 2px; }
  .calbutton { font-size: 10px; }
  .caltable td { font-size: 12px; }
+ .t1top { position: -webkit-sticky; position: sticky; top: 0; background-clip: padding-box; }
+ .t1left { position: -webkit-sticky; position: sticky; left: 0; background-clip: padding-box; }
  @media only screen and (max-width: 480px) {
   .t_book table, table.extra_costs, [class^=\"phr_separator\"] { display: block; }
   .t_book table tr, .extra_costs tr { display: block; padding: 5px 0 5px 0; }
@@ -110,37 +113,54 @@ $template_theme_html_pre[1] = "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01//EN
   .calbutton { font-size: 14px; padding-left: 12px; padding-right: 12px; }
   .caltable td { font-size: 16px; }
   .check_avail_line { line-height: 1.5; }
-  table.perstype td { display: inline-block;
+  table.perstype td { display: inline-block; }
+  .tab_cont { overflow-x: scroll; padding-bottom: 6px; }
  }
 </style>
 <script type=\"text/javascript\">
+var hd_webpage_type = 'availability';
+var hd_webpage_lang = '".urlencode($lingua_modello)."';
 function open_calendar_dates_from_select () {
- var children = document.body.getElementsByTagName('select');
- var child;
- for (var i = 0, length = children.length; i < length; i++) {
-  child = children[i];
-  if (child.id.substr(0,6) == 'id_sdm') {
-  child.addEventListener('mousedown', function(e) {
-   e.preventDefault();
-   var elem = this;
-   elem.disabled=true;
-   setTimeout(function() { elem.disabled = false; }, 0);
-   elem.blur();
-   window.focus();
-   var n = this.id.substr(6);
-   mos_cal(n);
-  });
+ if (typeof mos_cal === 'function') {
+  var children = document.body.getElementsByTagName('select');
+  var child;
+  for (var i = 0, length = children.length; i < length; i++) {
+   child = children[i];
+   if (child.id.substr(0,6) == 'id_sdm') {
+   child.addEventListener('mousedown', function(e) {
+    e.preventDefault();
+    var elem = this;
+    elem.disabled=true;
+    setTimeout(function() { elem.disabled = false; }, 0);
+    elem.blur();
+    window.focus();
+    var n = this.id.substr(6);
+    mos_cal(n);
+   });
+   }
   }
+ }
+}
+function set_tab_cont_max_width () {
+var tabs = document.getElementsByClassName('tab_cont');
+ for (n1 = 0 ; n1 < tabs.length ; n1++) {
+  tabs[n1].style.maxWidth = (document.body.clientWidth - 44) + 'px';
  }
 }
 </script>[theme_value_4]
 </head>
 <body style=\"background-color: [theme_color_2]; color: [theme_color_1]; padding: 0; margin: 0;\">
+<div id=\"container01\">
+<div id=\"container02\">
 <div id=\"html_pre\"></div>
+<div id=\"container03\">
 [theme_value_1]
+<div id=\"container04\">
 <div id=\"logo_post\"></div>
+<div id=\"container05\">
+<div id=\"container06\">
 
-<div class=\"mainbox\"><big><big>[theme_value_6]</big></big><br><br>
+<div class=\"mainbox\">[theme_value_6]<br>
 
 <table class=\"formframe\" border=1 cellspacing=0 cellpadding=16>
 <tr><td>
@@ -151,15 +171,24 @@ $template_theme_html_post[1] = "
 </td></tr></table>
 
 ";
-if (!defined('C_NASCONDI_MARCA') or C_NASCONDI_MARCA != "SI") $template_theme_html_post[1] .= "<small><small>Powered by 
+if (!defined('C_NASCONDI_MARCA') or C_NASCONDI_MARCA != "SI") $template_theme_html_post[1] .= "<div id=\"powered_by_hd\"><small><small>Powered by 
 <a href=\"https://www.hoteldruid.com\" style=\"color: [theme_color_1];\">
-HotelDruid booking software</a></small></small>";
+HotelDruid booking software</a></small></small></div>";
 $template_theme_html_post[1] .= "</div>
+
+</div>
+</div>
 <div id=\"html_post\"></div>
+</div>
+</div>
+<div id=\"html_post2\"></div>
+</div>
+</div>
 [theme_value_7]
 <script type=\"text/javascript\">
 <!--
 if (typeof open_calendar_dates_from_select === 'function') open_calendar_dates_from_select();
+if (typeof set_tab_cont_max_width === 'function') set_tab_cont_max_width();
 //-->
 </script>
 </body>

@@ -2,7 +2,7 @@
 
 ##################################################################################
 #    HOTELDRUID
-#    Copyright (C) 2001-2020 by Marco Maria Francesco De Santis (marco@digitaldruid.net)
+#    Copyright (C) 2001-2023 by Marco Maria Francesco De Santis (marco@digitaldruid.net)
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published by
@@ -156,13 +156,13 @@ $col_tableregole = estrai_col_tabella($col_tableregole);
 
 # Creo la tabella con i costi di gestione
 $tablecosti = $PHPR_TAB_PRE."costi".$anno;
-$col_tablecosti = "idcosti integer unique,nome_costo text, val_costo float8, tipo_costo text, valuta text, costo_valuta float8, nome_cassa varchar(70), persona_costo text, provenienza_costo text, metodo_pagamento text, datainserimento $DATETIME, hostinserimento varchar(50), utente_inserimento integer";
+$col_tablecosti = "idcosti integer unique, nome_costo text, val_costo float8, tipo_costo text, valuta text, costo_valuta float8, nome_cassa varchar(70), persona_costo text, provenienza_costo text, id_pagamento text, metodo_pagamento text, data_transazione $DATETIME, data_modifica $DATETIME, datainserimento $DATETIME, hostinserimento varchar(50), utente_inserimento integer";
 esegui_query("create table $tablecosti ($col_tablecosti)");
 $col_tablecosti = estrai_col_tabella($col_tablecosti);
 
 # Creo la tabella per la storia entrate-uscite
 $tablesoldi = $PHPR_TAB_PRE."soldi".$anno;
-$col_tablesoldi = "idsoldi integer unique, motivazione text, id_pagamento text, metodo_pagamento text, saldo_prenota float8, saldo_cassa float8, soldi_prima float8, valuta text, saldo_valuta float8, data_inserimento $DATETIME, utente_inserimento integer";
+$col_tablesoldi = "idsoldi integer unique, motivazione text, id_pagamento text, metodo_pagamento text, note text, saldo_prenota float8, saldo_cassa float8, soldi_prima float8, valuta text, saldo_valuta float8, data_transazione $DATETIME, data_modifica $DATETIME, data_inserimento $DATETIME, utente_inserimento integer";
 esegui_query("create table $tablesoldi ($col_tablesoldi)");
 $col_tablesoldi = estrai_col_tabella($col_tablesoldi);
 
@@ -298,7 +298,20 @@ $datafine2 = $datafine;
 } # fine if ($mesecreato >= $mese_ini and $mesecreato <= $mese_fine)
 } while ($annocreato2 <= $anno_fine or $mesecreato2 == 48);
 
+$numero_giorno = substr($datafine2,8,2);
 $numero_mese = substr($datafine2,5,2);
+$numero_anno = substr($datafine2,0,4);
+$nome_giorno = date("D",mktime(0,0,0,$numero_mese,$numero_giorno,$numero_anno));
+if ($tipo_periodi == "g") {
+if ($nome_giorno == "Sun") $nome_giorno = mex(" Do",$pag);
+if ($nome_giorno == "Mon") $nome_giorno = mex(" Lu",$pag);
+if ($nome_giorno == "Tue") $nome_giorno = mex(" Ma",$pag);
+if ($nome_giorno == "Wed") $nome_giorno = mex(" Me",$pag);
+if ($nome_giorno == "Thu") $nome_giorno = mex(" Gi",$pag);
+if ($nome_giorno == "Fri") $nome_giorno = mex(" Ve",$pag);
+if ($nome_giorno == "Sat") $nome_giorno = mex(" Sa",$pag);
+} # fine if ($tipo_periodi == "g")
+else $nome_giorno = "";
 if ($numero_mese == "01") $nome_mese = mex("Gen",$pag);
 if ($numero_mese == "02") $nome_mese = mex("Feb",$pag);
 if ($numero_mese == "03") $nome_mese = mex("Mar",$pag);
@@ -311,10 +324,8 @@ if ($numero_mese == "09") $nome_mese = mex("Set",$pag);
 if ($numero_mese == "10") $nome_mese = mex("Ott",$pag);
 if ($numero_mese == "11") $nome_mese = mex("Nov",$pag);
 if ($numero_mese == "12") $nome_mese = mex("Dic",$pag);
-$numero_giorno = substr($datafine2,8,2);
-$numero_anno = substr($datafine2,0,4);
 $n_date_menu++;
-$date_option .= "<option value=\\\"$datafine2\\\">$nome_mese $numero_giorno, $numero_anno</option>
+$date_option .= "<option value=\\\"$datafine2\\\">$nome_mese $numero_giorno$nome_giorno, $numero_anno</option>
 ";
 fwrite($fileaperto,"<?php 
 
@@ -520,7 +531,7 @@ $costi_agg_importati = esegui_query("select * from $tablecostiprenota where idco
 $num_costi_agg_importati = numlin_query($costi_agg_importati);
 for ($num1 = 0 ; $num1 < $num_costi_agg_importati ; $num1++) {
 $idcostiprenota = risul_query($costi_agg_importati,$num1,'idcostiprenota');
-$settimane = risul_query($costi_agg_importati,$num1,'settimane');
+$settimane = (string) risul_query($costi_agg_importati,$num1,'settimane');
 if (str_replace(",","",$settimane) != $settimane) {
 $settimane = explode(",",$settimane);
 $settimane_nuove = ",";
@@ -556,9 +567,9 @@ $idperiodi = risul_query($tariffe_importate,$num1,'idperiodi');
 $idperiodi = $idperiodi - $id_data_ini_periodi_prec + 1;
 for ($num2 = 1 ; $num2 <= $num_tariffe_tab ; $num2++) {
 $tariffa = (string) risul_query($tariffe_importate,$num1,"tariffa".$num2);
-if (strcmp($tariffa,"")) esegui_query("update $tableperiodi set tariffa$num2 = '$tariffa' where idperiodi = $idperiodi ");
+if (strcmp((string) $tariffa,"")) esegui_query("update $tableperiodi set tariffa$num2 = '$tariffa' where idperiodi = $idperiodi ");
 $tariffap = (string) risul_query($tariffe_importate,$num1,"tariffa".$num2."p");
-if (strcmp($tariffap,"")) esegui_query("update $tableperiodi set tariffa$num2"."p = '$tariffap' where idperiodi = $idperiodi ");
+if (strcmp((string) $tariffap,"")) esegui_query("update $tableperiodi set tariffa$num2"."p = '$tariffap' where idperiodi = $idperiodi ");
 } # fine for $num2
 } # fine for $num1
 
@@ -583,9 +594,9 @@ else {
 if ($tariffa_chiusa) esegui_query("insert into $tableregole (idregole,tariffa_chiusa,iddatainizio,iddatafine) values ('$idregole','$tariffa_chiusa','$iddatainizio','$iddatafine') ");
 else esegui_query("insert into $tableregole (idregole,app_agenzia,iddatainizio,iddatafine) values ('$idregole','$app_agenzia','$iddatainizio','$iddatafine') ");
 } # fine else $tariffa_commissioni)
-if (strcmp($motivazione,"")) esegui_query("update $tableregole set motivazione = '".aggslashdb($motivazione)."' where idregole = '$idregole' ");
-if (strcmp($motivazione2,"")) esegui_query("update $tableregole set motivazione2 = '".aggslashdb($motivazione2)."' where idregole = '$idregole' ");
-if (strcmp($motivazione3,"")) esegui_query("update $tableregole set motivazione3 = '".aggslashdb($motivazione3)."' where idregole = '$idregole' ");
+if (strcmp((string) $motivazione,"")) esegui_query("update $tableregole set motivazione = '".aggslashdb($motivazione)."' where idregole = '$idregole' ");
+if (strcmp((string) $motivazione2,"")) esegui_query("update $tableregole set motivazione2 = '".aggslashdb($motivazione2)."' where idregole = '$idregole' ");
+if (strcmp((string) $motivazione3,"")) esegui_query("update $tableregole set motivazione3 = '".aggslashdb($motivazione3)."' where idregole = '$idregole' ");
 } # fine for $num1
 
 $soldi_importati = esegui_query("select * from $tablesoldi_prec where data_inserimento >= '$data_inizio_periodi' and  saldo_prenota is not NULL order by idsoldi");
@@ -605,7 +616,7 @@ esegui_query("update $tablesoldi set idsoldi = '$idsoldi_corr' where idsoldi = '
 } # fine for $num1
 
 # aggiorno i messaggi con prenotazioni del nuovo anno già inserite, quelli da inserire sono aggiornati con i modelli internet
-$messaggi_importati = esegui_query("select * from $tablemessaggi where stato = 'ins' and dati_messaggio18 = '$anno_prec' ");
+$messaggi_importati = esegui_query("select * from $tablemessaggi where stato = 'ins' and (dati_messaggio2 = '$anno_prec' or dati_messaggio18 = '$anno_prec') ");
 $num_messaggi_importati = numlin_query($messaggi_importati);
 for ($num1 = 0 ; $num1 < $num_messaggi_importati ; $num1++) {
 $agg_mess = 1;
@@ -617,8 +628,12 @@ else $agg_mess = 0;
 } # fine for $num2
 if ($agg_mess) {
 $idmess = risul_query($messaggi_importati,$num1,'idmessaggi');
+$dati_messaggio2 = risul_query($messaggi_importati,$num1,'dati_messaggio2');
+$dati_messaggio18 = risul_query($messaggi_importati,$num1,'dati_messaggio18');
 $n_lista_pren = substr($n_lista_pren,0,-1);
-esegui_query("update $tablemessaggi set dati_messaggio1 = '$n_lista_pren', dati_messaggio18 = '$anno' where idmessaggi = '$idmess' ");
+esegui_query("update $tablemessaggi set dati_messaggio1 = '$n_lista_pren' where idmessaggi = '$idmess' ");
+if ($dati_messaggio2 == $anno_prec) esegui_query("update $tablemessaggi set dati_messaggio2 = '$anno' where idmessaggi = '$idmess' ");
+if ($dati_messaggio18 == $anno_prec) esegui_query("update $tablemessaggi set dati_messaggio18 = '$anno' where idmessaggi = '$idmess' ");
 } # fine if ($agg_mess)
 } # fine for $num1
 
@@ -648,7 +663,7 @@ $nomi_contratti = explode("#@&",$nomi_contratti);
 $num_nomi_contratti = count($nomi_contratti);
 for ($num2 = 0 ; $num2 < $num_nomi_contratti ; $num2++) {
 $dati_nome_contratto = explode("#?&",$nomi_contratti[$num2]);
-$nomi_contr_ut[$idutente_contr][$dati_nome_contratto[0]] = $dati_nome_contratto[1];
+$nomi_contr_ut[$idutente_contr][$dati_nome_contratto[0]] = fixset($dati_nome_contratto[1]);
 } # fine for $num2
 } # fine for $num1
 $prefissi_contr = array();
@@ -823,7 +838,7 @@ if ($val_costo < 0) {
 $tipo_costo = "s";
 $val_costo = (double) $val_costo * -1;
 } # fine if ($val_costo < 0)
-esegui_query("insert into $tablecosti (idcosti,nome_costo,val_costo,persona_costo,tipo_costo,datainserimento,hostinserimento,utente_inserimento) values ('$idcosti_corr','$anno_prec','$val_costo','".aggslashdb($nome_utente)."','$tipo_costo','$datainserimento','$HOSTNAME','$utente_costo') ");
+esegui_query("insert into $tablecosti (idcosti,nome_costo,val_costo,persona_costo,tipo_costo,data_transazione,datainserimento,hostinserimento,utente_inserimento) values ('$idcosti_corr','$anno_prec','$val_costo','".aggslashdb($nome_utente)."','$tipo_costo','$datainserimento','$datainserimento','$HOSTNAME','$utente_costo') ");
 if ($nome_cassa != "@#principale#@") esegui_query("update $tablecosti set nome_cassa = '".aggslashdb($nome_cassa)."' where idcosti = '$idcosti_corr' ");
 } # fine foreach ($casse as $nome_cassa => $val_costo)
 } # fine foreach ($cassa_prec as $utente_costo => $casse)
@@ -837,7 +852,7 @@ esegui_query("insert into $tablenometariffe ($colonne) select $colonne from $tab
 $prezzi_tar_importati = esegui_query("select * from $tablenometariffe where idntariffe = '6' ");
 if (numlin_query($prezzi_tar_importati)) {
 for ($num1 = 1 ; $num1 <= $num_tariffe_tab ; $num1++) {
-$prezzi_imp_int = risul_query($prezzi_tar_importati,0,"tariffa$num1");
+$prezzi_imp_int = (string) risul_query($prezzi_tar_importati,0,"tariffa$num1");
 $prezzi_imp = explode(">",$prezzi_imp_int);
 $pi_nuovi = $prezzi_imp[0];
 for ($num2 = 1 ; $num2 < count($prezzi_imp) ; $num2++) {
@@ -868,13 +883,13 @@ if ($periodipermessi[$num2]) {
 $id_data_fine_pp = explode("-",$periodipermessi[$num2]);
 $id_data_inizio_pp = $id_data_fine_pp[0];
 $id_data_fine_pp = $id_data_fine_pp[1];
-if ($id_data_fine_pp >= $id_data_ini_periodi_prec and $id_data_inizio_pp <= $id_data_fine_periodi_prec) {
+if (isset($id_data_ini_periodi_prec) and isset($id_data_fine_periodi_prec) and $id_data_fine_pp >= $id_data_ini_periodi_prec and $id_data_inizio_pp <= $id_data_fine_periodi_prec) {
 if ($id_data_inizio_pp < $id_data_ini_periodi_prec) $id_data_inizio_pp = $id_data_ini_periodi_prec;
 if ($id_data_fine_pp > $id_data_fine_periodi_prec) $id_data_fine_pp = $id_data_fine_periodi_prec;
 $id_data_inizio_pp = $id_data_inizio_pp - $id_data_ini_periodi_prec + 1;
 $id_data_fine_pp = $id_data_fine_pp - $id_data_ini_periodi_prec + 1;
 $pp_nuovi .= $id_data_inizio_pp."-".$id_data_fine_pp.",";
-} # fine if ($id_data_fine_pp >= $id_data_ini_periodi_prec and...
+} # fine if (isset($id_data_ini_periodi_prec) and isset($id_data_fine_periodi_prec) and $id_data_fine_pp >= $id_data_ini_periodi_prec and...
 } # fine if ($periodipermessi[$num2])
 } # fine for $num2
 if (strlen($pp_nuovi) > 1) $pp_nuovi = substr($pp_nuovi,0,-1);
@@ -888,6 +903,7 @@ esegui_query("insert into $tableregole select $col_tableregole from $tableregole
 $privilegi_prec = esegui_query("select * from $tableprivilegi where anno = '$anno_prec'");
 for ($num1 = 0 ; $num1 < numlin_query($privilegi_prec) ; $num1++) {
 $idutente_p = risul_query($privilegi_prec,$num1,'idutente');
+if ($idutente_p > 1) {
 $regole1_consentite_p = risul_query($privilegi_prec,$num1,'regole1_consentite');
 $tariffe_consentite_p = risul_query($privilegi_prec,$num1,'tariffe_consentite');
 $costi_agg_consentiti_p = risul_query($privilegi_prec,$num1,'costi_agg_consentiti');
@@ -910,6 +926,7 @@ else copy(C_DATI_PATH."/selectperiodi$anno.$idutente_p.php",C_DATI_PATH."/selper
 $lingua_mex = $lingua[1];
 $giorno_vedi_ini_sett = esegui_query("select valpersonalizza_num from $tablepersonalizza where idpersonalizza = 'giorno_vedi_ini_sett$anno_prec' and idutente = '$idutente_p'");
 if (numlin_query($giorno_vedi_ini_sett) == 1 and $tipo_periodi == "g") esegui_query("insert into $tablepersonalizza (idpersonalizza,valpersonalizza_num,idutente) values ('giorno_vedi_ini_sett$anno','".risul_query($giorno_vedi_ini_sett,0,"valpersonalizza_num")."','$idutente_p')");
+} # fine ($idutente_p > 1)
 } # fine for $num1
 $giorno_vedi_ini_sett = esegui_query("select valpersonalizza_num from $tablepersonalizza where idpersonalizza = 'giorno_vedi_ini_sett$anno_prec' and idutente = '1'");
 if (numlin_query($giorno_vedi_ini_sett) == 1 and $tipo_periodi == "g") esegui_query("insert into $tablepersonalizza (idpersonalizza,valpersonalizza_num,idutente) values ('giorno_vedi_ini_sett$anno','".risul_query($giorno_vedi_ini_sett,0,"valpersonalizza_num")."','1')");
@@ -967,7 +984,7 @@ if (@is_file("$percorso_cartella_modello/mdl_disponibilita.php")) {
 $lingua_modello = "ita";
 $nome_file = mex2("mdl_disponibilita",$pag,$lingua_modello).".php";
 $num_periodi_date = "";
-recupera_var_modello_disponibilita($nome_file,$percorso_cartella_modello,$pag,$fr_frase,$num_frasi,$var_mod,$num_var_mod,$tipo_periodi,"SI",$anno_modello,$PHPR_TAB_PRE);
+recupera_var_modello_disponibilita($nome_file,$percorso_cartella_modello,$pag,$fr_frase,$frase,$num_frasi,$var_mod,$num_var_mod,$tipo_periodi,"SI",$anno_modello,$lingua_modello,$PHPR_TAB_PRE);
 if ($anno_modello_presente == $anno_prec) {
 aggiorna_var_anno_modello_disponibilita($id_data_ini_periodi_prec,$tableperiodi_prec,$tableperiodi,$tabletransazioniweb,$tablemessaggi,$tipo_periodi);
 crea_modello_disponibilita($percorso_cartella_modello,$anno_modello,$PHPR_TAB_PRE,$pag,$lingua_modello,$silenzio_mod,$fr_frase,$frase,$num_frasi,$tipo_periodi);
@@ -984,7 +1001,7 @@ $percorso_cartella_modello = $perc_cart_mod_vett[$num_cart];
 if (@is_file("$percorso_cartella_modello/$nome_file")) {
 $lingua_modello = $ini_lingua;
 $num_periodi_date = "";
-recupera_var_modello_disponibilita($nome_file,$percorso_cartella_modello,$pag,$fr_frase,$num_frasi,$var_mod,$num_var_mod,$tipo_periodi,"SI",$anno_modello,$PHPR_TAB_PRE);
+recupera_var_modello_disponibilita($nome_file,$percorso_cartella_modello,$pag,$fr_frase,$frase,$num_frasi,$var_mod,$num_var_mod,$tipo_periodi,"SI",$anno_modello,$lingua_modello,$PHPR_TAB_PRE);
 if ($anno_modello_presente == $anno_prec) {
 aggiorna_var_anno_modello_disponibilita($id_data_ini_periodi_prec,$tableperiodi_prec,$tableperiodi,$tabletransazioniweb,$tablemessaggi,$tipo_periodi);
 crea_modello_disponibilita($percorso_cartella_modello,$anno_modello,$PHPR_TAB_PRE,$pag,$lingua_modello,$silenzio_mod,$fr_frase,$frase,$num_frasi,$tipo_periodi);
@@ -1010,7 +1027,7 @@ $percorso_cartella_modello = $perc_cart_mod_vett[$num_cart];
 if (@is_file("$percorso_cartella_modello/$nome_file")) {
 $lingua_modello = "ita";
 $num_periodi_date = "";
-$funz_recupera_var_modello($nome_file,$percorso_cartella_modello,$pag,$fr_frase,$num_frasi,$var_mod,$num_var_mod,$tipo_periodi,"SI",$anno_modello,$PHPR_TAB_PRE);
+$funz_recupera_var_modello($nome_file,$percorso_cartella_modello,$pag,$fr_frase,$frase,$num_frasi,$var_mod,$num_var_mod,$tipo_periodi,"SI",$anno_modello,$lingua_modello,$PHPR_TAB_PRE);
 if ($anno_modello_presente == $anno_prec) {
 $funz_aggiorna_var_anno_modello($id_data_ini_periodi_prec,$tableperiodi_prec,$tableperiodi,$tabletransazioniweb,$tablemessaggi,$tipo_periodi);
 $funz_crea_modello($percorso_cartella_modello,$anno_modello,$PHPR_TAB_PRE,$pag,$lingua_modello,$silenzio_mod,$fr_frase,$frase,$num_frasi,$tipo_periodi);
@@ -1027,7 +1044,7 @@ $percorso_cartella_modello = $perc_cart_mod_vett[$num_cart];
 if (@is_file("$percorso_cartella_modello/$nome_file")) {
 $lingua_modello = $ini_lingua;
 $num_periodi_date = "";
-$funz_recupera_var_modello($nome_file,$percorso_cartella_modello,$pag,$fr_frase,$num_frasi,$var_mod,$num_var_mod,$tipo_periodi,"SI",$anno_modello,$PHPR_TAB_PRE);
+$funz_recupera_var_modello($nome_file,$percorso_cartella_modello,$pag,$fr_frase,$frase,$num_frasi,$var_mod,$num_var_mod,$tipo_periodi,"SI",$anno_modello,$lingua_modello,$PHPR_TAB_PRE);
 if ($anno_modello_presente == $anno_prec) {
 $funz_aggiorna_var_anno_modello($id_data_ini_periodi_prec,$tableperiodi_prec,$tableperiodi,$tabletransazioniweb,$tablemessaggi,$tipo_periodi);
 $funz_crea_modello($percorso_cartella_modello,$anno_modello,$PHPR_TAB_PRE,$pag,$lingua_modello,$silenzio_mod,$fr_frase,$frase,$num_frasi,$tipo_periodi);

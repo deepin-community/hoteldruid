@@ -2,7 +2,7 @@
 
 ##################################################################################
 #    HOTELDRUID
-#    Copyright (C) 2001-2019 by Marco Maria Francesco De Santis (marco@digitaldruid.net)
+#    Copyright (C) 2001-2023 by Marco Maria Francesco De Santis (marco@digitaldruid.net)
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published by
@@ -34,11 +34,11 @@ esegui_query("insert into $tablepersonalizza (idpersonalizza,valpersonalizza,idu
 
 
 # Prendo i dati dal file se già esistente
-if ($template_file_name[$lingua_modello]) $nome_file = $template_file_name[$lingua_modello];
+if (!empty($template_file_name[$lingua_modello])) $nome_file = $template_file_name[$lingua_modello];
 else {
 $nome_file = mext_rat($template_file_name['ita'],$pag,$lingua_modello);
 if ($nome_file == $template_file_name['en'] or $nome_file == $template_file_name['ita']) $nome_file = $lingua_modello."_".$template_file_name['en'];
-} # fine else if ($template_file_name[$lingua_modello])
+} # fine else if (!empty($template_file_name[$lingua_modello]))
 $modello_esistente = "NO";
 $lingua_mod_esist = $lingua_mex_1;
 unset($id_transazione);
@@ -46,14 +46,14 @@ if (@is_file("$percorso_cartella_modello/$nome_file")) {
 $modello_esistente = "SI";
 $lingua_mex = $lingua_mex_1;
 include("./includes/templates/$template_data_dir/functions.php");
-recupera_var_modello_rat($nome_file,$percorso_cartella_modello,$pag,$fr_frase,$num_frasi,$var_mod,$num_var_mod,$tipo_periodi,"NO",$anno_modello,$PHPR_TAB_PRE);
+recupera_var_modello_rat($nome_file,$percorso_cartella_modello,$pag,$fr_frase,$frase,$num_frasi,$var_mod,$num_var_mod,$tipo_periodi,"NO",$anno_modello,$lingua_modello,$PHPR_TAB_PRE);
 $lingua_mex = $lingua_orig;
 
 $tabelle_lock = array($tableversioni,$tabletransazioni);
 $tabelle_lock = lock_tabelle($tabelle_lock);
 $adesso = date("YmdHis",(time() + (C_DIFF_ORE * 3600)));
 list($usec, $sec) = explode(' ', microtime());
-mt_srand((float) $sec + ((float) $usec * 100000));
+mt_srand($sec + (int) ((float) $usec * 1000000.0));
 $val_casuale = mt_rand(100000,999999);
 $versione_transazione = prendi_numero_versione($tableversioni);
 $id_transazione = $adesso.$val_casuale.$versione_transazione;
@@ -72,20 +72,20 @@ $NO = mex2("NO",$pag,$lingua_mod_esist);
 echo "<form method=\"post\" action=\"crea_modelli.php\" enctype=\"multipart/form-data\"><div>
 <input type=\"hidden\" name=\"anno\" value=\"$anno\">
 <input type=\"hidden\" name=\"id_sessione\" value=\"$id_sessione\">
-<input type=\"hidden\" name=\"id_transazione\" value=\"".htmlspecialchars(fixset($id_transazione))."\">
+<input type=\"hidden\" name=\"id_transazione\" value=\"".htmlspecialchars(fixstr($id_transazione))."\">
 <input type=\"hidden\" name=\"crea_modello\" value=\"SI\">
 <input type=\"hidden\" name=\"fonte_dati_conn\" value=\"$fonte_dati_conn\">
-<input type=\"hidden\" name=\"T_PHPR_DB_TYPE\" value=\"".htmlspecialchars(fixset($T_PHPR_DB_TYPE))."\">
-<input type=\"hidden\" name=\"T_PHPR_DB_NAME\" value=\"".htmlspecialchars(fixset($T_PHPR_DB_NAME))."\">
-<input type=\"hidden\" name=\"T_PHPR_DB_HOST\" value=\"".htmlspecialchars(fixset($T_PHPR_DB_HOST))."\">
-<input type=\"hidden\" name=\"T_PHPR_DB_PORT\" value=\"".htmlspecialchars(fixset($T_PHPR_DB_PORT))."\">
-<input type=\"hidden\" name=\"T_PHPR_DB_USER\" value=\"".htmlspecialchars(fixset($T_PHPR_DB_USER))."\">
-<input type=\"hidden\" name=\"T_PHPR_DB_PASS\" value=\"".htmlspecialchars(fixset($T_PHPR_DB_PASS))."\">
-<input type=\"hidden\" name=\"T_PHPR_LOAD_EXT\" value=\"".htmlspecialchars(fixset($T_PHPR_LOAD_EXT))."\">
-<input type=\"hidden\" name=\"T_PHPR_TAB_PRE\" value=\"".htmlspecialchars(fixset($T_PHPR_TAB_PRE))."\">
+<input type=\"hidden\" name=\"T_PHPR_DB_TYPE\" value=\"".htmlspecialchars(fixstr($T_PHPR_DB_TYPE))."\">
+<input type=\"hidden\" name=\"T_PHPR_DB_NAME\" value=\"".htmlspecialchars(fixstr($T_PHPR_DB_NAME))."\">
+<input type=\"hidden\" name=\"T_PHPR_DB_HOST\" value=\"".htmlspecialchars(fixstr($T_PHPR_DB_HOST))."\">
+<input type=\"hidden\" name=\"T_PHPR_DB_PORT\" value=\"".htmlspecialchars(fixstr($T_PHPR_DB_PORT))."\">
+<input type=\"hidden\" name=\"T_PHPR_DB_USER\" value=\"".htmlspecialchars(fixstr($T_PHPR_DB_USER))."\">
+<input type=\"hidden\" name=\"T_PHPR_DB_PASS\" value=\"".htmlspecialchars(fixstr($T_PHPR_DB_PASS))."\">
+<input type=\"hidden\" name=\"T_PHPR_LOAD_EXT\" value=\"".htmlspecialchars(fixstr($T_PHPR_LOAD_EXT))."\">
+<input type=\"hidden\" name=\"T_PHPR_TAB_PRE\" value=\"".htmlspecialchars(fixstr($T_PHPR_TAB_PRE))."\">
 <input type=\"hidden\" name=\"anno_modello\" value=\"$anno_modello\">
 <input type=\"hidden\" name=\"lingua_modello\" value=\"$lingua_modello\">
-<input type=\"hidden\" name=\"perc_cart_mod_sel\" value=\"".htmlspecialchars(fixset($perc_cart_mod_sel))."\">
+<input type=\"hidden\" name=\"perc_cart_mod_sel\" value=\"".htmlspecialchars(fixstr($perc_cart_mod_sel))."\">
 <input type=\"hidden\" name=\"templ_data_dir\" value=\"$template_data_dir\">
 
 <div style=\"height: 4px;\"></div>
@@ -190,7 +190,7 @@ $numero_tariffe = risul_query($rigatariffe,0,'nomecostoagg');
 for ($numtariffa = 1 ; $numtariffa <= $numero_tariffe ; $numtariffa++) {
 if (isset($tariffe_mostra[$numtariffa]) and strtoupper($tariffe_mostra[$numtariffa]) == $SI) $checked = " checked";
 else $checked = "";
-if ($attiva_tariffe_consentite == "n" or $tariffe_consentite_vett[$numtariffa] == "SI" or $checked) {
+if ($attiva_tariffe_consentite == "n" or (isset($tariffe_consentite_vett[$numtariffa]) and $tariffe_consentite_vett[$numtariffa] == "SI") or $checked) {
 if ($celle == 1) echo "<tr>";
 $tariffa = "tariffa".$numtariffa;
 $nometariffa=risul_query($rigatariffe,0,$tariffa);
@@ -210,7 +210,7 @@ echo "</tr>";
 $celle = 0;
 } # fine if ($celle == $num_colonne)
 $celle++;
-} # fine if ($attiva_tariffe_consentite == "n" or $tariffe_consentite_vett[$numtariffa] == "SI" or $checked)
+} # fine if ($attiva_tariffe_consentite == "n" or (isset($tariffe_consentite_vett[$numtariffa]) and...
 } # fine for $numtariffa
 if ($celle != 1) {
 for ($num1 = $celle ; $num1 <= $num_colonne ; $num1++) echo "<td>&nbsp;</td>";
@@ -232,10 +232,12 @@ echo "".mex("Costi aggiuntivi da mostrare ed eventuali loro nomi sostitutivi con
 <table style=\"margin-left: auto; margin-right: auto;\" border=\"1\" cellspacing=\"0\" cellpadding=\"4\">";
 $celle = 1;
 $num_colonne = 2;
+$lista_idc_passa = "";
 for ($numca = 0 ; $numca < $dati_ca['num'] ; $numca++) {
 if (isset($costi_aggiuntivi_mostra[$dati_ca[$numca]['id']]) and strtoupper($costi_aggiuntivi_mostra[$dati_ca[$numca]['id']]) == $SI) $checked = " checked";
 else $checked = "";
 if ($attiva_costi_agg_consentiti == "n" or $costi_agg_consentiti_vett[$dati_ca[$numca]['id']] == "SI" or $checked) {
+$lista_idc_passa .= ",".$dati_ca[$numca]['id'];
 if ($celle == 1) echo "<tr>";
 if ($dati_ca[$numca]['tipo'] == "u") $tipo_costo = "Costo unico";
 if ($dati_ca[$numca]['tipo'] == "s") $tipo_costo = "Costo $parola_settimanale";
@@ -258,6 +260,7 @@ echo "</tr>";
 } # fine if ($celle != 1)
 elseif ($dati_ca['num'] == 0) echo "<tr><td style=\"width: 250px;\">&nbsp;</td></tr>";
 echo "</table><br>";
+if ($lista_idc_passa) echo "<input type=\"hidden\" name=\"lista_idc_passa\" value=\"$lista_idc_passa\">";
 
 $dati_struttura = esegui_query("select * from $tablepersonalizza where idpersonalizza = 'dati_struttura' and idutente = '$id_utente'");
 $dati_struttura = explode("#@&",risul_query($dati_struttura,0,'valpersonalizza'));
@@ -333,10 +336,10 @@ $colori_tema = array();
 if ($tema_sel) $valori_tema = $template_theme_values[$tema_sel];
 $num_valori = count($valori_tema);
 for ($num1 = 1 ; $num1 <= $num_valori ; $num1++) {
-if (!isset(${"valore_tema_".$num1}) or !strcmp(${"valore_tema_".$num1},"")) ${"valore_tema_".$num1} = $valori_tema[$num1]['default'];
+if (!isset(${"valore_tema_".$num1}) or !strcmp((string) ${"valore_tema_".$num1},"")) ${"valore_tema_".$num1} = $valori_tema[$num1]['default'];
 $valore_sost = ${"valore_tema_".$num1};
-if (!strcmp($valore_sost,"")) $valore_sost = fixset($valori_tema[$num1]['null']);
-elseif (isset($valori_tema[$num1]['replace']) and strcmp($valori_tema[$num1]['replace'],"")) $valore_sost = str_replace("[theme_value_$num1]",$valore_sost,$valori_tema[$num1]['replace']);
+if (!strcmp((string) $valore_sost,"")) $valore_sost = fixstr($valori_tema[$num1]['null']);
+elseif (isset($valori_tema[$num1]['replace']) and strcmp((string) $valori_tema[$num1]['replace'],"")) $valore_sost = str_replace("[theme_value_$num1]",$valore_sost,$valori_tema[$num1]['replace']);
 $template_theme_html_pre[$tema_sel] = str_replace("[theme_value_$num1]",$valore_sost,$template_theme_html_pre[$tema_sel]);
 $template_theme_html_post[$tema_sel] = str_replace("[theme_value_$num1]",$valore_sost,$template_theme_html_post[$tema_sel]);
 } # fine for $num1
@@ -403,7 +406,7 @@ agg_tema_sel();
 </script>
 
 
-<input type=\"hidden\" name=\"cambia_frasi\" value=\"".htmlspecialchars(fixset($cambia_frasi))."\">
+<input type=\"hidden\" name=\"cambia_frasi\" value=\"".htmlspecialchars(fixstr($cambia_frasi))."\">
 <input type=\"hidden\" name=\"modello_esistente\" value=\"$modello_esistente\">";
 if (!empty($cambia_frasi)) {
 echo "<br><table style=\"background-color: #000000; margin-left: auto; margin-right: auto;\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"100%\">
@@ -425,13 +428,13 @@ for ($num_fr = 0 ; $num_fr < $num_frasi ; $num_fr++) echo "<input type=\"hidden\
 } # fine elseif ($modello_esistente == "SI")
 
 echo "<br><div style=\"text-align: center;\"><input type=\"hidden\" name=\"$template_name\" value=\"SI\">
-<button class=\"rate\" type=\"submit\"><div>".mext_rat("Crea la pagina con la tabella delle tariffe",$pag)."</div></button>
+<button class=\"rate\" id=\"modi\" type=\"submit\"><div>".mext_rat("Crea la pagina con la tabella delle tariffe",$pag)."</div></button>
 </div></div></form><br>
 <hr style=\"width: 95%\"><br><div style=\"text-align: center;\">
 <form method=\"post\" action=\"crea_modelli.php\"><div>
 <input type=\"hidden\" name=\"anno\" value=\"$anno\">
 <input type=\"hidden\" name=\"id_sessione\" value=\"$id_sessione\">
-<button class=\"gobk\" type=\"submit\"><div>".mex("Torna indietro",$pag)."</div></button>
+<button class=\"gobk\" id=\"indi\" type=\"submit\"><div>".mex("Torna indietro",$pag)."</div></button>
 </div></form><br></div>";
 
 } # fine if (function_exists('esegui_query'))

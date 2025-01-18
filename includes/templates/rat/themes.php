@@ -2,7 +2,7 @@
 
 ##################################################################################
 #    HOTELDRUID
-#    Copyright (C) 2001-2018 by Marco Maria Francesco De Santis (marco@digitaldruid.net)
+#    Copyright (C) 2001-2023 by Marco Maria Francesco De Santis (marco@digitaldruid.net)
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published by
@@ -58,7 +58,8 @@ $template_theme_values[1][5]['null'] = "[theme_value_6]";
 $template_theme_values[1][6]['name'] = mex("titolo",$pag);
 $template_theme_values[1][6]['default'] = mext_rat("Tabella Tariffe",$pag,$lingua_modello);
 #rimuovere questo null dopo versione 2.2.2?
-$template_theme_values[1][6]['null'] = mext_rat("Tabella Tariffe",$pag,$lingua_modello);
+#$template_theme_values[1][6]['null'] = mext_rat("Tabella Tariffe",$pag,$lingua_modello);
+$template_theme_values[1][6]['replace'] = "<big><big>[theme_value_6]</big></big><br>";
 $template_theme_values[1][7]['name'] = mex("URL file javascript",$pag);
 $template_theme_values[1][7]['default'] = "";
 $template_theme_values[1][7]['replace'] = "
@@ -86,22 +87,39 @@ $template_theme_html_pre[1] = "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01//EN
  @media only screen and (max-width: 790px) {
   .rates_cont { overflow-x: scroll; }
  }
-</style>[theme_value_4]
+</style>
+<script type=\"text/javascript\">
+var hd_webpage_type = 'rates';
+var hd_webpage_lang = '".urlencode($lingua_modello)."';
+</script>[theme_value_4]
 </head>
 <body style=\"background-color: [theme_color_2]; color: [theme_color_1]; padding: 0; margin: 0;\">
+<div id=\"container01\">
+<div id=\"container02\">
 <div id=\"html_pre\"></div>
+<div id=\"container03\">
 [theme_value_1]
+<div id=\"container04\">
 <div id=\"logo_post\"></div>
+<div id=\"container05\">
+<div id=\"container06\">
 
-<div class=\"mainbox\"><big><big>[theme_value_6]</big></big>
-<br><br>";
+<div class=\"mainbox\">[theme_value_6]<br>";
 $template_theme_html_post[1] = "
 ";
-if (!defined('C_NASCONDI_MARCA') or C_NASCONDI_MARCA != "SI") $template_theme_html_post[1] .= "<small><small>Powered by 
+if (!defined('C_NASCONDI_MARCA') or C_NASCONDI_MARCA != "SI") $template_theme_html_post[1] .= "<div id=\"powered_by_hd\"><small><small>Powered by 
 <a href=\"https://www.hoteldruid.com\" style=\"color: [theme_color_1];\">
-HotelDruid management software</a></small></small>";
+HotelDruid management software</a></small></small></div>";
 $template_theme_html_post[1] .= "</div>
+
+</div>
+</div>
 <div id=\"html_post\"></div>
+</div>
+</div>
+<div id=\"html_post2\"></div>
+</div>
+</div>
 [theme_value_7]
 </body>
 </html>";

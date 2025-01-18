@@ -2,7 +2,7 @@
 
 ##################################################################################
 #    HOTELDRUID
-#    Copyright (C) 2001-2021 by Marco Maria Francesco De Santis (marco@digitaldruid.net)
+#    Copyright (C) 2001-2023 by Marco Maria Francesco De Santis (marco@digitaldruid.net)
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published by
@@ -36,7 +36,23 @@ $var_pag[8] = 'scarica_mess';
 $var_pag[9] = 'mese';
 $var_pag[10] = 'tipo_tabella';
 $var_pag[11] = 'torna_indietro';
-$n_var_pag = 12;
+$var_pag[12] = 'pagina_messaggi';
+$var_pag[13] = 'spedisci_messaggio';
+$var_pag[14] = 'destinatario';
+$var_pag[15] = 'ora_visione';
+$var_pag[16] = 'min_visione';
+$var_pag[17] = 'data_visione';
+$var_pag[18] = 'anno_visione';
+$var_pag[19] = 'testo';
+$var_pag[20] = 'origine_vecchia';
+$var_pag[21] = 'indietro';
+$var_pag[22] = 'cambia_dati_ricavati';
+$var_pag[23] = 'n_cognome_richiedente';
+$var_pag[24] = 'n_email_richiedente';
+$var_pag[25] = 'n_data_arrivo';
+$var_pag[26] = 'n_data_partenza';
+$var_pag[27] = 'n_num_persone';
+$n_var_pag = 28;
 
 include("./costanti.php");
 include(C_DATI_PATH."/dati_connessione.php");
@@ -190,7 +206,8 @@ if ($destinatario != "tutti") $lista_utenti = ",".$destinatario.",";
 if ($anno_visione.str_replace("-","",$data_visione).$ora_visione.$min_visione < date("YmdHi",(time() + (C_DIFF_ORE * 3600)))) $datavisione = date("Y-m-d H:i",(time() + (C_DIFF_ORE * 3600))).":00";
 else $datavisione = $anno_visione.$data_visione." ".$ora_visione.":".$min_visione.":00";
 if (@get_magic_quotes_gpc()) $testo = stripslashes($testo);
-$testo = substr(htmlspecialchars($testo),0,65530);
+if (!defined('ENT_SUBSTITUTE')) define('ENT_SUBSTITUTE',ENT_IGNORE);
+$testo = substr(htmlspecialchars($testo,ENT_SUBSTITUTE),0,65530);
 $testo = aggslashdb($testo);
 $datainserimento = date("Y-m-d H:i:s",(time() + (C_DIFF_ORE * 3600)));
 esegui_query("insert into $tablemessaggi (idmessaggi,tipo_messaggio,idutenti,idutenti_visto,datavisione,mittente,testo,datainserimento) values ('$max_mess','mess','$lista_utenti','$lista_utenti','$datavisione','$id_utente','$testo','$datainserimento')");
@@ -200,8 +217,7 @@ unlock_tabelle($tabelle_lock);
 } # fine if (!empty($spedisci_messaggio))
 
 function cancella_messaggi_vecchi ($tableprivilegi,$tablemessaggi) {
-unset($utente_attivo);
-$utente_attivo[1] = "SI";
+$utente_attivo = array(1 => "SI");
 $priv_vedi_mess = esegui_query("select idutente,priv_messaggi from $tableprivilegi where anno = '1'");
 $num_priv_vedi_mess = numlin_query($priv_vedi_mess);
 for ($num1 = 0 ; $num1 < $num_priv_vedi_mess ; $num1++) {
@@ -216,7 +232,7 @@ $idutenti = risul_query($messaggi,$num1,'idutenti');
 $idutenti = explode(",",$idutenti);
 $num_idutenti = count($idutenti);
 for ($num2 = 1 ; $num2 < ($num_idutenti - 1) ; $num2++) {
-if ($utente_attivo[$idutenti[$num2]] == "SI") $utente_attivo_trovato = "SI";
+if (isset($utente_attivo[$idutenti[$num2]]) and $utente_attivo[$idutenti[$num2]] == "SI") $utente_attivo_trovato = "SI";
 } # fine for $num2
 if ($utente_attivo_trovato == "NO") {
 $idmessaggi = risul_query($messaggi,$num1,'idmessaggi');
@@ -262,7 +278,7 @@ unlock_tabelle($tabelle_lock);
 if (isset($elimina_tutti_mess) and $elimina_tutti_mess == "SI") {
 if ($prima_dopo != "prima") $prima_dopo = "dopo";
 $mostra_form_iniziale = "NO";
-if ($continua != "SI") {
+if (!isset($continua) or $continua != "SI") {
 if (!preg_match("/-[0-9]{2}-[0-9]{2}/",$data_arrivo)) $data_arrivo = "";
 if ($anno_arrivo != $anno_corrente and $anno_arrivo != ($anno_corrente - 1)) $anno_arrivo = "";
 if ($data_arrivo and $anno_arrivo) $data_arrivo = $anno_arrivo.$data_arrivo;
@@ -285,7 +301,7 @@ echo " <b>".formatta_data($data_arrivo,$stile_data)."</b>";
 echo "?
 <button class=\"canc\" type=\"submit\"><div>".mex("SI",$pag)."</div></button>
 </div></form><br><br>";
-} # fine if ($continua != "SI")
+} # fine if (!isset($continua) or $continua != "SI")
 else {
 if (!preg_match("/[0-9]{4}-[0-9]{2}-[0-9]{2}/",$data_arrivo)) $data_arrivo = "";
 if (substr($data_arrivo,0,4) != $anno_corrente and substr($data_arrivo,0,4) != ($anno_corrente - 1)) $data_arrivo = "";
@@ -311,7 +327,7 @@ esegui_query("update $tablemessaggi set idutenti = '".str_replace(",$id_utente,"
 cancella_messaggi_vecchi($tableprivilegi,$tablemessaggi);
 unlock_tabelle($tabelle_lock);
 echo mex("Messaggi eliminati",$pag).".<br>";
-} # fine else if ($continua != "SI")
+} # fine else if (!isset($continua) or $continua != "SI")
 } # fine if (isset($elimina_tutti_mess) and $elimina_tutti_mess == "SI")
 
 
@@ -365,9 +381,9 @@ $lingue = "";
 
 for ($num1 = 0 ; $num1 < $num_mess ; $num1++) {
 $inbox_id = $info_mess[$num1]->uid;
-/*echo "<b>$num1</b> ".htmlspecialchars("messaggio id: ".$info_mess[$num1]->message_id." / $inbox_id - date: ".$info_mess[$num1]->date." - from: ".$info_mess[$num1]->from." - ").utf8_encode(imap_qprint($info_mess[$num1]->subject))." - ".$info_mess[$num1]->in_reply_to." - ".$info_mess[$num1]->references."<br>";
+echo "<b>$num1</b> ".htmlspecialchars("messaggio id: ".$info_mess[$num1]->message_id." / $inbox_id - date: ".$info_mess[$num1]->date." - from: ".$info_mess[$num1]->from." - ").@utf8_encode(imap_qprint($info_mess[$num1]->subject))." - ".fixset($info_mess[$num1]->in_reply_to)." - ".fixset($info_mess[$num1]->references)."<br>";
 #echo "---------------------------------------------------------<br>".htmlspecialchars(utf8_encode(imap_qprint(imap_body($email_conn,$mess[$num1]))))."<br>";
-echo "<br>";*/
+echo "<br>";
 #$inbox_id_visto = 26742;
 if ($inbox_id > $inbox_id_visto) {
 $mess_nuovi++;
@@ -378,17 +394,19 @@ if (isset($info_mess[$num1]->in_reply_to)) $risposta_a = $info_mess[$num1]->in_r
 else $risposta_a = null;
 if (isset($info_mess[$num1]->references)) $riferimento = $info_mess[$num1]->references;
 else $riferimento = null;
-$oggetto = utf8_encode(imap_qprint($info_mess[$num1]->subject));
+$oggetto = imap_qprint($info_mess[$num1]->subject);
+if (function_exists('mb_convert_encoding')) $oggetto = mb_convert_encoding($oggetto,'UTF-8',mb_list_encodings());
+elseif (function_exists('utf8_encode')) $oggetto = @utf8_encode($oggetto);
 $inserisci_mess = 0;
 for ($num2 = 0 ; $num2 < $num_trova_email_tm ; $num2++) {
 if (!$mittente_email_tm[$num2] or stristr($mittente,$mittente_email_tm[$num2])) {
-if (!strcmp($oggetto_email_tm[$num2],"") or stristr($oggetto,$oggetto_email_tm[$num2])) {
+if (!strcmp((string) $oggetto_email_tm[$num2],"") or stristr($oggetto,$oggetto_email_tm[$num2])) {
 if ($therad_email_tm[$num2] == "tutti" or (!$risposta_a and !$riferimento and substr($oggetto,0,4) != "Re: " and substr($oggetto,0,3) != "R: ")) {
 $inserisci_mess = 1;
 $mess_scaricati++;
 break;
 } # fine if ($therad_email_tm[$num2] == "tutti" or (!$risposta_a and...
-} # fine if (!strcmp($oggetto_email_tm[$num2],"") or stristr($oggetto,$oggetto_email_tm[$num2]))
+} # fine if (!strcmp((string) $oggetto_email_tm[$num2],"") or stristr($oggetto,$oggetto_email_tm[$num2]))
 } # fine if (!$mittente_email_tm[$num2] or stristr($mittente,$mittente_email_tm[$num2]))
 } # fine for $num2
 
@@ -447,10 +465,10 @@ while (strstr($testo,"\n\n\n")) $testo = str_replace("\n\n\n","\n\n",$testo);
 } # fine if (stristr($testo,"Content-Type: text/html;") or stristr($testo,"<html>"))
 } # fine else if (stristr($testo,"Content-Type: multipart/alternative;") and...
 if (!defined('ENT_SUBSTITUTE')) define('ENT_SUBSTITUTE',ENT_IGNORE);
-$testo = htmlspecialchars($testo,ENT_SUBSTITUTE);
+$testo = substr(htmlspecialchars($testo,ENT_SUBSTITUTE),0,65530);
 $testo = aggslashdb($testo);
 $dati_richiedente = "$nome_cognome_richiedente<d><d>$mittente<d><d><d><d><d><d><d><d><d><d><d><d><d><d><d><d>";
-esegui_query("insert into $tablemessaggi (idmessaggi,tipo_messaggio,idutenti,idutenti_visto,datavisione,mittente,testo,dati_messaggio1,dati_messaggio3,dati_messaggio8,dati_messaggio15,dati_messaggio20,datainserimento) values ('$max_mess','rprenota','$lista_utenti','$lista_utenti','$datavisione','$mittente','".aggslashdb($testo)."','da_inserire','1','1','".aggslashdb($dati_richiedente)."','email','$datainserimento')");
+esegui_query("insert into $tablemessaggi (idmessaggi,tipo_messaggio,idutenti,idutenti_visto,datavisione,mittente,testo,dati_messaggio1,dati_messaggio3,dati_messaggio8,dati_messaggio15,dati_messaggio20,datainserimento) values ('$max_mess','rprenota','$lista_utenti','$lista_utenti','$datavisione','$mittente','$testo','da_inserire','1','1','".aggslashdb($dati_richiedente)."','email','$datainserimento')");
 
 # Estrazione dati da testo email
 $testo = preg_replace("/  +/"," ",str_replace("\n"," - ",$testo));
@@ -487,29 +505,29 @@ $fr_date = mex("date",$pag);
 $fr_periodo = mex("periodo",$pag);
 $fr_persone = mex("persone",$pag);
 $lingua_mex = $lingua_orig;
-if (!$arrivo_trovato and !$arrivo_cercato[$fr_arrivo]) {
+if (!$arrivo_trovato and empty($arrivo_cercato[$fr_arrivo])) {
 $arrivo_cercato[$fr_arrivo] = 1;
 # strano syntax error se si rimuove "." (dovuto a riconoscimento array?)
 $arrivo = preg_split("/$fr_arrivo"."[^0-9a-z]/i",$testo);
-if ($arrivo[1]) {
+if (!empty($arrivo[1])) {
 $arrivo = preg_split("/$fr_partenza"."[^0-9a-z]/i",substr($testo,strlen($arrivo[0])));
 $arrivo = trova_prima_data(substr($arrivo[0],0,40),$stile_data,$lingue[$num2],$lung_resto);
 if ($arrivo) $arrivo_trovato = 1;
-} # fine if ($arrivo[1])
+} # fine if (!empty($arrivo[1]))
 if (!$arrivo_trovato) {
 $arrivo_r = preg_split("/$fr_date"."[^0-9a-z]/i",$testo);
-if ($arrivo_r[1]) {
+if (!empty($arrivo_r[1])) {
 $arrivo = preg_split("/$fr_partenza"."[^0-9a-z]/i",substr($testo,strlen($arrivo_r[0])));
 $arrivo = trova_prima_data(substr($arrivo[0],0,40),$stile_data,$lingue[$num2],$lung_resto);
 if ($arrivo) $arrivo_trovato = 1;
-} # fine if ($arrivo_r[1])
+} # fine if (!empty($arrivo_r[1]))
 if (!$arrivo_trovato) {
 $arrivo_r = preg_split("/$fr_periodo"."[^0-9a-z]/i",$testo);
-if ($arrivo_r[1]) {
+if (!empty($arrivo_r[1])) {
 $arrivo = preg_split("/$fr_partenza"."[^0-9a-z]/i",substr($testo,strlen($arrivo_r[0])));
 $arrivo = trova_prima_data(substr($arrivo[0],0,40),$stile_data,$lingue[$num2],$lung_resto);
 if ($arrivo) $arrivo_trovato = 1;
-} # fine if ($arrivo_r[1])
+} # fine if (!empty($arrivo_r[1]))
 } # fine if (!$arrivo_trovato)
 if ($arrivo_trovato and !$partenza_trovata) {
 $partenza = substr($testo,((int) $lung_resto + strlen($arrivo_r[0])));
@@ -517,16 +535,16 @@ $partenza = trova_prima_data(substr($partenza,0,40),$stile_data,$lingue[$num2],$
 if ($partenza) $partenza_trovata = 1;
 } # fine if ($arrivo_trovato and !$partenza_trovata)
 } # fine if (!$arrivo_trovato)
-} # fine if (!$arrivo_trovato and !$arrivo_cercato[$fr_arrivo])
-if (!$partenza_trovata and !$partenza_cercata[$fr_partenza]) {
+} # fine if (!$arrivo_trovato and empty($arrivo_cercato[$fr_arrivo]))
+if (!$partenza_trovata and empty($partenza_cercata[$fr_partenza])) {
 $partenza_cercata[$fr_partenza] = 1;
 $partenza = preg_split("/$fr_partenza"."[^0-9a-z]/i",$testo);
 if ($partenza[1]) {
 $partenza = trova_prima_data(substr($testo,strlen($partenza[0]),40),$stile_data,$lingue[$num2],$lung_prima_data);
 if ($partenza and $partenza != $arrivo) $partenza_trovata = 1;
 } # fine if ($partenza[1])
-} # fine if (!$partenza_trovata and !$partenza_cercata[$fr_partenza])
-if (!$num_persone and !$persone_cercate[$fr_persone]) {
+} # fine if (!$partenza_trovata and empty($partenza_cercata[$fr_partenza]))
+if (!$num_persone and empty($persone_cercate[$fr_persone])) {
 $persone_cercate[$fr_persone] = 1;
 $lingua_mex = $lingue[$num2];
 $fr_persone2 = mex("individui",$pag);
@@ -554,7 +572,7 @@ if (!$num_persone) $num_persone = trova_numero_vicino($testo,$fr_viaggiatori);
 } # fine if (!$num_persone)
 } # fine if (!$num_persone)
 } # fine else if ($num_persone)
-} # fine if (!$num_persone and !$persone_cercate[$fr_persone])
+} # fine if (!$num_persone and empty($persone_cercate[$fr_persone]))
 } # fine for $num2
 for ($num2 = 0 ; $num2 < $num_lingue ; $num2++) {
 $lingua_orig = $lingua_mex;
@@ -595,7 +613,10 @@ else {
 echo mex("Connessione al server",$pag)." ".$server[0]." ".mex("non riuscita!",$pag)." ".mex("Controllare i dati immessi in",$pag)." \"";
 if ($modifica_pers != "NO") echo "<a href=\"./personalizza.php?anno=$anno&id_sessione=$id_sessione#tab_mess\">".mex("configura e personalizza",$pag)."\"</a>.<br>";
 else echo "".mex("configura e personalizza\"",$pag).".<br>";
-if (stristr($server[0],"gmail.com")) echo "<br>".mex("Per gli account su gmail potrebbe essere necessario abilitare l'opzione",$pag)." \"<a rel=\"noopener noreferrer\" target=\"_blank\" href=\"https://myaccount.google.com/lesssecureapps\">Less secure app access: ON</a>\" ".mex("e/o per una volta usare prima la funzione",$pag)." \"<a rel=\"noopener noreferrer\" target=\"_blank\" href=\"https://accounts.google.com/DisplayUnlockCaptcha\">Unlock Captcha</a>\".<br><br>";
+if (stristr($server[0],"gmail.com")) {
+#echo "<br>".mex("Per gli account su gmail potrebbe essere necessario abilitare l'opzione",$pag)." \"<a rel=\"noopener noreferrer\" target=\"_blank\" href=\"https://myaccount.google.com/lesssecureapps\">Less secure app access: ON</a>\" ".mex("e/o per una volta usare prima la funzione",$pag)." \"<a rel=\"noopener noreferrer\" target=\"_blank\" href=\"https://accounts.google.com/DisplayUnlockCaptcha\">Unlock Captcha</a>\".<br><br>";
+echo "<br>".mex("Per gli account su gmail potrebbe essere necessario abilitare l'opzione",$pag)." \"<a rel=\"noopener noreferrer\" target=\"_blank\" href=\"https://myaccount.google.com/apppasswords\">App Password</a>\".<br><br>";
+} # fine if (stristr($server[0],"gmail.com"))
 } # fine else if ($email_conn)
 } # fine if (numlin_query($server_email_tab_messaggi))
 unlock_tabelle($tabelle_lock);
@@ -697,12 +718,12 @@ $option_select_utenti .= "<option value=\"$idutenti\">".$nome_utente[$idutenti].
 } # fine for $num1
 
 $nomi_contratti = esegui_query("select valpersonalizza from $tablepersonalizza where idpersonalizza = 'nomi_contratti' and idutente = '$id_utente'");
-$nomi_contratti = risul_query($nomi_contratti,0,'valpersonalizza');
+$nomi_contratti = (string) risul_query($nomi_contratti,0,'valpersonalizza');
 $nomi_contratti = explode("#@&",$nomi_contratti);
 $num_nomi_contratti = count($nomi_contratti);
 for ($num1 = 0 ; $num1 < $num_nomi_contratti ; $num1++) {
 $dati_nome_contratto = explode("#?&",$nomi_contratti[$num1]);
-$nome_contratto[$dati_nome_contratto[0]] = $dati_nome_contratto[1];
+$nome_contratto[$dati_nome_contratto[0]] = fixset($dati_nome_contratto[1]);
 } # fine for $num1
 $max_contr = esegui_query("select max(numero) from $tablecontratti where tipo $LIKE 'contr%'");
 $max_contr = risul_query($max_contr,0,0);
@@ -780,7 +801,10 @@ $stilebarrato = " style=\"text-decoration: line-through\"";
 $pcanc = "&amp;pcanc=1";
 } # fine if (numlin_query($dati_prenota))
 } # fine if (!numlin_query($dati_prenota))
-if (numlin_query($dati_prenota) != 1) $link_modifica = "NO";
+if (numlin_query($dati_prenota) != 1) {
+$link_modifica = "NO";
+$utente_ins_prenota = "";
+} # fine if (numlin_query($dati_prenota) != 1)
 else {
 $utente_ins_prenota = risul_query($dati_prenota,0,'utente_inserimento');
 $id_data_ini_prenota = risul_query($dati_prenota,0,'iddatainizio');
@@ -788,11 +812,11 @@ $data_ins_prenota = risul_query($dati_prenota,0,'datainserimento');
 } # fine else if (numlin_query($dati_prenota) != 1)
 if ($priv_mod_prenotazioni == "n") $link_modifica = "NO";
 if ($priv_mod_prenotazioni == "p" and $utente_ins_prenota != $id_utente) $link_modifica = "NO";
-if ($priv_mod_prenotazioni == "g" and !$utenti_gruppi[$utente_ins_prenota]) $link_modifica = "NO";
+if ($priv_mod_prenotazioni == "g" and empty($utenti_gruppi[$utente_ins_prenota])) $link_modifica = "NO";
 if ($priv_mod_prenota_iniziate != "s" and $id_periodo_corrente >= $id_data_ini_prenota) $link_modifica = "NO";
 if ($priv_mod_prenota_ore != "000") {
 $adesso = date("YmdHis",(time() + (C_DIFF_ORE * 3600)));
-$limite = date("YmdHis",mktime((substr($data_ins_prenota,11,2) + $priv_mod_prenota_ore),substr($data_ins_prenota,14,2),substr($data_ins_prenota,17,2),substr($data_ins_prenota,5,2),substr($data_ins_prenota,8,2),substr($data_ins_prenota,0,4)));
+$limite = date("YmdHis",mktime((substr($data_ins_prenota,11,2) + (int) $priv_mod_prenota_ore),substr($data_ins_prenota,14,2),substr($data_ins_prenota,17,2),substr($data_ins_prenota,5,2),substr($data_ins_prenota,8,2),substr($data_ins_prenota,0,4)));
 if ($adesso > $limite) $link_modifica = "NO";
 } # fine if ($priv_mod_prenota_ore != "000")
 if ($link_modifica == "SI") {
@@ -801,8 +825,8 @@ $link_modifica_fine = "</a>";
 #$checkbox_modifica = "<input type=\"checkbox\" name=\"cambia$numero\" value=\"SI\">";
 } # fine if ($link_modifica == "SI")
 else {
-unset($link_modifica_inizio);
-unset($link_modifica_fine);
+$link_modifica_inizio = "";
+$link_modifica_fine = "";
 #$checkbox_modifica = "&nbsp;";
 } # fine else if ($link_modifica == "SI")
 if ($num2 != 0) $tasto_prenota .= ", ";
@@ -864,27 +888,27 @@ unset($nummoltiplica_ca);
 unset($catpers_ca);
 $cat_numpers = array();
 $num_periodi = array();
-$stato_prenota = risul_query($messaggi,$num1,'dati_messaggio1');
-$num_tipologie = risul_query($messaggi,$num1,'dati_messaggio3');
-$inizioperiodo_dt = explode(",",risul_query($messaggi,$num1,'dati_messaggio4'));
-$fineperiodo_dt = explode(",",risul_query($messaggi,$num1,'dati_messaggio5'));
-$numero_tariffa_dt = explode(",",risul_query($messaggi,$num1,'dati_messaggio6'));
-$numpersone_dt = explode(",",risul_query($messaggi,$num1,'dati_messaggio7'));
-$num_app_tipo_richiesti_dt = explode(",",risul_query($messaggi,$num1,'dati_messaggio8'));
-$numcostiagg_dt = explode(",",risul_query($messaggi,$num1,'dati_messaggio9'));
-$idcostoagg_dt = explode(";",risul_query($messaggi,$num1,'dati_messaggio10'));
-$costoagg_dt = explode(";",risul_query($messaggi,$num1,'dati_messaggio11'));
-$numsettimane_dt = explode(";",risul_query($messaggi,$num1,'dati_messaggio12'));
-$nummoltiplica_ca_dt = explode(";",risul_query($messaggi,$num1,'dati_messaggio13'));
-$id_periodi_costo_dt = explode(";",risul_query($messaggi,$num1,'dati_messaggio14'));
-$catpers_ca_dt = explode(";",risul_query($messaggi,$num1,'dati_messaggio21'));
-$dati_calcolati_dt = explode(";",risul_query($messaggi,$num1,'dati_messaggio16'));
-$anno_prenota_dt = risul_query($messaggi,$num1,'dati_messaggio18');
-$origine_prenota_dt = explode(">",risul_query($messaggi,$num1,'dati_messaggio19'));
-$prenota_vicine_dt = $origine_prenota_dt[1];
+$stato_prenota = (string) risul_query($messaggi,$num1,'dati_messaggio1');
+$num_tipologie = (string) risul_query($messaggi,$num1,'dati_messaggio3');
+$inizioperiodo_dt = explode(",",(string) risul_query($messaggi,$num1,'dati_messaggio4'));
+$fineperiodo_dt = explode(",",(string) risul_query($messaggi,$num1,'dati_messaggio5'));
+$numero_tariffa_dt = explode(",",(string) risul_query($messaggi,$num1,'dati_messaggio6'));
+$numpersone_dt = explode(",",(string) risul_query($messaggi,$num1,'dati_messaggio7'));
+$num_app_tipo_richiesti_dt = explode(",",(string) risul_query($messaggi,$num1,'dati_messaggio8'));
+$numcostiagg_dt = explode(",",(string) risul_query($messaggi,$num1,'dati_messaggio9'));
+$idcostoagg_dt = explode(";",(string) risul_query($messaggi,$num1,'dati_messaggio10'));
+$costoagg_dt = explode(";",(string) risul_query($messaggi,$num1,'dati_messaggio11'));
+$numsettimane_dt = explode(";",(string) risul_query($messaggi,$num1,'dati_messaggio12'));
+$nummoltiplica_ca_dt = explode(";",(string) risul_query($messaggi,$num1,'dati_messaggio13'));
+$id_periodi_costo_dt = explode(";",(string) risul_query($messaggi,$num1,'dati_messaggio14'));
+$catpers_ca_dt = explode(";",(string) risul_query($messaggi,$num1,'dati_messaggio21'));
+$dati_calcolati_dt = explode(";",(string) risul_query($messaggi,$num1,'dati_messaggio16'));
+$anno_prenota_dt = (string) risul_query($messaggi,$num1,'dati_messaggio18');
+$origine_prenota_dt = explode(">",(string) risul_query($messaggi,$num1,'dati_messaggio19'));
+$prenota_vicine_dt = fixset($origine_prenota_dt[1]);
 $origine_prenota_dt = $origine_prenota_dt[0];
-$aggiunta_testo_dt = risul_query($messaggi,$num1,'dati_messaggio20');
-$cat_numpers_dt = explode(";",risul_query($messaggi,$num1,'dati_messaggio22'));
+$aggiunta_testo_dt = (string) risul_query($messaggi,$num1,'dati_messaggio20');
+$cat_numpers_dt = explode(";",(string) risul_query($messaggi,$num1,'dati_messaggio22'));
 for ($n_t = 1 ; $n_t <= $num_tipologie ; $n_t++) {
 $inizioperiodo[$n_t] = aggslashdb($inizioperiodo_dt[($n_t - 1)]);
 $idinizioperiodo[$n_t] = esegui_query("select idperiodi from $tableperiodi where datainizio = '".$inizioperiodo[$n_t]."'");
@@ -905,14 +929,19 @@ $num_app_tipo_richiesti[$n_t] = $num_app_tipo_richiesti_dt[($n_t - 1)];
 $dati_calcolati = explode(":",$dati_calcolati_dt[($n_t - 1)]);
 $dati_calcolati_0 = explode(",",$dati_calcolati[0]);
 $costo_tariffa[$n_t] = (double) $dati_calcolati_0[0];
-$caparra[$n_t] = $dati_calcolati_0[1];
-$letti_agg[$n_t] = $dati_calcolati_0[2];
+$caparra[$n_t] = fixset($dati_calcolati_0[1]);
+$letti_agg[$n_t] = fixset($dati_calcolati_0[2]);
 $num_ca_calc[$n_t] = (count($dati_calcolati) - 1);
 for ($num2 = 1 ; $num2 < $num_ca_calc[$n_t] ; $num2++) {
 $dati_calcolati_ca = explode(",",$dati_calcolati[$num2]);
 $prezzo_ca_calc[$n_t][$num2] = (double) $dati_calcolati_ca[0];
 $nome_ca_calc[$n_t][$num2] = $dati_calcolati_ca[1];
 $ripeti_ca_calc[$n_t][$num2] = $dati_calcolati_ca[2];
+$tasseperc_ca_calc[$n_t][$num2] = fixset($dati_calcolati_ca[3]);
+$moltmax_ca_calc[$n_t][$num2] = str_replace("|",",",fixstr($dati_calcolati_ca[4]));
+$valgiornmax_ca_calc[$n_t][$num2] = str_replace("|",",",fixstr($dati_calcolati_ca[5]));
+$giorni_ca_calc[$n_t][$num2] = str_replace("|",",",fixstr($dati_calcolati_ca[6]));
+$tipo_persona_ca_calc[$n_t][$num2] = fixset($dati_calcolati_ca[7]);
 } # fine for $num2
 $numcostiagg[$n_t] = $numcostiagg_dt[($n_t - 1)];
 $idcostoagg_dt2 = explode(",",$idcostoagg_dt[($n_t - 1)]);
@@ -931,7 +960,7 @@ $catpers_ca[$n_t][$idcostoagg_dt2[($numca - 1)]] = $catpers_ca_dt2[($numca - 1)]
 } # fine for $numca
 $cat_numpers[$n_t] = explode(",",$cat_numpers_dt[($n_t - 1)]);
 } # fine for $n_t
-$dati_richiedente_dt = explode("<d>",risul_query($messaggi,$num1,'dati_messaggio15'));
+$dati_richiedente_dt = explode("<d>",(string) risul_query($messaggi,$num1,'dati_messaggio15'));
 $cognome_richiedente = $dati_richiedente_dt[0];
 $nome_richiedente = $dati_richiedente_dt[1];
 $email_richiedente = $dati_richiedente_dt[2];
@@ -945,7 +974,7 @@ $citta = $dati_richiedente_dt[8];
 $via = $dati_richiedente_dt[9];
 $numcivico = $dati_richiedente_dt[10];
 $cap = $dati_richiedente_dt[11];
-$lingua_cli = $dati_richiedente_dt[19];
+$lingua_cli = fixset($dati_richiedente_dt[19]);
 $telefono = $dati_richiedente_dt[12];
 $telefono2 = $dati_richiedente_dt[13];
 $telefono3 = $dati_richiedente_dt[14];
@@ -958,16 +987,16 @@ $min_stima_checkin = substr($oracheckin,14,2);
 $oracheckin = $oracheckin.":00";
 } # fine if ($oracheckin)
 $metodo_pagamento = $dati_richiedente_dt[17];
-$commento = $dati_richiedente_dt[20];
-$commenti_pers = explode(">",$dati_richiedente_dt[21]);
+$commento = fixset($dati_richiedente_dt[20]);
+$commenti_pers = explode(">",fixstr($dati_richiedente_dt[21]));
 $num_commenti_pers = count($commenti_pers);
 if ($num_commenti_pers < 1) $num_commenti_pers = 1;
-$campi_pers_clienti = $dati_richiedente_dt[22];
-$codfiscale = $dati_richiedente_dt[23];
-$partitaiva = $dati_richiedente_dt[24];
-$valuta_pagamento = $dati_richiedente_dt[25];
-$cambio_pagamento = $dati_richiedente_dt[26];
-$arrotond_pagamento = $dati_richiedente_dt[27];
+$campi_pers_clienti = fixset($dati_richiedente_dt[22]);
+$codfiscale = fixset($dati_richiedente_dt[23]);
+$partitaiva = fixset($dati_richiedente_dt[24]);
+$valuta_pagamento = fixset($dati_richiedente_dt[25]);
+$cambio_pagamento = fixset($dati_richiedente_dt[26]);
+$arrotond_pagamento = fixset($dati_richiedente_dt[27]);
 
 if ($stato_prenota == "da_inserire") {
 if ($priv_ins_nuove_prenota == "s" and $inizioperiodo[1]) {
@@ -1016,6 +1045,7 @@ $tasto_prenota .= "<input type=\"hidden\" name=\"giorno_stima_checkin$n_t\" valu
 } # fine if ($giorno_stima_checkin)
 } # fine if ($oracheckin)
 $ncostiagg = 0;
+$ngrcostiagg = 0;
 for ($num2 = 0 ; $num2 < $dati_ca['num'] ; $num2++) {
 if ($attiva_costi_agg_consentiti == "n" or $costi_agg_consentiti_vett[$dati_ca[$num2]['id']] == "SI") {
 if ($dati_ca[$num2]['combina'] != "s" and $dati_ca[$num2]['raggruppa'] != "s") {
@@ -1028,17 +1058,22 @@ $tasto_prenota .= "<input type=\"hidden\" name=\"costoagg$ncostiagg"."_$n_t\" va
 } # fine if (isset($costo_presente[$n_t][$dati_ca[$num2]['id']]))
 } # fine if ($dati_ca[$num2]['combina'] != "s" and $dati_ca[$num2]['raggruppa'] != "s")
 else {
+$ngrcostiagg++;
 if (isset($costo_presente[$n_t][$dati_ca[$num2]['id']])) {
 $tasto_prenota .= "<input type=\"hidden\" name=\"gr_idcostoagg".$dati_ca[$num2]['id']."_$n_t\" value=\"SI\">
 <input type=\"hidden\" name=\"gr_numsettimane".$dati_ca[$num2]['id']."_$n_t\" value=\"".$numsettimane[$n_t][$dati_ca[$num2]['id']]."\">
 <input type=\"hidden\" name=\"gr_nummoltiplica_ca".$dati_ca[$num2]['id']."_$n_t\" value=\"".$nummoltiplica_ca[$n_t][$dati_ca[$num2]['id']]."\">
-<input type=\"hidden\" name=\"gr_catpers_ca".$dati_ca[$num2]['id']."_$n_t\" value=\"".$catpers_ca[$n_t][$dati_ca[$num2]['id']]."\">";
+<input type=\"hidden\" name=\"gr_catpers_ca".$dati_ca[$num2]['id']."_$n_t\" value=\"".$catpers_ca[$n_t][$dati_ca[$num2]['id']]."\">
+<input type=\"hidden\" name=\"idca_ngr_passa$ngrcostiagg"."_$n_t\" value=\"".$dati_ca[$num2]['id']."\">";
 } # fine if (isset($costo_presente[$n_t][$dati_ca[$num2]['id']]))
 } # fine else if ($dati_ca[$num2]['combina'] != "s" and $dati_ca[$num2]['raggruppa'] != "s")
 } # fine if ($attiva_costi_agg_consentiti == "n" or...
 } # fine for $num2
 } # fine for $n_t
-$tasto_prenota .= "<button class=\"ires\" type=\"submit\"><div>".mex("Inserisci la prenotazione",$pag)."</div></button>
+$tasto_prenota .= "<input type=\"hidden\" name=\"numcostiagg\" value=\"$ncostiagg\">
+<input type=\"hidden\" name=\"numgrca_passa\" value=\"$ngrcostiagg\">
+<input type=\"hidden\" name=\"num_categorie_persone\" value=\"".count($cat_numpers[1])."\">
+<button class=\"ires\" type=\"submit\"><div>".mex("Inserisci la prenotazione",$pag)."</div></button>
 </div></form><br>";
 
 if ($num_tipologie == 1 and !$numero_tariffa[1] and $num_app_tipo_richiesti[1] == 1 and $fineperiodo[1]) {
@@ -1068,7 +1103,7 @@ for ($n_r = 1 ; $n_r <= $num_app_tipo_richiesti[$n_t] ; $n_r++) {
 $n_c++;
 $tasto_contr .= "<input type=\"hidden\" name=\"cognome_$n_c\" value=\"$cognome_richiedente\">
 <input type=\"hidden\" name=\"nome_$n_c\" value=\"$nome_richiedente\">
-<input type=\"hidden\" name=\"datanascita_$n_c\" value=\"$datanascita\">
+<input type=\"hidden\" name=\"data_nascita_$n_c\" value=\"$datanascita\">
 <input type=\"hidden\" name=\"documento_$n_c\" value=\"$documento\">
 <input type=\"hidden\" name=\"tipo_documento_$n_c\" value=\"$tipodoc\">
 <input type=\"hidden\" name=\"sesso_$n_c\" value=\"$sesso\">
@@ -1095,13 +1130,20 @@ $tasto_contr .= "<input type=\"hidden\" name=\"cognome_$n_c\" value=\"$cognome_r
 <input type=\"hidden\" name=\"costo_tariffa_$n_c\" value=\"".$costo_tariffa[$n_t]."\">
 <input type=\"hidden\" name=\"caparra_$n_c\" value=\"".$caparra[$n_t]."\">
 <input type=\"hidden\" name=\"n_letti_agg_$n_c\" value=\"".$letti_agg[$n_t]."\">";
+if ($n_t == $num_tipologie and $n_r == $num_app_tipo_richiesti[$n_t]) $tasto_contr .= "<input type=\"hidden\" name=\"ultima_prenotazione_per_cliente_$n_c\" value=\"1\">";
+else $tasto_contr .= "<input type=\"hidden\" name=\"ultima_prenotazione_per_cliente_$n_c\" value=\"0\">";
 $costo_tot = (double) $costo_tariffa[$n_t];
 $num_costi_agg = 0;
 for ($num2 = 1 ; $num2 < $num_ca_calc[$n_t] ; $num2++) {
 if (!$ripeti_ca_calc[$n_t][$num2] or $ripeti_ca_calc[$n_t][$num2] >= $n_r) {
 $costo_tot = (double) ($costo_tot + $prezzo_ca_calc[$n_t][$num2]);
 $tasto_contr .= "<input type=\"hidden\" name=\"nome_costo_agg$num_costi_agg"."_$n_c\" value=\"".$nome_ca_calc[$n_t][$num2]."\">
-<input type=\"hidden\" name=\"val_costo_agg$num_costi_agg"."_$n_c\" value=\"".$prezzo_ca_calc[$n_t][$num2]."\">";
+<input type=\"hidden\" name=\"val_costo_agg$num_costi_agg"."_$n_c\" value=\"".$prezzo_ca_calc[$n_t][$num2]."\">
+<input type=\"hidden\" name=\"percentuale_tasse_costo_agg$num_costi_agg"."_$n_c\" value=\"".$tasseperc_ca_calc[$n_t][$num2]."\">
+<input type=\"hidden\" name=\"moltiplica_max_costo_agg$num_costi_agg"."_$n_c\" value=\"".$moltmax_ca_calc[$n_t][$num2]."\">
+<input type=\"hidden\" name=\"valore_giornaliero_max_costo_agg$num_costi_agg"."_$n_c\" value=\"".$valgiornmax_ca_calc[$n_t][$num2]."\">";
+if ($giorni_ca_calc[$n_t][$num2]) $tasto_contr .= "<input type=\"hidden\" name=\"giorni_costo_agg$num_costi_agg"."_$n_c\" value=\"".$giorni_ca_calc[$n_t][$num2]."\">";
+if ($tipo_persona_ca_calc[$n_t][$num2]) $tasto_contr .= "<input type=\"hidden\" name=\"tipo_persona_costo_agg$num_costi_agg"."_$n_c\" value=\"".$tipo_persona_ca_calc[$n_t][$num2]."\">";
 $num_costi_agg++;
 } # fine if (!$ripeti_ca_calc[$n_t][$num2] or $ripeti_ca_calc[$n_t][$num2] >= $n_r)
 } # fine for $num2

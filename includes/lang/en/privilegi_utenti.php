@@ -395,6 +395,14 @@ case "potrà modificare le <b>pagine per il sito web</b> solo quando crea e modi
 case "non potrà più creare e modificare le <b>pagine per il sito web</b>":	$messaggio = "will not be able to create and modify <b>website pages</b>"; break;
 case "solo per tariffe":  			$messaggio = "only for rates"; break;
 case "per entrambi":  				$messaggio = "for both"; break;
+case "Modifica dei documenti in formato HTML":	$messaggio = "Modify documents in HTML format"; break;
+case "potrà modificare i <b>documenti con formato HTML</b>":	$messaggio = "will be able to modify <b>documents with HTML format</b>"; break;
+case "non potrà più modificare i <b>documenti con formato HTML</b>":	$messaggio = "will not be able to modify <b>documents with HTML format</b> anymore"; break;
+case "questo può consentire di portare attacchi di tipo \"Cross Site Scripting\" per rubare le credenziali di altri utenti":	$messaggio = "this could allow to carry out \"Cross Site Scripting\" attacks to steal other users' credentials"; break;
+case "Modifica delle password":  		$messaggio = "Modify passwords"; break;
+case "solo la propria":  			$messaggio = "only his own"; break;
+case "potrà modificare solo la sua <b>password</b>":	$messaggio = "will be able to modify only his own <b>password</b>"; break;
+case "non potrà più modificare le <b>password</b>":	$messaggio = "will not be able to modify <b>passwords</b>"; break;
 case "":  		$messaggio = ""; break;
 case "":  		$messaggio = ""; break;
 

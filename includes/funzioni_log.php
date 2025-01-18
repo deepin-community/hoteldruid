@@ -26,6 +26,7 @@ function inserisci_log ($query,$idlog = "") {
 global $id_utente,$PHPR_TAB_PRE,$PHPR_LOG;
 if (!$idlog) $idutente_log = $id_utente;
 else $idutente_log = $idlog;
+$insert = 0;
 
 if ($idutente_log and $idutente_log != 1) {
 if ($PHPR_LOG == "SI" or str_replace(",$idutente_log,","","$PHPR_LOG,") != "$PHPR_LOG,") {
@@ -47,10 +48,13 @@ $dati_file[0] = "<?php exit(); ?>\n";
 $num_lin = count($dati_file);
 $limite = date("Y-m-d H:i:s",(time() + (C_DIFF_ORE * 3600) - 2592000));
 for ($n = 1 ; $n < $num_lin ; $n++) {
+if (preg_replace("/^[a0-9-]{1,1}[0-9]*>[0-9]{4,4}-[0-9]{2,2}-[0-9]{2,2} [0-9]{2,2}:[0-9]{2,2}:[0-9]{2,2}>[a-zA-Z]?.*/","",togli_acapo($dati_file[$n])) != "") $dati_file[$n] = "";
+else {
 $data = explode(">",$dati_file[$n]);
-$data = $data[1];
+$data = fixstr($data[1]);
 if (strcmp($limite,$data) > 0) $dati_file[$n] = "";
 else break;
+} # fine else if (preg_replace("/^[a0-9-]{1,1}[0-9]*>[0-9]{4,4}-[0-9]{2,2}-[0-9]{2,2} [0-9]{2,2}:[0-9]{2,2}:[0-9]{2,2}>[a-zA-Z]?.*/","",togli_acapo($dati_file[$n])) != "")
 } # fine for $n
 if ($num_lin >= 12000) $dati_file[1] = "";
 $dati_file[$num_lin] = $idutente_log.">".date("Y-m-d H:i:s",(time() + (C_DIFF_ORE * 3600))).">".$query."\n";

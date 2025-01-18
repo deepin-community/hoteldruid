@@ -82,12 +82,12 @@ if ($num_rel_utente) {
 echo "<select name=\"$cmp\" id=\"$cmp\">";
 if ($pieno != "SI") echo "<option value=\"\">------</option>";
 for ($num1 = 0 ; $num1 < $num_rel_utente ; $num1++) {
-$rel = htmlspecialchars(risul_query($rel_utente,$num1,"nome_$rel_sing",$tablerel));
+$rel = htmlspecialchars(str_replace("&amp;","&",str_replace("&#039;","'",(string) risul_query($rel_utente,$num1,"nome_$rel_sing",$tablerel))));
 echo "<option value=\"$rel\">$rel";
 if ($mostra_cod) {
-$codice = htmlspecialchars(risul_query($rel_utente,$num1,"codice_$rel_sing",$tablerel));
-$codice2 = htmlspecialchars(risul_query($rel_utente,$num1,"codice2_$rel_sing",$tablerel));
-$codice3 = htmlspecialchars(risul_query($rel_utente,$num1,"codice3_$rel_sing",$tablerel));
+$codice = htmlspecialchars((string) risul_query($rel_utente,$num1,"codice_$rel_sing",$tablerel));
+$codice2 = htmlspecialchars((string) risul_query($rel_utente,$num1,"codice2_$rel_sing",$tablerel));
+$codice3 = htmlspecialchars((string) risul_query($rel_utente,$num1,"codice3_$rel_sing",$tablerel));
 if (strcmp($codice,"")) echo " ($codice)";
 if (strcmp($codice2,"")) echo " (".mex("2°",'personalizza.php')." $codice2)";
 if (strcmp($codice3,"")) echo " (".mex("3°",'personalizza.php')." $codice3)";

@@ -2,7 +2,7 @@
 
 ##################################################################################
 #    HOTELDRUID
-#    Copyright (C) 2001-2019 by Marco Maria Francesco De Santis (marco@digitaldruid.net)
+#    Copyright (C) 2001-2023 by Marco Maria Francesco De Santis (marco@digitaldruid.net)
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published by
@@ -68,75 +68,80 @@ $var_mod[39] = "nome_modello_paypal";
 $var_mod[40] = "mostra_richiesta_via_mail";
 $var_mod[41] = "indirizzo_email";
 $var_mod[42] = "manda_copia_richiesta_email";
-$var_mod[43] = "maschera_email";
-$var_mod[44] = "mostra_quadro_disponibilita";
-$var_mod[45] = "raggruppa_quadro_disponibilita_con_regola_2";
-$var_mod[46] = "raggruppa_quadro_disponibilita_con_persone";
-$var_mod[47] = "colore_sfondo_quadro_disponibilita";
-$var_mod[48] = "colore_inizio_settimana_quadro_disponibilita";
-$var_mod[49] = "colore_libero_quadro_disponibilita";
-$var_mod[50] = "colore_occupato_quadro_disponibilita";
-$var_mod[51] = "apertura_font_quadro_disponibilita";
-$var_mod[52] = "chiusura_font_quadro_disponibilita";
-$var_mod[53] = "mostra_numero_liberi_quadro_disponibilita";
-$var_mod[54] = "allinea_disponibilita_con_arrivo";
-$var_mod[55] = "utente_messaggio";
-$var_mod[56] = "origine_prenotazione";
-$var_mod[57] = "chiedi_cognome";
-$var_mod[58] = "chiedi_nome";
-$var_mod[59] = "chiedi_email";
-$var_mod[60] = "chiedi_email2";
-$var_mod[61] = "chiedi_email_cert";
-$var_mod[62] = "chiedi_sesso";
-$var_mod[63] = "chiedi_datanascita";
-$var_mod[64] = "chiedi_documento";
-$var_mod[65] = "chiedi_nazione";
-$var_mod[66] = "chiedi_citta";
-$var_mod[67] = "chiedi_regione";
-$var_mod[68] = "chiedi_via";
-$var_mod[69] = "chiedi_numcivico";
-$var_mod[70] = "chiedi_cap";
-$var_mod[71] = "chiedi_telefono";
-$var_mod[72] = "chiedi_telefono2";
-$var_mod[73] = "chiedi_telefono3";
-$var_mod[74] = "chiedi_fax";
-$var_mod[75] = "chiedi_codfiscale";
-$var_mod[76] = "chiedi_partitaiva";
-$var_mod[77] = "chiedi_commento";
-$var_mod[78] = "chiedi_oracheckin";
-$var_mod[79] = "chiedi_valutapagamento";
-$var_mod[80] = "chiedi_metodopagamento";
-$var_mod[81] = "metodi_pagamento_da_chiedere";
-$var_mod[82] = "nomi_metodi_pagamento_imposti";
-$var_mod[83] = "campi_form_personalizzati";
-$var_mod[84] = "chiedi_campi_form_personalizzati";
-$var_mod[85] = "ins_campi_form_personalizzati";
-$var_mod[86] = "campi_form_doc_condizioni";
-$var_mod[87] = "chiedi_campi_form_doc_condizioni";
-$var_mod[88] = "apertura_tag_font_rosse";
-$var_mod[89] = "chiusura_tag_font_rosse";
-$var_mod[90] = "stile_tabella_prenotazione";
-$var_mod[91] = "mostra_calendario_scelta_date";
-$var_mod[92] = "stile_riquadro_calendario";
-$var_mod[93] = "stile_tabella_calendario";
-$var_mod[94] = "stile_bottoni_calendario";
-$var_mod[95] = "stile_bottone_apertura_calendario";
-$var_mod[96] = "spostamento_orizzontale_calendario";
-$var_mod[97] = "colore_data_attiva_calendario";
-$var_mod[98] = "colore_data_selezionata_calendario";
-$var_mod[99] = "file_css_frame";
-$var_mod[100] = "file_js_frame";
-$var_mod[101] = "apri_nuova_finestra_da_frame";
-$var_mod[102] = "larghezza_finestra_da_frame";
-$var_mod[103] = "altezza_finestra_da_frame";
-$var_mod[104] = "tema_modello";
+$var_mod[43] = "mostra_quadro_disponibilita";
+$var_mod[44] = "raggruppa_quadro_disponibilita_con_regola_2";
+$var_mod[45] = "raggruppa_quadro_disponibilita_con_persone";
+$var_mod[46] = "colore_sfondo_quadro_disponibilita";
+$var_mod[47] = "colore_inizio_settimana_quadro_disponibilita";
+$var_mod[48] = "colore_libero_quadro_disponibilita";
+$var_mod[49] = "colore_occupato_quadro_disponibilita";
+$var_mod[50] = "apertura_font_quadro_disponibilita";
+$var_mod[51] = "chiusura_font_quadro_disponibilita";
+$var_mod[52] = "mostra_numero_liberi_quadro_disponibilita";
+$var_mod[53] = "allinea_disponibilita_con_arrivo";
+$var_mod[54] = "utente_messaggio";
+$var_mod[55] = "origine_prenotazione";
+$var_mod[56] = "chiedi_cognome";
+$var_mod[57] = "chiedi_nome";
+$var_mod[58] = "chiedi_email";
+$var_mod[59] = "chiedi_email2";
+$var_mod[60] = "chiedi_email_cert";
+$var_mod[61] = "chiedi_sesso";
+$var_mod[62] = "chiedi_datanascita";
+$var_mod[63] = "chiedi_documento";
+$var_mod[64] = "chiedi_nazione";
+$var_mod[65] = "chiedi_citta";
+$var_mod[66] = "chiedi_regione";
+$var_mod[67] = "chiedi_via";
+$var_mod[68] = "chiedi_numcivico";
+$var_mod[69] = "chiedi_cap";
+$var_mod[70] = "chiedi_telefono";
+$var_mod[71] = "chiedi_telefono2";
+$var_mod[72] = "chiedi_telefono3";
+$var_mod[73] = "chiedi_fax";
+$var_mod[74] = "chiedi_codfiscale";
+$var_mod[75] = "chiedi_partitaiva";
+$var_mod[76] = "chiedi_commento";
+$var_mod[77] = "chiedi_oracheckin";
+$var_mod[78] = "chiedi_valutapagamento";
+$var_mod[79] = "chiedi_metodopagamento";
+$var_mod[80] = "metodi_pagamento_da_chiedere";
+$var_mod[81] = "nomi_metodi_pagamento_imposti";
+$var_mod[82] = "campi_form_personalizzati";
+$var_mod[83] = "chiedi_campi_form_personalizzati";
+$var_mod[84] = "ins_campi_form_personalizzati";
+$var_mod[85] = "campi_form_doc_condizioni";
+$var_mod[86] = "chiedi_campi_form_doc_condizioni";
+$var_mod[87] = "apertura_tag_font_rosse";
+$var_mod[88] = "chiusura_tag_font_rosse";
+$var_mod[89] = "stile_tabella_prenotazione";
+$var_mod[90] = "mostra_calendario_scelta_date";
+$var_mod[91] = "stile_riquadro_calendario";
+$var_mod[92] = "stile_tabella_calendario";
+$var_mod[93] = "stile_bottoni_calendario";
+$var_mod[94] = "stile_bottone_apertura_calendario";
+$var_mod[95] = "spostamento_orizzontale_calendario";
+$var_mod[96] = "colore_data_attiva_calendario";
+$var_mod[97] = "colore_data_selezionata_calendario";
+$var_mod[98] = "file_css_frame";
+$var_mod[99] = "file_js_frame";
+$var_mod[100] = "apri_nuova_finestra_da_frame";
+$var_mod[101] = "larghezza_finestra_da_frame";
+$var_mod[102] = "altezza_finestra_da_frame";
+$var_mod[103] = "tema_modello";
 
 $num_var_mod = count($var_mod);
 
 
 
 
-function recupera_var_modello_disponibilita ($nome_file,$percorso_cartella_modello,$pag,$fr_frase,$num_frasi,$var_mod,$num_var_mod,$tipo_periodi,$var_per_crea_mod,$anno_modello,$PHPR_TAB_PRE) {
+function recupera_var_modello_disponibilita ($nome_file,$percorso_cartella_modello,$pag,&$fr_frase,&$frase,$num_frasi,$var_mod,$num_var_mod,$tipo_periodi,$var_per_crea_mod,$anno_modello,$lingua_modello,$PHPR_TAB_PRE) {
+
+# Se sono state aggiunte frasi prima dell'uscita di una nuova versione
+/*for ($num_fr = 0 ; $num_fr < $num_frasi ; $num_fr++) {
+global ${$fr_frase[$num_fr]};
+${$fr_frase[$num_fr]} = mex2($frase[$num_fr],$pag,$lingua_modello);
+} # fine for $num_fr*/
 
 $linee_file = file("$percorso_cartella_modello/$nome_file");
 $num_linee_file = count($linee_file);
@@ -371,19 +376,23 @@ if ($continua != "NO") {
 $SI = mex("SI",$pag);
 $NO = mex("NO",$pag);
 global $M_PHPR_DB_TYPE,$M_PHPR_DB_NAME,$M_PHPR_DB_HOST,$M_PHPR_DB_PORT,$M_PHPR_DB_USER,$M_PHPR_DB_PASS,$M_PHPR_LOAD_EXT,$M_PHPR_TAB_PRE,$m_stile_soldi,$m_stile_data,$m_valuta_sing,$m_valuta_plur,$utente_lis;
-if ($tipo_db == "mysql" and @function_exists('mysqli_connect')) $tipo_db = "mysqli";
-$M_PHPR_DB_TYPE = $tipo_db;
-$M_PHPR_DB_NAME = $nome_db;
-$M_PHPR_DB_HOST = $computer_db;
-$M_PHPR_DB_PORT = $porta_db;
-$M_PHPR_DB_USER = $utente_db;
-$M_PHPR_DB_PASS = $password_db;
-if (strtoupper($carica_estensione_db) == $SI) $carica_estensione_db = "SI";
+if (isset($tipo_db) and $tipo_db == "mysql" and @function_exists('mysqli_connect')) $tipo_db = "mysqli";
+$M_PHPR_DB_TYPE = fixstr($tipo_db);
+$M_PHPR_DB_NAME = fixstr($nome_db);
+$M_PHPR_DB_HOST = fixstr($computer_db);
+$M_PHPR_DB_PORT = fixstr($porta_db);
+$M_PHPR_DB_USER = fixstr($utente_db);
+$M_PHPR_DB_PASS = fixstr($password_db);
+if (strtoupper(fixstr($carica_estensione_db)) == $SI) $carica_estensione_db = "SI";
 else $carica_estensione_db = "NO";
 $M_PHPR_LOAD_EXT = $carica_estensione_db;
-$M_PHPR_TAB_PRE = $prefisso_tabelle_db;
-$m_stile_soldi = $stile_soldi;
-$m_stile_data = $stile_data;
+$M_PHPR_TAB_PRE = fixstr($prefisso_tabelle_db);
+$m_stile_soldi = "";
+if ($stile_soldi == mex("europa",$pag)) $m_stile_soldi = "europa";
+if ($stile_soldi == mex("usa",$pag)) $m_stile_soldi = "usa";
+$m_stile_data = "";
+if ($stile_data == mex("europa",$pag)) $m_stile_data = "europa";
+if ($stile_data == mex("usa",$pag)) $m_stile_data = "usa";
 $m_valuta_sing = $fr_Valuta_sing;
 $m_valuta_plur = $fr_Valuta_plur;
 if (strtoupper($anteponi_nome_valuta) == $SI) $anteponi_nome_valuta = "SI";
@@ -440,7 +449,7 @@ $nome_costo_imposto = "nome_costo_imposto".$dati_ca[$numca]['id'];
 $nome_cat_imp = "nome_cat_imp".$dati_ca[$numca]['id'];
 global $$attiva_costo,$$nome_costo_imposto,$$nome_cat_imp;
 $$attiva_costo = "";
-if (strtoupper($costi_aggiuntivi_mostra[$dati_ca[$numca]['id']]) == $SI) $$attiva_costo = "SI";
+if (strtoupper(fixstr($costi_aggiuntivi_mostra[$dati_ca[$numca]['id']])) == $SI) $$attiva_costo = "SI";
 $$nome_costo_imposto = fixset($nomi_costi_agg_imposti[$dati_ca[$numca]['id']]);
 if ($dati_ca[$numca]['combina'] == "s") $$nome_cat_imp = fixset($categorie_costi_agg_imposte[$dati_ca[$numca]['categoria']]);
 } # fine for $numca
@@ -467,14 +476,14 @@ for ($num1 = 0 ; $num1 < $num_regole ; $num1 = $num1 + 1) {
 $idregole = risul_query($regole,$num1,'idregole');
 $motivazione = risul_query($regole,$num1,'motivazione');
 if (!$motivazione) $motivazione = " ";
-if ($motivazioni_presenti[$motivazione] != "SI") {
+if (!isset($motivazioni_presenti[$motivazione]) or $motivazioni_presenti[$motivazione] != "SI") {
 $motivazioni_presenti[$motivazione] = "SI";
 $var_motivazione = "var_mot_".$num_motivazioni;
 $num_motivazioni++;
 global $$var_motivazione;
 $$var_motivazione = "";
-if (strtoupper($considera_motivazioni_regola1[$motivazione]) == $SI) $$var_motivazione = $motivazione;
-} # fine if ($motivazioni_presenti[$motivazione] != "SI")
+if (strtoupper(fixstr($considera_motivazioni_regola1[$motivazione])) == $SI) $$var_motivazione = $motivazione;
+} # fine if (!isset($motivazioni_presenti[$motivazione]) or $motivazioni_presenti[$motivazione] != "SI")
 } # fine for $num1
 if (strtoupper($mostra_frase_alternativa_regola1) == $SI) $mostra_frase_alternativa_regola1 = "SI";
 else $mostra_frase_alternativa_regola1 = "NO";
@@ -492,13 +501,10 @@ $ind_email = $indirizzo_email;
 $utente_mess = $utente_messaggio;
 $orig_prenota = $origine_prenotazione;
 
-global $maschera_envelope;
 if (strtoupper($mostra_richiesta_via_mail) == $SI) $mostra_richiesta_via_mail = "SI";
 else $mostra_richiesta_via_mail = "NO";
 if (strtoupper($manda_copia_richiesta_email) == $SI) $manda_copia_richiesta_email = "SI";
 else $manda_copia_richiesta_email = "NO";
-if (strtoupper($maschera_email) == $SI) $maschera_envelope = "SI";
-else $maschera_envelope = "NO";
 $chiedi_cognome = strtoupper($chiedi_cognome);
 if ($chiedi_cognome != $SI and $chiedi_cognome != $NO) $chiedi_cognome = "opzionale";
 if ($chiedi_cognome == $SI) $chiedi_cognome = "SI";
@@ -611,10 +617,10 @@ $metodi_pagamenti_chiesti = array('array_esistente' => 1);
 for ($num1 = 0 ; $num1 < $num_metodi_pagamento ; $num1++) {
 $metodo = $metodi_pagamento[$num1];
 global ${"var_met_paga_".$num1},${"nome_met_paga_imposto_".$num1};
-if (strtoupper($metodi_pagamento_da_chiedere[$metodo]) == $SI) {
+if (strtoupper(fixstr($metodi_pagamento_da_chiedere[$metodo])) == $SI) {
 ${"var_met_paga_".$num1} = $metodo;
 $metodi_pagamenti_chiesti[$metodo] = 1;
-} # fine if (strtoupper($metodi_pagamento_da_chiedere[$metodo]) == $SI)
+} # fine if (strtoupper(fixstr($metodi_pagamento_da_chiedere[$metodo])) == $SI)
 else ${"var_met_paga_".$num1} = "";
 if (@get_magic_quotes_gpc()) ${"var_met_paga_".$num1} = addslashes(${"var_met_paga_".$num1});
 if (!empty($nomi_metodi_pagamento_imposti[$metodo])) ${"nome_met_paga_imposto_".$num1} = $nomi_metodi_pagamento_imposti[$metodo];
@@ -632,7 +638,7 @@ $nome_met_paga_imposto = "nome_met_paga_imposto_".$num1;
 global ${"var_met_paga_".$num1},${"nome_met_paga_imposto_".$num1};
 ${"var_met_paga_".$num1} = $metodo;
 if (@get_magic_quotes_gpc()) ${"var_met_paga_".$num1} = addslashes(${"var_met_paga_".$num1});
-if ($nomi_metodi_pagamento_imposti[$metodo]) ${"nome_met_paga_imposto_".$num1} = $nomi_metodi_pagamento_imposti[$metodo];
+if (!empty($nomi_metodi_pagamento_imposti[$metodo])) ${"nome_met_paga_imposto_".$num1} = $nomi_metodi_pagamento_imposti[$metodo];
 else ${"nome_met_paga_imposto_".$num1} = "";
 if (@get_magic_quotes_gpc()) ${"nome_met_paga_imposto_".$num1} = addslashes(${"nome_met_paga_imposto_".$num1});
 } # fine if (empty($metodi_pagamenti_chiesti[$metodo]))
@@ -699,7 +705,7 @@ $lingua_mex = $lingua_mex_orig;
 
 function crea_modello_disponibilita ($percorso_cartella_modello,$anno_modello,$PHPR_TAB_PRE,$pag,$lingua_modello,$silenzio,$fr_frase,$frase,$num_frasi,$tipo_periodi,$lingua_orig="") {
 global $num_periodi_date,$M_PHPR_DB_TYPE,$M_PHPR_DB_NAME,$M_PHPR_DB_HOST,$M_PHPR_DB_PORT,$M_PHPR_DB_USER,$M_PHPR_DB_PASS,$M_PHPR_LOAD_EXT,$M_PHPR_TAB_PRE,$estendi_ultima_data,$max_num_app_tipologia,$chiedi_num_app_tipologia,$parola_appartamenti,$parola_appartamento,$aggiungi_tipologie,$max_num_tipologie,$cerca_app_vicini,$chiedi_num_persone,$max_num_persone,$costo_aggiungi_letti,$max_num_aggiungi_letti,$sett_no_prenota;
-global $mostra_richiesta_via_mail,$mostra_costi_aggiuntivi,$num_colonne_costi_agg,$num_motivazioni,$mostra_quadro_disp,$raggr_quadro_disp,$mostra_numero_liberi_quadro_disponibilita,$allinea_disponibilita_con_arrivo,$m_stile_soldi,$m_stile_data,$anteponi_nome_valuta,$utente_lis,$aggiungi_costi_fissi,$assegna_con_regola2,$mostra_frase_alternativa_regola1,$mostra_caparra,$ind_email,$maschera_envelope,$manda_copia_richiesta_email;
+global $mostra_richiesta_via_mail,$mostra_costi_aggiuntivi,$num_colonne_costi_agg,$num_motivazioni,$mostra_quadro_disp,$raggr_quadro_disp,$mostra_numero_liberi_quadro_disponibilita,$allinea_disponibilita_con_arrivo,$m_stile_soldi,$m_stile_data,$anteponi_nome_valuta,$utente_lis,$aggiungi_costi_fissi,$assegna_con_regola2,$mostra_frase_alternativa_regola1,$mostra_caparra,$ind_email,$manda_copia_richiesta_email;
 global $colore_sfondo_quadro_disponibilita,$colore_inizio_settimana_quadro_disponibilita,$colore_libero_quadro_disponibilita,$colore_occupato_quadro_disponibilita,$apertura_font_quadro_disponibilita,$chiusura_font_quadro_disponibilita,$apertura_tag_font,$chiusura_tag_font,$apertura_tag_font_rosse,$chiusura_tag_font_rosse,$stile_tabella_prenotazione,$m_valuta_sing,$m_valuta_plur,$frase_alternativa_regola1,$cambia_frasi,$utente_mess;
 global $orig_prenota,$num_metodi_pagamento,$num_campi_pers,$num_campi_doc_cond,$chiedi_cognome,$chiedi_nome,$chiedi_email,$chiedi_email2,$chiedi_email_cert,$chiedi_sesso,$chiedi_datanascita,$chiedi_documento,$chiedi_nazione,$chiedi_citta,$chiedi_regione,$chiedi_via,$chiedi_numcivico,$chiedi_cap,$chiedi_telefono,$chiedi_telefono2,$chiedi_telefono3,$chiedi_fax,$chiedi_codfiscale,$chiedi_partitaiva,$chiedi_commento,$chiedi_oracheckin;
 global $mostra_bottone_paypal,$nome_modello_paypal,$mostra_calendario_scelta_date,$stile_riquadro_calendario,$stile_tabella_calendario,$stile_bottoni_calendario,$stile_bottone_apertura_calendario,$spostamento_orizzontale_calendario,$colore_data_attiva_calendario,$colore_data_selezionata_calendario,$prima_parte_html,$ultima_parte_html,$mostra_giorni_pieni,$modello_esistente,$chiedi_valutapagamento,$chiedi_metodopagamento;
@@ -771,8 +777,25 @@ if ($estendi_ultima_data != "SI") $estendi_ultima_data = "NO";
 $date_in_menu = "";
 $idfineperiodo_prec = -10;
 if (!$num_periodi_date or controlla_num_pos($num_periodi_date) == "NO") $num_periodi_date = 1;
+$vett_ini = array();
+$vett_fine = array();
+$vett_int = array();
 for ($num1 = 0 ; $num1 < $num_periodi_date ; $num1++) {
 global ${"inizioperiodo".$num1},${"fineperiodo".$num1},${"intervalloperiodo".$num1};
+$vett_ini[$num1] = ${"inizioperiodo".$num1};
+$vett_fine[$num1] = ${"fineperiodo".$num1};
+$vett_int[$num1] = ${"intervalloperiodo".$num1};
+} # fine for $num1
+$num1 = 0;
+asort($vett_ini);
+reset ($vett_ini);
+foreach ($vett_ini as $ord => $val) {
+${"inizioperiodo".$num1} = $vett_ini[$ord];
+${"fineperiodo".$num1} = $vett_fine[$ord];
+${"intervalloperiodo".$num1} = $vett_int[$ord];
+$num1++;
+} # fine foreach ($vett_ini as $ord => $val)
+for ($num1 = 0 ; $num1 < $num_periodi_date ; $num1++) {
 $inizioperiodo = aggslashdb(${"inizioperiodo".$num1});
 $fineperiodo = aggslashdb(${"fineperiodo".$num1});
 $idinizioperiodo = esegui_query("select idperiodi from $tableperiodi_modello where datainizio = '$inizioperiodo' ");
@@ -1003,7 +1026,7 @@ for ($num1 = 1 ; $num1 <= $num_campi_doc_cond ; $num1++) {
 $num_doc_cond = "num_doc_cond".$num1;
 $chiedi_num_doc_cond = "chiedi_num_doc_cond".$num1;
 global $$num_doc_cond,$$chiedi_num_doc_cond;
-if (strcmp($$num_doc_cond,"") and !$doc_usati[$$num_doc_cond]) {
+if (strcmp((string) $$num_doc_cond,"") and empty($doc_usati[$$num_doc_cond])) {
 if ($attiva_contratti_consentiti == "n" or $contratti_consentiti_vett[$$num_doc_cond] == "SI" or $campi_form_doc_condizioni_tr[$num1] == $$num_doc_cond) {
 if (controlla_num_pos($$num_doc_cond) == "NO") $continua = "NO";
 else {
@@ -1026,7 +1049,7 @@ $chiedi_campi_form_doc_condizioni .= "\"".$num_campo_doc_cond."\" => \"".mex($$c
 } # fine else if (!numlin_query($contr_txt))
 } # fine else if (controlla_num_pos($num_doc_email_conferma) == "NO")
 } # fine if ($attiva_contratti_consentiti == "n" or $contratti_consentiti_vett[$$num_doc_cond] == "SI" or $campi_form_doc_condizioni_tr[$num1] == $$num_doc_cond)
-} # fine if (strcmp($$num_doc_cond,"") and !$doc_usati[$$num_doc_cond])
+} # fine if (strcmp((string) $$num_doc_cond,"") and empty($doc_usati[$$num_doc_cond]))
 } # fine for $num1
 if ($campi_form_doc_condizioni) $campi_form_doc_condizioni = substr($campi_form_doc_condizioni,0,-1);
 if ($chiedi_campi_form_doc_condizioni) $chiedi_campi_form_doc_condizioni = substr($chiedi_campi_form_doc_condizioni,0,-1);
@@ -1074,7 +1097,7 @@ if (isset(${"attiva_costo".$dati_ca[$numca]['id']}) and ${"attiva_costo".$dati_c
 $nome_costo_imposto = "nome_costo_imposto".$dati_ca[$numca]['id'];
 global $$nome_costo_imposto;
 $$nome_costo_imposto = formatta_input_var_x_file($$nome_costo_imposto);
-if (strcmp($$nome_costo_imposto,"")) $nomi_costi_imposti .= $dati_ca[$numca]['id']." => \"".$$nome_costo_imposto."\",";
+if (strcmp((string) $$nome_costo_imposto,"")) $nomi_costi_imposti .= $dati_ca[$numca]['id']." => \"".$$nome_costo_imposto."\",";
 if ($dati_ca[$numca]['combina'] == "s" and empty($nomi_cat_presenti[$dati_ca[$numca]['categoria']])) {
 $nome_cat_imp = "nome_cat_imp".$dati_ca[$numca]['id'];
 global $$nome_cat_imp;
@@ -1103,7 +1126,7 @@ global $$codice_promo,$$tipo_codice_promo,$$costo_codice_promo;
 if (@get_magic_quotes_gpc()) $$codice_promo = stripslashes($$codice_promo);
 $$codice_promo = formatta_input_var_x_file($$codice_promo);
 $$costo_codice_promo = formatta_input_var_x_file($$costo_codice_promo);
-if ($$codice_promo and ($$tipo_codice_promo == "+" or $$tipo_codice_promo == "-") and strcmp($dati_ca['id'][$$costo_codice_promo],"") and $$costo_codice_promo != $costo_aggiungi_letti) {
+if ($$codice_promo and ($$tipo_codice_promo == "+" or $$tipo_codice_promo == "-") and strcmp((string) $dati_ca['id'][$$costo_codice_promo],"") and $$costo_codice_promo != $costo_aggiungi_letti) {
 if ($attiva_costi_agg_consentiti == "n" or $costi_agg_consentiti_vett[$$costo_codice_promo] == "SI" or substr($costi_campi_codici_promo_tr[$num1],1) == $$costo_codice_promo) {
 $num_codice_promo++;
 $campi_codici_promo .= "\"".$num_codice_promo."\" => \"".$$codice_promo."\",";
@@ -1141,7 +1164,7 @@ $metodi_pagamento_da_chiedere = "";
 $nomi_metodi_pagamento_imposti = "";
 $metodi_pagamenti_chiesti = array('array_esistente' => 1);
 $metodi_pagamento = esegui_query("select valpersonalizza from $tablepersonalizza where idpersonalizza = 'metodi_pagamento' and idutente = '$id_utente' ");
-$metodi_pagamento = risul_query($metodi_pagamento,0,'valpersonalizza');
+$metodi_pagamento = (string) risul_query($metodi_pagamento,0,'valpersonalizza');
 $metodi_pagamento = explode(",",$metodi_pagamento);
 for ($num1 = 0 ; $num1 < count($metodi_pagamento) ; $num1++) $esiste_met_paga[$metodi_pagamento[$num1]] = "SI";
 for ($num1 = 0 ; $num1 < $num_metodi_pagamento ; $num1++) {
@@ -1162,7 +1185,7 @@ if ($$nome_met_paga_imposto) $nomi_metodi_pagamento_imposti .= "\"".$$var_met_pa
 if (!empty($metodi_pagamento_da_chiedere_tr['array_esistente'])) {
 reset($metodi_pagamento_da_chiedere_tr);
 foreach ($metodi_pagamento_da_chiedere_tr as $metodo => $val_m) {
-if (!$metodi_pagamenti_chiesti[$metodo]) {
+if (empty($metodi_pagamenti_chiesti[$metodo])) {
 $num1++;
 $var_met_paga = "var_met_paga_".$num1;
 $nome_met_paga_imposto = "nome_met_paga_imposto_".$num1;
@@ -1176,7 +1199,7 @@ $$nome_met_paga_imposto = formatta_input_var_x_file($$nome_met_paga_imposto);
 $metodi_pagamento_da_chiedere .= "\"".$$var_met_paga."\" => \"$SI\",";
 if ($$nome_met_paga_imposto) $nomi_metodi_pagamento_imposti .= "\"".$$var_met_paga."\" => \"".$$nome_met_paga_imposto."\",";
 } # fine ($$var_met_paga and $met_paga_compara == $metodo)
-} # fine if (!$metodi_pagamenti_chiesti[$metodo])
+} # fine if (empty($metodi_pagamenti_chiesti[$metodo]))
 } # fine foreach ($metodi_pagamento_da_chiedere_tr as $metodo => $val_m)
 } # fine if (!empty($metodi_pagamento_da_chiedere_tr['array_esistente']))
 if ($metodi_pagamento_da_chiedere) $metodi_pagamento_da_chiedere = substr($metodi_pagamento_da_chiedere,0,-1);
@@ -1216,10 +1239,9 @@ else $raggruppa_quadro_disponibilita_con_persone = "NO";
 if ($mostra_numero_liberi_quadro_disponibilita != "SI") $mostra_numero_liberi_quadro_disponibilita = "NO";
 if ($allinea_disponibilita_con_arrivo != "SI") $allinea_disponibilita_con_arrivo = "NO";
 
-if (substr($spostamento_orizzontale_calendario,0,1) == "+") $spostamento_orizzontale_calendario = substr($spostamento_orizzontale_calendario,1);
-if (!strcmp($spostamento_orizzontale_calendario,"") or controlla_num($spostamento_orizzontale_calendario) == "NO") $spostamento_orizzontale_calendario = 2;
+if (substr((string) $spostamento_orizzontale_calendario,0,1) == "+") $spostamento_orizzontale_calendario = substr($spostamento_orizzontale_calendario,1);
+if (!strcmp((string) $spostamento_orizzontale_calendario,"") or controlla_num($spostamento_orizzontale_calendario) == "NO") $spostamento_orizzontale_calendario = 2;
 
-if (defined("C_MASCHERA_EMAIL") and C_MASCHERA_EMAIL != "") $maschera_envelope = C_MASCHERA_EMAIL;
 if (defined('C_RESTRIZIONI_DEMO_ADMIN') and C_RESTRIZIONI_DEMO_ADMIN == "SI") {
 $indirizzo_email = C_EMAIL_DEMO_ADMIN;
 $manda_copia_richiesta_email = "NO";
@@ -1233,8 +1255,10 @@ if (!$larghezza_finestra_da_frame or controlla_num_pos($larghezza_finestra_da_fr
 if (!$altezza_finestra_da_frame or controlla_num_pos($altezza_finestra_da_frame) == "NO") $altezza_finestra_da_frame = "620";
 
 $num_colori = 0;
+$num_valori = 0;
+$tema_trovato = 0;
 $extra_head_frame = "";
-if (strcmp($tema_modello,"")) {
+if (strcmp((string) $tema_modello,"")) {
 include("./includes/templates/temi_mod_disp.php");
 $num_temi = count($template_theme_name);
 for ($num1 = 1 ; $num1 <= $num_temi ; $num1++) {
@@ -1254,8 +1278,8 @@ global ${"valore_tema_".$num1};
 if (!empty($valori_tema[$num1]['pattern']) and !preg_match("/".$valori_tema[$num1]['pattern']."/i",${"valore_tema_".$num1})) ${"valore_tema_".$num1} = "";
 ${"valore_tema_".$num1} = formatta_input_var_x_file(${"valore_tema_".$num1});
 $valore_sost = ${"valore_tema_".$num1};
-if (!strcmp($valore_sost,"")) $valore_sost = fixset($valori_tema[$num1]['null']);
-elseif (isset($valori_tema[$num1]['replace']) and strcmp($valori_tema[$num1]['replace'],"")) $valore_sost = str_replace("[theme_value_$num1]",$valore_sost,$valori_tema[$num1]['replace']);
+if (!strcmp((string) $valore_sost,"")) $valore_sost = fixstr($valori_tema[$num1]['null']);
+elseif (isset($valori_tema[$num1]['replace']) and strcmp((string) $valori_tema[$num1]['replace'],"")) $valore_sost = str_replace("[theme_value_$num1]",$valore_sost,$valori_tema[$num1]['replace']);
 $prima_parte_html = str_replace("[theme_value_$num1]",$valore_sost,$prima_parte_html);
 $ultima_parte_html = str_replace("[theme_value_$num1]",$valore_sost,$ultima_parte_html);
 $extra_head_frame = str_replace("[theme_value_$num1]",$valore_sost,$extra_head_frame);
@@ -1277,7 +1301,7 @@ $extra_head_frame = str_replace("[theme_color_$num1]",${"colore_tema_".$num1},$e
 } # fine for $num1
 } # fine if ($tema_trovato)
 else $tema_modello = "";
-} # fine if (strcmp($tema_modello,""))
+} # fine if (strcmp((string) $tema_modello,""))
 
 if (defined('C_EXT_DB_DATA_PATH') and C_EXT_DB_DATA_PATH) {
 $HOTELD_DB_TYPE = "";
@@ -1291,9 +1315,9 @@ include(C_EXT_DB_DATA_PATH);
 if ($HOTELD_DB_TYPE) $M_PHPR_DB_TYPE = "";
 if ($HOTELD_DB_NAME) $M_PHPR_DB_NAME = "";
 if ($HOTELD_DB_HOST) $M_PHPR_DB_HOST = "";
-if (strcmp($HOTELD_DB_PORT,"")) $M_PHPR_DB_PORT = "";
+if (strcmp((string) $HOTELD_DB_PORT,"")) $M_PHPR_DB_PORT = "";
 if ($HOTELD_DB_USER) $M_PHPR_DB_USER = "";
-if (strcmp($HOTELD_DB_PASS,"")) $M_PHPR_DB_PASS = "";
+if (strcmp((string) $HOTELD_DB_PASS,"")) $M_PHPR_DB_PASS = "";
 if ($HOTELD_TAB_PRE) $M_PHPR_TAB_PRE = "";
 } # fine if (defined('C_EXT_DB_DATA_PATH') and C_EXT_DB_DATA_PATH)
 
@@ -1319,7 +1343,6 @@ $mostra_caparra = formatta_input_var_x_file($mostra_caparra);
 $mostra_richiesta_via_mail = formatta_input_var_x_file($mostra_richiesta_via_mail);
 $indirizzo_email = formatta_input_var_x_file($indirizzo_email);
 $manda_copia_richiesta_email = formatta_input_var_x_file($manda_copia_richiesta_email);
-$maschera_envelope = formatta_input_var_x_file($maschera_envelope);
 $mostra_giorni_pieni = formatta_input_var_x_file($mostra_giorni_pieni);
 $orig_prenota = formatta_input_var_x_file($orig_prenota);
 $mostra_bottone_paypal = formatta_input_var_x_file($mostra_bottone_paypal);
@@ -1469,7 +1492,6 @@ fwrite($file,"<?php if (empty(\$framed) and empty(\$_GET['framed']) and empty(\$
 \$".mex("var_mostra_richiesta_via_mail",$pag)." = \"".mex("$mostra_richiesta_via_mail",$pag)."\";
 \$".mex("var_indirizzo_email",$pag)." = \"$indirizzo_email\";
 \$".mex("var_manda_copia_richiesta_email",$pag)." = \"".mex("$manda_copia_richiesta_email",$pag)."\";
-\$".mex("var_maschera_email",$pag)." = \"".mex("$maschera_envelope",$pag)."\";
 \$".mex("var_mostra_giorni_pieni",$pag)." = \"".mex("$mostra_giorni_pieni",$pag)."\";
 \$".mex("var_mostra_bottone_paypal",$pag)." = \"".mex("$mostra_bottone_paypal",$pag)."\";
 \$".mex("var_nome_modello_paypal",$pag)." = \"".$nome_modello_paypal."\";
@@ -1624,6 +1646,12 @@ else echo \"".mex("La variabile \\\$PHP_SELF non è definita, si dovrà editare 
 
 define('C_PERCORSO_A_DATI',\"$cost_percorso_a_dati\");
 define('C_PAGINA_WEB','1');
+");
+if (defined('C_MASCHERA_EMAIL') and C_MASCHERA_EMAIL != "") fwrite($file,"define('C_MASCHERA_EMAIL',\"".C_MASCHERA_EMAIL."\");
+");
+if (defined('C_PERCORSO_PHPMAILER') and C_PERCORSO_PHPMAILER != "") fwrite($file,"define('C_PERCORSO_PHPMAILER',\"".C_PERCORSO_PHPMAILER."\");
+");
+fwrite($file,"
 
 \$var_pag = array();
 \$var_pag[0] = 'framed';
@@ -1665,7 +1693,19 @@ define('C_PAGINA_WEB','1');
 \$var_pag[36] = 'lista_tariffe_p2';
 \$var_pag[37] = 'aggiungi_tipologie_p2';
 \$var_pag[38] = 'chiedi_num_persone_passo_1_p2';
-\$n_var_pag = 39;
+\$var_pag[39] = 'valuta_pagamento';
+\$var_pag[40] = 'rel';
+\$var_pag[41] = 'rel_sup';
+\$var_pag[42] = 'id_ut_sel';
+\$var_pag[43] = 'cmp';
+\$var_pag[44] = 'mostra_cod';
+\$var_pag[45] = 'pieno';
+\$var_pag[46] = 'd';
+\$var_pag[47] = 'dati_relutenti';
+\$var_pag[48] = 'id';
+\$var_pag[49] = 'tipodoc';
+\$var_pag[50] = 'metodo_pagamento';
+\$n_var_pag = 51;
 \$num2 = 1;
 if (isset(\$_POST['num_tipologie'])) \$num2 = (int) \$_POST['num_tipologie'];
 elseif (isset(\$_GET['num_tipologie'])) \$num2 = (int) \$_GET['num_tipologie'];
@@ -1691,6 +1731,15 @@ for (\$num3 = 1 ; \$num3 <= \$num5 ; \$num3++) {
 \$var_pag[\$n_var_pag++] = \"catpers_ca\$num3\".\"_\$num1\";
 \$var_pag[\$n_var_pag++] = \"id_periodi_costo\$num3\".\"_\$num1\";
 \$var_pag[\$n_var_pag++] = \"idca_cat\$num3\".\"_\$num1\";
+\$var_pag[\$n_var_pag++] = \"lista_sett_passa\$num3\".\"_\$num1\";
+\$num6 = 0;
+if (isset(\$_POST[\"lista_sett_passa\$num3\".\"_\$num1\"])) \$num6 = \$_POST[\"lista_sett_passa\$num3\".\"_\$num1\"];
+elseif (isset(\$_GET[\"lista_sett_passa\$num3\".\"_\$num1\"])) \$num6 = \$_GET[\"lista_sett_passa\$num3\".\"_\$num1\"];
+if (\$num6) {
+\$num6 = explode(\",\",\$num6);
+\$num8 = count(\$num6);
+for (\$num7 = 1 ; \$num7 < \$num8 ; \$num7++) \$var_pag[\$n_var_pag++] = \"sett\".(int) \$num6[\$num7].\"costo\$num3\".\"_\$num1\";
+} # fine if (\$num6)
 } # fine for for \$num3
 } # fine for \$num1
 \$num2 = count(\$".mex("var_campi_form_personalizzati",$pag).");
@@ -1754,8 +1803,10 @@ if (strcmp(\$HOTELD_DB_PASS,\"\")) \$PHPR_DB_PASS = \$HOTELD_DB_PASS;
 if (\$HOTELD_TAB_PRE) \$PHPR_TAB_PRE = \$HOTELD_TAB_PRE;
 ");
 fwrite($file,"\$lingua_modello = \$".mex("var_lingua_modello",$pag).";
+\$stile_soldi = \"\";
 if (\$".mex("var_stile_soldi",$pag)." == \"".mex("europa",$pag)."\") \$stile_soldi = \"europa\";
 if (\$".mex("var_stile_soldi",$pag)." == \"".mex("usa",$pag)."\") \$stile_soldi = \"usa\";
+\$stile_data = \"\";
 if (\$".mex("var_stile_data",$pag)." == \"".mex("europa",$pag)."\") \$stile_data = \"europa\";
 if (\$".mex("var_stile_data",$pag)." == \"".mex("usa",$pag)."\") \$stile_data = \"usa\";
 if (strtoupper(\$".mex("var_anteponi_nome_valuta",$pag).") == \"$SI\") \$anteponi_nome_valuta = \"SI\";
@@ -1835,8 +1886,6 @@ else \$mostra_richiesta_via_mail = \"NO\";
 \$indirizzo_email = \$".mex("var_indirizzo_email",$pag).";
 if (strtoupper(\$".mex("var_manda_copia_richiesta_email",$pag).") == \"$SI\") \$manda_copia_richiesta_email = \"SI\";
 else \$manda_copia_richiesta_email = \"NO\";
-if (strtoupper(\$".mex("var_maschera_email",$pag).") == \"$SI\") \$maschera_envelope = \"SI\";
-else \$maschera_envelope = \"NO\";
 if (strtoupper(\$".mex("var_mostra_giorni_pieni",$pag).") == \"$SI\") \$mostra_giorni_pieni = \"SI\";
 else \$mostra_giorni_pieni = \"NO\";
 if (strtoupper(\$".mex("var_mostra_bottone_paypal",$pag).") == \"$SI\") \$mostra_bottone_paypal = \"SI\";
@@ -2052,6 +2101,11 @@ includi_file("./includes/funzioni.php",$file);
 includi_file("./includes/liberasettimane.php",$file);
 includi_file("./includes/funzioni_tariffe.php",$file);
 includi_file("./includes/funzioni_costi_agg.php",$file);
+fwrite($file,"
+#use PHPMailer\PHPMailer\PHPMailer;
+#use PHPMailer\PHPMailer\SMTP;
+");
+includi_file("./includes/funzioni_email.php",$file);
 if ($mostra_quadro_disp == "SI" or $mostra_quadro_disp == "SI_NO") includi_file("./includes/funzioni_quadro_disp.php",$file);
 includi_file("./includes/funzioni_clienti.php",$file);
 includi_file("./includes/funzioni_dati_relutenti.php",$file);
@@ -2096,9 +2150,11 @@ if (empty(\$campi_esist[\$campi_pers_corr[\$num2]])) {
 if (numlin_query(\$ut_lis) != 1) \$ut_lis = 1;
 else \$ut_lis = risul_query(\$ut_lis,0,'idutenti');
 \$dati_cat_pers = dati_cat_pers(\$ut_lis,\$PHPR_TAB_PRE.\"personalizza\",\$lingua_modello,\"v\",0);
+\$dati_allegato = array('num' => 0);
 \$commento_personalizzato_ = \"commento_personalizzato_\";
 \$campo_personalizzato_ = \"campo_personalizzato_\";
 \$num_persone_tipo_ = \"num_persone_tipo_\";
+\$allegato_ = \"allegato\";
 ");
 includi_file("./includes/variabili_contratto.php",$file);
 includi_file("./includes/funzioni_contratti.php",$file);

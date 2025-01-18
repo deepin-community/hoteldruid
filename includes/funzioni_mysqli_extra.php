@@ -32,7 +32,7 @@ $risul[-2] = -1;
 $risul[-3] = $query;
 if (!$risul[-1] and $silenzio != "totale") {
 global $PHPR_TAB_PRE;
-if (!$silenzio) echo "<br>ERROR IN: ".str_replace(" ".$PHPR_TAB_PRE," ",$query)." <br>".mysqli_errno($link_mysqli).": ".mysqli_error($link_mysqli)."<br>";
+if (!$silenzio) echo "<br>ERROR IN: ".htmlspecialchars(str_replace(" ".$PHPR_TAB_PRE," ",$query))." <br>".htmlspecialchars(mysqli_errno($link_mysqli).": ".mysqli_error($link_mysqli))."<br>";
 error_log("IN ".$_SERVER['PHP_SELF']." MYSQL ERROR: ".substr(str_replace(" ".$PHPR_TAB_PRE," ",$query),0,25)."... - ".mysqli_errno($link_mysqli).": ".mysqli_error($link_mysqli));
 } # fine if (!$risul and $silenzio != "totale")
 

@@ -44,7 +44,6 @@ border-radius: 2px; }
 
 input.rbutton,select.rselect { font-size:70%; padding: 0; }
 
-a:link { user-select: none; -moz-user-select: none; -webkit-user-select: none; -ms-user-select: none; }
 a:link, a:visited { color: #26316a; text-decoration: underline; }
 a:hover { color: #26316a; text-decoration: none; }
 a.noho:hover { color: black; }
@@ -98,6 +97,7 @@ span.long_select select { width: 100%; }
 
 .bspacer { height: 6px; }
 .linhbox { line-height: 1.5; }
+.linhbox2 { line-height: 1.8; }
 .wsnowrap, .wsnw { white-space: nowrap; }
 .smlscr { display: none; }
 
@@ -105,12 +105,14 @@ span.long_select select { width: 100%; }
 .colblu { color: blue; }
 .colinfo { color: blue; }
 .colwarn { color: #F88017; }
+.infobox { border: 4px solid blue; padding: 8px; }
 
 .bcolunconf { background-color: #CC0000; }
 .bcolconf { background-color: #FF9900; }
 .bcoldeposit { background-color: #FFEE22; }
 .bcolpaid { background-color: #99CCD4; }
 .bcoldeleted, .bcoldeleted .t1left { background-color: #999999; }
+.bcolclosed { background-color: #777777; }
 
 
 .txtcenter { text-align: center; }

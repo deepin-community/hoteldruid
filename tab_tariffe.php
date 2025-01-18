@@ -2,7 +2,7 @@
 
 ##################################################################################
 #    HOTELDRUID
-#    Copyright (C) 2001-2021 by Marco Maria Francesco De Santis (marco@digitaldruid.net)
+#    Copyright (C) 2001-2023 by Marco Maria Francesco De Santis (marco@digitaldruid.net)
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published by
@@ -40,14 +40,37 @@ $var_pag[12] = 'solo_sel';
 $var_pag[13] = 'numtariffa1';
 $var_pag[14] = 'tariffa_sel1';
 $var_pag[15] = 'cambia_mostra_tab';
-$n_var_pag = 16;
+$var_pag[16] = 'n_tar_passa';
+$var_pag[17] = 'azione';
+$var_pag[18] = 'aggurlfoto';
+$var_pag[19] = 'n_urlfoto';
+$var_pag[20] = 'MAX_FILE_SIZE';
+$var_pag[21] = 'cancurlfoto';
+$var_pag[22] = 'numfoto';
+$var_pag[23] = 'commentofoto';
+$var_pag[24] = 'n_commento_ita';
+$var_pag[25] = 'modificadescr';
+$var_pag[26] = 'n_descrizione_ita';
+$var_pag[27] = 'n_per_passa';
+$n_var_pag = 28;
 $num2 = 0;
 if (isset($_POST['num_tariffe_mostra'])) $num2 = (int) $_POST['num_tariffe_mostra'];
 elseif (isset($_GET['num_tariffe_mostra'])) $num2 = (int) $_GET['num_tariffe_mostra'];
+$num3 = 0;
+if (isset($_POST['n_tar_passa'])) $num3 = (int) $_POST['n_tar_passa'];
+elseif (isset($_GET['n_tar_passa'])) $num3 = (int) $_GET['n_tar_passa'];
+if ($num3 > $num2) $num2 = $num3;
 for ($num1 = 2 ; $num1 <= $num2 ; $num1++) {
 $var_pag[$n_var_pag++] = "numtariffa$num1";
 $var_pag[$n_var_pag++] = "tariffa_sel$num1";
 } # fine for $num1
+$num2 = opendir("./includes/lang/");
+while ($num1 = readdir($num2)) {
+if ($num1 != "." and $num1 != ".." and strlen($num1) <= 3 and preg_replace("/[a-z]/","",$num1) == "") {
+$var_pag[$n_var_pag++] = "n_descrizione_$num1";
+$var_pag[$n_var_pag++] = "n_commento_$num1";
+} # fine if ($num1 != "." and $num1 != ".." and...
+} # fine while ($num1 = readdir($num2))
 
 include("./costanti.php");
 include(C_DATI_PATH."/dati_connessione.php");
@@ -291,29 +314,29 @@ if (!empty($azione)) {
 $mostra_tab_tariffe = "NO";
 
 
-if ($modificadescr and $priv_mod_tariffe != "n") {
+if (!empty($modificadescr) and $priv_mod_tariffe != "n") {
 $tabelle_lock = array($tabledescrizioni);
 $tabelle_lock = lock_tabelle($tabelle_lock);
-if (strcmp($n_descrizione_ita,"")) {
+if (strcmp((string) $n_descrizione_ita,"")) {
 if (@get_magic_quotes_gpc()) $n_descrizione_ita = stripslashes($n_descrizione_ita);
 $n_descrizione_ita = aggslashdb(htmlspecialchars($n_descrizione_ita));
 $descr_esistente = esegui_query("select testo from $tabledescrizioni where nome = 'tariffa".$numtariffa1."' and tipo = 'tardescr' and lingua = 'ita' and numero = '1' ");
 if (numlin_query($descr_esistente)) esegui_query("update $tabledescrizioni set testo = '$n_descrizione_ita' where nome = 'tariffa".$numtariffa1."' and tipo = 'tardescr' and lingua = 'ita' and numero = '1' ");
 else esegui_query("insert into $tabledescrizioni (nome,tipo,lingua,numero,testo) values ('tariffa".$numtariffa1."','tardescr','ita','1','$n_descrizione_ita') ");
-} # fine if (strcmp($n_descrizione_ita,""))
+} # fine if (strcmp((string) $n_descrizione_ita,""))
 else esegui_query("delete from $tabledescrizioni where nome = 'tariffa".$numtariffa1."' and tipo = 'tardescr' and lingua = 'ita' and numero = '1' ");
 $lang_dir = opendir("./includes/lang/");
 include(C_DATI_PATH."/lingua.php");
 while ($ini_lingua = readdir($lang_dir)) {
 if ($ini_lingua != "." && $ini_lingua != ".." and strlen($ini_lingua) <= 3 and preg_replace("/[a-z]/","",$ini_lingua) == "") {
 $n_descrizione = ${"n_descrizione_".$ini_lingua};
-if (strcmp($n_descrizione,"")) {
+if (strcmp((string) $n_descrizione,"")) {
 if (@get_magic_quotes_gpc()) $n_descrizione = stripslashes($n_descrizione);
 $n_descrizione = aggslashdb(htmlspecialchars($n_descrizione));
 $descr_esistente = esegui_query("select testo from $tabledescrizioni where nome = 'tariffa".$numtariffa1."' and tipo = 'tardescr' and lingua = '$ini_lingua' and numero = '1' ");
 if (numlin_query($descr_esistente)) esegui_query("update $tabledescrizioni set testo = '$n_descrizione' where nome = 'tariffa".$numtariffa1."' and tipo = 'tardescr' and lingua = '$ini_lingua' and numero = '1' ");
 else esegui_query("insert into $tabledescrizioni (nome,tipo,lingua,numero,testo) values ('tariffa".$numtariffa1."','tardescr','$ini_lingua','1','$n_descrizione') ");
-} # fine if (strcmp($n_descrizione,""))
+} # fine if (strcmp((string) $n_descrizione,""))
 else esegui_query("delete from $tabledescrizioni where nome = 'tariffa".$numtariffa1."' and tipo = 'tardescr' and lingua = '$ini_lingua' and numero = '1' ");
 } # fine if ($file != "." && $file != ".." and...
 } # fine while ($file = readdir($lang_dig))
@@ -321,13 +344,14 @@ closedir($lang_dir);
 echo "<br>".ucfirst(mex("descrizione della tariffa",$pag))." ".mex("aggiornata",$pag).".<br>";
 unlock_tabelle($tabelle_lock);
 $dest = "#descrcocont";
-} # fine if ($modificadescr and $priv_mod_tariffe != "n")
+} # fine if (!empty($modificadescr) and $priv_mod_tariffe != "n")
 
 
-if ($aggurlfoto and $priv_mod_tariffe != "n" and (!defined('C_RESTRIZIONI_DEMO_ADMIN') or C_RESTRIZIONI_DEMO_ADMIN != "SI")) {
+if (!empty($aggurlfoto) and $priv_mod_tariffe != "n" and (!defined('C_RESTRIZIONI_DEMO_ADMIN') or C_RESTRIZIONI_DEMO_ADMIN != "SI")) {
 $dest = "#aggfoto";
+$errore = "";
 if (@get_magic_quotes_gpc()) $n_urlfoto = stripslashes($n_urlfoto);
-$lowurl = strtolower($n_urlfoto);
+$lowurl = strtolower(fixstr($n_urlfoto));
 if (substr($lowurl,-4) != ".jpg" and substr($lowurl,-5) != ".jpeg" and substr($lowurl,-4) != ".gif" and substr($lowurl,-4) != ".png" and substr($lowurl,-5) != ".webp") $errore = "SI";
 if (str_replace("<","",$n_urlfoto) != $n_urlfoto or str_replace(">","",$n_urlfoto) != $n_urlfoto or str_replace("\"","",$n_urlfoto) != $n_urlfoto) $errore = "SI";
 if ($errore != "SI") {
@@ -344,35 +368,35 @@ unlock_tabelle($tabelle_lock);
 $dest = "#ultimafoto";
 } # fine if ($errore != "SI")
 else echo "".ucfirst(mex("l'url della foto è sbagliata",$pag)).".<br>";
-} # fine if ($aggurlfoto and $priv_mod_tariffe != "n" and...
+} # fine if (!empty($aggurlfoto) and $priv_mod_tariffe != "n" and...
 
 
-if ($commentofoto and $priv_mod_tariffe != "n") {
+if (!empty($commentofoto) and $priv_mod_tariffe != "n") {
 if ($numfoto and controlla_num_pos($numfoto) == "SI") {
 $tabelle_lock = array($tabledescrizioni);
 $tabelle_lock = lock_tabelle($tabelle_lock);
 $foto_esistente = esegui_query("select testo from $tabledescrizioni where nome = 'tariffa".$numtariffa1."' and tipo = 'tarfoto' and numero = '$numfoto' ");
 if (numlin_query($foto_esistente)) {
-if (strcmp($n_commento_ita,"")) {
+if (strcmp((string) $n_commento_ita,"")) {
 if (@get_magic_quotes_gpc()) $n_commento_ita = stripslashes($n_commento_ita);
 $n_commento_ita = aggslashdb(htmlspecialchars($n_commento_ita));
 $comm_esistente = esegui_query("select testo from $tabledescrizioni where nome = 'tariffa".$numtariffa1."' and tipo = 'tarcommfoto' and lingua = 'ita' and numero = '$numfoto' ");
 if (numlin_query($comm_esistente)) esegui_query("update $tabledescrizioni set testo = '$n_commento_ita' where nome = 'tariffa".$numtariffa1."' and tipo = 'tarcommfoto' and lingua = 'ita' and numero = '$numfoto' ");
 else esegui_query("insert into $tabledescrizioni (nome,tipo,lingua,numero,testo) values ('tariffa".$numtariffa1."','tarcommfoto','ita','$numfoto','$n_commento_ita') ");
-} # fine if (strcmp($n_commento_ita,""))
+} # fine if (strcmp((string) $n_commento_ita,""))
 else esegui_query("delete from $tabledescrizioni where nome = 'tariffa".$numtariffa1."' and tipo = 'tarcommfoto' and lingua = 'ita' and numero = '$numfoto' ");
 $lang_dir = opendir("./includes/lang/");
 include(C_DATI_PATH."/lingua.php");
 while ($ini_lingua = readdir($lang_dir)) {
 if ($ini_lingua != "." && $ini_lingua != ".." and strlen($ini_lingua) <= 3 and preg_replace("/[a-z]/","",$ini_lingua) == "") {
 $n_commento = ${"n_commento_".$ini_lingua};
-if (strcmp($n_commento,"")) {
+if (strcmp((string) $n_commento,"")) {
 if (@get_magic_quotes_gpc()) $n_commento = stripslashes($n_commento);
 $n_commento = aggslashdb(htmlspecialchars($n_commento));
 $comm_esistente = esegui_query("select testo from $tabledescrizioni where nome = 'tariffa".$numtariffa1."' and tipo = 'tarcommfoto' and lingua = '$ini_lingua' and numero = '$numfoto' ");
 if (numlin_query($comm_esistente)) esegui_query("update $tabledescrizioni set testo = '$n_commento' where nome = 'tariffa".$numtariffa1."' and tipo = 'tarcommfoto' and lingua = '$ini_lingua' and numero = '$numfoto' ");
 else esegui_query("insert into $tabledescrizioni (nome,tipo,lingua,numero,testo) values ('tariffa".$numtariffa1."','tarcommfoto','$ini_lingua','$numfoto','$n_commento') ");
-} # fine if (strcmp($n_commento,""))
+} # fine if (strcmp((string) $n_commento,""))
 else esegui_query("delete from $tabledescrizioni where nome = 'tariffa".$numtariffa1."' and tipo = 'tarcommfoto' and lingua = '$ini_lingua' and numero = '$numfoto' ");
 } # fine if ($file != "." && $file != ".." and...
 } # fine while ($file = readdir($lang_dig))
@@ -382,16 +406,16 @@ echo "<br>".ucfirst(mex("commento della foto",$pag))." $numfoto ".mex("aggiornat
 unlock_tabelle($tabelle_lock);
 } # fine if ($numfoto and controlla_num_pos($numfoto) == "SI") 
 $dest = "#fotocont";
-} # fine if ($commentofoto and $priv_mod_tariffe != "n")
+} # fine if (!empty($commentofoto) and $priv_mod_tariffe != "n")
 
 
-if ($cancurlfoto and $priv_mod_tariffe != "n") {
+if (!empty($cancurlfoto) and $priv_mod_tariffe != "n") {
 if ($numfoto and controlla_num_pos($numfoto) == "SI") {
 esegui_query("delete from $tabledescrizioni where nome = 'tariffa".$numtariffa1."' and (tipo = 'tarfoto' or tipo = 'tarcommfoto') and numero = '$numfoto' ");
 echo "".ucfirst(mex("foto eliminata",$pag)).".<br>";
 } # fine if ($numfoto and controlla_num_pos($numfoto) == "SI") 
 $dest = "#fotocont";
-} # fine if ($cancurlfoto and $priv_mod_tariffe != "n")
+} # fine if (!empty($cancurlfoto) and $priv_mod_tariffe != "n")
 
 
 echo "<br><div style=\"text-align: center;\">
@@ -436,7 +460,7 @@ $max_periodo = risul_query($periodi,(numlin_query($periodi) - 1),'idperiodi');
 if ($mostra_disp == "s") {
 unset($limiti_var);
 unset($profondita);
-unset($dati_app);
+$dati_app = array();
 unset($app_prenota_id);
 unset($app_orig_prenota_id);
 unset($inizio_prenota_id);
@@ -476,20 +500,26 @@ $app_orig_prenota_id = $app_prenota_id;
 } # fine if ($info_periodi_ag['numero'])
 } # fine if ($num_app_agenzia != 0)
 } # fine if ($mostra_disp == "s")
+else {
+$idapp = esegui_query("select idappartamenti from $tableappartamenti order by priorita ");
+$dati_app['totapp'] = numlin_query($idapp);
+$dati_app['lista'] = ",";
+for ($num1 = 0 ; $num1 < $dati_app['totapp'] ; $num1++) $dati_app['lista'] .= risul_query($idapp,$num1,'idappartamenti').",";
+} # fine if ($mostra_disp == "s")
 
 
 $app_regola2_orig = array();
 for ($num1 = 1 ; $num1 <= $num_tariffe_mostra ; $num1++) {
 $tariffa[$num1] = "tariffa".${"numtariffa".$num1};
 $nometariffa[$num1] = $dati_tariffe[$tariffa[$num1]]['nome'];
-if (!strcmp($nometariffa[$num1],"")) {
+if (!strcmp((string) $nometariffa[$num1],"")) {
 $nometariffa_vedi[$num1] = mex("tariffa",$pag).${"numtariffa".$num1};
 $nometariffa[$num1] = $nometariffa_vedi[$num1];
-} # fine if (!strcmp($nometariffa[$num1],""))
+} # fine if (!strcmp((string) $nometariffa[$num1],""))
 else {
 if (num_caratteri_testo($nometariffa[$num1]) > 10) $nometariffa_vedi[$num1] = "<small><small>".$nometariffa[$num1]."</small></small>";
 else $nometariffa_vedi[$num1] = $nometariffa[$num1];
-} # fine else if (!strcmp($nometariffa[$num1],""))
+} # fine else if (!strcmp((string) $nometariffa[$num1],""))
 $nome_tariffa[${"numtariffa".$num1}] = $tariffa[$num1];
 if (($priv_vedi_tab_periodi == "s" and $priv_vedi_tab_regole == "s" and $priv_vedi_tab_mesi == "s") or $attiva_tariffe_consentite == "n" or $tariffe_consentite_vett[${"numtariffa".$num1}] == "SI") {
 if (empty($dati_r2[$tariffa[$num1]])) $app_regola2_orig[${"numtariffa".$num1}] = substr($dati_app['lista'],1,-1);
@@ -539,7 +569,7 @@ $permanenza_massima = array();
 $pmax_attiva = 0;
 for ($num1 = 1 ; $num1 <= $num_tariffe_mostra ; $num1++) {
 for ($num2 = 0 ; $num2 < $dati_ca['num'] ; $num2++) {
-if ($dati_ca[$num2]["tipo_associa_".$tariffa[$num1]] == "s" or $dati_ca[$num2]["tipo_associa_".$tariffa[$num1]] == "r") {
+if (isset($dati_ca[$num2]["tipo_associa_".$tariffa[$num1]]) and ($dati_ca[$num2]["tipo_associa_".$tariffa[$num1]] == "s" or $dati_ca[$num2]["tipo_associa_".$tariffa[$num1]] == "r")) {
 if (substr($dati_ca[$num2][$tariffa[$num1]],0,1) != "s") {
 $p_min = 0;
 $p_max = 0;
@@ -567,13 +597,13 @@ $fine_for[$num_for] = $dati_ca[$num2]['sett_periodipermessi_fine'][$num3];
 } # fine if ($dati_ca[$num2]["tipo_associa_".$tariffa[$num1]] == "r" and...
 for ($num3 = 1 ; $num3 <= $num_for ; $num3++) {
 for ($num4 = $ini_for[$num3] ; $num4 <= $fine_for[$num3] ; $num4++) {
-if ($p_min and (!$permanenza_minima[$tariffa[$num1]][$num4] or $p_min > $permanenza_minima[$tariffa[$num1]][$num4])) $permanenza_minima[$tariffa[$num1]][$num4] = $p_min;
-if ($p_max and (!$permanenza_massima[$tariffa[$num1]][$num4] or $p_max < $permanenza_massima[$tariffa[$num1]][$num4])) $permanenza_massima[$tariffa[$num1]][$num4] = $p_max;
+if ($p_min and (empty($permanenza_minima[$tariffa[$num1]][$num4]) or $p_min > $permanenza_minima[$tariffa[$num1]][$num4])) $permanenza_minima[$tariffa[$num1]][$num4] = $p_min;
+if ($p_max and (empty($permanenza_massima[$tariffa[$num1]][$num4]) or $p_max < $permanenza_massima[$tariffa[$num1]][$num4])) $permanenza_massima[$tariffa[$num1]][$num4] = $p_max;
 } # fine for $num4
 } # fine for $num3
 if ($p_max > 0) $pmax_attiva = 1;
 } # fine if (substr($dati_ca[$num2][$tariffa[$num1]],0,1) != "s")
-} # fine if ($dati_ca[$num2]["tipo_associa_".$tariffa[$num1]] == "s" or...
+} # fine if (isset($dati_ca[$num2]["tipo_associa_".$tariffa[$num1]]) and ($dati_ca[$num2]["tipo_associa_".$tariffa[$num1]] == "s" or...
 } # fine for $num2
 } # fine for $num1
 } # fine if ($mostra_pmm == "s")
@@ -596,7 +626,7 @@ $sett_in_per = 0;
 $p_pers = mex("p","visualizza_tabelle.php");
 $p_app = array();
 
-while ($sett_in_per == 0 or ($datafine <= $datafine_periodi and !$date_menu[$datafine] and !$mos_per_sing)) {
+while ($sett_in_per == 0 or ($datafine <= $datafine_periodi and empty($date_menu[$datafine]) and empty($mos_per_sing))) {
 $sett_in_per++;
 $datafine = risul_query($periodi,($sett_in_per - 1),'datafine');
 $idper_corr = risul_query($periodi,($sett_in_per - 1),'idperiodi');
@@ -610,7 +640,7 @@ $p_app[${"numtariffa".$num1}] = "*".$dati_r2['napp'][$tariffa[$num1]];
 if (empty($form_tabella)) $tar_corr = (string) ((double) $tar_corr * (double) $dati_r2['napp'][$tariffa[$num1]]);
 #$tarp_corr = (string) ((double) $tarp_corr * (double) $dati_r2['napp'][$tariffa[$num1]]);
 } # fine if (isset($dati_r2['napp'][$tariffa[$num1]]) and $dati_r2['napp'][$tariffa[$num1]] > 1)
-if ($sett_in_per == 1 or (!strcmp($tar_corr,"") and !strcmp($tarp_corr,""))) {
+if ($sett_in_per == 1 or (!strcmp((string) $tar_corr,"") and !strcmp((string) $tarp_corr,""))) {
 if ($sett_in_per == 1) {
 $chiusa_colonna_periodo[$num1][0] = "";
 $importata_colonna_periodo[$num1][0] = "";
@@ -620,13 +650,13 @@ if ($mostra_pmm == "s") $pmassima_colonna_periodo[$num1][0] = fixset($permanenza
 } # fine if ($sett_in_per == 1)
 $tariffa_colonna_periodo[$num1][0] = $tar_corr;
 $tariffap_colonna_periodo[$num1][0] = $tarp_corr;
-} # fine if ($sett_in_per == 1 or (!strcmp($tar_corr,"") and !strcmp($tarp_corr,"")))
-elseif (strcmp($tariffa_colonna_periodo[$num1][0],"") or strcmp($tariffap_colonna_periodo[$num1][0],"")) {
-if (!strcmp($tariffa_colonna_periodo[$num1][0],"")) $tariffa_colonna_periodo[$num1][0] = 0;
-if (!strcmp($tariffap_colonna_periodo[$num1][0],"")) $tariffap_colonna_periodo[$num1][0] = 0;
+} # fine if ($sett_in_per == 1 or (!strcmp((string) $tar_corr,"") and !strcmp((string) $tarp_corr,"")))
+elseif (strcmp((string) $tariffa_colonna_periodo[$num1][0],"") or strcmp((string) $tariffap_colonna_periodo[$num1][0],"")) {
+if (!strcmp((string) $tariffa_colonna_periodo[$num1][0],"")) $tariffa_colonna_periodo[$num1][0] = 0;
+if (!strcmp((string) $tariffap_colonna_periodo[$num1][0],"")) $tariffap_colonna_periodo[$num1][0] = 0;
 $tariffa_colonna_periodo[$num1][0] += (double) $tar_corr;
 $tariffap_colonna_periodo[$num1][0] += (double) $tarp_corr;
-} # fine elseif (strcmp($tariffa_colonna_periodo[$num1][0],"") or strcmp($tariffap_colonna_periodo[$num1][0],""))
+} # fine elseif (strcmp((string) $tariffa_colonna_periodo[$num1][0],"") or strcmp((string) $tariffap_colonna_periodo[$num1][0],""))
 if (!empty($dati_tariffe[$tariffa[$num1]]['chiusa'][$idper_corr])) $chiusa_colonna_periodo[$num1][0] = 1;
 $tar_imp = periodo_importato_tar($tariffa[$num1],$idper_corr,$dati_tariffe);
 if (!$importata_colonna_periodo[$num1][0]) $importata_colonna_periodo[$num1][0] = $tar_imp;
@@ -646,7 +676,7 @@ for ($num1 = $sett_in_per_col[0] ; $num1 < $num_periodi ; $num1++) {
 $datainizio1 = risul_query($periodi,$num1,'datainizio');
 $periodo1 = risul_query($periodi,$num1,'idperiodi');
 $sett_in_per = 0;
-while ($sett_in_per == 0 or ($datafine <= $datafine_periodi and !$date_menu[$datafine]) and !$mos_per_sing) {
+while ($sett_in_per == 0 or ($datafine <= $datafine_periodi and empty($date_menu[$datafine])) and empty($mos_per_sing)) {
 $sett_in_per++;
 if ($sett_in_per > 1) $num1++;
 $datafine = risul_query($periodi,$num1,'datafine');
@@ -660,7 +690,7 @@ if (isset($dati_r2['napp'][$tariffa[$num2]]) and $dati_r2['napp'][$tariffa[$num2
 if (empty($form_tabella)) $tar_corr = (string) ((double) $tar_corr * (double) $dati_r2['napp'][$tariffa[$num2]]);
 #$tarp_corr = (string) ((double) $tarp_corr * (double) $dati_r2['napp'][$tariffa[$num2]]);
 } # fine if (isset($dati_r2['napp'][$tariffa[$num2]]) and $dati_r2['napp'][$tariffa[$num2]] > 1)
-if ($sett_in_per == 1 or (!strcmp($tar_corr,"") and !strcmp($tarp_corr,""))) {
+if ($sett_in_per == 1 or (!strcmp((string) $tar_corr,"") and !strcmp((string) $tarp_corr,""))) {
 ${$tariffa[$num2]} = $tar_corr;
 ${$tariffa[$num2]."p"} = $tarp_corr;
 if ($sett_in_per == 1) {
@@ -670,20 +700,20 @@ if ($mostra_disp == "s") ${$tariffa[$num2]."l"} = $tab_liberi[$tariffa[$num2]][$
 if ($mostra_pmm == "s") ${$tariffa[$num2]."pmin"} = fixset($permanenza_minima[$tariffa[$num2]][$idper_corr]);
 if ($mostra_pmm == "s") ${$tariffa[$num2]."pmax"} = fixset($permanenza_massima[$tariffa[$num2]][$idper_corr]);
 } # fine if ($sett_in_per == 1)
-} # fine if ($sett_in_per == 1 or (!strcmp($tar_corr,"") and !strcmp($tarp_corr,"")))
-elseif (strcmp(${$tariffa[$num2]},"") or strcmp(${$tariffa[$num2]."p"},"")) {
-if (!strcmp(${$tariffa[$num2]},"")) ${$tariffa[$num2]} = 0;
-if (!strcmp(${$tariffa[$num2]."p"},"")) ${$tariffa[$num2]."p"} = 0;
+} # fine if ($sett_in_per == 1 or (!strcmp((string) $tar_corr,"") and !strcmp((string) $tarp_corr,"")))
+elseif (strcmp((string) ${$tariffa[$num2]},"") or strcmp((string) ${$tariffa[$num2]."p"},"")) {
+if (!strcmp((string) ${$tariffa[$num2]},"")) ${$tariffa[$num2]} = 0;
+if (!strcmp((string) ${$tariffa[$num2]."p"},"")) ${$tariffa[$num2]."p"} = 0;
 ${$tariffa[$num2]} += (double) $tar_corr;
 ${$tariffa[$num2]."p"} += (double) $tarp_corr;
-} # fine elseif (strcmp(${$tariffa[$num2]},"") or strcmp(${$tariffa[$num2]."p"},""))
+} # fine elseif (strcmp((string) ${$tariffa[$num2]},"") or strcmp((string) ${$tariffa[$num2]."p"},""))
 if (!empty($dati_tariffe[$tariffa[$num2]]['chiusa'][$idper_corr])) ${$tariffa[$num2]."c"} = 1;
 $tar_imp = periodo_importato_tar($tariffa[$num2],$idper_corr,$dati_tariffe);
 if (!${$tariffa[$num2]."i"}) ${$tariffa[$num2]."i"} = $tar_imp;
 elseif ($tar_imp and ${$tariffa[$num2]."i"} != $tar_imp) ${$tariffa[$num2]."i"} = -1;
 if ($mostra_disp == "s" and $tab_liberi[$tariffa[$num2]][$idper_corr] < ${$tariffa[$num2]."l"}) ${$tariffa[$num2]."l"} = $tab_liberi[$tariffa[$num2]][$idper_corr];
-if ($mostra_pmm == "s" and $permanenza_minima[$tariffa[$num2]][$idper_corr] > ${$tariffa[$num2]."pmin"}) ${$tariffa[$num2]."pmin"} = $permanenza_minima[$tariffa[$num2]][$idper_corr];
-if ($mostra_pmm == "s" and $permanenza_massima[$tariffa[$num2]][$idper_corr] > ${$tariffa[$num2]."pmax"}) ${$tariffa[$num2]."pmax"} = $permanenza_massima[$tariffa[$num2]][$idper_corr];
+if ($mostra_pmm == "s" and fixset($permanenza_minima[$tariffa[$num2]][$idper_corr]) > ${$tariffa[$num2]."pmin"}) ${$tariffa[$num2]."pmin"} = $permanenza_minima[$tariffa[$num2]][$idper_corr];
+if ($mostra_pmm == "s" and fixset($permanenza_massima[$tariffa[$num2]][$idper_corr]) > ${$tariffa[$num2]."pmax"}) ${$tariffa[$num2]."pmax"} = $permanenza_massima[$tariffa[$num2]][$idper_corr];
 } # fine if ($priv_vedi_tab_periodi == "s" or $attiva_tariffe_consentite == "n" or...
 } # fine for $num2
 } # fine while ($sett_in_per == 0 or...
@@ -763,11 +793,13 @@ echo "<br><div style=\"text-align: center; font-size: 80%;\">
 <input type=\"hidden\" name=\"anno\" value=\"$anno\">
 <input type=\"hidden\" name=\"id_sessione\" value=\"$id_sessione\">
 <input type=\"hidden\" name=\"cambia_mostra_tab\" value=\"1\">
-<input type=\"hidden\" name=\"mos_per_sing\" value=\"".htmlspecialchars(fixset($mos_per_sing))."\">
-<input type=\"hidden\" name=\"form_tabella\" value=\"".htmlspecialchars(fixset($form_tabella))."\">
+<input type=\"hidden\" name=\"mos_per_sing\" value=\"".htmlspecialchars(fixstr($mos_per_sing))."\">
+<input type=\"hidden\" name=\"form_tabella\" value=\"".htmlspecialchars(fixstr($form_tabella))."\">
 <input type=\"hidden\" name=\"num_tariffe_mostra\" value=\"$num_tariffe_mostra\">";
 $lista_tariffe_sel = "";
+$num_tar_max = 0;
 for ($num1 = 1 ; $num1 <= $num_tariffe_mostra ; $num1++) {
+if (${"numtariffa".$num1} > $num_tar_max) $num_tar_max = ${"numtariffa".$num1};
 echo "<input type=\"hidden\" name=\"numtariffa$num1\" value=\"".${"numtariffa".$num1}."\">";
 $lista_tariffe_sel .= "&amp;numtariffa$num1=".${"numtariffa".$num1}."";
 } # fine for $num1
@@ -793,12 +825,14 @@ echo "<form id=\"f_tpt\" accept-charset=\"utf-8\" method=\"post\" action=\"$azio
 <input type=\"hidden\" name=\"mostra_disp\" value=\"".htmlspecialchars($mostra_disp)."\">
 <input type=\"hidden\" name=\"mostra_pmm\" value=\"".htmlspecialchars($mostra_pmm)."\">
 <input type=\"hidden\" name=\"raggruppa_date\" value=\"".htmlspecialchars($raggruppa_date)."\">
-<input type=\"hidden\" name=\"mos_per_sing\" value=\"".htmlspecialchars($mos_per_sing)."\">
+<input type=\"hidden\" name=\"mos_per_sing\" value=\"".htmlspecialchars(fixstr($mos_per_sing))."\">
 <input type=\"hidden\" name=\"lista_periodi\" value=\"".substr($lista_periodi,0,-1)."\">
 <input type=\"hidden\" name=\"lista_sett_in_per\" value=\"".substr($lista_sett_in_per,0,-1)."\">
 <input type=\"hidden\" name=\"tariffe_sel\" value=\"SI\">
 <input type=\"hidden\" name=\"origine\" value=\"tab_tariffe.php\">
-<input type=\"hidden\" name=\"num_tariffe_mostra\" value=\"$num_tariffe_mostra\">";
+<input type=\"hidden\" name=\"num_tariffe_mostra\" value=\"$num_tariffe_mostra\">
+<input type=\"hidden\" name=\"n_tar_passa\" value=\"$num_tar_max\">
+<input type=\"hidden\" name=\"n_per_passa\" value=\"$num_periodi\">";
 if ($form_tabella) echo "<input type=\"hidden\" name=\"ins_form_tabella\" value=\"SI\">";
 else echo "<input type=\"hidden\" name=\"solo_sel\" value=\"1\">";
 $tab_modificabile = 0;
@@ -835,7 +869,7 @@ if ($sett_in_per_col[$num1] > 1) echo " - ".substr($fine_colonna_periodo[$num1],
 } # fine if ($raggruppa_date != "s")
 else echo formatta_data($ini_colonna_periodo[$num1],$stile_data)."<br>---<br>".formatta_data($fine_colonna_periodo[$num1],$stile_data);
 if ($sett_in_per_col[$num1] > 1) echo "<br><small>".str_replace(" ","&nbsp;","(".$sett_in_per_col[$num1]." ".mex($parola_settimane,$pag).")")."</small><a
- href=\"./$pag?anno=$anno&amp;id_sessione=$id_sessione&amp;mostra_disp=".htmlspecialchars($mostra_disp)."&amp;mostra_pmm=".htmlspecialchars($mostra_pmm)."&amp;raggruppa_date=".htmlspecialchars($raggruppa_date)."&amp;mos_per_sing=1&amp;form_tabella=".htmlspecialchars($form_tabella)."$lista_tariffe_sel\" style=\"text-decoration: none; color: #777777;\" title=\"".mex("mostra prezzi $parola_settimanali",'visualizza_tabelle.php')."\"><b>&prime;</b></a>";
+ href=\"./$pag?anno=$anno&amp;id_sessione=$id_sessione&amp;mostra_disp=".htmlspecialchars(fixstr($mostra_disp))."&amp;mostra_pmm=".htmlspecialchars(fixstr($mostra_pmm))."&amp;raggruppa_date=".htmlspecialchars(fixstr($raggruppa_date))."&amp;mos_per_sing=1&amp;form_tabella=".htmlspecialchars(fixstr($form_tabella))."$lista_tariffe_sel\" style=\"text-decoration: none; color: #777777;\" title=\"".mex("mostra prezzi $parola_settimanali",'visualizza_tabelle.php')."\"><b>&prime;</b></a>";
 echo "</small></td>";
 } # fine if (!empty($mostra_data[$num1]))
 } # fine for $num1
@@ -853,15 +887,15 @@ $tariffa_vedi = "<input type=\"text\" name=\"per".fixset($per_colonna_periodo[$n
 if ($dati_tariffe[$tariffa[$num1]]['moltiplica'] == "p") $tariffa_vedi .= " + <input type=\"text\" name=\"per".$per_colonna_periodo[$num2]."tar".${"numtariffa".$num1}.""."p\" value=\"".$tariffap_colonna_periodo[$num1][$num2]."\" size=\"6\">*$p_pers";
 } # fine if (!empty($form_tabella) and ($attiva_tariffe_consentite_ut == "n" or $tariffe_consentite_vett_ut[${"numtariffa".$num1}] == "SI") and...
 else {
-if (!$tariffa_colonna_periodo[$num1][$num2] and !$tariffap_colonna_periodo[$num1][$num2]) $tariffa_vedi = "&nbsp;";
+if (!strcmp((string) $tariffa_colonna_periodo[$num1][$num2],"") and !$tariffap_colonna_periodo[$num1][$num2]) $tariffa_vedi = "&nbsp;";
 else {
-if ($tariffa_colonna_periodo[$num1][$num2]) $tariffa_vedi = punti_in_num($tariffa_colonna_periodo[$num1][$num2],$stile_soldi);
+if (strcmp((string) $tariffa_colonna_periodo[$num1][$num2],"") and ($tariffa_colonna_periodo[$num1][$num2] or !$tariffap_colonna_periodo[$num1][$num2])) $tariffa_vedi = punti_in_num($tariffa_colonna_periodo[$num1][$num2],$stile_soldi);
 else $tariffa_vedi = "";
 if ($tariffap_colonna_periodo[$num1][$num2]) {
 if ($tariffa_colonna_periodo[$num1][$num2]) $tariffa_vedi .= " + ";
 $tariffa_vedi .= punti_in_num($tariffap_colonna_periodo[$num1][$num2],$stile_soldi)."*$p_pers";
 } # fine if ($tariffap_colonna_periodo[$num1][$num2])
-} # fine else if (!$tariffa_colonna_periodo[$num1][$num2] and...
+} # fine else if (!strcmp((string) $tariffa_colonna_periodo[$num1][$num2],"") and...
 if ($importata_colonna_periodo[$num1][$num2] and $importata_colonna_periodo[$num1][$num2] != $dati_tariffe[$tariffa[$num1]]['importa_prezzi'][0]) {
 $tariffa_vedi .= "<br><small><small>";
 if ((string) $importata_colonna_periodo[$num1][$num2] == "-1") $tariffa_vedi .= "(".mex("da varie tariffe",'visualizza_tabelle.php').")";
@@ -960,13 +994,13 @@ if ($tab_modificabile) echo "<br>";
 
 $select_tariffe = "";
 for ($numtariffa = 1 ; $numtariffa <= $numero_tariffe ; $numtariffa++) {
-if ($attiva_tariffe_consentite == "n" or $tariffe_consentite_vett[$numtariffa] == "SI") {
+if ($attiva_tariffe_consentite == "n" or (isset($tariffe_consentite_vett[$numtariffa]) and $tariffe_consentite_vett[$numtariffa] == "SI")) {
 $presente = "NO";
 for ($num2 = 1 ; $num2 <= $num_tariffe_mostra ; $num2++) if (${"numtariffa".$num2} == $numtariffa) $presente = "SI";
 if ($presente == "NO") {
 $tariffa_corr = "tariffa".$numtariffa;
 $nometariffa_vedi_corr = $dati_tariffe[$tariffa_corr]['nome'];
-if (!strcmp($nometariffa_vedi_corr,"")) $nometariffa_vedi_corr = mex("tariffa",$pag).$numtariffa;
+if (!strcmp((string) $nometariffa_vedi_corr,"")) $nometariffa_vedi_corr = mex("tariffa",$pag).$numtariffa;
 else $nometariffa_vedi_corr = mex("tariffa",$pag)."$numtariffa ($nometariffa_vedi_corr)";
 $select_tariffe .= "<option value=\"$numtariffa\">$nometariffa_vedi_corr</option>";
 } # fine if ($presente == "NO")
@@ -980,8 +1014,8 @@ echo "<div style=\"text-align: center;\">
 <input type=\"hidden\" name=\"mostra_disp\" value=\"".htmlspecialchars($mostra_disp)."\">
 <input type=\"hidden\" name=\"mostra_pmm\" value=\"".htmlspecialchars($mostra_pmm)."\">
 <input type=\"hidden\" name=\"raggruppa_date\" value=\"".htmlspecialchars($raggruppa_date)."\">
-<input type=\"hidden\" name=\"mos_per_sing\" value=\"".htmlspecialchars($mos_per_sing)."\">
-<input type=\"hidden\" name=\"form_tabella\" value=\"".htmlspecialchars(fixset($form_tabella))."\">
+<input type=\"hidden\" name=\"mos_per_sing\" value=\"".htmlspecialchars(fixstr($mos_per_sing))."\">
+<input type=\"hidden\" name=\"form_tabella\" value=\"".htmlspecialchars(fixstr($form_tabella))."\">
 <input type=\"hidden\" name=\"num_tariffe_mostra\" value=\"".($num_tariffe_mostra + 1)."\">";
 for ($num1 = 1 ; $num1 <= $num_tariffe_mostra ; $num1++) {
 echo "<input type=\"hidden\" name=\"numtariffa$num1\" value=\"".${"numtariffa".$num1}."\">";
@@ -1001,16 +1035,10 @@ if (!empty($dati_r2[$tariffa[1]])) {
 $num_app = explode(",",$dati_r2[$tariffa[1]]);
 $num_app = count($num_app);
 } # fine if (!empty($dati_r2[$tariffa[1]]))
-else {
-if ($dati_app) $num_app = $dati_app['totapp'];
-else {
-$num_app = esegui_query("select idappartamenti from $tableappartamenti ");
-$num_app = numlin_query($num_app);
-} # fine else if ($dati_app)
-} # fine else if (!empty($dati_r2[$tariffa[1]]))
+else $num_app = $dati_app['totapp'];
 if (isset($dati_r2['napp'][$tariffa[1]]) and $dati_r2['napp'][$tariffa[1]] > 1) {
 echo "<em><b>".$dati_r2['napp'][$tariffa[1]]."</b> ";
-if ($dati_r2['napp']['v'][$tariffa[1]]) echo strtolower(mex("Appartamenti vicini",'unit.php'));
+if (!empty($dati_r2['napp']['v'][$tariffa[1]])) echo strtolower(mex("Appartamenti vicini",'unit.php'));
 else echo mex("appartamenti",'unit.php');
 echo "</em>"." ".mex("tra",'crearegole.php')." ";
 } # fine if (isset($dati_r2['napp'][$tariffa[1]]) and $dati_r2['napp'][$tariffa[1]] > 1)
@@ -1023,10 +1051,14 @@ if ($priv_mod_reg2 == "s") echo " <a style=\"display: inline-block; margin-botto
 echo "<br><br>";
 
 $regola4 = esegui_query("select * from $tableregole where tariffa_per_persone = '".$tariffa[1]."' ");
-if (numlin_query($regola4)) $num_pers_reg4 = risul_query($regola4,0,'iddatainizio');
+if (numlin_query($regola4) and risul_query($regola4,0,'iddatainizio')) $num_pers_reg4 = risul_query($regola4,0,'iddatainizio');
 else $num_pers_reg4 = mex("non definito",$pag);
+if (numlin_query($regola4) and risul_query($regola4,0,'iddatafine')) $num_pers_reg4m = risul_query($regola4,0,'iddatafine');
+else $num_pers_reg4m = mex("non definito",$pag);
 echo mex("Numero di persone predefinito per la tariffa",$pag)." \"".$nometariffa_vedi[1]."\": <em>$num_pers_reg4</em>.";
-if ($priv_mod_reg2 == "s") echo " <a style=\"display: inline-block; margin-bottom: 2px;\" href=\"./crearegole.php?id_sessione=$id_sessione&amp;anno=$anno&amp;tipotariffa_regola3=".$tariffa[1]."&amp;origine=tab_tariffa\">".mex("Modifica la regola di assegnazione",'interconnessioni.php')." 3</a>";
+if ($priv_mod_reg2 == "s") echo " <a style=\"display: inline-block; margin-bottom: 2px;\" href=\"./crearegole.php?id_sessione=$id_sessione&amp;anno=$anno&amp;tipotariffa_regola3=".$tariffa[1]."&amp;nor3m=1&amp;origine=tab_tariffa\">".mex("Modifica la regola di assegnazione",'interconnessioni.php')." 3</a>";
+echo "<br><br>".mex("Numero di persone minimo per la tariffa",$pag)." \"".$nometariffa_vedi[1]."\": <em>$num_pers_reg4m</em>.";
+if ($priv_mod_reg2 == "s") echo " <a style=\"display: inline-block; margin-bottom: 2px;\" href=\"./crearegole.php?id_sessione=$id_sessione&amp;anno=$anno&amp;tipotariffa_regola3=".$tariffa[1]."&amp;nor3=1&amp;origine=tab_tariffa\">".mex("Modifica la regola di assegnazione",'interconnessioni.php')." 3</a>";
 echo "<br><br><br>";
 
 if ($attiva_tariffe_consentite == "n" or $tariffe_consentite_vett[$numtariffa1] == "SI") {

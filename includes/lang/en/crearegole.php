@@ -70,6 +70,10 @@ case "Modifica la regola":  			$messaggio = "Modify rule"; break;
 case "chiusure":  				$messaggio = "closures"; break;
 case "numero di persone":  			$messaggio = "number of people"; break;
 case "utente inserimento":  			$messaggio = "inserting user"; break;
+case "non permettere l'inserimento di prenotazioni con meno di":	$messaggio = "do not allow inserting reservations with less than"; break;
+case "Il numero di persone minimo":  		$messaggio = "The minimum number of people"; break;
+case "è maggiore del numero di persone predefinito":	$messaggio = "is bigger then the default number of people"; break;
+case "è stata cancellata":  			$messaggio = "has been deleted"; break;
 case "":  		$messaggio = ""; break;
 case "":  		$messaggio = ""; break;
 

@@ -16,11 +16,11 @@ case "Inserisci una nuova password":  		$messaggio = "Insert a new password"; br
 case "Ripeti la password":  			$messaggio = "Repeat the password"; break;
 case "Continua":  				$messaggio = "Continue"; break;
 case "Torna indietro":  			$messaggio = "Go back"; break;
-case "<div style=\"display: inline; color: red;\">Esiste già</div> un utente chiamato":	$messaggio = "<div style=\"display: inline; color: red;\">Already exists</div> an user called"; break;
+case "<div style=\"display: inline; color: red;\">Esiste già</div> un utente chiamato":	$messaggio = "<div style=\"display: inline; color: red;\">Already exists</div> a user called"; break;
 case "Nuova password dell'utente":  		$messaggio = "New password of user"; break;
 case "<div style=\"display: inline; color: red;\">non</div> inserita correttamente":	$messaggio = "<div style=\"display: inline; color: red;\">not</div> inserted correctly"; break;
 case "<b>Non</b> è stato effettuato nessun cambiamento":	$messaggio = "<b>No</b> changes have been done"; break;
-case "Esiste già un utente chiamato":  		$messaggio = "Already exists an user called"; break;
+case "Esiste già un utente chiamato":  		$messaggio = "Already exists a user called"; break;
 case "Le nuove password non coincidono":  	$messaggio = "New passwrds do not coincide"; break;
 case "Inserisci una nuova password per l'utente":	$messaggio = "Insert a new password for user"; break;
 case "Nuova password":  			$messaggio = "New password"; break;
@@ -64,6 +64,7 @@ case "privilegi e gruppi":  			$messaggio = "privileges and groups"; break;
 case "personalizzazioni e gruppi":  		$messaggio = "customizations and groups"; break;
 case "solo i gruppi":  				$messaggio = "only groups"; break;
 case "Gruppi importati":  			$messaggio = "Groups imported"; break;
+case "Password aggiornata":  			$messaggio = "Password updated"; break;
 case "":  		$messaggio = ""; break;
 case "":  		$messaggio = ""; break;
 

@@ -2,7 +2,7 @@
 
 ##################################################################################
 #    HOTELDRUID
-#    Copyright (C) 2001-2021 by Marco Maria Francesco De Santis (marco@digitaldruid.net)
+#    Copyright (C) 2001-2023 by Marco Maria Francesco De Santis (marco@digitaldruid.net)
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published by
@@ -41,7 +41,8 @@ $var_pag[11] = 'numletti';
 $var_pag[12] = 'creabase';
 $var_pag[13] = 'lingua';
 $var_pag[14] = 'insappartamenti';
-$n_var_pag = 15;
+$var_pag[15] = 'lista_camere_letti';
+$n_var_pag = 16;
 $num2 = 0;
 if (isset($_POST['numappartamenti'])) $num2 = (int) $_POST['numappartamenti'];
 elseif (isset($_GET['numappartamenti'])) $num2 = (int) $_GET['numappartamenti'];
@@ -63,8 +64,8 @@ if (!defined('C_CREA_ULTIMO_ACCESSO') or C_CREA_ULTIMO_ACCESSO != "SI" or !@is_f
 unset($numconnessione);
 unset($PHPR_TAB_PRE);
 unset($id_sessione);
-unset($nome_utente_phpr);
-unset($password_phpr);
+$nome_utente_phpr = "";
+$password_phpr = "";
 $id_utente = controlla_login($numconnessione,$PHPR_TAB_PRE,$id_sessione,$nome_utente_phpr,$password_phpr,$anno);
 if ($id_utente and $id_utente == 1) {
 
@@ -83,7 +84,7 @@ return $messaggio;
 
 
 $show_bar = "NO";
-$titolo = "HotelDruid: ".mex2("Crea Database",$pag,$lingua);
+$titolo = "HotelDruid: ".mex2("Crea Database",$pag,fixset($lingua));
 if ($tema[$id_utente] and $tema[$id_utente] != "base" and @is_dir("./themes/".$tema[$id_utente]."/php")) include("./themes/".$tema[$id_utente]."/php/head.php");
 else include("./includes/head.php");
 
@@ -93,16 +94,18 @@ if (defined('C_UTILIZZA_SEMPRE_DEFAULTS') and C_UTILIZZA_SEMPRE_DEFAULTS == "AUT
 
 
 
-if ($creabase and !@is_file(C_DATI_PATH."/dati_connessione.php")) {
+if (!empty($creabase) and !@is_file(C_DATI_PATH."/dati_connessione.php")) {
 $mostra_form_iniziale = "NO";
 $insappartamenti = "";
+$permessi_scrittura_controllati = "";
+$torna_indietro = "";
 
 allunga_tempo_limite();
 if ($tipo_db == "mysql" and @function_exists('mysqli_connect')) $tipo_db = "mysqli";
-$carica_estensione == "NO";
-if (($tipo_db == "postgresql" and !@function_exists('pg_connect')) or ($tipo_db == "mysql" and !@function_exists('mysql_connect'))) $carica_estensione == "SI";
+$carica_estensione = "NO";
+if (($tipo_db == "postgresql" and !@function_exists('pg_connect')) or ($tipo_db == "mysql" and !@function_exists('mysql_connect'))) $carica_estensione = "SI";
 if ($tipo_db == "sqlite") {
-if (!@class_exists('SQLite3')) $carica_estensione == "SI";
+if (!@class_exists('SQLite3')) $carica_estensione = "SI";
 } # fine if ($tipo_db == "sqlite")
 if (defined('C_UTILIZZA_SEMPRE_DEFAULTS') and (C_UTILIZZA_SEMPRE_DEFAULTS == "SI" or C_UTILIZZA_SEMPRE_DEFAULTS == "AUTO")) {
 $tipo_db = C_CREADB_TIPODB;
@@ -139,9 +142,9 @@ if ($tipo_db == "mysql" and @function_exists('mysqli_connect')) $tipo_db = "mysq
 } # fine if ($HOTELD_DB_TYPE)
 if ($HOTELD_DB_NAME) $database_phprdb = $HOTELD_DB_NAME;
 if ($HOTELD_DB_HOST) $host_phprdb = $HOTELD_DB_HOST;
-if (strcmp($HOTELD_DB_PORT,"")) $port_phprdb = $HOTELD_DB_PORT;
+if (strcmp((string) $HOTELD_DB_PORT,"")) $port_phprdb = $HOTELD_DB_PORT;
 if ($HOTELD_DB_USER) $user_phprdb = $HOTELD_DB_USER;
-if (strcmp($HOTELD_DB_PASS,"")) $password_phprdb = $HOTELD_DB_PASS;
+if (strcmp((string) $HOTELD_DB_PASS,"")) $password_phprdb = $HOTELD_DB_PASS;
 if ($HOTELD_TAB_PRE) $prefisso_tab = $HOTELD_TAB_PRE;
 } # fine if (defined('C_EXT_DB_DATA_PATH') and C_EXT_DB_DATA_PATH)
 
@@ -188,6 +191,7 @@ $database_esistente = "SI";
 } # fine if ($tipo_db == "sqlite")
 
 if ($numconnessione) {
+$PHPR_LOG = "";
 include("./includes/funzioni_$tipo_db.php");
 if ($database_esistente == "NO") {
 $link_mysqli = $numconnessione;
@@ -282,6 +286,7 @@ $tablepersonalizza = $prefisso_tab."personalizza";
 esegui_query("create table $tablepersonalizza (idpersonalizza varchar(50) not null, idutente integer, valpersonalizza text, valpersonalizza_num integer)");
 esegui_query("insert into $tablepersonalizza (idpersonalizza,idutente,valpersonalizza) values ('col_tab_tutte_prenota','1','nu#@&cg#@&in#@&fi#@&tc#@&ca#@&pa#@&ap#@&pe#@&co')");
 esegui_query("insert into $tablepersonalizza (idpersonalizza,idutente,valpersonalizza) values ('rig_tab_tutte_prenota','1','to#@&ta#@&ca#@&pc')");
+esegui_query("insert into $tablepersonalizza (idpersonalizza,idutente,valpersonalizza) values ('modo_invio_email','1','locale')");
 if (defined("C_MASCHERA_EMAIL") and C_MASCHERA_EMAIL == "SI") $maschera_email = "SI";
 else $maschera_email = "NO";
 esegui_query("insert into $tablepersonalizza (idpersonalizza,idutente,valpersonalizza) values ('maschera_email','1','$maschera_email')");
@@ -308,8 +313,10 @@ esegui_query("insert into $tablepersonalizza (idpersonalizza,idutente,valpersona
 esegui_query("insert into $tablepersonalizza (idpersonalizza,idutente,valpersonalizza_num) values ('num_righe_tab_doc_salvati','1','100')");
 esegui_query("insert into $tablepersonalizza (idpersonalizza,idutente,valpersonalizza_num) values ('num_righe_tab_storia_soldi','1','200')");
 esegui_query("insert into $tablepersonalizza (idpersonalizza,idutente,valpersonalizza) values ('stile_data','1','europa')");
+esegui_query("insert into $tablepersonalizza (idpersonalizza,idutente,valpersonalizza) values ('stile_nomi','1','ma1or')");
 esegui_query("insert into $tablepersonalizza (idpersonalizza,idutente,valpersonalizza_num) values ('num_categorie_persone','1','1')");
 esegui_query("insert into $tablepersonalizza (idpersonalizza,idutente,valpersonalizza_num) values ('minuti_durata_sessione','1','90')");
+esegui_query("insert into $tablepersonalizza (idpersonalizza,idutente,valpersonalizza_num) values ('usa_cookies','1','0')");
 esegui_query("insert into $tablepersonalizza (idpersonalizza,idutente,valpersonalizza_num) values ('minuti_durata_insprenota','1','10')");
 esegui_query("insert into $tablepersonalizza (idpersonalizza,idutente,valpersonalizza_num) values ('ore_anticipa_periodo_corrente','1','0')");
 esegui_query("insert into $tablepersonalizza (idpersonalizza,idutente,valpersonalizza) values ('tutti_fissi','1','10')");
@@ -348,11 +355,11 @@ $tablerelgruppi = $prefisso_tab."relgruppi";
 esegui_query("create table $tablerelgruppi (idutente integer not null, idgruppo integer, datainserimento $DATETIME, hostinserimento varchar(50), utente_inserimento integer )");
 crea_indice($tablerelgruppi,"idutente",$prefisso_tab."iidprelgruppi");
 $tablesessioni = $prefisso_tab."sessioni";
-esegui_query("create table $tablesessioni (idsessioni varchar(30) primary key, idutente integer, indirizzo_ip text, tipo_conn varchar(12), user_agent text, ultimo_accesso $DATETIME)");
+esegui_query("create table $tablesessioni (idsessioni varchar(42) primary key, idcliente varchar(42), idutente integer, indirizzo_ip text, tipo_conn varchar(12), user_agent text, ultimo_accesso $DATETIME)");
 $tabletransazioni = $prefisso_tab."transazioni";
-esegui_query("create table $tabletransazioni (idtransazioni varchar(30) primary key, idsessione varchar(30), tipo_transazione varchar(5), anno integer, spostamenti text, dati_transazione1 text, dati_transazione2 text, dati_transazione3 text, dati_transazione4 text, dati_transazione5 text, dati_transazione6 text, dati_transazione7 text, dati_transazione8 text, dati_transazione9 text, dati_transazione10 text, dati_transazione11 text, dati_transazione12 text, dati_transazione13 text, dati_transazione14 text, dati_transazione15 text, dati_transazione16 text, dati_transazione17 text, dati_transazione18 text, dati_transazione19 text, dati_transazione20 text, dati_transazione21 text, dati_transazione22 text, ultimo_accesso $DATETIME)");
+esegui_query("create table $tabletransazioni (idtransazioni varchar(42) primary key, idcliente varchar(42), idsessione varchar(42), tipo_transazione varchar(5), anno integer, spostamenti text, dati_transazione1 text, dati_transazione2 text, dati_transazione3 text, dati_transazione4 text, dati_transazione5 text, dati_transazione6 text, dati_transazione7 text, dati_transazione8 text, dati_transazione9 text, dati_transazione10 text, dati_transazione11 text, dati_transazione12 text, dati_transazione13 text, dati_transazione14 text, dati_transazione15 text, dati_transazione16 text, dati_transazione17 text, dati_transazione18 text, dati_transazione19 text, dati_transazione20 text, dati_transazione21 text, dati_transazione22 text, ultimo_accesso $DATETIME)");
 $tabletransazioniweb = $prefisso_tab."transazioniweb";
-esegui_query("create table $tabletransazioniweb (idtransazioni varchar(30) primary key, idsessione varchar(30), tipo_transazione varchar(5), anno integer, spostamenti text, dati_transazione1 text, dati_transazione2 text, dati_transazione3 text, dati_transazione4 text, dati_transazione5 text, dati_transazione6 text, dati_transazione7 text, dati_transazione8 text, dati_transazione9 text, dati_transazione10 text, dati_transazione11 text, dati_transazione12 text, dati_transazione13 text, dati_transazione14 text, dati_transazione15 text, dati_transazione16 text, dati_transazione17 text, dati_transazione18 text, dati_transazione19 text, dati_transazione20 text, dati_transazione21 text, dati_transazione22 text, ultimo_accesso $DATETIME)");
+esegui_query("create table $tabletransazioniweb (idtransazioni varchar(42) primary key, idcliente varchar(42), idsessione varchar(42), tipo_transazione varchar(5), anno integer, spostamenti text, dati_transazione1 text, dati_transazione2 text, dati_transazione3 text, dati_transazione4 text, dati_transazione5 text, dati_transazione6 text, dati_transazione7 text, dati_transazione8 text, dati_transazione9 text, dati_transazione10 text, dati_transazione11 text, dati_transazione12 text, dati_transazione13 text, dati_transazione14 text, dati_transazione15 text, dati_transazione16 text, dati_transazione17 text, dati_transazione18 text, dati_transazione19 text, dati_transazione20 text, dati_transazione21 text, dati_transazione22 text, ultimo_accesso $DATETIME)");
 esegui_query("insert into  $tabletransazioniweb (idtransazioni, anno) values ('2', '100')");
 $tablemessaggi = $prefisso_tab."messaggi";
 esegui_query("create table $tablemessaggi (idmessaggi integer primary key, tipo_messaggio varchar(8), stato varchar(8), idutenti text, idutenti_visto text, datavisione $DATETIME, mittente text, testo text, dati_messaggio1 text, dati_messaggio2 text, dati_messaggio3 text, dati_messaggio4 text, dati_messaggio5 text, dati_messaggio6 text, dati_messaggio7 text, dati_messaggio8 text, dati_messaggio9 text, dati_messaggio10 text, dati_messaggio11 text, dati_messaggio12 text, dati_messaggio13 text, dati_messaggio14 text, dati_messaggio15 text, dati_messaggio16 text, dati_messaggio17 text, dati_messaggio18 text, dati_messaggio19 text, dati_messaggio20 text, dati_messaggio21 text, dati_messaggio22 text, datainserimento $DATETIME )");
@@ -401,9 +408,9 @@ if (defined('C_EXT_DB_DATA_PATH') and C_EXT_DB_DATA_PATH) {
 if ($HOTELD_DB_TYPE) $tipo_db = "";
 if ($HOTELD_DB_NAME) $database_phprdb = "";
 if ($HOTELD_DB_HOST) $host_phprdb = "";
-if (strcmp($HOTELD_DB_PORT,"")) $port_phprdb = "";
+if (strcmp((string) $HOTELD_DB_PORT,"")) $port_phprdb = "";
 if ($HOTELD_DB_USER) $user_phprdb = "";
-if (strcmp($HOTELD_DB_PASS,"")) $password_phprdb = "";
+if (strcmp((string) $HOTELD_DB_PASS,"")) $password_phprdb = "";
 if ($HOTELD_TAB_PRE) $prefisso_tab = "";
 } # fine if (defined('C_EXT_DB_DATA_PATH') and C_EXT_DB_DATA_PATH)
 $database_scrivi = aggiungi_slash($database_phprdb);
@@ -491,6 +498,8 @@ $fileaperto = fopen(C_DATI_PATH."/versione.php","w+");
 fwrite($fileaperto,"<?php
 define('C_VERSIONE_ATTUALE',".C_PHPR_VERSIONE_NUM.");
 define('C_DIFF_ORE',0);
+define('C_MIN_SESSIONE',90);
+define('C_USA_COOKIES',0);
 ?>");
 fclose($fileaperto);
 
@@ -642,13 +651,13 @@ echo "<form accept-charset=\"utf-8\" method=\"post\" action=\"creadb.php\"><div>
 <input class=\"sbutton\" type=\"submit\" name=\"torna\" value=\"".mex2("Torna indietro",$pag,$lingua)."\"><br>
 </div></form>";
 } # fine if ($torna_indietro == "SI")
-} # fine if ($creabase and !@is_file(C_DATI_PATH."/dati_connessione.php"))
+} # fine if (!empty($creabase) and !@is_file(C_DATI_PATH."/dati_connessione.php"))
 
 
 
 
 // inserisco i dati forniti nella tabella appartamenti e creo il file selezione appartamenti.
-if ($insappartamenti and !@is_file(C_DATI_PATH."/selectappartamenti.php")) {
+if (!empty($insappartamenti) and !@is_file(C_DATI_PATH."/selectappartamenti.php")) {
 $mostra_form_iniziale = "NO";
 if (!controlla_num_pos($numletti) == "NO") $numletti = 0;
 if ((!$numappartamenti and !$numletti) or controlla_num_pos($numappartamenti) == "NO") $numappartamenti = 5;
@@ -660,17 +669,17 @@ include_once("./includes/funzioni_$PHPR_DB_TYPE.php");
 $numconnessione = connetti_db($PHPR_DB_NAME,$PHPR_DB_HOST,$PHPR_DB_PORT,$PHPR_DB_USER,$PHPR_DB_PASS,$PHPR_LOAD_EXT);
 $tableappartamenti = $PHPR_TAB_PRE."appartamenti";
 $fileaperto = fopen(C_DATI_PATH."/selectappartamenti.php","a+");
-fwrite($fileaperto,"<?php \necho \"\n");
+fwrite($fileaperto,"<?php \necho '\n");
 $zeri = (string) "0000000000000000000000000000";
 $lettere = (string) "abcdefghijklmnopqrstuvwxyz";
 $pos_lettera = 0;
 $pos_lettera_tot = 0;
 $suff_lettera = "";
 $num_dorm = $numappartamenti;
-if ($lista_camere_letti) {
+if (!empty($lista_camere_letti)) {
 $lista_camere_letti = explode(",",",$lista_camere_letti");
 $num_camera_l = 1;
-} # fine if ($lista_camere_letti)
+} # fine if (!empty($lista_camere_letti))
 else $num_camera_l = 0;
 $app_vicini_vett = array();
 if (!$numletti) $num_app_max = $numappartamenti;
@@ -721,7 +730,8 @@ else $suff_lettera = substr(strstr($lettere,$suff_lettera),1,1);
 $numapp = str_replace (",","",$numapp);
 if (str_replace (" ","",$numapp) == "") $numapp = str_replace (" ","_",$numapp);
 $numapp = trim($numapp);
-$numapp = aggslashdb(htmlspecialchars(elimina_caratteri_slash($numapp)));
+$numapp_file = htmlspecialchars(elimina_caratteri_slash($numapp));
+$numapp = aggslashdb($numapp_file);
 $piano = "piano" . $num;
 $piano = aggslashdb(htmlspecialchars(elimina_caratteri_slash($$piano)));
 $maxoccupanti = "maxoccupanti" . $num;
@@ -732,11 +742,11 @@ $numcasa = aggslashdb(htmlspecialchars(elimina_caratteri_slash($$numcasa)));
 $priorita = "priorita" . $num;
 $priorita = $$priorita;
 $app_vicini = "app_vicini" . $num;
-$app_vicini = aggslashdb(htmlspecialchars($$app_vicini));
+$app_vicini = aggslashdb(htmlspecialchars(fixstr($$app_vicini)));
 if (controlla_num($maxoccupanti) != "SI") unset($maxoccupanti);
 if (controlla_num($priorita) != "SI") unset($priorita);
 esegui_query("insert into $tableappartamenti ( idappartamenti ) values ( '$numapp' )");
-fwrite($fileaperto,"<option value=\\\"$numapp\\\">$numapp</option>
+fwrite($fileaperto,"<option value=\"$numapp_file\">$numapp_file</option>
 ");
 if ($piano) {
 esegui_query("update $tableappartamenti set numpiano = '$piano' where idappartamenti = '$numapp'");
@@ -750,15 +760,15 @@ esegui_query("update $tableappartamenti set numcasa = '$numcasa' where idapparta
 if ($priorita) {
 esegui_query("update $tableappartamenti set priorita = '$priorita' where idappartamenti = '$numapp'");
 } # fine if ($priorita)
-if ($app_vicini and $assegna_vicini_nc != "SI") {
+if ($app_vicini and (!isset($assegna_vicini_nc) or $assegna_vicini_nc != "SI")) {
 esegui_query("update $tableappartamenti set app_vicini = '$app_vicini' where idappartamenti = '$numapp'");
-} # fine if ($app_vicini and assegna_vicini_nc != "SI")
+} # fine if ($app_vicini and (!isset($assegna_vicini_nc) or $assegna_vicini_nc != "SI"))
 if ($num > $numappartamenti) esegui_query("update $tableappartamenti set letto = '1' where idappartamenti = '$numapp'");
 } # fine for $num
 
-fwrite($fileaperto,"\"; \n?>");
+fwrite($fileaperto,"';\n?>");
 fclose($fileaperto);
-if ($assegna_vicini_nc == "SI") {
+if (isset($assegna_vicini_nc) and $assegna_vicini_nc == "SI") {
 $appart = esegui_query("select * from $tableappartamenti");
 for ($num1 = 0 ; $num1 < $numappartamenti ; $num1 = $num1 + 1) {
 $idapp = risul_query($appart,$num1,'idappartamenti');
@@ -778,7 +788,7 @@ else { $app_vicini = $app_vicini . "," . $id_av; }
 } # fine for $num2
 esegui_query("update $tableappartamenti set app_vicini = '$app_vicini' where idappartamenti = '$idapp'");
 } # fine for $num1
-} # fine if ($assegna_vicini_nc == "SI")
+} # fine if (isset($assegna_vicini_nc) and $assegna_vicini_nc == "SI")
 if ($num_camera_l) {
 for ($num = 1 ; $num <= ($numappartamenti + $numletti) ; $num = $num + 1) {
 if ($app_vicini_vett[$num]) {
@@ -793,12 +803,12 @@ include(C_DATI_PATH."/ini.php");
 $admin = "";
 if (defined('C_ADMIN_NAME')) $admin = C_ADMIN_NAME;
 if (htmlspecialchars($admin) != $admin) $admin = "";
-if (strcmp($admin,"")) {
+if (strcmp((string) $admin,"")) {
 esegui_query("update $tableutenti set nome_utente = '".aggslashdb($admin)."' where idutenti = '1'");
 $passw = "";
 if (defined('C_ADMIN_PASS')) $passw = C_ADMIN_PASS;
 if ($passw != str_replace("&","",$passw)) $passw = "";
-if (strcmp($passw,"")) {
+if (strcmp((string) $passw,"")) {
 if (C_ADMIN_MD5P >= "1" and C_ADMIN_MD5P <= "15") $md5p = C_ADMIN_MD5P;
 else $md5p = 0;
 if (defined('C_ADMIN_SALT')) $salt = C_ADMIN_SALT;
@@ -815,8 +825,8 @@ for ($num1 = $md5p ; $num1 < 15 ; $num1++) $passw = md5($passw.substr($salt,0,(2
 esegui_query("update $tableutenti set password = '$passw', salt = '$salt', tipo_pass = '5' where idutenti = '1'");
 $fileaperto = fopen(C_DATI_PATH."/abilita_login","w+");
 fclose($fileaperto);
-} # fine if (strcmp($passw,""))
-} # fine if (strcmp($admin,""))
+} # fine if (strcmp((string) $passw,""))
+} # fine if (strcmp((string) $admin,""))
 @unlink(C_DATI_PATH."/ini.php");
 } # fine if (defined('C_UTILIZZA_SEMPRE_DEFAULTS') and C_UTILIZZA_SEMPRE_DEFAULTS == "AUTO" and @is_file(C_DATI_PATH."/ini.php"))
 
@@ -857,12 +867,12 @@ $fileaperto = @fopen(C_DATI_PATH."/ultimo_accesso","w+");
 @fclose($fileaperto);
 @chmod(C_DATI_PATH."/ultimo_accesso",0644);
 } # fine if (defined('C_CREA_ULTIMO_ACCESSO') and C_CREA_ULTIMO_ACCESSO == "SI")
-} # fine if ($insappartamenti and !@is_file(C_DATI_PATH."/selectappartamenti.php"))
+} # fine if (!empty($insappartamenti) and !@is_file(C_DATI_PATH."/selectappartamenti.php"))
 
 
 
 
-if ($mostra_form_iniziale != "NO") {
+if (!isset($mostra_form_iniziale) or $mostra_form_iniziale != "NO") {
 
 // prima form di inserimento
 echo "<h4>".mex2("Inserimento dei dati permanenti",$pag,$lingua)."</h4><br>
@@ -910,6 +920,7 @@ else $selected = "";
 echo "<option value=\"NO\"$selected>".mex2("No",$pag,$lingua)."</option>
 </select> <small>(".mex2("scegliere si se non viene caricata automaticamente da php",$pag,$lingua).")</small><br>";*/
 $messaggio = "";
+$unit = array('gender' => 'm', 'special' => '', 's_n' => '', 'p_n' => '');
 if ($lingua == "ita") include("./includes/unit.php");
 else include("./includes/lang/$lingua/unit.php");
 echo "".mex2("Nome del database a cui collegarsi temporaneamente",$pag,$lingua).":
@@ -931,7 +942,7 @@ echo "".mex2("Nome del database a cui collegarsi temporaneamente",$pag,$lingua).
 <input type=\"hidden\" name=\"lingua\" value=\"$lingua\">
 </div></form>";
 
-} # fine if ($mostra_form_iniziale != "NO")
+} # fine if (!isset($mostra_form_iniziale) or $mostra_form_iniziale != "NO")
 
 
 

@@ -33,6 +33,8 @@ case "Metodo":  				$messaggio = "Método"; break;
 case "Vedi solo le entrate-uscite":  		$messaggio = "Mira solo los pagos"; break;
 case "con metodo":  				$messaggio = "con método"; break;
 case "N°":  					$messaggio = "N°"; break;
+case "Note":  					$messaggio = "Notas"; break;
+case "Id":  					$messaggio = "Id"; break;
 case "":  		$messaggio = ""; break;
 case "":  		$messaggio = ""; break;
 

@@ -1,6 +1,6 @@
 <?php exit(); ?>
 
-<!--             2021-08-18 14:44:55             -->
+<!--             2023-03-08 13:41:30             -->
 
 <!--  **    SAVE THIS FILE AS hoteld_doc_backup.php     **  -->
 
@@ -8,7 +8,7 @@
 
 
 <backup>
-<versione>3.02</versione>
+<versione>3.05</versione>
 <database>
 <tabella>
 <nometabella>contratti</nometabella>
@@ -33,132 +33,139 @@
 <riga><cmp>2332</cmp><cmp>vett9</cmp><cmp>ec_unit_row_clean;unit_clean</cmp></riga>
 <riga><cmp>2333</cmp><cmp>vett9</cmp><cmp>array_dates_clean;day_clean</cmp></riga>
 <riga><cmp>2334</cmp><cmp>vett9</cmp><cmp>total_ec_clean;ec_num_clean</cmp></riga>
+<riga><cmp>2340</cmp><cmp>vett8</cmp><cmp>arr_links_wle;numero_cliente</cmp></riga>
+<riga><cmp>2341</cmp><cmp>vett8</cmp><cmp>arr_links_es_wle;numero_cliente</cmp></riga>
+<riga><cmp>2336</cmp><cmp>vett7</cmp><cmp>arr_links_cre;numero_cliente</cmp></riga>
+<riga><cmp>2337</cmp><cmp>vett7</cmp><cmp>arr_links_es_cre;numero_cliente</cmp></riga>
+<riga><cmp>2338</cmp><cmp>vett7</cmp><cmp>arr_access_data_cre;numero_cliente</cmp></riga>
+<riga><cmp>2339</cmp><cmp>vett7</cmp><cmp>arr_access_data_es_cre;numero_cliente</cmp></riga>
 <riga><cmp>1</cmp><cmp>vett2</cmp><cmp>vat_perc_arr_invo;vat_num_invo</cmp></riga>
 <riga><cmp>2</cmp><cmp>vett2</cmp><cmp>exist_perc_vat_invo;tmp_var_invo</cmp></riga>
-<riga><cmp>101282</cmp><cmp>var9</cmp><cmp>report_date_clean</cmp></riga>
-<riga><cmp>101283</cmp><cmp>var9</cmp><cmp>arrival_clean</cmp></riga>
-<riga><cmp>101284</cmp><cmp>var9</cmp><cmp>departure_clean</cmp></riga>
-<riga><cmp>101285</cmp><cmp>var9</cmp><cmp>unit_clean</cmp></riga>
-<riga><cmp>101286</cmp><cmp>var9</cmp><cmp>row_class_clean</cmp></riga>
-<riga><cmp>101287</cmp><cmp>var9</cmp><cmp>f_report_date_clean</cmp></riga>
-<riga><cmp>101288</cmp><cmp>var9</cmp><cmp>people_tot_clean</cmp></riga>
-<riga><cmp>101289</cmp><cmp>var9</cmp><cmp>dep_people_tot_clean</cmp></riga>
-<riga><cmp>101290</cmp><cmp>var9</cmp><cmp>arr_people_tot_clean</cmp></riga>
-<riga><cmp>101291</cmp><cmp>var9</cmp><cmp>ec_num_clean</cmp></riga>
-<riga><cmp>101292</cmp><cmp>var9</cmp><cmp>repetition_number_clean</cmp></riga>
-<riga><cmp>101293</cmp><cmp>var9</cmp><cmp>var_tmp_clean</cmp></riga>
-<riga><cmp>101294</cmp><cmp>var9</cmp><cmp>ec_table_head_clean</cmp></riga>
-<riga><cmp>101295</cmp><cmp>var9</cmp><cmp>ec_table_row_clean</cmp></riga>
-<riga><cmp>101296</cmp><cmp>var9</cmp><cmp>day_clean</cmp></riga>
-<riga><cmp>101297</cmp><cmp>var9</cmp><cmp>header_row_table_clean</cmp></riga>
-<riga><cmp>101298</cmp><cmp>var9</cmp><cmp>unit_repetition_number_clean</cmp></riga>
-<riga><cmp>101299</cmp><cmp>var9</cmp><cmp>repeat_header_row_clean</cmp></riga>
-<riga><cmp>101300</cmp><cmp>var9</cmp><cmp>number_repeat_head_row_clean</cmp></riga>
-<riga><cmp>101606</cmp><cmp>var8</cmp><cmp>surname_wle</cmp></riga>
-<riga><cmp>101607</cmp><cmp>var8</cmp><cmp>surn_no_sp_wle</cmp></riga>
-<riga><cmp>305</cmp><cmp>var7</cmp><cmp>surname_cre</cmp></riga>
-<riga><cmp>306</cmp><cmp>var7</cmp><cmp>surn_no_sp_cre</cmp></riga>
-<riga><cmp>102</cmp><cmp>var6</cmp><cmp>surname_avail_eml</cmp></riga>
-<riga><cmp>68</cmp><cmp>var4</cmp><cmp>city_row_recei</cmp></riga>
-<riga><cmp>69</cmp><cmp>var4</cmp><cmp>nation_row_recei</cmp></riga>
-<riga><cmp>73</cmp><cmp>var4</cmp><cmp>struct_fisc_code_recei</cmp></riga>
-<riga><cmp>74</cmp><cmp>var4</cmp><cmp>first_name_recei</cmp></riga>
-<riga><cmp>75</cmp><cmp>var4</cmp><cmp>surname_recei</cmp></riga>
-<riga><cmp>76</cmp><cmp>var4</cmp><cmp>struct_telephone_recei</cmp></riga>
-<riga><cmp>98</cmp><cmp>var4</cmp><cmp>street_num_recei</cmp></riga>
-<riga><cmp>421</cmp><cmp>var4</cmp><cmp>show_method_recei</cmp></riga>
-<riga><cmp>101301</cmp><cmp>var4</cmp><cmp>logo_recei</cmp></riga>
-<riga><cmp>325</cmp><cmp>var2</cmp><cmp>city_row_invo</cmp></riga>
-<riga><cmp>326</cmp><cmp>var2</cmp><cmp>nation_row_invo</cmp></riga>
-<riga><cmp>330</cmp><cmp>var2</cmp><cmp>struct_fisc_code_invo</cmp></riga>
-<riga><cmp>331</cmp><cmp>var2</cmp><cmp>first_name_invo</cmp></riga>
-<riga><cmp>332</cmp><cmp>var2</cmp><cmp>surname_invo</cmp></riga>
-<riga><cmp>333</cmp><cmp>var2</cmp><cmp>struct_telephone_invo</cmp></riga>
-<riga><cmp>336</cmp><cmp>var2</cmp><cmp>tmp_var_invo</cmp></riga>
-<riga><cmp>337</cmp><cmp>var2</cmp><cmp>rate_no_vat_invo</cmp></riga>
-<riga><cmp>339</cmp><cmp>var2</cmp><cmp>last_reserv_invo</cmp></riga>
-<riga><cmp>342</cmp><cmp>var2</cmp><cmp>extra_cost_name_invo</cmp></riga>
-<riga><cmp>343</cmp><cmp>var2</cmp><cmp>tot_no_vat_invo</cmp></riga>
-<riga><cmp>347</cmp><cmp>var2</cmp><cmp>price_tot_invo</cmp></riga>
-<riga><cmp>348</cmp><cmp>var2</cmp><cmp>price_tot_invo_p</cmp></riga>
-<riga><cmp>349</cmp><cmp>var2</cmp><cmp>vat_invo_p</cmp></riga>
-<riga><cmp>350</cmp><cmp>var2</cmp><cmp>tot_no_vat_invo_p</cmp></riga>
-<riga><cmp>351</cmp><cmp>var2</cmp><cmp>extra_cost_no_vat_invo_p</cmp></riga>
-<riga><cmp>352</cmp><cmp>var2</cmp><cmp>discount_no_vat_invo_p</cmp></riga>
-<riga><cmp>353</cmp><cmp>var2</cmp><cmp>rate_no_vat_invo_p</cmp></riga>
-<riga><cmp>355</cmp><cmp>var2</cmp><cmp>street_num_invo</cmp></riga>
-<riga><cmp>405</cmp><cmp>var2</cmp><cmp>fiscal_code_invo</cmp></riga>
-<riga><cmp>406</cmp><cmp>var2</cmp><cmp>vat_number_invo</cmp></riga>
-<riga><cmp>407</cmp><cmp>var2</cmp><cmp>street_invo</cmp></riga>
-<riga><cmp>408</cmp><cmp>var2</cmp><cmp>vat_num_invo</cmp></riga>
-<riga><cmp>409</cmp><cmp>var2</cmp><cmp>show_rate_invo</cmp></riga>
-<riga><cmp>410</cmp><cmp>var2</cmp><cmp>show_discount_invo</cmp></riga>
-<riga><cmp>411</cmp><cmp>var2</cmp><cmp>show_extra_cost_invo</cmp></riga>
-<riga><cmp>412</cmp><cmp>var2</cmp><cmp>repetition_num_invo</cmp></riga>
-<riga><cmp>413</cmp><cmp>var2</cmp><cmp>part_tot_no_vat_invo</cmp></riga>
-<riga><cmp>414</cmp><cmp>var2</cmp><cmp>part_tot_vat_invo</cmp></riga>
-<riga><cmp>415</cmp><cmp>var2</cmp><cmp>part_tot_no_vat_invo_p</cmp></riga>
-<riga><cmp>416</cmp><cmp>var2</cmp><cmp>part_tot_vat_invo_p</cmp></riga>
-<riga><cmp>417</cmp><cmp>var2</cmp><cmp>max_vat_num_invo</cmp></riga>
-<riga><cmp>418</cmp><cmp>var2</cmp><cmp>people_phrase_invo</cmp></riga>
-<riga><cmp>419</cmp><cmp>var2</cmp><cmp>merge_discount_with_rate</cmp></riga>
-<riga><cmp>420</cmp><cmp>var2</cmp><cmp>logo_invo</cmp></riga>
-<riga><cmp>422</cmp><cmp>var2</cmp><cmp>tax_cost_name_invo</cmp></riga>
-<riga><cmp>423</cmp><cmp>var2</cmp><cmp>show_tax_cost_invo</cmp></riga>
-<riga><cmp>424</cmp><cmp>var2</cmp><cmp>vat_invo</cmp></riga>
-<riga><cmp>425</cmp><cmp>var2</cmp><cmp>tot_costs_tax_invo</cmp></riga>
-<riga><cmp>426</cmp><cmp>var2</cmp><cmp>show_cost_as_taxes_invo</cmp></riga>
-<riga><cmp>427</cmp><cmp>var2</cmp><cmp>show_subtotal_invo</cmp></riga>
-<riga><cmp>204089</cmp><cmp>var11</cmp><cmp>surname_rcsv</cmp></riga>
-<riga><cmp>204090</cmp><cmp>var11</cmp><cmp>name_rcsv</cmp></riga>
-<riga><cmp>204091</cmp><cmp>var11</cmp><cmp>unit_rcsv</cmp></riga>
-<riga><cmp>204092</cmp><cmp>var11</cmp><cmp>rate_name_rcsv</cmp></riga>
-<riga><cmp>204093</cmp><cmp>var11</cmp><cmp>email_rcsv</cmp></riga>
-<riga><cmp>204094</cmp><cmp>var11</cmp><cmp>telephone_rcsv</cmp></riga>
-<riga><cmp>204095</cmp><cmp>var11</cmp><cmp>rate_price_rcsv</cmp></riga>
-<riga><cmp>204096</cmp><cmp>var11</cmp><cmp>total_price_rcsv</cmp></riga>
-<riga><cmp>204097</cmp><cmp>var11</cmp><cmp>paid_rcsv</cmp></riga>
-<riga><cmp>204098</cmp><cmp>var11</cmp><cmp>total_people_rcsv</cmp></riga>
-<riga><cmp>204100</cmp><cmp>var11</cmp><cmp>comment_rcsv</cmp></riga>
-<riga><cmp>204109</cmp><cmp>var11</cmp><cmp>arrival_rcsv</cmp></riga>
-<riga><cmp>204110</cmp><cmp>var11</cmp><cmp>departure_rcsv</cmp></riga>
-<riga><cmp>102035</cmp><cmp>var10</cmp><cmp>surname_csv</cmp></riga>
-<riga><cmp>102036</cmp><cmp>var10</cmp><cmp>name_csv</cmp></riga>
-<riga><cmp>102037</cmp><cmp>var10</cmp><cmp>nickname_csv</cmp></riga>
-<riga><cmp>102038</cmp><cmp>var10</cmp><cmp>title_csv</cmp></riga>
-<riga><cmp>102039</cmp><cmp>var10</cmp><cmp>email_csv</cmp></riga>
-<riga><cmp>102040</cmp><cmp>var10</cmp><cmp>telephone_csv</cmp></riga>
-<riga><cmp>102041</cmp><cmp>var10</cmp><cmp>fax_csv</cmp></riga>
-<riga><cmp>102042</cmp><cmp>var10</cmp><cmp>nation_csv</cmp></riga>
-<riga><cmp>102043</cmp><cmp>var10</cmp><cmp>region_csv</cmp></riga>
-<riga><cmp>102044</cmp><cmp>var10</cmp><cmp>city_csv</cmp></riga>
-<riga><cmp>102045</cmp><cmp>var10</cmp><cmp>address_csv</cmp></riga>
-<riga><cmp>102046</cmp><cmp>var10</cmp><cmp>postal_code_csv</cmp></riga>
-<riga><cmp>102047</cmp><cmp>var10</cmp><cmp>nationality_csv</cmp></riga>
-<riga><cmp>102048</cmp><cmp>var10</cmp><cmp>birthdate_csv</cmp></riga>
-<riga><cmp>102049</cmp><cmp>var10</cmp><cmp>vat_number_csv</cmp></riga>
-<riga><cmp>102050</cmp><cmp>var10</cmp><cmp>tmp_csv</cmp></riga>
-<riga><cmp>102051</cmp><cmp>var10</cmp><cmp>email2_csv</cmp></riga>
-<riga><cmp>102052</cmp><cmp>var10</cmp><cmp>certified_email_csv</cmp></riga>
-<riga><cmp>102053</cmp><cmp>var10</cmp><cmp>telephone2_csv</cmp></riga>
-<riga><cmp>102054</cmp><cmp>var10</cmp><cmp>telephone3_csv</cmp></riga>
+<riga><cmp>2335</cmp><cmp>vett10</cmp><cmp>client_shown_csv;numero_cliente</cmp></riga>
+<riga><cmp>64</cmp><cmp>var9</cmp><cmp>report_date_clean</cmp></riga>
+<riga><cmp>65</cmp><cmp>var9</cmp><cmp>arrival_clean</cmp></riga>
+<riga><cmp>66</cmp><cmp>var9</cmp><cmp>departure_clean</cmp></riga>
+<riga><cmp>67</cmp><cmp>var9</cmp><cmp>unit_clean</cmp></riga>
+<riga><cmp>68</cmp><cmp>var9</cmp><cmp>row_class_clean</cmp></riga>
+<riga><cmp>69</cmp><cmp>var9</cmp><cmp>f_report_date_clean</cmp></riga>
+<riga><cmp>70</cmp><cmp>var9</cmp><cmp>people_tot_clean</cmp></riga>
+<riga><cmp>71</cmp><cmp>var9</cmp><cmp>dep_people_tot_clean</cmp></riga>
+<riga><cmp>72</cmp><cmp>var9</cmp><cmp>arr_people_tot_clean</cmp></riga>
+<riga><cmp>73</cmp><cmp>var9</cmp><cmp>ec_num_clean</cmp></riga>
+<riga><cmp>74</cmp><cmp>var9</cmp><cmp>repetition_number_clean</cmp></riga>
+<riga><cmp>75</cmp><cmp>var9</cmp><cmp>var_tmp_clean</cmp></riga>
+<riga><cmp>76</cmp><cmp>var9</cmp><cmp>ec_table_head_clean</cmp></riga>
+<riga><cmp>77</cmp><cmp>var9</cmp><cmp>ec_table_row_clean</cmp></riga>
+<riga><cmp>78</cmp><cmp>var9</cmp><cmp>day_clean</cmp></riga>
+<riga><cmp>79</cmp><cmp>var9</cmp><cmp>header_row_table_clean</cmp></riga>
+<riga><cmp>80</cmp><cmp>var9</cmp><cmp>unit_repetition_number_clean</cmp></riga>
+<riga><cmp>81</cmp><cmp>var9</cmp><cmp>repeat_header_row_clean</cmp></riga>
+<riga><cmp>82</cmp><cmp>var9</cmp><cmp>number_repeat_head_row_clean</cmp></riga>
+<riga><cmp>84</cmp><cmp>var8</cmp><cmp>surname_wle</cmp></riga>
+<riga><cmp>85</cmp><cmp>var8</cmp><cmp>surn_no_sp_wle</cmp></riga>
+<riga><cmp>20</cmp><cmp>var7</cmp><cmp>surname_cre</cmp></riga>
+<riga><cmp>21</cmp><cmp>var7</cmp><cmp>surn_no_sp_cre</cmp></riga>
+<riga><cmp>19</cmp><cmp>var6</cmp><cmp>surname_avail_eml</cmp></riga>
+<riga><cmp>12</cmp><cmp>var4</cmp><cmp>city_row_recei</cmp></riga>
+<riga><cmp>13</cmp><cmp>var4</cmp><cmp>nation_row_recei</cmp></riga>
+<riga><cmp>14</cmp><cmp>var4</cmp><cmp>struct_fisc_code_recei</cmp></riga>
+<riga><cmp>15</cmp><cmp>var4</cmp><cmp>first_name_recei</cmp></riga>
+<riga><cmp>16</cmp><cmp>var4</cmp><cmp>surname_recei</cmp></riga>
+<riga><cmp>17</cmp><cmp>var4</cmp><cmp>struct_telephone_recei</cmp></riga>
+<riga><cmp>18</cmp><cmp>var4</cmp><cmp>street_num_recei</cmp></riga>
+<riga><cmp>57</cmp><cmp>var4</cmp><cmp>show_method_recei</cmp></riga>
+<riga><cmp>83</cmp><cmp>var4</cmp><cmp>logo_recei</cmp></riga>
+<riga><cmp>22</cmp><cmp>var2</cmp><cmp>city_row_invo</cmp></riga>
+<riga><cmp>23</cmp><cmp>var2</cmp><cmp>nation_row_invo</cmp></riga>
+<riga><cmp>24</cmp><cmp>var2</cmp><cmp>struct_fisc_code_invo</cmp></riga>
+<riga><cmp>25</cmp><cmp>var2</cmp><cmp>first_name_invo</cmp></riga>
+<riga><cmp>26</cmp><cmp>var2</cmp><cmp>surname_invo</cmp></riga>
+<riga><cmp>27</cmp><cmp>var2</cmp><cmp>struct_telephone_invo</cmp></riga>
+<riga><cmp>28</cmp><cmp>var2</cmp><cmp>tmp_var_invo</cmp></riga>
+<riga><cmp>29</cmp><cmp>var2</cmp><cmp>rate_no_vat_invo</cmp></riga>
+<riga><cmp>30</cmp><cmp>var2</cmp><cmp>last_reserv_invo</cmp></riga>
+<riga><cmp>31</cmp><cmp>var2</cmp><cmp>extra_cost_name_invo</cmp></riga>
+<riga><cmp>32</cmp><cmp>var2</cmp><cmp>tot_no_vat_invo</cmp></riga>
+<riga><cmp>33</cmp><cmp>var2</cmp><cmp>price_tot_invo</cmp></riga>
+<riga><cmp>34</cmp><cmp>var2</cmp><cmp>price_tot_invo_p</cmp></riga>
+<riga><cmp>35</cmp><cmp>var2</cmp><cmp>vat_invo_p</cmp></riga>
+<riga><cmp>36</cmp><cmp>var2</cmp><cmp>tot_no_vat_invo_p</cmp></riga>
+<riga><cmp>37</cmp><cmp>var2</cmp><cmp>extra_cost_no_vat_invo_p</cmp></riga>
+<riga><cmp>38</cmp><cmp>var2</cmp><cmp>discount_no_vat_invo_p</cmp></riga>
+<riga><cmp>39</cmp><cmp>var2</cmp><cmp>rate_no_vat_invo_p</cmp></riga>
+<riga><cmp>40</cmp><cmp>var2</cmp><cmp>street_num_invo</cmp></riga>
+<riga><cmp>41</cmp><cmp>var2</cmp><cmp>fiscal_code_invo</cmp></riga>
+<riga><cmp>42</cmp><cmp>var2</cmp><cmp>vat_number_invo</cmp></riga>
+<riga><cmp>43</cmp><cmp>var2</cmp><cmp>street_invo</cmp></riga>
+<riga><cmp>44</cmp><cmp>var2</cmp><cmp>vat_num_invo</cmp></riga>
+<riga><cmp>45</cmp><cmp>var2</cmp><cmp>show_rate_invo</cmp></riga>
+<riga><cmp>46</cmp><cmp>var2</cmp><cmp>show_discount_invo</cmp></riga>
+<riga><cmp>47</cmp><cmp>var2</cmp><cmp>show_extra_cost_invo</cmp></riga>
+<riga><cmp>48</cmp><cmp>var2</cmp><cmp>repetition_num_invo</cmp></riga>
+<riga><cmp>49</cmp><cmp>var2</cmp><cmp>part_tot_no_vat_invo</cmp></riga>
+<riga><cmp>50</cmp><cmp>var2</cmp><cmp>part_tot_vat_invo</cmp></riga>
+<riga><cmp>51</cmp><cmp>var2</cmp><cmp>part_tot_no_vat_invo_p</cmp></riga>
+<riga><cmp>52</cmp><cmp>var2</cmp><cmp>part_tot_vat_invo_p</cmp></riga>
+<riga><cmp>53</cmp><cmp>var2</cmp><cmp>max_vat_num_invo</cmp></riga>
+<riga><cmp>54</cmp><cmp>var2</cmp><cmp>people_phrase_invo</cmp></riga>
+<riga><cmp>55</cmp><cmp>var2</cmp><cmp>merge_discount_with_rate</cmp></riga>
+<riga><cmp>56</cmp><cmp>var2</cmp><cmp>logo_invo</cmp></riga>
+<riga><cmp>58</cmp><cmp>var2</cmp><cmp>tax_cost_name_invo</cmp></riga>
+<riga><cmp>59</cmp><cmp>var2</cmp><cmp>show_tax_cost_invo</cmp></riga>
+<riga><cmp>60</cmp><cmp>var2</cmp><cmp>vat_invo</cmp></riga>
+<riga><cmp>61</cmp><cmp>var2</cmp><cmp>tot_costs_tax_invo</cmp></riga>
+<riga><cmp>62</cmp><cmp>var2</cmp><cmp>show_cost_as_taxes_invo</cmp></riga>
+<riga><cmp>63</cmp><cmp>var2</cmp><cmp>show_subtotal_invo</cmp></riga>
+<riga><cmp>106</cmp><cmp>var11</cmp><cmp>surname_rcsv</cmp></riga>
+<riga><cmp>107</cmp><cmp>var11</cmp><cmp>name_rcsv</cmp></riga>
+<riga><cmp>108</cmp><cmp>var11</cmp><cmp>unit_rcsv</cmp></riga>
+<riga><cmp>109</cmp><cmp>var11</cmp><cmp>rate_name_rcsv</cmp></riga>
+<riga><cmp>110</cmp><cmp>var11</cmp><cmp>email_rcsv</cmp></riga>
+<riga><cmp>111</cmp><cmp>var11</cmp><cmp>telephone_rcsv</cmp></riga>
+<riga><cmp>112</cmp><cmp>var11</cmp><cmp>rate_price_rcsv</cmp></riga>
+<riga><cmp>113</cmp><cmp>var11</cmp><cmp>total_price_rcsv</cmp></riga>
+<riga><cmp>114</cmp><cmp>var11</cmp><cmp>paid_rcsv</cmp></riga>
+<riga><cmp>115</cmp><cmp>var11</cmp><cmp>total_people_rcsv</cmp></riga>
+<riga><cmp>116</cmp><cmp>var11</cmp><cmp>comment_rcsv</cmp></riga>
+<riga><cmp>117</cmp><cmp>var11</cmp><cmp>arrival_rcsv</cmp></riga>
+<riga><cmp>118</cmp><cmp>var11</cmp><cmp>departure_rcsv</cmp></riga>
+<riga><cmp>86</cmp><cmp>var10</cmp><cmp>surname_csv</cmp></riga>
+<riga><cmp>87</cmp><cmp>var10</cmp><cmp>name_csv</cmp></riga>
+<riga><cmp>88</cmp><cmp>var10</cmp><cmp>nickname_csv</cmp></riga>
+<riga><cmp>89</cmp><cmp>var10</cmp><cmp>title_csv</cmp></riga>
+<riga><cmp>90</cmp><cmp>var10</cmp><cmp>email_csv</cmp></riga>
+<riga><cmp>91</cmp><cmp>var10</cmp><cmp>telephone_csv</cmp></riga>
+<riga><cmp>92</cmp><cmp>var10</cmp><cmp>fax_csv</cmp></riga>
+<riga><cmp>93</cmp><cmp>var10</cmp><cmp>nation_csv</cmp></riga>
+<riga><cmp>94</cmp><cmp>var10</cmp><cmp>region_csv</cmp></riga>
+<riga><cmp>95</cmp><cmp>var10</cmp><cmp>city_csv</cmp></riga>
+<riga><cmp>96</cmp><cmp>var10</cmp><cmp>address_csv</cmp></riga>
+<riga><cmp>97</cmp><cmp>var10</cmp><cmp>postal_code_csv</cmp></riga>
+<riga><cmp>98</cmp><cmp>var10</cmp><cmp>nationality_csv</cmp></riga>
+<riga><cmp>99</cmp><cmp>var10</cmp><cmp>birthdate_csv</cmp></riga>
+<riga><cmp>100</cmp><cmp>var10</cmp><cmp>vat_number_csv</cmp></riga>
+<riga><cmp>101</cmp><cmp>var10</cmp><cmp>tmp_csv</cmp></riga>
+<riga><cmp>102</cmp><cmp>var10</cmp><cmp>email2_csv</cmp></riga>
+<riga><cmp>103</cmp><cmp>var10</cmp><cmp>certified_email_csv</cmp></riga>
+<riga><cmp>104</cmp><cmp>var10</cmp><cmp>telephone2_csv</cmp></riga>
+<riga><cmp>105</cmp><cmp>var10</cmp><cmp>telephone3_csv</cmp></riga>
 <riga><cmp>1</cmp><cmp>var</cmp><cmp>Mr</cmp></riga>
-<riga><cmp>3</cmp><cmp>var</cmp><cmp>il</cmp></riga>
-<riga><cmp>4</cmp><cmp>var</cmp><cmp>Il_</cmp></riga>
-<riga><cmp>5</cmp><cmp>var</cmp><cmp>al</cmp></riga>
-<riga><cmp>6</cmp><cmp>var</cmp><cmp>e</cmp></riga>
-<riga><cmp>7</cmp><cmp>var</cmp><cmp>o</cmp></riga>
-<riga><cmp>13</cmp><cmp>var</cmp><cmp>el</cmp></riga>
-<riga><cmp>14</cmp><cmp>var</cmp><cmp>El_</cmp></riga>
-<riga><cmp>15</cmp><cmp>var</cmp><cmp>al3</cmp></riga>
-<riga><cmp>16</cmp><cmp>var</cmp><cmp>a</cmp></riga>
-<riga><cmp>17</cmp><cmp>var</cmp><cmp>o3</cmp></riga>
+<riga><cmp>2</cmp><cmp>var</cmp><cmp>il</cmp></riga>
+<riga><cmp>3</cmp><cmp>var</cmp><cmp>Il_</cmp></riga>
+<riga><cmp>4</cmp><cmp>var</cmp><cmp>al</cmp></riga>
+<riga><cmp>5</cmp><cmp>var</cmp><cmp>e</cmp></riga>
+<riga><cmp>6</cmp><cmp>var</cmp><cmp>o</cmp></riga>
+<riga><cmp>7</cmp><cmp>var</cmp><cmp>el</cmp></riga>
+<riga><cmp>8</cmp><cmp>var</cmp><cmp>El_</cmp></riga>
+<riga><cmp>9</cmp><cmp>var</cmp><cmp>al3</cmp></riga>
+<riga><cmp>10</cmp><cmp>var</cmp><cmp>a</cmp></riga>
+<riga><cmp>11</cmp><cmp>var</cmp><cmp>o3</cmp></riga>
 <riga><cmp>6</cmp><cmp>opzeml</cmp><cmp>;;</cmp></riga>
 <riga><cmp>7</cmp><cmp>opzeml</cmp><cmp>;SI;</cmp></riga>
 <riga><cmp>8</cmp><cmp>opzeml</cmp><cmp>;SI;</cmp></riga>
-<riga><cmp>6</cmp><cmp>oggetto</cmp><cmp>Availability</cmp></riga>
-<riga><cmp>7</cmp><cmp>oggetto</cmp><cmp>Reservation confirmation</cmp></riga>
-<riga><cmp>8</cmp><cmp>oggetto</cmp><cmp>Your reservation is approaching</cmp></riga>
+<riga><cmp>6</cmp><cmp>oggetto</cmp><cmp>mln_en:Availability>mln_es:Disponibilidad</cmp></riga>
+<riga><cmp>7</cmp><cmp>oggetto</cmp><cmp>mln_en:Reservation confirmation>mln_es:Confirmación reserva</cmp></riga>
+<riga><cmp>8</cmp><cmp>oggetto</cmp><cmp>mln_en:Your reservation is approaching>mln_es:Se acerca tu reserva</cmp></riga>
 <riga><cmp>1</cmp><cmp>nomi_con</cmp><cmp>1#?&Example#@&2#?&Invoice#@&3#?&Invoice - rtf#@&4#?&Last payment receipt#@&6#?&Availability email#@&7#?&Confirm reservation email#@&9#?&Cleaning Report#@&5#?&Receipt - rtf#@&8#?&Welcome email#@&10#?&Export clients data#@&11#?&Export reservations</cmp></riga>
 <riga><cmp>3</cmp><cmp>nomefile</cmp><cmp>Invoice</cmp></riga>
 <riga><cmp>6</cmp><cmp>mln_es</cmp><cmp>Estimad[o] Señor[a] [surname_avail_eml],
@@ -178,17 +185,17 @@ Saludos,
 [texto_citado_email_pedido]
 </cmp></riga>
 <riga><cmp>7</cmp><cmp>mln_es</cmp><cmp>Estimad[o] Señor[a] [surname_cre],
-le confirmo que he reservado a su nombre un apartamento[c num_personas_tot!=""] para [num_personas_tot] personas[/c] para el período desde el [fecha_inicial] hasta el [fecha_final]. El precio para dicho período es de [coste_tot_p] [nombre_divisa] (incluyendo costes asociados). Para completar la reserva es necesario pagar por adelantado [fianza_p] [nombre_divisa], puede efectuar este pago siguiendo este enlace:
+le confirmo que he reservado a su nombre un apartamento[c num_personas_tot!=""] para [num_personas_tot] personas[/c] para el período desde el [fecha_inicial] hasta el [fecha_final]. El precio para dicho período es de [coste_tot_p] [nombre_divisa] (incluyendo costes asociados). Para completar la reserva es necesario pagar por adelantado [fianza_p] [nombre_divisa], puede efectuar este pago siguiendo [c arr_links_cre(client_number)=""]este enlace[/c][c arr_links_cre(client_number)!=""]estos enlaces[/c]:
 
-[base_url_for_webpages]mdl_confirma_reserva.php?cn=[surn_no_sp_cre]&cp=[reservation_code]
+[arr_links_es_cre(client_number)][base_url_for_webpages]mdl_confirma_reserva.php?cn=[surn_no_sp_cre]&cp=[reservation_code]
 
-Si el enlace no funcionara correctamente puede intentar utilizar este otro:
+Si [c arr_links_cre(client_number)=""]el enlace no funcionara[/c][c arr_links_cre(client_number)!=""]los enlaces no funcionaran[/c] correctamente puede intentar utilizar este otro:
 
 [base_url_for_webpages]mdl_confirma_reserva.php
 
 e insertar después:
 
-Apellido: [apellido]
+[arr_access_data_es_cre(client_number)]Apellido: [apellido]
 Código reserva: [codigo_reserva]
 
 Estaré a su disposición para cualquier otra información que necesite.
@@ -200,11 +207,11 @@ Saludos,
 [sitio_web_estructura]
 </cmp></riga>
 <riga><cmp>8</cmp><cmp>mln_es</cmp><cmp>Estimad[o] Señor[a] [surname_wle],
-adjunto a este correo electrónico un archivo con nuestros contactos y un mapa para ayudarles a encontrarnos, avíseme si tiene problemas para leerlo.
+[c attachment1!=""]he adjuntado a este correo electrónico un archivo con nuestros contactos y un mapa para ayudarles a encontrarnos, avíseme si tiene problemas para leerlo.
 
-Si desea ahorrar tiempo a su llegada, puede completar los datos necesarios para registrarse desde aquí:
+[/c]Si desea ahorrar tiempo a su llegada, puede completar los datos necesarios para registrarse desde aquí:
 
-[base_url_for_webpages]mdl_confirma_reserva.php?cn=[surn_no_sp_wle]&cp=[reservation_code]&fe=1
+[arr_links_es_wle(client_number)][base_url_for_webpages]mdl_confirma_reserva.php?cn=[surn_no_sp_wle]&cp=[reservation_code]&fe=1
 
 [c estimated_checkin_time=""]¿Conoce su hora estimada de llegada? ¡Gracias! [/c]Estaré a su disposición para cualquier otra información que necesite.
 
@@ -231,17 +238,17 @@ Best regards,
 [enquiry_email_quoted_text]
 </cmp></riga>
 <riga><cmp>7</cmp><cmp>mln_en</cmp><cmp>Dear Mr[Mr] [surname_cre],
-I confirm you that I have reserved you an apartment[c people_num_tot!=""] for [people_num_tot] people[/c] in the period from [starting_date] to [ending_date]. The price for this period is [price_tot_p] [currency_name] (including cleaning and utilities). In order to complete the reservation you must send a down-payment of [deposit_p] [currency_name], you can pay it following this link:
+I confirm you that I have reserved you an apartment[c people_num_tot!=""] for [people_num_tot] people[/c] in the period from [starting_date] to [ending_date]. The price for this period is [price_tot_p] [currency_name] (including cleaning and utilities). In order to complete the reservation you must send a down-payment of [deposit_p] [currency_name], you can pay it following [c arr_links_cre(client_number)=""]this link[/c][c arr_links_cre(client_number)!=""]these links[/c]:
 
-[base_url_for_webpages]confirm_reservation_tpl.php?cn=[surn_no_sp_cre]&cp=[reservation_code]
+[arr_links_cre(client_number)][base_url_for_webpages]confirm_reservation_tpl.php?cn=[surn_no_sp_cre]&cp=[reservation_code]
 
-If the above link does not work properly for you, try this other one:
+If the above [c arr_links_cre(client_number)=""]link does not[/c][c arr_links_cre(client_number)!=""]links do not[/c] work properly for you, try this other one:
 
 [base_url_for_webpages]confirm_reservation_tpl.php
 
 and then insert:
 
-Surname: [surname]
+[arr_access_data_cre(client_number)]Surname: [surname]
 Reservation code: [reservation_code]
 
 Please let me know if you have any other question.
@@ -253,11 +260,11 @@ Best regards,
 [structure_website]
 </cmp></riga>
 <riga><cmp>8</cmp><cmp>mln_en</cmp><cmp>Dear Mr[Mr] [surname_wle],
-I’ve attached to this e-mail a file with our contacts and a map to help you find us, please let me know if you have problems reading it.
+[c attachment1!=""]I’ve attached to this e-mail a file with our contacts and a map to help you find us, please let me know if you have problems reading it.
 
-If you want to save time at your arrival you can fill in the data required for check-in from here:
+[/c]If you want to save time at your arrival you can fill in the data required for check-in from here:
 
-[base_url_for_webpages]confirm_reservation_tpl.php?cn=[surn_no_sp_wle]&cp=[reservation_code]&fe=1
+[arr_links_wle(client_number)][base_url_for_webpages]confirm_reservation_tpl.php?cn=[surn_no_sp_wle]&cp=[reservation_code]&fe=1
 
 [c estimated_checkin_time=""]Do you know your estimated time of arrival? Thanks! [/c]Please let me know if you have any other question.
 
@@ -286,10 +293,10 @@ tr.bgclr { background-color: #eeeeee; }
 <riga><cmp>9</cmp><cmp>foothtm</cmp><cmp></body>
 </html>
 </cmp></riga>
-<riga><cmp>10</cmp><cmp>est_txt</cmp><cmp>csv</cmp></riga>
-<riga><cmp>11</cmp><cmp>est_txt</cmp><cmp>csv</cmp></riga>
 <riga><cmp>2</cmp><cmp>dir</cmp><cmp>~</cmp></riga>
 <riga><cmp>3</cmp><cmp>dir</cmp><cmp>~</cmp></riga>
+<riga><cmp>10</cmp><cmp>datdownl</cmp><cmp>csv></cmp></riga>
+<riga><cmp>11</cmp><cmp>datdownl</cmp><cmp>csv></cmp></riga>
 <riga><cmp>10</cmp><cmp>contrtxt</cmp><cmp>Surname,Name,Nickname,Title,Sex,Email,2nd Email,Certified Email,Telephone,2nd Telephone,3rd Telephone,Fax,Language,Nation of Residency,Region of Residency,City of Residency,Address,Postal Code,Nationality,Date of Birth,Vat Number
 [r][surname_csv],[name_csv],[nickname_csv],[title_csv],[sex],[email_csv],[email2_csv],[certified_email_csv],[telephone_csv],[telephone2_csv],[telephone3_csv],[fax_csv],[language_code],[nation_csv],[region_csv],[city_csv],[address_csv],[postal_code_csv],[nationality_csv],[birthdate_csv],[vat_number_csv]
 [/r]</cmp></riga>
@@ -530,14 +537,14 @@ tr.bgclr { background-color: #eeeeee; }
 \pard\intbl\pard\plain \intbl\ltrpar\s1\cf0\cbpat3\ql\rtlch\afs12\lang255\ltrch\dbch\langfe255\hich\fs12\lang1040\loch\fs12\lang1040 
 \cell\pard\plain \intbl\ltrpar\s1\cf0\ql\rtlch\afs24\lang255\ltrch\dbch\langfe255\hich\fs24\lang1040\loch\fs24\lang1040 
 \cell\row\pard \trowd\trql\trleft276\trpaddft3\trpaddt55\trpaddfl3\trpaddl55\trpaddfb3\trpaddb55\trpaddfr3\trpaddr55\clbrdrl\brdrs\brdrw1\brdrcf1\clbrdrb\brdrs\brdrw1\brdrcf1\clcbpat2\cellx7792\clbrdrl\brdrs\brdrw1\brdrcf1\clbrdrb\brdrs\brdrw1\brdrcf1\clbrdrr\brdrs\brdrw1\brdrcf1\clcbpat2\clvertalb\cellx9637
-\pard\intbl\pard\plain \intbl\ltrpar\s1{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\ql\rtlch\af1\afs24\lang255\ltrch\dbch\af1\langfe255\hich\f1\fs24\lang1040\loch\f1\fs24\lang1040 {\rtlch \ltrch\loch\f1\fs24\lang1040\i0\b0 [c starting_date!=""]Reservation from [starting_date] to [ending_date][/c][c people_num_tot!=""] for [people_num_tot] persons[/c][c starting_date=""][last_payment_method][/c]}
-\cell\pard\plain \intbl\ltrpar\s1{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\qr\rtlch\af1\afs24\lang255\ltrch\dbch\af1\langfe255\hich\f1\fs24\lang1040\loch\f1\fs24\lang1040 {\rtlch \ltrch\loch\f1\fs24\lang1040\i0\b0 [c show_method_recei="1"][currency_name] [last_payment_value_p][/c]}
+\pard\intbl\pard\plain \intbl\ltrpar\s1{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\ql\rtlch\af1\afs24\lang255\ltrch\dbch\af1\langfe255\hich\f1\fs24\lang1040\loch\f1\fs24\lang1040 {\rtlch \ltrch\loch\f1\fs24\lang1040\i0\b0 [c starting_date!=""]Reservation from [starting_date] to [ending_date][/c][c people_num_tot!=""] for [people_num_tot] persons[/c][r5][c starting_date="" & last_payment="1"][payment_method][/c][/r5]}
+\cell\pard\plain \intbl\ltrpar\s1{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\qr\rtlch\af1\afs24\lang255\ltrch\dbch\af1\langfe255\hich\f1\fs24\lang1040\loch\f1\fs24\lang1040 {\rtlch \ltrch\loch\f1\fs24\lang1040\i0\b0 [r5][c show_method_recei="1" & last_payment="1"][currency_name] [payment_value_p][/c][/r5]}
 \cell\row\pard \trowd\trql\trleft276\trrh-119\trpaddft3\trpaddt55\trpaddfl3\trpaddl55\trpaddfb3\trpaddb55\trpaddfr3\trpaddr55\clbrdrt\brdrs\brdrw1\brdrcf1\clbrdrb\brdrs\brdrw1\brdrcf1\clcbpat3\cellx7792\clbrdrt\brdrs\brdrw1\brdrcf1\clbrdrb\brdrs\brdrw1\brdrcf1\clcbpat3\clvertalb\cellx9637
 \pard\intbl\pard\plain \intbl\ltrpar\s1{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\ql\rtlch\af1\afs12\lang255\ltrch\dbch\af1\langfe255\hich\f1\fs12\lang1040\loch\f1\fs12\lang1040 
 \cell\pard\plain \intbl\ltrpar\s1{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\qr\rtlch\af1\afs24\lang255\ltrch\dbch\af1\langfe255\hich\f1\fs24\lang1040\loch\f1\fs24\lang1040 
 \cell\row\pard \trowd\trql\trleft276\trpaddft3\trpaddt55\trpaddfl3\trpaddl55\trpaddfb3\trpaddb55\trpaddfr3\trpaddr55\clbrdrt\brdrs\brdrw1\brdrcf1\clbrdrl\brdrs\brdrw1\brdrcf1\clbrdrb\brdrs\brdrw1\brdrcf1\clbrdrr\brdrs\brdrw1\brdrcf1\clcbpat4\cellx7792\clbrdrt\brdrs\brdrw1\brdrcf1\clbrdrb\brdrs\brdrw1\brdrcf1\clbrdrr\brdrs\brdrw1\brdrcf1\clcbpat4\clvertalb\cellx9637
 \pard\intbl\pard\plain \intbl\ltrpar\s1\cf0\ql\rtlch\afs24\lang255\ltrch\dbch\langfe255\hich\fs24\lang1040\loch\fs24\lang1040 {\rtlch \ltrch\loch\f1\fs24\lang1040\i0\b0 Total paid}
-\cell\pard\plain \intbl\ltrpar\s1\cf0\qr\rtlch\afs24\lang255\ab\ltrch\dbch\langfe255\hich\fs24\lang1040\b\loch\fs24\lang1040\b {\rtlch \ltrch\loch\f1\fs24\lang1040\i0\b [currency_name] [last_payment_value_p]}
+\cell\pard\plain \intbl\ltrpar\s1\cf0\qr\rtlch\afs24\lang255\ab\ltrch\dbch\langfe255\hich\fs24\lang1040\b\loch\fs24\lang1040\b {\rtlch \ltrch\loch\f1\fs24\lang1040\i0\b [currency_name] [r5][c last_payment="1"][payment_value_p][/c][/r5]}
 \cell\row\pard \pard\plain \ltrpar\s1\cf0\ql\rtlch\afs24\lang255\ltrch\dbch\langfe255\hich\fs24\lang1040\loch\fs24\lang1040 
 \par \pard\plain \ltrpar\s1{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\rtlch\af1\afs24\lang255\ltrch\dbch\af1\langfe255\hich\f1\fs24\lang1040\loch\f1\fs24\lang1040 
 \par \pard\plain \ltrpar\s1{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\brdrb\brdrs\brdrw20\brdrcf1\brsp20{\*\brdrb\brdlncol1\brdlnin0\brdlnout20\brdlndist0}\brsp20\ql\rtlch\af1\afs24\lang255\ltrch\dbch\af1\langfe255\hich\f1\fs24\lang1040\loch\f1\fs24\lang1040 
@@ -565,7 +572,8 @@ The owner</P>
 __________&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;____________</P>
 <P ALIGN="JUSTIFY"></P>
 </FONT></cmp></riga>
-<riga><cmp>2</cmp><cmp>contrhtm</cmp><cmp><div class="invoice_frame" style="width: 780px; margin: 10px; border: solid 1px black; padding: 30px; font-size: 12px; page-break-after: always">
+<riga><cmp>2</cmp><cmp>contrhtm</cmp><cmp><div style="page-break-after: always;"><br>
+<div class="invoice_frame" style="width: 780px; margin-left: 10px; margin-right: 10px; border: solid 1px black; padding: 30px; font-size: 12px;">
 [r][r3][/r3] [/r]
 
 <div class="structure_data">
@@ -640,6 +648,7 @@ Invoice n. [document_progressive_number] released on [today]
 <br>
 
 
+</div>
 </div></cmp></riga>
 <riga><cmp>4</cmp><cmp>contrhtm</cmp><cmp><div class="invoice_frame" style="width: 780px; margin: 10px; border: solid 1px black; padding: 30px; font-size: 12px; page-break-after: always">
 
@@ -671,13 +680,13 @@ Receipt[c document_progressive_number!=""] n. [document_progressive_number][/c] 
 
 
 <table class="invoice_items" border="1" cellpadding="5" style="border: 1px black solid; width: 740px; margin-left: auto; margin-right: 5px; margin-top: 8px; border-collapse: collapse; background-color: #e6e6e6;">
-<tr><td style="border-color: black;">[c starting_date!=""]Reservation from [starting_date] to [ending_date][/c][c people_num_tot!=""] for [people_num_tot] persons[/c][c starting_date=""][last_payment_method][/c]</td>
-<td style="width: 120px; text-align: right; border-color: black;">[c show_method_recei="1"][currency_name] [last_payment_value_p][/c]</td></tr>
+<tr><td style="border-color: black;">[c starting_date!=""]Reservation from [starting_date] to [ending_date][/c][c people_num_tot!=""] for [people_num_tot] persons[/c][r5][c starting_date="" & last_payment="1"][payment_method][/c][/r5]</td>
+<td style="width: 120px; text-align: right; border-color: black;">[r5][c show_method_recei="1" & last_payment="1"][currency_name] [payment_value_p][/c][/r5]</td></tr>
 </table>
 
 <table class="invoice_total" border="1" cellpadding="5" style="border: 1px black solid; width: 740px; margin-left: auto; margin-right: 5px; margin-top: 8px; border-collapse: collapse; background-color: #cccccc;">
 <tr><td style="border-color: black;">Total paid</td>
-<td style="width: 120px; text-align: right; border-color: black;">[currency_name] [last_payment_value_p]</td></tr>
+<td style="width: 120px; text-align: right; border-color: black;">[currency_name] [r5][c last_payment="1"][payment_value_p][/c][/r5]</td></tr>
 </table>
 
 
@@ -706,25 +715,25 @@ Receipt[c document_progressive_number!=""] n. [document_progressive_number][/c] 
 <riga><cmp>6</cmp><cmp>contreml</cmp><cmp>#!mln!#en</cmp></riga>
 <riga><cmp>7</cmp><cmp>contreml</cmp><cmp>#!mln!#en</cmp></riga>
 <riga><cmp>8</cmp><cmp>contreml</cmp><cmp>#!mln!#en</cmp></riga>
-<riga><cmp>5</cmp><cmp>cond9</cmp><cmp>ind#@?#@?set#%?101300#%?=#%?txt#%?30#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>6</cmp><cmp>cond9</cmp><cmp>ind#@?#@?date#%?101293#%?data_inizio_selezione#%?is#%?2#%?g</cmp></riga>
+<riga><cmp>5</cmp><cmp>cond9</cmp><cmp>ind#@?#@?set#%?82#%?=#%?txt#%?30#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>6</cmp><cmp>cond9</cmp><cmp>ind#@?#@?date#%?75#%?data_inizio_selezione#%?is#%?2#%?g</cmp></riga>
 <riga><cmp>7</cmp><cmp>cond9</cmp><cmp>ind#@?or#$?data_inizio_selezione#%?=#%?txt#%?#$?var_tmp_clean#%?>#%?var#%?data_fine_selezione#@?set#%?-1#%?=#%?txt#%?This document must be viewed from the table with departures and current reservations (entry "reservations" in top menu --&gt; "depart. and current") or at least 2 days must be selected.#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>8</cmp><cmp>cond9</cmp><cmp>ind#@?#@?date#%?101282#%?data_inizio_selezione#%?is#%?1#%?g</cmp></riga>
-<riga><cmp>9</cmp><cmp>cond9</cmp><cmp>rpt#@?#@?set#%?101285#%?=#%?var#%?unita_occupata#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>10</cmp><cmp>cond9</cmp><cmp>rpt#@?#@?set#%?101283#%?=#%?txt#%?0#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>15</cmp><cmp>cond9</cmp><cmp>rpt#@?#@?set#%?101284#%?=#%?txt#%?0#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>16</cmp><cmp>cond9</cmp><cmp>rpt#@?#$?data_inizio#%?=#%?var#%?report_date_clean#@?set#%?101283#%?=#%?txt#%?1#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>17</cmp><cmp>cond9</cmp><cmp>rpt#@?#$?data_fine#%?=#%?var#%?report_date_clean#@?set#%?101284#%?=#%?txt#%?1#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>18</cmp><cmp>cond9</cmp><cmp>run#@?#@?set#%?101285#%?=#%?var#%?nome_unita#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>8</cmp><cmp>cond9</cmp><cmp>ind#@?#@?date#%?64#%?data_inizio_selezione#%?is#%?1#%?g</cmp></riga>
+<riga><cmp>9</cmp><cmp>cond9</cmp><cmp>rpt#@?#@?set#%?67#%?=#%?var#%?unita_occupata#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>10</cmp><cmp>cond9</cmp><cmp>rpt#@?#@?set#%?65#%?=#%?txt#%?0#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>15</cmp><cmp>cond9</cmp><cmp>rpt#@?#@?set#%?66#%?=#%?txt#%?0#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>16</cmp><cmp>cond9</cmp><cmp>rpt#@?#$?data_inizio#%?=#%?var#%?report_date_clean#@?set#%?65#%?=#%?txt#%?1#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>17</cmp><cmp>cond9</cmp><cmp>rpt#@?#$?data_fine#%?=#%?var#%?report_date_clean#@?set#%?66#%?=#%?txt#%?1#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>18</cmp><cmp>cond9</cmp><cmp>run#@?#@?set#%?67#%?=#%?var#%?nome_unita#%?txt#%?#%?txt#%?#%?</cmp></riga>
 <riga><cmp>19</cmp><cmp>cond9</cmp><cmp>rpt#@?and#$?arrival_clean#%?=#%?txt#%?1#$?situation_clean(unit_clean)#%?!=#%?txt#%?#@?set#%?a2322#%?=#%?txt#%?DEP+ARR#%?txt#%?#%?txt#%?#%?</cmp></riga>
 <riga><cmp>20</cmp><cmp>cond9</cmp><cmp>rpt#@?and#$?departure_clean#%?=#%?txt#%?1#$?situation_clean(unit_clean)#%?!=#%?txt#%?#@?set#%?a2322#%?=#%?txt#%?DEP+ARR#%?txt#%?#%?txt#%?#%?</cmp></riga>
 <riga><cmp>31</cmp><cmp>cond9</cmp><cmp>rpt#@?and#$?data_inizio#%?<#%?var#%?report_date_clean#$?data_fine#%?>#%?var#%?report_date_clean#@?set#%?a2322#%?=#%?txt#%?STAY#%?txt#%?#%?txt#%?#%?</cmp></riga>
 <riga><cmp>33</cmp><cmp>cond9</cmp><cmp>rpt#@?and#$?arrival_clean#%?=#%?txt#%?1#$?situation_clean(unit_clean)#%?=#%?txt#%?#@?set#%?a2322#%?=#%?txt#%?ARRIVAL#%?txt#%?#%?txt#%?#%?</cmp></riga>
 <riga><cmp>34</cmp><cmp>cond9</cmp><cmp>rpt#@?and#$?departure_clean#%?=#%?txt#%?1#$?situation_clean(unit_clean)#%?=#%?txt#%?#@?set#%?a2322#%?=#%?txt#%?DEPARTURE#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>35</cmp><cmp>cond9</cmp><cmp>ind#@?#@?date#%?101287#%?report_date_clean#%?da#%?0#%?g</cmp></riga>
-<riga><cmp>36</cmp><cmp>cond9</cmp><cmp>rpt#@?#@?set#%?101293#%?=#%?txt#%?#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>37</cmp><cmp>cond9</cmp><cmp>rpt#@?or#$?data_inizio#%?=#%?var#%?report_date_clean#$?data_inizio#%?<#%?var#%?report_date_clean#@?set#%?101293#%?=#%?var#%?num_persone#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>38</cmp><cmp>cond9</cmp><cmp>rpt#@?or#$?data_fine#%?=#%?var#%?report_date_clean#$?data_fine#%?<#%?var#%?report_date_clean#@?set#%?101293#%?=#%?txt#%?#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>35</cmp><cmp>cond9</cmp><cmp>ind#@?#@?date#%?69#%?report_date_clean#%?da#%?0#%?g</cmp></riga>
+<riga><cmp>36</cmp><cmp>cond9</cmp><cmp>rpt#@?#@?set#%?75#%?=#%?txt#%?#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>37</cmp><cmp>cond9</cmp><cmp>rpt#@?or#$?data_inizio#%?=#%?var#%?report_date_clean#$?data_inizio#%?<#%?var#%?report_date_clean#@?set#%?75#%?=#%?var#%?num_persone#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>38</cmp><cmp>cond9</cmp><cmp>rpt#@?or#$?data_fine#%?=#%?var#%?report_date_clean#$?data_fine#%?<#%?var#%?report_date_clean#@?set#%?75#%?=#%?txt#%?#%?txt#%?#%?txt#%?#%?</cmp></riga>
 <riga><cmp>39</cmp><cmp>cond9</cmp><cmp>rpt#@?#$?var_tmp_clean#%?!=#%?txt#%?#@?set#%?a2323#%?=#%?var#%?var_tmp_clean#%?txt#%?#%?txt#%?#%?</cmp></riga>
 <riga><cmp>40</cmp><cmp>cond9</cmp><cmp>rpt#@?and#$?var_tmp_clean#%?!=#%?txt#%?#$?n_letti_agg#%?!=#%?txt#%?#@?set#%?a2323#%?.=#%?txt#%?+#%?txt#%?#%?txt#%?#%?</cmp></riga>
 <riga><cmp>41</cmp><cmp>cond9</cmp><cmp>rpt#@?and#$?var_tmp_clean#%?!=#%?txt#%?#$?n_letti_agg#%?!=#%?txt#%?#@?set#%?a2323#%?.=#%?var#%?n_letti_agg#%?txt#%?#%?txt#%?#%?</cmp></riga>
@@ -732,338 +741,374 @@ Receipt[c document_progressive_number!=""] n. [document_progressive_number][/c] 
 <riga><cmp>43</cmp><cmp>cond9</cmp><cmp>rpt#@?#$?data_fine#%?=#%?var#%?report_date_clean#@?set#%?a2324#%?=#%?var#%?num_persone#%?txt#%?#%?txt#%?#%?</cmp></riga>
 <riga><cmp>44</cmp><cmp>cond9</cmp><cmp>rpt#@?and#$?data_fine#%?=#%?var#%?report_date_clean#$?n_letti_agg#%?!=#%?txt#%?#@?set#%?a2324#%?.=#%?txt#%?+#%?txt#%?#%?txt#%?#%?</cmp></riga>
 <riga><cmp>45</cmp><cmp>cond9</cmp><cmp>rpt#@?and#$?data_fine#%?=#%?var#%?report_date_clean#$?n_letti_agg#%?!=#%?txt#%?#@?set#%?a2324#%?.=#%?var#%?n_letti_agg#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>46</cmp><cmp>cond9</cmp><cmp>run#@?#@?oper#%?101288#%?people_tot_clean#%?+#%?var#%?people_num_clean(unit_clean)#%?</cmp></riga>
+<riga><cmp>46</cmp><cmp>cond9</cmp><cmp>run#@?#@?oper#%?70#%?people_tot_clean#%?+#%?var#%?people_num_clean(unit_clean)#%?</cmp></riga>
 <riga><cmp>47</cmp><cmp>cond9</cmp><cmp>rpt#@?#$?data_fine#%?=#%?var#%?report_date_clean#@?set#%?a2326#%?=#%?var#%?num_persone_tot#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>48</cmp><cmp>cond9</cmp><cmp>run#@?#@?oper#%?101289#%?dep_people_tot_clean#%?+#%?var#%?dep_people_num_clean(unit_clean)#%?</cmp></riga>
+<riga><cmp>48</cmp><cmp>cond9</cmp><cmp>run#@?#@?oper#%?71#%?dep_people_tot_clean#%?+#%?var#%?dep_people_num_clean(unit_clean)#%?</cmp></riga>
 <riga><cmp>49</cmp><cmp>cond9</cmp><cmp>rpt#@?#$?data_inizio#%?=#%?var#%?report_date_clean#@?set#%?a2327#%?=#%?var#%?num_persone_tot#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>50</cmp><cmp>cond9</cmp><cmp>run#@?#@?oper#%?101290#%?arr_people_tot_clean#%?+#%?var#%?arr_people_num_clean(unit_clean)#%?</cmp></riga>
+<riga><cmp>50</cmp><cmp>cond9</cmp><cmp>run#@?#@?oper#%?72#%?arr_people_tot_clean#%?+#%?var#%?arr_people_num_clean(unit_clean)#%?</cmp></riga>
 <riga><cmp>51</cmp><cmp>cond9</cmp><cmp>rpt#@?#$?data_inizio#%?=#%?var#%?report_date_clean#@?set#%?a2328#%?=#%?var#%?orario_entrata_stimato#%?var#%?report_date_clean#%?txt#%?#%?</cmp></riga>
-<riga><cmp>52</cmp><cmp>cond9</cmp><cmp>ind#@?#@?set#%?101291#%?=#%?txt#%?0#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>52</cmp><cmp>cond9</cmp><cmp>ind#@?#@?set#%?73#%?=#%?txt#%?0#%?txt#%?#%?txt#%?#%?</cmp></riga>
 <riga><cmp>53</cmp><cmp>cond9</cmp><cmp>rca#@?#$?repetition_number_clean#%?!=#%?txt#%?1#@?break#%?cont</cmp></riga>
-<riga><cmp>54</cmp><cmp>cond9</cmp><cmp>rca#@?#$?giorni_costo_agg#%?=#%?txt#%?#@?break#%?cont</cmp></riga>
-<riga><cmp>55</cmp><cmp>cond9</cmp><cmp>rca#@?#$?ec_pos_clean(nome_costo_agg)#%?=#%?txt#%?#@?oper#%?101291#%?ec_num_clean#%?+#%?txt#%?1#%?</cmp></riga>
-<riga><cmp>56</cmp><cmp>cond9</cmp><cmp>rca#@?#$?ec_pos_clean(nome_costo_agg)#%?=#%?txt#%?#@?set#%?a2329#%?=#%?var#%?nome_costo_agg#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>57</cmp><cmp>cond9</cmp><cmp>ind#@?#@?set#%?101292#%?=#%?txt#%?0#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>58</cmp><cmp>cond9</cmp><cmp>inr#@?#@?oper#%?101292#%?repetition_number_clean#%?+#%?txt#%?1#%?</cmp></riga>
-<riga><cmp>59</cmp><cmp>cond9</cmp><cmp>rca#@?#$?ec_pos_clean(nome_costo_agg)#%?=#%?txt#%?#@?set#%?a2330#%?=#%?var#%?ec_num_clean#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>60</cmp><cmp>cond9</cmp><cmp>rca#@?#@?cont</cmp></riga>
-<riga><cmp>61</cmp><cmp>cond9</cmp><cmp>run#@?#@?set#%?101293#%?=#%?txt#%?0#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>62</cmp><cmp>cond9</cmp><cmp>run#@?#$?row_class_clean#%?!=#%?txt#%?#@?set#%?101293#%?=#%?txt#%?1#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>63</cmp><cmp>cond9</cmp><cmp>run#@?#$?var_tmp_clean#%?!=#%?txt#%?1#@?set#%?101286#%?=#%?txt#%? class="bgclr"#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>64</cmp><cmp>cond9</cmp><cmp>run#@?#$?var_tmp_clean#%?=#%?txt#%?1#@?set#%?101286#%?=#%?txt#%?#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>65</cmp><cmp>cond9</cmp><cmp>rar2329#@?#@?set#%?101294#%?.=#%?txt#%?<td><small><small>#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>66</cmp><cmp>cond9</cmp><cmp>rar2329#@?#@?set#%?101294#%?.=#%?var#%?extra_costs_clean(ec_num_clean)#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>67</cmp><cmp>cond9</cmp><cmp>rar2329#@?#@?set#%?101294#%?.=#%?txt#%?</small></small></td>#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>68</cmp><cmp>cond9</cmp><cmp>rar2329#@?#@?set#%?101295#%?.=#%?txt#%?<td><!-- cost#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>69</cmp><cmp>cond9</cmp><cmp>rar2329#@?#@?set#%?101295#%?.=#%?var#%?ec_num_clean#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>71</cmp><cmp>cond9</cmp><cmp>rar2329#@?#@?set#%?101295#%?.=#%?txt#%? --></td>#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>72</cmp><cmp>cond9</cmp><cmp>rca#@?#$?repetition_number_clean#%?<#%?txt#%?2#@?break#%?cont</cmp></riga>
-<riga><cmp>73</cmp><cmp>cond9</cmp><cmp>rca#@?#$?array_dates_clean(day_clean)#%?!=#%?var#%?report_date_clean#@?break#%?cont</cmp></riga>
-<riga><cmp>74</cmp><cmp>cond9</cmp><cmp>rca#@?#$?ec_pos_clean(nome_costo_agg)#%?=#%?txt#%?#@?break#%?cont</cmp></riga>
-<riga><cmp>75</cmp><cmp>cond9</cmp><cmp>rca#@?#@?set#%?101285#%?=#%?var#%?unita_occupata#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>76</cmp><cmp>cond9</cmp><cmp>rca#@?#$?ec_unit_row_clean(unit_clean)#%?=#%?txt#%?#@?set#%?a2332#%?=#%?var#%?ec_table_row_clean#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>77</cmp><cmp>cond9</cmp><cmp>ind#@?#@?array#%?a2333#%?dat#%?</cmp></riga>
-<riga><cmp>78</cmp><cmp>cond9</cmp><cmp>rca#@?#@?set#%?101293#%?=#%?txt#%?<!-- cost#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>79</cmp><cmp>cond9</cmp><cmp>rca#@?#@?set#%?101293#%?.=#%?var#%?ec_pos_clean(nome_costo_agg)#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>80</cmp><cmp>cond9</cmp><cmp>rca#@?#@?set#%?101293#%?.=#%?txt#%? -->#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>82</cmp><cmp>cond9</cmp><cmp>rca#@?#@?set#%?a2332#%?=#%?var#%?ec_unit_row_clean(unit_clean)#%?var#%?var_tmp_clean#%?var#%?moltiplica_max_costo_agg#%?</cmp></riga>
-<riga><cmp>83</cmp><cmp>cond9</cmp><cmp>rca#@?#@?set#%?101291#%?=#%?var#%?ec_pos_clean(nome_costo_agg)#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>84</cmp><cmp>cond9</cmp><cmp>rca#@?#@?oper#%?a2334#%?total_ec_clean(ec_num_clean)#%?+#%?var#%?moltiplica_max_costo_agg#%?</cmp></riga>
-<riga><cmp>85</cmp><cmp>cond9</cmp><cmp>rca#@?#@?cont</cmp></riga>
-<riga><cmp>86</cmp><cmp>cond9</cmp><cmp>run#@?#$?ec_unit_row_clean(unit_clean)#%?=#%?txt#%?#@?set#%?a2332#%?=#%?var#%?ec_table_row_clean#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>87</cmp><cmp>cond9</cmp><cmp>rpt#@?#$?data_inizio#%?=#%?var#%?report_date_clean#@?trunc#%?a2328#%?-3#%?#%?ini</cmp></riga>
-<riga><cmp>88</cmp><cmp>cond9</cmp><cmp>rar2329#@?#@?set#%?a2334#%?=#%?txt#%?0#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>89</cmp><cmp>cond9</cmp><cmp>ind#@?#@?set#%?101297#%?=#%?txt#%?<tr class="headrow"><td>Room</td><td>People</td><td>Situation</td><td><small><small>Departing<br>People</small></small></td><td><small><small>Arrival<br>Time</small></small></td>#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>90</cmp><cmp>cond9</cmp><cmp>run#@?#@?oper#%?101298#%?unit_repetition_number_clean#%?+#%?txt#%?1#%?</cmp></riga>
-<riga><cmp>91</cmp><cmp>cond9</cmp><cmp>run#@?#@?set#%?101299#%?=#%?txt#%?#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>92</cmp><cmp>cond9</cmp><cmp>run#@?#$?unit_repetition_number_clean#%?=#%?var#%?number_repeat_head_row_clean#@?set#%?101299#%?=#%?var#%?header_row_table_clean#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>93</cmp><cmp>cond9</cmp><cmp>run#@?#$?unit_repetition_number_clean#%?=#%?var#%?number_repeat_head_row_clean#@?set#%?101299#%?.=#%?var#%?ec_table_head_clean#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>94</cmp><cmp>cond9</cmp><cmp>run#@?#$?unit_repetition_number_clean#%?=#%?var#%?number_repeat_head_row_clean#@?set#%?101299#%?.=#%?txt#%?</tr>#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>95</cmp><cmp>cond9</cmp><cmp>run#@?#$?unit_repetition_number_clean#%?=#%?var#%?number_repeat_head_row_clean#@?set#%?101298#%?=#%?txt#%?0#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>1</cmp><cmp>cond8</cmp><cmp>rpt#@?#@?set#%?101606#%?=#%?var#%?cognome#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>2</cmp><cmp>cond8</cmp><cmp>rpt#@?#@?set#%?101607#%?=#%?var#%?cognome#%?txt#%? #%?txt#%?#%?</cmp></riga>
-<riga><cmp>3</cmp><cmp>cond8</cmp><cmp>rpt#@?#@?trunc#%?101607#%?6#%?#%?ini</cmp></riga>
-<riga><cmp>4</cmp><cmp>cond8</cmp><cmp>rpt#@?#@?set#%?101607#%?=#%?var#%?surn_no_sp_wle#%?txt#%?#%?txt#%?#%?url</cmp></riga>
-<riga><cmp>1</cmp><cmp>cond7</cmp><cmp>rpt#@?#@?set#%?305#%?=#%?var#%?cognome#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>2</cmp><cmp>cond7</cmp><cmp>rpt#@?#@?set#%?306#%?=#%?var#%?cognome#%?txt#%? #%?txt#%?#%?</cmp></riga>
-<riga><cmp>3</cmp><cmp>cond7</cmp><cmp>rpt#@?#@?trunc#%?306#%?6#%?#%?ini</cmp></riga>
-<riga><cmp>4</cmp><cmp>cond7</cmp><cmp>rpt#@?#@?set#%?306#%?=#%?var#%?surn_no_sp_cre#%?txt#%?#%?txt#%?#%?url</cmp></riga>
-<riga><cmp>1</cmp><cmp>cond6</cmp><cmp>rpt#@?#@?set#%?102#%?=#%?var#%?cognome#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>87</cmp><cmp>cond4</cmp><cmp>rpt#@?#$?codice_fiscale_struttura#%?!=#%?txt#%?#@?set#%?73#%?=#%?txt#%?- Fiscal Code  #%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>88</cmp><cmp>cond4</cmp><cmp>rpt#@?#$?codice_fiscale_struttura#%?!=#%?txt#%?#@?set#%?73#%?.=#%?var#%?codice_fiscale_struttura#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>89</cmp><cmp>cond4</cmp><cmp>rpt#@?#@?set#%?76#%?=#%?txt#%?#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>92</cmp><cmp>cond4</cmp><cmp>rpt#@?#$?telefono_struttura#%?!=#%?txt#%?#@?set#%?76#%?=#%?txt#%?Tel. #%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>94</cmp><cmp>cond4</cmp><cmp>rpt#@?#$?telefono_struttura#%?!=#%?txt#%?#@?set#%?76#%?.=#%?var#%?telefono_struttura#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>97</cmp><cmp>cond4</cmp><cmp>rpt#@?and#$?telefono_struttura#%?!=#%?txt#%?#$?sito_web_struttura#%?!=#%?txt#%?#@?set#%?76#%?.=#%?txt#%? - #%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>98</cmp><cmp>cond4</cmp><cmp>rpt#@?#$?sito_web_struttura#%?!=#%?txt#%?#@?set#%?76#%?.=#%?var#%?sito_web_struttura#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>99</cmp><cmp>cond4</cmp><cmp>rpt#@?#@?set#%?74#%?=#%?var#%?nome#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>100</cmp><cmp>cond4</cmp><cmp>rpt#@?#@?set#%?75#%?=#%?var#%?cognome#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>101</cmp><cmp>cond4</cmp><cmp>rpt#@?#@?set#%?98#%?=#%?txt#%?#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>102</cmp><cmp>cond4</cmp><cmp>rpt#@?#$?numcivico#%?!=#%?txt#%?#@?set#%?98#%?=#%?txt#%?, #%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>103</cmp><cmp>cond4</cmp><cmp>rpt#@?#$?numcivico#%?!=#%?txt#%?#@?set#%?98#%?.=#%?var#%?numcivico#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>104</cmp><cmp>cond4</cmp><cmp>rpt#@?#@?set#%?68#%?=#%?txt#%?#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>105</cmp><cmp>cond4</cmp><cmp>rpt#@?#$?citta#%?!=#%?txt#%?#@?set#%?68#%?.=#%?var#%?citta#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>107</cmp><cmp>cond4</cmp><cmp>rpt#@?#$?regione#%?!=#%?txt#%?#@?set#%?68#%?.=#%?txt#%? (#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>108</cmp><cmp>cond4</cmp><cmp>rpt#@?#$?regione#%?!=#%?txt#%?#@?set#%?68#%?.=#%?var#%?regione#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>109</cmp><cmp>cond4</cmp><cmp>rpt#@?#$?regione#%?!=#%?txt#%?#@?set#%?68#%?.=#%?txt#%?)#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>110</cmp><cmp>cond4</cmp><cmp>rpt#@?#@?set#%?69#%?=#%?txt#%?#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>111</cmp><cmp>cond4</cmp><cmp>rpt#@?#$?cap#%?!=#%?txt#%?#@?set#%?69#%?.=#%?var#%?cap#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>112</cmp><cmp>cond4</cmp><cmp>rpt#@?and#$?cap#%?!=#%?txt#%?#$?nazione#%?!=#%?txt#%?#@?set#%?69#%?.=#%?txt#%? #%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>113</cmp><cmp>cond4</cmp><cmp>rpt#@?#$?nazione#%?!=#%?txt#%?#@?set#%?69#%?.=#%?var#%?nazione#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>114</cmp><cmp>cond4</cmp><cmp>rpt#@?#@?set#%?421#%?=#%?txt#%?0#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>115</cmp><cmp>cond4</cmp><cmp>rpt#@?and#$?data_inizio#%?=#%?txt#%?#$?metodo_ultimo_pagamento#%?!=#%?txt#%?#@?set#%?421#%?=#%?txt#%?1#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>116</cmp><cmp>cond4</cmp><cmp>rpt#@?#$?logo_struttura#%?!=#%?txt#%?#@?set#%?101301#%?=#%?txt#%?<img src="#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>117</cmp><cmp>cond4</cmp><cmp>rpt#@?#$?logo_struttura#%?!=#%?txt#%?#@?set#%?101301#%?.=#%?var#%?logo_struttura#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>118</cmp><cmp>cond4</cmp><cmp>rpt#@?#$?logo_struttura#%?!=#%?txt#%?#@?set#%?101301#%?.=#%?txt#%?" alt="Logo" style="float: right;">#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>25</cmp><cmp>cond2</cmp><cmp>rpt#@?#@?set#%?409#%?=#%?txt#%?0#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>26</cmp><cmp>cond2</cmp><cmp>rpt#@?and#$?vat_perc_arr_invo(vat_num_invo)#%?=#%?var#%?percentuale_tasse_tariffa#$?repetition_num_invo#%?>#%?txt#%?1#@?set#%?409#%?=#%?txt#%?1#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>27</cmp><cmp>cond2</cmp><cmp>rpt#@?#@?set#%?410#%?=#%?txt#%?0#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>30</cmp><cmp>cond2</cmp><cmp>rpt#@?and#$?show_rate_invo#%?=#%?txt#%?1#$?sconto#%?!=#%?txt#%?0#@?set#%?410#%?=#%?txt#%?1#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>31</cmp><cmp>cond2</cmp><cmp>rpt#@?#@?set#%?411#%?=#%?txt#%?0#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>32</cmp><cmp>cond2</cmp><cmp>rpt#@?#@?set#%?426#%?=#%?txt#%?0#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>36</cmp><cmp>cond2</cmp><cmp>ind#@?#@?set#%?427#%?=#%?txt#%?0#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>38</cmp><cmp>cond2</cmp><cmp>rpt#@?#@?set#%?423#%?=#%?txt#%?0#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>39</cmp><cmp>cond2</cmp><cmp>rpt#@?#$?nome_costo_agg#%?=#%?var#%?tax_cost_name_invo#@?set#%?423#%?=#%?txt#%?1#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>40</cmp><cmp>cond2</cmp><cmp>rpt#@?and#$?vat_perc_arr_invo(vat_num_invo)#%?=#%?var#%?percentuale_tasse_costo_agg#$?valore_costo_agg#%?!=#%?txt#%?0#$?repetition_num_invo#%?>#%?txt#%?1#$?show_tax_cost_invo#%?!=#%?txt#%?1#@?set#%?411#%?=#%?txt#%?1#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>42</cmp><cmp>cond2</cmp><cmp>rpt#@?#@?set#%?336#%?=#%?var#%?percentuale_tasse_tariffa#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>43</cmp><cmp>cond2</cmp><cmp>rpt#@?#$?tmp_var_invo#%?=#%?txt#%?#@?set#%?336#%?=#%?txt#%?0#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>54</cmp><cmp>cond9</cmp><cmp>rca#@?#@?set#%?75#%?=#%?txt#%?0#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>55</cmp><cmp>cond9</cmp><cmp>rca#@?#$?giorni_costo_agg#%?{A}#%?txt#%?,#@?set#%?75#%?=#%?txt#%?1#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>56</cmp><cmp>cond9</cmp><cmp>rca#@?#$?var_tmp_clean#%?=#%?txt#%?0#@?break#%?cont</cmp></riga>
+<riga><cmp>57</cmp><cmp>cond9</cmp><cmp>rca#@?#$?ec_pos_clean(nome_costo_agg)#%?=#%?txt#%?#@?oper#%?73#%?ec_num_clean#%?+#%?txt#%?1#%?</cmp></riga>
+<riga><cmp>58</cmp><cmp>cond9</cmp><cmp>rca#@?#$?ec_pos_clean(nome_costo_agg)#%?=#%?txt#%?#@?set#%?a2329#%?=#%?var#%?nome_costo_agg#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>59</cmp><cmp>cond9</cmp><cmp>ind#@?#@?set#%?74#%?=#%?txt#%?0#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>60</cmp><cmp>cond9</cmp><cmp>inr#@?#@?oper#%?74#%?repetition_number_clean#%?+#%?txt#%?1#%?</cmp></riga>
+<riga><cmp>61</cmp><cmp>cond9</cmp><cmp>rca#@?#$?ec_pos_clean(nome_costo_agg)#%?=#%?txt#%?#@?set#%?a2330#%?=#%?var#%?ec_num_clean#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>62</cmp><cmp>cond9</cmp><cmp>rca#@?#@?cont</cmp></riga>
+<riga><cmp>63</cmp><cmp>cond9</cmp><cmp>run#@?#@?set#%?75#%?=#%?txt#%?0#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>64</cmp><cmp>cond9</cmp><cmp>run#@?#$?row_class_clean#%?!=#%?txt#%?#@?set#%?75#%?=#%?txt#%?1#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>65</cmp><cmp>cond9</cmp><cmp>run#@?#$?var_tmp_clean#%?!=#%?txt#%?1#@?set#%?68#%?=#%?txt#%? class="bgclr"#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>66</cmp><cmp>cond9</cmp><cmp>run#@?#$?var_tmp_clean#%?=#%?txt#%?1#@?set#%?68#%?=#%?txt#%?#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>67</cmp><cmp>cond9</cmp><cmp>rar2329#@?#@?set#%?76#%?.=#%?txt#%?<td><small><small>#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>68</cmp><cmp>cond9</cmp><cmp>rar2329#@?#@?set#%?76#%?.=#%?var#%?extra_costs_clean(ec_num_clean)#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>69</cmp><cmp>cond9</cmp><cmp>rar2329#@?#@?set#%?76#%?.=#%?txt#%?</small></small></td>#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>71</cmp><cmp>cond9</cmp><cmp>rar2329#@?#@?set#%?77#%?.=#%?txt#%?<td><!-- cost#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>72</cmp><cmp>cond9</cmp><cmp>rar2329#@?#@?set#%?77#%?.=#%?var#%?ec_num_clean#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>73</cmp><cmp>cond9</cmp><cmp>rar2329#@?#@?set#%?77#%?.=#%?txt#%? --></td>#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>74</cmp><cmp>cond9</cmp><cmp>rca#@?#$?repetition_number_clean#%?<#%?txt#%?2#@?break#%?cont</cmp></riga>
+<riga><cmp>75</cmp><cmp>cond9</cmp><cmp>rca#@?#$?array_dates_clean(day_clean)#%?!=#%?var#%?report_date_clean#@?break#%?cont</cmp></riga>
+<riga><cmp>76</cmp><cmp>cond9</cmp><cmp>rca#@?#$?ec_pos_clean(nome_costo_agg)#%?=#%?txt#%?#@?break#%?cont</cmp></riga>
+<riga><cmp>77</cmp><cmp>cond9</cmp><cmp>rca#@?#@?set#%?67#%?=#%?var#%?unita_occupata#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>78</cmp><cmp>cond9</cmp><cmp>rca#@?#$?ec_unit_row_clean(unit_clean)#%?=#%?txt#%?#@?set#%?a2332#%?=#%?var#%?ec_table_row_clean#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>79</cmp><cmp>cond9</cmp><cmp>ind#@?#@?array#%?a2333#%?dat#%?</cmp></riga>
+<riga><cmp>80</cmp><cmp>cond9</cmp><cmp>rca#@?#@?set#%?75#%?=#%?txt#%?<!-- cost#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>82</cmp><cmp>cond9</cmp><cmp>rca#@?#@?set#%?75#%?.=#%?var#%?ec_pos_clean(nome_costo_agg)#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>83</cmp><cmp>cond9</cmp><cmp>rca#@?#@?set#%?75#%?.=#%?txt#%? -->#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>84</cmp><cmp>cond9</cmp><cmp>rca#@?#@?set#%?a2332#%?=#%?var#%?ec_unit_row_clean(unit_clean)#%?var#%?var_tmp_clean#%?var#%?moltiplica_max_costo_agg#%?</cmp></riga>
+<riga><cmp>85</cmp><cmp>cond9</cmp><cmp>rca#@?#@?set#%?73#%?=#%?var#%?ec_pos_clean(nome_costo_agg)#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>86</cmp><cmp>cond9</cmp><cmp>rca#@?#@?oper#%?a2334#%?total_ec_clean(ec_num_clean)#%?+#%?var#%?moltiplica_max_costo_agg#%?</cmp></riga>
+<riga><cmp>87</cmp><cmp>cond9</cmp><cmp>rca#@?#@?cont</cmp></riga>
+<riga><cmp>88</cmp><cmp>cond9</cmp><cmp>run#@?#$?ec_unit_row_clean(unit_clean)#%?=#%?txt#%?#@?set#%?a2332#%?=#%?var#%?ec_table_row_clean#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>89</cmp><cmp>cond9</cmp><cmp>rpt#@?#$?data_inizio#%?=#%?var#%?report_date_clean#@?trunc#%?a2328#%?-3#%?#%?ini</cmp></riga>
+<riga><cmp>90</cmp><cmp>cond9</cmp><cmp>rar2329#@?#@?set#%?a2334#%?=#%?txt#%?0#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>91</cmp><cmp>cond9</cmp><cmp>ind#@?#@?set#%?79#%?=#%?txt#%?<tr class="headrow"><td>Room</td><td>People</td><td>Situation</td><td><small><small>Departing<br>People</small></small></td><td><small><small>Arrival<br>Time</small></small></td>#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>92</cmp><cmp>cond9</cmp><cmp>run#@?#@?oper#%?80#%?unit_repetition_number_clean#%?+#%?txt#%?1#%?</cmp></riga>
+<riga><cmp>93</cmp><cmp>cond9</cmp><cmp>run#@?#@?set#%?81#%?=#%?txt#%?#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>94</cmp><cmp>cond9</cmp><cmp>run#@?#$?unit_repetition_number_clean#%?=#%?var#%?number_repeat_head_row_clean#@?set#%?81#%?=#%?var#%?header_row_table_clean#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>95</cmp><cmp>cond9</cmp><cmp>run#@?#$?unit_repetition_number_clean#%?=#%?var#%?number_repeat_head_row_clean#@?set#%?81#%?.=#%?var#%?ec_table_head_clean#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>96</cmp><cmp>cond9</cmp><cmp>run#@?#$?unit_repetition_number_clean#%?=#%?var#%?number_repeat_head_row_clean#@?set#%?81#%?.=#%?txt#%?</tr>#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>97</cmp><cmp>cond9</cmp><cmp>run#@?#$?unit_repetition_number_clean#%?=#%?var#%?number_repeat_head_row_clean#@?set#%?80#%?=#%?txt#%?0#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>1</cmp><cmp>cond8</cmp><cmp>rpt#@?#@?set#%?84#%?=#%?var#%?cognome#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>2</cmp><cmp>cond8</cmp><cmp>rpt#@?#@?set#%?85#%?=#%?var#%?cognome#%?txt#%? #%?txt#%?#%?</cmp></riga>
+<riga><cmp>3</cmp><cmp>cond8</cmp><cmp>rpt#@?#@?trunc#%?85#%?6#%?#%?ini</cmp></riga>
+<riga><cmp>4</cmp><cmp>cond8</cmp><cmp>rpt#@?#@?set#%?85#%?=#%?var#%?surn_no_sp_wle#%?txt#%?#%?txt#%?#%?url</cmp></riga>
+<riga><cmp>5</cmp><cmp>cond8</cmp><cmp>rpt#@?#$?ultima_prenotazione_per_cliente#%?=#%?txt#%?1#@?break#%?cont</cmp></riga>
+<riga><cmp>6</cmp><cmp>cond8</cmp><cmp>rpt#@?#@?set#%?a2340#%?.=#%?var#%?url_base_pagine_web#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>7</cmp><cmp>cond8</cmp><cmp>rpt#@?#@?set#%?a2340#%?.=#%?txt#%?confirm_reservation_tpl.php?cn=#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>8</cmp><cmp>cond8</cmp><cmp>rpt#@?#@?set#%?a2340#%?.=#%?var#%?surn_no_sp_wle#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>9</cmp><cmp>cond8</cmp><cmp>rpt#@?#@?set#%?a2340#%?.=#%?txt#%?&cp=#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>10</cmp><cmp>cond8</cmp><cmp>rpt#@?#@?set#%?a2340#%?.=#%?var#%?codice_prenotazione#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>11</cmp><cmp>cond8</cmp><cmp>rpt#@?#@?set#%?a2340#%?.=#%?txt#%?&fe=1#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>12</cmp><cmp>cond8</cmp><cmp>rpt#@?#@?set#%?a2340#%?.=#%?var#%?avanzamento_riga#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>13</cmp><cmp>cond8</cmp><cmp>rpt#@?#@?set#%?a2340#%?.=#%?var#%?avanzamento_riga#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>14</cmp><cmp>cond8</cmp><cmp>rpt#@?#@?set#%?a2341#%?=#%?var#%?arr_links_wle(numero_cliente)#%?txt#%?confirm_reservation_tpl.php?cn=#%?txt#%?mdl_confirma_reserva.php?cn=#%?</cmp></riga>
+<riga><cmp>15</cmp><cmp>cond8</cmp><cmp>rpt#@?#@?cont</cmp></riga>
+<riga><cmp>16</cmp><cmp>cond8</cmp><cmp>rpt#@?#$?ultima_prenotazione_per_cliente#%?!=#%?txt#%?1#@?set#%?-2#%?=#%?txt#%?1#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>1</cmp><cmp>cond7</cmp><cmp>rpt#@?#@?set#%?20#%?=#%?var#%?cognome#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>2</cmp><cmp>cond7</cmp><cmp>rpt#@?#@?set#%?21#%?=#%?var#%?cognome#%?txt#%? #%?txt#%?#%?</cmp></riga>
+<riga><cmp>3</cmp><cmp>cond7</cmp><cmp>rpt#@?#@?trunc#%?21#%?6#%?#%?ini</cmp></riga>
+<riga><cmp>4</cmp><cmp>cond7</cmp><cmp>rpt#@?#@?set#%?21#%?=#%?var#%?surn_no_sp_cre#%?txt#%?#%?txt#%?#%?url</cmp></riga>
+<riga><cmp>5</cmp><cmp>cond7</cmp><cmp>rpt#@?#$?ultima_prenotazione_per_cliente#%?=#%?txt#%?1#@?break#%?cont</cmp></riga>
+<riga><cmp>6</cmp><cmp>cond7</cmp><cmp>rpt#@?#@?set#%?a2336#%?.=#%?var#%?url_base_pagine_web#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>7</cmp><cmp>cond7</cmp><cmp>rpt#@?#@?set#%?a2336#%?.=#%?txt#%?confirm_reservation_tpl.php?cn=#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>8</cmp><cmp>cond7</cmp><cmp>rpt#@?#@?set#%?a2336#%?.=#%?var#%?surn_no_sp_cre#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>9</cmp><cmp>cond7</cmp><cmp>rpt#@?#@?set#%?a2336#%?.=#%?txt#%?&cp=#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>10</cmp><cmp>cond7</cmp><cmp>rpt#@?#@?set#%?a2336#%?.=#%?var#%?codice_prenotazione#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>11</cmp><cmp>cond7</cmp><cmp>rpt#@?#@?set#%?a2336#%?.=#%?var#%?avanzamento_riga#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>12</cmp><cmp>cond7</cmp><cmp>rpt#@?#@?set#%?a2336#%?.=#%?var#%?avanzamento_riga#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>13</cmp><cmp>cond7</cmp><cmp>rpt#@?#@?set#%?a2337#%?=#%?var#%?arr_links_cre(numero_cliente)#%?txt#%?confirm_reservation_tpl.php?cn=#%?txt#%?mdl_confirma_reserva.php?cn=#%?</cmp></riga>
+<riga><cmp>14</cmp><cmp>cond7</cmp><cmp>rpt#@?#@?set#%?a2338#%?.=#%?txt#%?Surname: #%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>15</cmp><cmp>cond7</cmp><cmp>rpt#@?#@?set#%?a2338#%?.=#%?var#%?cognome#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>16</cmp><cmp>cond7</cmp><cmp>rpt#@?#@?set#%?a2338#%?.=#%?var#%?avanzamento_riga#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>17</cmp><cmp>cond7</cmp><cmp>rpt#@?#@?set#%?a2338#%?.=#%?txt#%?Reservation code: #%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>18</cmp><cmp>cond7</cmp><cmp>rpt#@?#@?set#%?a2338#%?.=#%?var#%?codice_prenotazione#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>19</cmp><cmp>cond7</cmp><cmp>rpt#@?#@?set#%?a2338#%?.=#%?var#%?avanzamento_riga#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>20</cmp><cmp>cond7</cmp><cmp>rpt#@?#@?set#%?a2338#%?.=#%?var#%?avanzamento_riga#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>21</cmp><cmp>cond7</cmp><cmp>rpt#@?#@?set#%?a2339#%?=#%?var#%?arr_access_data_cre(numero_cliente)#%?txt#%?Surname:#%?txt#%?Apellido:#%?</cmp></riga>
+<riga><cmp>22</cmp><cmp>cond7</cmp><cmp>rpt#@?#@?set#%?a2339#%?=#%?var#%?arr_access_data_es_cre(numero_cliente)#%?txt#%?Reservation code:#%?txt#%?Código reserva:#%?</cmp></riga>
+<riga><cmp>23</cmp><cmp>cond7</cmp><cmp>rpt#@?#@?cont</cmp></riga>
+<riga><cmp>24</cmp><cmp>cond7</cmp><cmp>rpt#@?#$?ultima_prenotazione_per_cliente#%?!=#%?txt#%?1#@?set#%?-2#%?=#%?txt#%?1#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>1</cmp><cmp>cond6</cmp><cmp>rpt#@?#@?set#%?19#%?=#%?var#%?cognome#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>87</cmp><cmp>cond4</cmp><cmp>rpt#@?#$?codice_fiscale_struttura#%?!=#%?txt#%?#@?set#%?14#%?=#%?txt#%?- Fiscal Code  #%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>88</cmp><cmp>cond4</cmp><cmp>rpt#@?#$?codice_fiscale_struttura#%?!=#%?txt#%?#@?set#%?14#%?.=#%?var#%?codice_fiscale_struttura#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>89</cmp><cmp>cond4</cmp><cmp>rpt#@?#@?set#%?17#%?=#%?txt#%?#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>92</cmp><cmp>cond4</cmp><cmp>rpt#@?#$?telefono_struttura#%?!=#%?txt#%?#@?set#%?17#%?=#%?txt#%?Tel. #%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>94</cmp><cmp>cond4</cmp><cmp>rpt#@?#$?telefono_struttura#%?!=#%?txt#%?#@?set#%?17#%?.=#%?var#%?telefono_struttura#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>97</cmp><cmp>cond4</cmp><cmp>rpt#@?and#$?telefono_struttura#%?!=#%?txt#%?#$?sito_web_struttura#%?!=#%?txt#%?#@?set#%?17#%?.=#%?txt#%? - #%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>98</cmp><cmp>cond4</cmp><cmp>rpt#@?#$?sito_web_struttura#%?!=#%?txt#%?#@?set#%?17#%?.=#%?var#%?sito_web_struttura#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>99</cmp><cmp>cond4</cmp><cmp>rpt#@?#@?set#%?15#%?=#%?var#%?nome#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>100</cmp><cmp>cond4</cmp><cmp>rpt#@?#@?set#%?16#%?=#%?var#%?cognome#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>101</cmp><cmp>cond4</cmp><cmp>rpt#@?#@?set#%?18#%?=#%?txt#%?#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>102</cmp><cmp>cond4</cmp><cmp>rpt#@?#$?numcivico#%?!=#%?txt#%?#@?set#%?18#%?=#%?txt#%?, #%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>103</cmp><cmp>cond4</cmp><cmp>rpt#@?#$?numcivico#%?!=#%?txt#%?#@?set#%?18#%?.=#%?var#%?numcivico#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>104</cmp><cmp>cond4</cmp><cmp>rpt#@?#@?set#%?12#%?=#%?txt#%?#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>105</cmp><cmp>cond4</cmp><cmp>rpt#@?#$?citta#%?!=#%?txt#%?#@?set#%?12#%?.=#%?var#%?citta#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>107</cmp><cmp>cond4</cmp><cmp>rpt#@?#$?regione#%?!=#%?txt#%?#@?set#%?12#%?.=#%?txt#%? (#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>108</cmp><cmp>cond4</cmp><cmp>rpt#@?#$?regione#%?!=#%?txt#%?#@?set#%?12#%?.=#%?var#%?regione#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>109</cmp><cmp>cond4</cmp><cmp>rpt#@?#$?regione#%?!=#%?txt#%?#@?set#%?12#%?.=#%?txt#%?)#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>110</cmp><cmp>cond4</cmp><cmp>rpt#@?#@?set#%?13#%?=#%?txt#%?#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>111</cmp><cmp>cond4</cmp><cmp>rpt#@?#$?cap#%?!=#%?txt#%?#@?set#%?13#%?.=#%?var#%?cap#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>112</cmp><cmp>cond4</cmp><cmp>rpt#@?and#$?cap#%?!=#%?txt#%?#$?nazione#%?!=#%?txt#%?#@?set#%?13#%?.=#%?txt#%? #%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>113</cmp><cmp>cond4</cmp><cmp>rpt#@?#$?nazione#%?!=#%?txt#%?#@?set#%?13#%?.=#%?var#%?nazione#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>114</cmp><cmp>cond4</cmp><cmp>rpt#@?#@?set#%?57#%?=#%?txt#%?0#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>115</cmp><cmp>cond4</cmp><cmp>rpa#@?and#$?data_inizio#%?=#%?txt#%?#$?ultimo_pagamento#%?=#%?txt#%?1#$?metodo_pagamento#%?!=#%?txt#%?#@?set#%?57#%?=#%?txt#%?1#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>116</cmp><cmp>cond4</cmp><cmp>rpt#@?#$?logo_struttura#%?!=#%?txt#%?#@?set#%?83#%?=#%?txt#%?<img src="#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>117</cmp><cmp>cond4</cmp><cmp>rpt#@?#$?logo_struttura#%?!=#%?txt#%?#@?set#%?83#%?.=#%?var#%?logo_struttura#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>118</cmp><cmp>cond4</cmp><cmp>rpt#@?#$?logo_struttura#%?!=#%?txt#%?#@?set#%?83#%?.=#%?txt#%?" alt="Logo" style="float: right;">#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>25</cmp><cmp>cond2</cmp><cmp>rpt#@?#@?set#%?45#%?=#%?txt#%?0#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>26</cmp><cmp>cond2</cmp><cmp>rpt#@?and#$?vat_perc_arr_invo(vat_num_invo)#%?=#%?var#%?percentuale_tasse_tariffa#$?repetition_num_invo#%?>#%?txt#%?1#@?set#%?45#%?=#%?txt#%?1#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>27</cmp><cmp>cond2</cmp><cmp>rpt#@?#@?set#%?46#%?=#%?txt#%?0#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>30</cmp><cmp>cond2</cmp><cmp>rpt#@?and#$?show_rate_invo#%?=#%?txt#%?1#$?sconto#%?!=#%?txt#%?0#@?set#%?46#%?=#%?txt#%?1#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>31</cmp><cmp>cond2</cmp><cmp>rpt#@?#@?set#%?47#%?=#%?txt#%?0#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>32</cmp><cmp>cond2</cmp><cmp>rpt#@?#@?set#%?62#%?=#%?txt#%?0#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>36</cmp><cmp>cond2</cmp><cmp>ind#@?#@?set#%?63#%?=#%?txt#%?0#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>38</cmp><cmp>cond2</cmp><cmp>rpt#@?#@?set#%?59#%?=#%?txt#%?0#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>39</cmp><cmp>cond2</cmp><cmp>rpt#@?#$?nome_costo_agg#%?=#%?var#%?tax_cost_name_invo#@?set#%?59#%?=#%?txt#%?1#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>40</cmp><cmp>cond2</cmp><cmp>rpt#@?and#$?vat_perc_arr_invo(vat_num_invo)#%?=#%?var#%?percentuale_tasse_costo_agg#$?valore_costo_agg#%?!=#%?txt#%?0#$?repetition_num_invo#%?>#%?txt#%?1#$?show_tax_cost_invo#%?!=#%?txt#%?1#@?set#%?47#%?=#%?txt#%?1#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>42</cmp><cmp>cond2</cmp><cmp>rpt#@?#@?set#%?28#%?=#%?var#%?percentuale_tasse_tariffa#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>43</cmp><cmp>cond2</cmp><cmp>rpt#@?#$?tmp_var_invo#%?=#%?txt#%?#@?set#%?28#%?=#%?txt#%?0#%?txt#%?#%?txt#%?#%?</cmp></riga>
 <riga><cmp>44</cmp><cmp>cond2</cmp><cmp>rpt#@?#$?exist_perc_vat_invo(tmp_var_invo)#%?=#%?txt#%?1#@?break#%?cont</cmp></riga>
-<riga><cmp>46</cmp><cmp>cond2</cmp><cmp>rpt#@?#@?oper#%?408#%?vat_num_invo#%?+#%?txt#%?1#%?</cmp></riga>
-<riga><cmp>48</cmp><cmp>cond2</cmp><cmp>rpt#@?#@?set#%?417#%?=#%?var#%?vat_num_invo#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>46</cmp><cmp>cond2</cmp><cmp>rpt#@?#@?oper#%?44#%?vat_num_invo#%?+#%?txt#%?1#%?</cmp></riga>
+<riga><cmp>48</cmp><cmp>cond2</cmp><cmp>rpt#@?#@?set#%?53#%?=#%?var#%?vat_num_invo#%?txt#%?#%?txt#%?#%?</cmp></riga>
 <riga><cmp>52</cmp><cmp>cond2</cmp><cmp>rpt#@?#@?set#%?a1#%?=#%?var#%?tmp_var_invo#%?txt#%?#%?txt#%?#%?</cmp></riga>
 <riga><cmp>60</cmp><cmp>cond2</cmp><cmp>rpt#@?#@?set#%?a2#%?=#%?txt#%?1#%?txt#%?#%?txt#%?#%?</cmp></riga>
 <riga><cmp>61</cmp><cmp>cond2</cmp><cmp>rpt#@?#@?cont</cmp></riga>
 <riga><cmp>65</cmp><cmp>cond2</cmp><cmp>rpt#@?or#$?valore_costo_agg#%?=#%?txt#%?0#$?valore_costo_agg#%?=#%?txt#%?#$?show_tax_cost_invo#%?=#%?txt#%?1#@?break#%?cont</cmp></riga>
-<riga><cmp>75</cmp><cmp>cond2</cmp><cmp>rpt#@?#@?set#%?336#%?=#%?var#%?percentuale_tasse_costo_agg#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>76</cmp><cmp>cond2</cmp><cmp>rpt#@?#$?tmp_var_invo#%?=#%?txt#%?#@?set#%?336#%?=#%?txt#%?0#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>75</cmp><cmp>cond2</cmp><cmp>rpt#@?#@?set#%?28#%?=#%?var#%?percentuale_tasse_costo_agg#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>76</cmp><cmp>cond2</cmp><cmp>rpt#@?#$?tmp_var_invo#%?=#%?txt#%?#@?set#%?28#%?=#%?txt#%?0#%?txt#%?#%?txt#%?#%?</cmp></riga>
 <riga><cmp>81</cmp><cmp>cond2</cmp><cmp>rpt#@?#$?exist_perc_vat_invo(tmp_var_invo)#%?=#%?txt#%?1#@?break#%?cont</cmp></riga>
-<riga><cmp>83</cmp><cmp>cond2</cmp><cmp>rpt#@?#@?oper#%?408#%?vat_num_invo#%?+#%?txt#%?1#%?</cmp></riga>
-<riga><cmp>84</cmp><cmp>cond2</cmp><cmp>rpt#@?#@?set#%?417#%?=#%?var#%?vat_num_invo#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>83</cmp><cmp>cond2</cmp><cmp>rpt#@?#@?oper#%?44#%?vat_num_invo#%?+#%?txt#%?1#%?</cmp></riga>
+<riga><cmp>84</cmp><cmp>cond2</cmp><cmp>rpt#@?#@?set#%?53#%?=#%?var#%?vat_num_invo#%?txt#%?#%?txt#%?#%?</cmp></riga>
 <riga><cmp>86</cmp><cmp>cond2</cmp><cmp>rpt#@?#@?set#%?a1#%?=#%?var#%?tmp_var_invo#%?txt#%?#%?txt#%?#%?</cmp></riga>
 <riga><cmp>87</cmp><cmp>cond2</cmp><cmp>rpt#@?#@?set#%?a2#%?=#%?txt#%?1#%?txt#%?#%?txt#%?#%?</cmp></riga>
 <riga><cmp>88</cmp><cmp>cond2</cmp><cmp>rpt#@?#@?cont</cmp></riga>
-<riga><cmp>89</cmp><cmp>cond2</cmp><cmp>rpt#@?#@?oper#%?351#%?valore_costo_agg_senza_tasse#%?+#%?txt#%?0#%?</cmp></riga>
-<riga><cmp>90</cmp><cmp>cond2</cmp><cmp>rpt#@?#$?show_tax_cost_invo#%?=#%?txt#%?1#@?oper#%?351#%?valore_costo_agg#%?+#%?txt#%?0#%?</cmp></riga>
-<riga><cmp>91</cmp><cmp>cond2</cmp><cmp>rpt#@?#@?set#%?342#%?=#%?var#%?nome_costo_agg#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>95</cmp><cmp>cond2</cmp><cmp>rpt#@?#$?show_extra_cost_invo#%?=#%?txt#%?1#@?oper#%?343#%?tot_no_vat_invo#%?+#%?var#%?valore_costo_agg_senza_tasse#%?</cmp></riga>
-<riga><cmp>100</cmp><cmp>cond2</cmp><cmp>rpt#@?#$?show_extra_cost_invo#%?=#%?txt#%?1#@?oper#%?413#%?part_tot_no_vat_invo#%?+#%?var#%?valore_costo_agg_senza_tasse#%?</cmp></riga>
-<riga><cmp>103</cmp><cmp>cond2</cmp><cmp>rpt#@?#$?show_extra_cost_invo#%?=#%?txt#%?1#@?oper#%?414#%?part_tot_vat_invo#%?+#%?var#%?tasse_costo_agg#%?</cmp></riga>
-<riga><cmp>105</cmp><cmp>cond2</cmp><cmp>rpt#@?#$?show_tax_cost_invo#%?=#%?txt#%?1#@?oper#%?425#%?tot_costs_tax_invo#%?+#%?var#%?valore_costo_agg#%?</cmp></riga>
-<riga><cmp>106</cmp><cmp>cond2</cmp><cmp>rpt#@?#@?oper#%?350#%?tot_no_vat_invo#%?+#%?txt#%?0#%?</cmp></riga>
-<riga><cmp>108</cmp><cmp>cond2</cmp><cmp>rpt#@?#@?oper#%?415#%?part_tot_no_vat_invo#%?+#%?txt#%?0#%?</cmp></riga>
-<riga><cmp>110</cmp><cmp>cond2</cmp><cmp>rpt#@?#@?oper#%?416#%?part_tot_vat_invo#%?+#%?txt#%?0#%?</cmp></riga>
-<riga><cmp>111</cmp><cmp>cond2</cmp><cmp>rpt#@?#@?oper#%?424#%?price_tot_invo#%?-#%?var#%?tot_no_vat_invo#%?</cmp></riga>
-<riga><cmp>112</cmp><cmp>cond2</cmp><cmp>rpt#@?#@?oper#%?424#%?vat_invo#%?-#%?var#%?tot_costs_tax_invo#%?</cmp></riga>
-<riga><cmp>113</cmp><cmp>cond2</cmp><cmp>rpt#@?#@?oper#%?349#%?vat_invo#%?+#%?txt#%?0#%?</cmp></riga>
+<riga><cmp>89</cmp><cmp>cond2</cmp><cmp>rpt#@?#@?oper#%?37#%?valore_costo_agg_senza_tasse#%?+#%?txt#%?0#%?</cmp></riga>
+<riga><cmp>90</cmp><cmp>cond2</cmp><cmp>rpt#@?#$?show_tax_cost_invo#%?=#%?txt#%?1#@?oper#%?37#%?valore_costo_agg#%?+#%?txt#%?0#%?</cmp></riga>
+<riga><cmp>91</cmp><cmp>cond2</cmp><cmp>rpt#@?#@?set#%?31#%?=#%?var#%?nome_costo_agg#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>95</cmp><cmp>cond2</cmp><cmp>rpt#@?#$?show_extra_cost_invo#%?=#%?txt#%?1#@?oper#%?32#%?tot_no_vat_invo#%?+#%?var#%?valore_costo_agg_senza_tasse#%?</cmp></riga>
+<riga><cmp>100</cmp><cmp>cond2</cmp><cmp>rpt#@?#$?show_extra_cost_invo#%?=#%?txt#%?1#@?oper#%?49#%?part_tot_no_vat_invo#%?+#%?var#%?valore_costo_agg_senza_tasse#%?</cmp></riga>
+<riga><cmp>103</cmp><cmp>cond2</cmp><cmp>rpt#@?#$?show_extra_cost_invo#%?=#%?txt#%?1#@?oper#%?50#%?part_tot_vat_invo#%?+#%?var#%?tasse_costo_agg#%?</cmp></riga>
+<riga><cmp>105</cmp><cmp>cond2</cmp><cmp>rpt#@?#$?show_tax_cost_invo#%?=#%?txt#%?1#@?oper#%?61#%?tot_costs_tax_invo#%?+#%?var#%?valore_costo_agg#%?</cmp></riga>
+<riga><cmp>106</cmp><cmp>cond2</cmp><cmp>rpt#@?#@?oper#%?36#%?tot_no_vat_invo#%?+#%?txt#%?0#%?</cmp></riga>
+<riga><cmp>108</cmp><cmp>cond2</cmp><cmp>rpt#@?#@?oper#%?51#%?part_tot_no_vat_invo#%?+#%?txt#%?0#%?</cmp></riga>
+<riga><cmp>110</cmp><cmp>cond2</cmp><cmp>rpt#@?#@?oper#%?52#%?part_tot_vat_invo#%?+#%?txt#%?0#%?</cmp></riga>
+<riga><cmp>111</cmp><cmp>cond2</cmp><cmp>rpt#@?#@?oper#%?60#%?price_tot_invo#%?-#%?var#%?tot_no_vat_invo#%?</cmp></riga>
+<riga><cmp>112</cmp><cmp>cond2</cmp><cmp>rpt#@?#@?oper#%?60#%?vat_invo#%?-#%?var#%?tot_costs_tax_invo#%?</cmp></riga>
+<riga><cmp>113</cmp><cmp>cond2</cmp><cmp>rpt#@?#@?oper#%?35#%?vat_invo#%?+#%?txt#%?0#%?</cmp></riga>
 <riga><cmp>114</cmp><cmp>cond2</cmp><cmp>rpt#@?or#$?show_extra_cost_invo#%?!=#%?txt#%?1#$?percentuale_tasse_costo_agg#%?!=#%?txt#%?-1#@?break#%?cont</cmp></riga>
-<riga><cmp>115</cmp><cmp>cond2</cmp><cmp>rpt#@?#@?set#%?426#%?=#%?txt#%?1#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>116</cmp><cmp>cond2</cmp><cmp>rpt#@?#@?set#%?411#%?=#%?txt#%?0#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>115</cmp><cmp>cond2</cmp><cmp>rpt#@?#@?set#%?62#%?=#%?txt#%?1#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>116</cmp><cmp>cond2</cmp><cmp>rpt#@?#@?set#%?47#%?=#%?txt#%?0#%?txt#%?#%?txt#%?#%?</cmp></riga>
 <riga><cmp>117</cmp><cmp>cond2</cmp><cmp>rpt#@?#@?cont</cmp></riga>
-<riga><cmp>118</cmp><cmp>cond2</cmp><cmp>rpt#@?#$?max_vat_num_invo#%?>#%?txt#%?1#@?set#%?427#%?=#%?txt#%?1#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>118</cmp><cmp>cond2</cmp><cmp>rpt#@?#$?max_vat_num_invo#%?>#%?txt#%?1#@?set#%?63#%?=#%?txt#%?1#%?txt#%?#%?txt#%?#%?</cmp></riga>
 <riga><cmp>119</cmp><cmp>cond2</cmp><cmp>rpt#@?#$?last_reserv_invo#%?=#%?var#%?numero_prenotazione#@?break#%?</cmp></riga>
-<riga><cmp>120</cmp><cmp>cond2</cmp><cmp>rpt#@?#@?set#%?339#%?=#%?var#%?numero_prenotazione#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>121</cmp><cmp>cond2</cmp><cmp>rpt#@?#$?show_rate_invo#%?=#%?txt#%?1#@?oper#%?343#%?tot_no_vat_invo#%?+#%?var#%?costo_tariffa_senza_tasse#%?</cmp></riga>
-<riga><cmp>122</cmp><cmp>cond2</cmp><cmp>rpt#@?#$?show_rate_invo#%?=#%?txt#%?1#@?oper#%?413#%?part_tot_no_vat_invo#%?+#%?var#%?costo_tariffa_senza_tasse#%?</cmp></riga>
-<riga><cmp>123</cmp><cmp>cond2</cmp><cmp>rpt#@?#$?show_rate_invo#%?=#%?txt#%?1#@?oper#%?414#%?part_tot_vat_invo#%?+#%?var#%?tasse_tariffa#%?</cmp></riga>
-<riga><cmp>124</cmp><cmp>cond2</cmp><cmp>rpt#@?#$?show_discount_invo#%?=#%?txt#%?1#@?oper#%?343#%?tot_no_vat_invo#%?-#%?var#%?sconto_senza_tasse#%?</cmp></riga>
-<riga><cmp>125</cmp><cmp>cond2</cmp><cmp>rpt#@?#$?show_discount_invo#%?=#%?txt#%?1#@?oper#%?413#%?part_tot_no_vat_invo#%?-#%?var#%?sconto_senza_tasse#%?</cmp></riga>
-<riga><cmp>126</cmp><cmp>cond2</cmp><cmp>rpt#@?#$?show_discount_invo#%?=#%?txt#%?1#@?oper#%?414#%?part_tot_vat_invo#%?-#%?var#%?tasse_sconto#%?</cmp></riga>
-<riga><cmp>128</cmp><cmp>cond2</cmp><cmp>rpt#@?#@?oper#%?353#%?costo_tariffa_senza_tasse#%?+#%?txt#%?0#%?</cmp></riga>
-<riga><cmp>129</cmp><cmp>cond2</cmp><cmp>rpt#@?#@?oper#%?352#%?sconto_senza_tasse#%?*#%?txt#%?-1#%?</cmp></riga>
-<riga><cmp>130</cmp><cmp>cond2</cmp><cmp>rpt#@?#@?oper#%?350#%?tot_no_vat_invo#%?+#%?txt#%?0#%?</cmp></riga>
-<riga><cmp>131</cmp><cmp>cond2</cmp><cmp>rpt#@?#@?oper#%?415#%?part_tot_no_vat_invo#%?+#%?txt#%?0#%?</cmp></riga>
-<riga><cmp>132</cmp><cmp>cond2</cmp><cmp>rpt#@?#@?oper#%?416#%?part_tot_vat_invo#%?+#%?txt#%?0#%?</cmp></riga>
-<riga><cmp>133</cmp><cmp>cond2</cmp><cmp>rpt#@?#@?oper#%?424#%?price_tot_invo#%?-#%?var#%?tot_no_vat_invo#%?</cmp></riga>
-<riga><cmp>134</cmp><cmp>cond2</cmp><cmp>rpt#@?#@?oper#%?424#%?vat_invo#%?-#%?var#%?tot_costs_tax_invo#%?</cmp></riga>
-<riga><cmp>135</cmp><cmp>cond2</cmp><cmp>rpt#@?#@?oper#%?349#%?vat_invo#%?+#%?txt#%?0#%?</cmp></riga>
-<riga><cmp>136</cmp><cmp>cond2</cmp><cmp>rpt#@?#$?merge_discount_with_rate#%?=#%?txt#%?YES#@?oper#%?353#%?costo_tariffa_senza_tasse#%?-#%?var#%?sconto_senza_tasse#%?</cmp></riga>
-<riga><cmp>137</cmp><cmp>cond2</cmp><cmp>rpt#@?#$?merge_discount_with_rate#%?=#%?txt#%?YES#@?set#%?410#%?=#%?txt#%?0#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>138</cmp><cmp>cond2</cmp><cmp>rpt#@?#@?set#%?418#%?=#%?txt#%?#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>139</cmp><cmp>cond2</cmp><cmp>rpt#@?and#$?num_persone_tot#%?!=#%?txt#%?#$?num_persone_tot#%?!=#%?txt#%?0#@?set#%?418#%?=#%?txt#%? for x persons#%?txt#%?x#%?var#%?num_persone_tot#%?</cmp></riga>
+<riga><cmp>120</cmp><cmp>cond2</cmp><cmp>rpt#@?#@?set#%?30#%?=#%?var#%?numero_prenotazione#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>121</cmp><cmp>cond2</cmp><cmp>rpt#@?#$?show_rate_invo#%?=#%?txt#%?1#@?oper#%?32#%?tot_no_vat_invo#%?+#%?var#%?costo_tariffa_senza_tasse#%?</cmp></riga>
+<riga><cmp>122</cmp><cmp>cond2</cmp><cmp>rpt#@?#$?show_rate_invo#%?=#%?txt#%?1#@?oper#%?49#%?part_tot_no_vat_invo#%?+#%?var#%?costo_tariffa_senza_tasse#%?</cmp></riga>
+<riga><cmp>123</cmp><cmp>cond2</cmp><cmp>rpt#@?#$?show_rate_invo#%?=#%?txt#%?1#@?oper#%?50#%?part_tot_vat_invo#%?+#%?var#%?tasse_tariffa#%?</cmp></riga>
+<riga><cmp>124</cmp><cmp>cond2</cmp><cmp>rpt#@?#$?show_discount_invo#%?=#%?txt#%?1#@?oper#%?32#%?tot_no_vat_invo#%?-#%?var#%?sconto_senza_tasse#%?</cmp></riga>
+<riga><cmp>125</cmp><cmp>cond2</cmp><cmp>rpt#@?#$?show_discount_invo#%?=#%?txt#%?1#@?oper#%?49#%?part_tot_no_vat_invo#%?-#%?var#%?sconto_senza_tasse#%?</cmp></riga>
+<riga><cmp>126</cmp><cmp>cond2</cmp><cmp>rpt#@?#$?show_discount_invo#%?=#%?txt#%?1#@?oper#%?50#%?part_tot_vat_invo#%?-#%?var#%?tasse_sconto#%?</cmp></riga>
+<riga><cmp>128</cmp><cmp>cond2</cmp><cmp>rpt#@?#@?oper#%?39#%?costo_tariffa_senza_tasse#%?+#%?txt#%?0#%?</cmp></riga>
+<riga><cmp>129</cmp><cmp>cond2</cmp><cmp>rpt#@?#@?oper#%?38#%?sconto_senza_tasse#%?*#%?txt#%?-1#%?</cmp></riga>
+<riga><cmp>130</cmp><cmp>cond2</cmp><cmp>rpt#@?#@?oper#%?36#%?tot_no_vat_invo#%?+#%?txt#%?0#%?</cmp></riga>
+<riga><cmp>131</cmp><cmp>cond2</cmp><cmp>rpt#@?#@?oper#%?51#%?part_tot_no_vat_invo#%?+#%?txt#%?0#%?</cmp></riga>
+<riga><cmp>132</cmp><cmp>cond2</cmp><cmp>rpt#@?#@?oper#%?52#%?part_tot_vat_invo#%?+#%?txt#%?0#%?</cmp></riga>
+<riga><cmp>133</cmp><cmp>cond2</cmp><cmp>rpt#@?#@?oper#%?60#%?price_tot_invo#%?-#%?var#%?tot_no_vat_invo#%?</cmp></riga>
+<riga><cmp>134</cmp><cmp>cond2</cmp><cmp>rpt#@?#@?oper#%?60#%?vat_invo#%?-#%?var#%?tot_costs_tax_invo#%?</cmp></riga>
+<riga><cmp>135</cmp><cmp>cond2</cmp><cmp>rpt#@?#@?oper#%?35#%?vat_invo#%?+#%?txt#%?0#%?</cmp></riga>
+<riga><cmp>136</cmp><cmp>cond2</cmp><cmp>rpt#@?#$?merge_discount_with_rate#%?=#%?txt#%?YES#@?oper#%?39#%?costo_tariffa_senza_tasse#%?-#%?var#%?sconto_senza_tasse#%?</cmp></riga>
+<riga><cmp>137</cmp><cmp>cond2</cmp><cmp>rpt#@?#$?merge_discount_with_rate#%?=#%?txt#%?YES#@?set#%?46#%?=#%?txt#%?0#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>138</cmp><cmp>cond2</cmp><cmp>rpt#@?#@?set#%?54#%?=#%?txt#%?#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>139</cmp><cmp>cond2</cmp><cmp>rpt#@?and#$?num_persone_tot#%?!=#%?txt#%?#$?num_persone_tot#%?!=#%?txt#%?0#@?set#%?54#%?=#%?txt#%? for x persons#%?txt#%?x#%?var#%?num_persone_tot#%?</cmp></riga>
 <riga><cmp>140</cmp><cmp>cond2</cmp><cmp>rpt#@?#$?repetition_num_invo#%?>#%?txt#%?1#@?break#%?</cmp></riga>
-<riga><cmp>141</cmp><cmp>cond2</cmp><cmp>rpt#@?#@?oper#%?347#%?price_tot_invo#%?+#%?var#%?costo_tot#%?</cmp></riga>
-<riga><cmp>142</cmp><cmp>cond2</cmp><cmp>rpt#@?#@?oper#%?348#%?price_tot_invo#%?+#%?txt#%?0#%?</cmp></riga>
-<riga><cmp>143</cmp><cmp>cond2</cmp><cmp>rpt#@?#$?codice_fiscale_struttura#%?!=#%?txt#%?#@?set#%?330#%?=#%?txt#%?- Fiscal Code #%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>144</cmp><cmp>cond2</cmp><cmp>rpt#@?#$?codice_fiscale_struttura#%?!=#%?txt#%?#@?set#%?330#%?.=#%?var#%?codice_fiscale_struttura#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>145</cmp><cmp>cond2</cmp><cmp>rpt#@?#$?telefono_struttura#%?!=#%?txt#%?#@?set#%?333#%?=#%?txt#%?Tel. #%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>146</cmp><cmp>cond2</cmp><cmp>rpt#@?#$?telefono_struttura#%?!=#%?txt#%?#@?set#%?333#%?.=#%?var#%?telefono_struttura#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>147</cmp><cmp>cond2</cmp><cmp>inr#@?#@?set#%?339#%?=#%?txt#%?#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>148</cmp><cmp>cond2</cmp><cmp>inr#@?#@?oper#%?412#%?repetition_num_invo#%?+#%?txt#%?1#%?</cmp></riga>
-<riga><cmp>149</cmp><cmp>cond2</cmp><cmp>ind#@?#@?set#%?419#%?=#%?txt#%?YES#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>150</cmp><cmp>cond2</cmp><cmp>ind#@?#@?set#%?422#%?=#%?txt#%?name of extra cost considered as tax#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>151</cmp><cmp>cond2</cmp><cmp>ind#@?#@?set#%?347#%?=#%?txt#%?0#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>152</cmp><cmp>cond2</cmp><cmp>rpt#@?and#$?telefono_struttura#%?!=#%?txt#%?#$?sito_web_struttura#%?!=#%?txt#%?#@?set#%?333#%?.=#%?txt#%? - #%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>153</cmp><cmp>cond2</cmp><cmp>rpt#@?#$?sito_web_struttura#%?!=#%?txt#%?#@?set#%?333#%?.=#%?var#%?sito_web_struttura#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>154</cmp><cmp>cond2</cmp><cmp>ind#@?#@?set#%?343#%?=#%?txt#%?0#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>155</cmp><cmp>cond2</cmp><cmp>rpt#@?#@?set#%?331#%?=#%?var#%?nome#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>156</cmp><cmp>cond2</cmp><cmp>rpt#@?#@?set#%?332#%?=#%?var#%?cognome#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>157</cmp><cmp>cond2</cmp><cmp>rpt#@?#@?set#%?355#%?=#%?txt#%?#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>158</cmp><cmp>cond2</cmp><cmp>rpt#@?#$?numcivico#%?!=#%?txt#%?#@?set#%?355#%?=#%?txt#%?, #%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>159</cmp><cmp>cond2</cmp><cmp>rpt#@?#$?numcivico#%?!=#%?txt#%?#@?set#%?355#%?.=#%?var#%?numcivico#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>160</cmp><cmp>cond2</cmp><cmp>rpt#@?#@?set#%?325#%?=#%?txt#%?#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>161</cmp><cmp>cond2</cmp><cmp>rpt#@?#$?citta#%?!=#%?txt#%?#@?set#%?325#%?.=#%?var#%?citta#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>162</cmp><cmp>cond2</cmp><cmp>rpt#@?#$?regione#%?!=#%?txt#%?#@?set#%?325#%?.=#%?txt#%? (#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>163</cmp><cmp>cond2</cmp><cmp>rpt#@?#$?regione#%?!=#%?txt#%?#@?set#%?325#%?.=#%?var#%?regione#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>164</cmp><cmp>cond2</cmp><cmp>rpt#@?#$?regione#%?!=#%?txt#%?#@?set#%?325#%?.=#%?txt#%?)#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>165</cmp><cmp>cond2</cmp><cmp>rpt#@?#@?set#%?326#%?=#%?txt#%?#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>166</cmp><cmp>cond2</cmp><cmp>rpt#@?#$?cap#%?!=#%?txt#%?#@?set#%?326#%?.=#%?var#%?cap#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>167</cmp><cmp>cond2</cmp><cmp>rpt#@?and#$?cap#%?!=#%?txt#%?#$?nazione#%?!=#%?txt#%?#@?set#%?326#%?.=#%?txt#%? #%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>168</cmp><cmp>cond2</cmp><cmp>rpt#@?#$?nazione#%?!=#%?txt#%?#@?set#%?326#%?.=#%?var#%?nazione#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>169</cmp><cmp>cond2</cmp><cmp>rpt#@?#@?set#%?405#%?=#%?var#%?codice_fiscale#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>170</cmp><cmp>cond2</cmp><cmp>rpt#@?#@?set#%?406#%?=#%?var#%?partita_iva#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>171</cmp><cmp>cond2</cmp><cmp>rpt#@?#@?set#%?407#%?=#%?var#%?via#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>172</cmp><cmp>cond2</cmp><cmp>ind#@?#@?set#%?408#%?=#%?txt#%?0#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>173</cmp><cmp>cond2</cmp><cmp>ind#@?#@?set#%?412#%?=#%?txt#%?0#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>174</cmp><cmp>cond2</cmp><cmp>inr#@?#@?set#%?413#%?=#%?txt#%?0#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>175</cmp><cmp>cond2</cmp><cmp>inr#@?#@?set#%?414#%?=#%?txt#%?0#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>176</cmp><cmp>cond2</cmp><cmp>rpt#@?#$?logo_struttura#%?!=#%?txt#%?#@?set#%?420#%?=#%?txt#%?<img src="#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>177</cmp><cmp>cond2</cmp><cmp>rpt#@?#$?logo_struttura#%?!=#%?txt#%?#@?set#%?420#%?.=#%?var#%?logo_struttura#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>178</cmp><cmp>cond2</cmp><cmp>rpt#@?#$?logo_struttura#%?!=#%?txt#%?#@?set#%?420#%?.=#%?txt#%?" alt="Logo" style="float: right;">#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>179</cmp><cmp>cond2</cmp><cmp>inr#@?#@?set#%?425#%?=#%?txt#%?0#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>1</cmp><cmp>cond11</cmp><cmp>rpt#@?#@?set#%?204089#%?=#%?txt#%?#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>2</cmp><cmp>cond11</cmp><cmp>rpt#@?or#$?cognome#%?{}#%?txt#%?&quot;#$?cognome#%?{}#%?txt#%?,#@?set#%?204089#%?=#%?txt#%?"#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>3</cmp><cmp>cond11</cmp><cmp>rpt#@?#@?set#%?204089#%?.=#%?var#%?cognome#%?txt#%?&quot;#%?txt#%?""#%?</cmp></riga>
-<riga><cmp>4</cmp><cmp>cond11</cmp><cmp>rpt#@?or#$?cognome#%?{}#%?txt#%?&quot;#$?cognome#%?{}#%?txt#%?,#@?set#%?204089#%?.=#%?txt#%?"#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>5</cmp><cmp>cond11</cmp><cmp>rpt#@?#@?set#%?204090#%?=#%?txt#%?#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>6</cmp><cmp>cond11</cmp><cmp>rpt#@?or#$?nome#%?{}#%?txt#%?&quot;#$?nome#%?{}#%?txt#%?,#@?set#%?204090#%?=#%?txt#%?"#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>7</cmp><cmp>cond11</cmp><cmp>rpt#@?#@?set#%?204090#%?.=#%?var#%?nome#%?txt#%?&quot;#%?txt#%?""#%?</cmp></riga>
-<riga><cmp>8</cmp><cmp>cond11</cmp><cmp>rpt#@?or#$?nome#%?{}#%?txt#%?&quot;#$?nome#%?{}#%?txt#%?,#@?set#%?204090#%?.=#%?txt#%?"#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>9</cmp><cmp>cond11</cmp><cmp>rpt#@?#@?set#%?204091#%?=#%?txt#%?#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>10</cmp><cmp>cond11</cmp><cmp>rpt#@?or#$?unita_occupata#%?{}#%?txt#%?&quot;#$?unita_occupata#%?{}#%?txt#%?,#@?set#%?204091#%?=#%?txt#%?"#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>11</cmp><cmp>cond11</cmp><cmp>rpt#@?#@?set#%?204091#%?.=#%?var#%?unita_occupata#%?txt#%?&quot;#%?txt#%?""#%?</cmp></riga>
-<riga><cmp>12</cmp><cmp>cond11</cmp><cmp>rpt#@?or#$?unita_occupata#%?{}#%?txt#%?&quot;#$?unita_occupata#%?{}#%?txt#%?,#@?set#%?204091#%?.=#%?txt#%?"#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>13</cmp><cmp>cond11</cmp><cmp>rpt#@?#@?set#%?204092#%?=#%?txt#%?#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>14</cmp><cmp>cond11</cmp><cmp>rpt#@?or#$?nome_tariffa#%?{}#%?txt#%?&quot;#$?nome_tariffa#%?{}#%?txt#%?,#@?set#%?204092#%?=#%?txt#%?"#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>15</cmp><cmp>cond11</cmp><cmp>rpt#@?#@?set#%?204092#%?.=#%?var#%?nome_tariffa#%?txt#%?&quot;#%?txt#%?""#%?</cmp></riga>
-<riga><cmp>16</cmp><cmp>cond11</cmp><cmp>rpt#@?or#$?nome_tariffa#%?{}#%?txt#%?&quot;#$?nome_tariffa#%?{}#%?txt#%?,#@?set#%?204092#%?.=#%?txt#%?"#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>17</cmp><cmp>cond11</cmp><cmp>rpt#@?#@?set#%?204093#%?=#%?txt#%?#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>18</cmp><cmp>cond11</cmp><cmp>rpt#@?or#$?email#%?{}#%?txt#%?&quot;#$?email#%?{}#%?txt#%?,#@?set#%?204093#%?=#%?txt#%?"#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>19</cmp><cmp>cond11</cmp><cmp>rpt#@?#@?set#%?204093#%?.=#%?var#%?email#%?txt#%?&quot;#%?txt#%?""#%?</cmp></riga>
-<riga><cmp>20</cmp><cmp>cond11</cmp><cmp>rpt#@?or#$?email#%?{}#%?txt#%?&quot;#$?email#%?{}#%?txt#%?,#@?set#%?204093#%?.=#%?txt#%?"#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>21</cmp><cmp>cond11</cmp><cmp>rpt#@?#@?set#%?204094#%?=#%?txt#%?#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>22</cmp><cmp>cond11</cmp><cmp>rpt#@?or#$?telefono#%?{}#%?txt#%?&quot;#$?telefono#%?{}#%?txt#%?,#@?set#%?204094#%?=#%?txt#%?"#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>23</cmp><cmp>cond11</cmp><cmp>rpt#@?#@?set#%?204094#%?.=#%?var#%?telefono#%?txt#%?&quot;#%?txt#%?""#%?</cmp></riga>
-<riga><cmp>24</cmp><cmp>cond11</cmp><cmp>rpt#@?or#$?telefono#%?{}#%?txt#%?&quot;#$?telefono#%?{}#%?txt#%?,#@?set#%?204094#%?.=#%?txt#%?"#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>25</cmp><cmp>cond11</cmp><cmp>rpt#@?#@?set#%?204095#%?=#%?txt#%?#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>26</cmp><cmp>cond11</cmp><cmp>rpt#@?or#$?costo_tariffa#%?{}#%?txt#%?&quot;#$?costo_tariffa#%?{}#%?txt#%?,#@?set#%?204095#%?=#%?txt#%?"#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>27</cmp><cmp>cond11</cmp><cmp>rpt#@?#@?set#%?204095#%?.=#%?var#%?costo_tariffa#%?txt#%?&quot;#%?txt#%?""#%?</cmp></riga>
-<riga><cmp>28</cmp><cmp>cond11</cmp><cmp>rpt#@?or#$?costo_tariffa#%?{}#%?txt#%?&quot;#$?costo_tariffa#%?{}#%?txt#%?,#@?set#%?204095#%?.=#%?txt#%?"#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>29</cmp><cmp>cond11</cmp><cmp>rpt#@?#@?set#%?204096#%?=#%?txt#%?#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>30</cmp><cmp>cond11</cmp><cmp>rpt#@?or#$?costo_tot#%?{}#%?txt#%?&quot;#$?costo_tot#%?{}#%?txt#%?,#@?set#%?204096#%?=#%?txt#%?"#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>31</cmp><cmp>cond11</cmp><cmp>rpt#@?#@?set#%?204096#%?.=#%?var#%?costo_tot#%?txt#%?&quot;#%?txt#%?""#%?</cmp></riga>
-<riga><cmp>32</cmp><cmp>cond11</cmp><cmp>rpt#@?or#$?costo_tot#%?{}#%?txt#%?&quot;#$?costo_tot#%?{}#%?txt#%?,#@?set#%?204096#%?.=#%?txt#%?"#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>33</cmp><cmp>cond11</cmp><cmp>rpt#@?#@?set#%?204097#%?=#%?txt#%?#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>34</cmp><cmp>cond11</cmp><cmp>rpt#@?or#$?pagato#%?{}#%?txt#%?&quot;#$?pagato#%?{}#%?txt#%?,#@?set#%?204097#%?=#%?txt#%?"#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>35</cmp><cmp>cond11</cmp><cmp>rpt#@?#@?set#%?204097#%?.=#%?var#%?pagato#%?txt#%?&quot;#%?txt#%?""#%?</cmp></riga>
-<riga><cmp>36</cmp><cmp>cond11</cmp><cmp>rpt#@?or#$?pagato#%?{}#%?txt#%?&quot;#$?pagato#%?{}#%?txt#%?,#@?set#%?204097#%?.=#%?txt#%?"#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>37</cmp><cmp>cond11</cmp><cmp>rpt#@?#@?set#%?204098#%?=#%?txt#%?#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>38</cmp><cmp>cond11</cmp><cmp>rpt#@?or#$?num_persone_tot#%?{}#%?txt#%?&quot;#$?num_persone_tot#%?{}#%?txt#%?,#@?set#%?204098#%?=#%?txt#%?"#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>39</cmp><cmp>cond11</cmp><cmp>rpt#@?#@?set#%?204098#%?.=#%?var#%?num_persone_tot#%?txt#%?&quot;#%?txt#%?""#%?</cmp></riga>
-<riga><cmp>40</cmp><cmp>cond11</cmp><cmp>rpt#@?or#$?num_persone_tot#%?{}#%?txt#%?&quot;#$?num_persone_tot#%?{}#%?txt#%?,#@?set#%?204098#%?.=#%?txt#%?"#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>48</cmp><cmp>cond11</cmp><cmp>rpt#@?#@?set#%?204100#%?=#%?txt#%?#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>49</cmp><cmp>cond11</cmp><cmp>rpt#@?or#$?commento#%?{}#%?txt#%?&quot;#$?commento#%?{}#%?txt#%?,#@?set#%?204100#%?=#%?txt#%?"#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>50</cmp><cmp>cond11</cmp><cmp>rpt#@?#@?set#%?204100#%?.=#%?var#%?commento#%?txt#%?&quot;#%?txt#%?""#%?</cmp></riga>
-<riga><cmp>51</cmp><cmp>cond11</cmp><cmp>rpt#@?#@?set#%?204100#%?=#%?var#%?comment_rcsv#%?var#%?avanzamento_riga#%?txt#%?#%?</cmp></riga>
-<riga><cmp>56</cmp><cmp>cond11</cmp><cmp>rpt#@?or#$?commento#%?{}#%?txt#%?&quot;#$?commento#%?{}#%?txt#%?,#@?set#%?204100#%?.=#%?txt#%?"#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>79</cmp><cmp>cond11</cmp><cmp>rpt#@?#@?date#%?204109#%?data_inizio#%?is#%?0#%?g</cmp></riga>
-<riga><cmp>80</cmp><cmp>cond11</cmp><cmp>rpt#@?#@?date#%?204110#%?data_fine#%?is#%?0#%?g</cmp></riga>
-<riga><cmp>1</cmp><cmp>cond10</cmp><cmp>rpt#@?#@?set#%?102035#%?=#%?txt#%?#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>2</cmp><cmp>cond10</cmp><cmp>rpt#@?or#$?cognome#%?{}#%?txt#%?&quot;#$?cognome#%?{}#%?txt#%?,#@?set#%?102035#%?=#%?txt#%?"#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>3</cmp><cmp>cond10</cmp><cmp>rpt#@?#@?set#%?102035#%?.=#%?var#%?cognome#%?txt#%?&quot;#%?txt#%?""#%?</cmp></riga>
-<riga><cmp>4</cmp><cmp>cond10</cmp><cmp>rpt#@?or#$?cognome#%?{}#%?txt#%?&quot;#$?cognome#%?{}#%?txt#%?,#@?set#%?102035#%?.=#%?txt#%?"#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>5</cmp><cmp>cond10</cmp><cmp>rpt#@?#@?set#%?102036#%?=#%?txt#%?#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>6</cmp><cmp>cond10</cmp><cmp>rpt#@?or#$?nome#%?{}#%?txt#%?&quot;#$?nome#%?{}#%?txt#%?,#@?set#%?102036#%?=#%?txt#%?"#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>7</cmp><cmp>cond10</cmp><cmp>rpt#@?#@?set#%?102036#%?.=#%?var#%?nome#%?txt#%?&quot;#%?txt#%?""#%?</cmp></riga>
-<riga><cmp>8</cmp><cmp>cond10</cmp><cmp>rpt#@?or#$?nome#%?{}#%?txt#%?&quot;#$?nome#%?{}#%?txt#%?,#@?set#%?102036#%?.=#%?txt#%?"#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>9</cmp><cmp>cond10</cmp><cmp>rpt#@?#@?set#%?102037#%?=#%?txt#%?#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>10</cmp><cmp>cond10</cmp><cmp>rpt#@?or#$?soprannome#%?{}#%?txt#%?&quot;#$?soprannome#%?{}#%?txt#%?,#@?set#%?102037#%?=#%?txt#%?"#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>11</cmp><cmp>cond10</cmp><cmp>rpt#@?#@?set#%?102037#%?.=#%?var#%?soprannome#%?txt#%?&quot;#%?txt#%?""#%?</cmp></riga>
-<riga><cmp>12</cmp><cmp>cond10</cmp><cmp>rpt#@?or#$?soprannome#%?{}#%?txt#%?&quot;#$?soprannome#%?{}#%?txt#%?,#@?set#%?102037#%?.=#%?txt#%?"#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>13</cmp><cmp>cond10</cmp><cmp>rpt#@?#@?set#%?102038#%?=#%?txt#%?#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>14</cmp><cmp>cond10</cmp><cmp>rpt#@?or#$?titolo#%?{}#%?txt#%?&quot;#$?titolo#%?{}#%?txt#%?,#@?set#%?102038#%?=#%?txt#%?"#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>15</cmp><cmp>cond10</cmp><cmp>rpt#@?#@?set#%?102038#%?.=#%?var#%?titolo#%?txt#%?&quot;#%?txt#%?""#%?</cmp></riga>
-<riga><cmp>16</cmp><cmp>cond10</cmp><cmp>rpt#@?or#$?titolo#%?{}#%?txt#%?&quot;#$?titolo#%?{}#%?txt#%?,#@?set#%?102038#%?.=#%?txt#%?"#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>17</cmp><cmp>cond10</cmp><cmp>rpt#@?#@?set#%?102039#%?=#%?txt#%?#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>18</cmp><cmp>cond10</cmp><cmp>rpt#@?or#$?email#%?{}#%?txt#%?&quot;#$?email#%?{}#%?txt#%?,#@?set#%?102039#%?=#%?txt#%?"#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>19</cmp><cmp>cond10</cmp><cmp>rpt#@?#@?set#%?102039#%?.=#%?var#%?email#%?txt#%?&quot;#%?txt#%?""#%?</cmp></riga>
-<riga><cmp>20</cmp><cmp>cond10</cmp><cmp>rpt#@?or#$?email#%?{}#%?txt#%?&quot;#$?email#%?{}#%?txt#%?,#@?set#%?102039#%?.=#%?txt#%?"#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>21</cmp><cmp>cond10</cmp><cmp>rpt#@?#@?set#%?102040#%?=#%?txt#%?#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>22</cmp><cmp>cond10</cmp><cmp>rpt#@?or#$?telefono#%?{}#%?txt#%?&quot;#$?telefono#%?{}#%?txt#%?,#@?set#%?102040#%?=#%?txt#%?"#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>23</cmp><cmp>cond10</cmp><cmp>rpt#@?#@?set#%?102040#%?.=#%?var#%?telefono#%?txt#%?&quot;#%?txt#%?""#%?</cmp></riga>
-<riga><cmp>24</cmp><cmp>cond10</cmp><cmp>rpt#@?or#$?telefono#%?{}#%?txt#%?&quot;#$?telefono#%?{}#%?txt#%?,#@?set#%?102040#%?.=#%?txt#%?"#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>25</cmp><cmp>cond10</cmp><cmp>rpt#@?#@?set#%?102041#%?=#%?txt#%?#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>26</cmp><cmp>cond10</cmp><cmp>rpt#@?or#$?fax#%?{}#%?txt#%?&quot;#$?fax#%?{}#%?txt#%?,#@?set#%?102041#%?=#%?txt#%?"#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>27</cmp><cmp>cond10</cmp><cmp>rpt#@?#@?set#%?102041#%?.=#%?var#%?fax#%?txt#%?&quot;#%?txt#%?""#%?</cmp></riga>
-<riga><cmp>28</cmp><cmp>cond10</cmp><cmp>rpt#@?or#$?fax#%?{}#%?txt#%?&quot;#$?fax#%?{}#%?txt#%?,#@?set#%?102041#%?.=#%?txt#%?"#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>29</cmp><cmp>cond10</cmp><cmp>rpt#@?#@?set#%?102042#%?=#%?txt#%?#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>30</cmp><cmp>cond10</cmp><cmp>rpt#@?or#$?nazione#%?{}#%?txt#%?&quot;#$?nazione#%?{}#%?txt#%?,#@?set#%?102042#%?=#%?txt#%?"#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>31</cmp><cmp>cond10</cmp><cmp>rpt#@?#@?set#%?102042#%?.=#%?var#%?nazione#%?txt#%?&quot;#%?txt#%?""#%?</cmp></riga>
-<riga><cmp>32</cmp><cmp>cond10</cmp><cmp>rpt#@?or#$?nazione#%?{}#%?txt#%?&quot;#$?nazione#%?{}#%?txt#%?,#@?set#%?102042#%?.=#%?txt#%?"#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>33</cmp><cmp>cond10</cmp><cmp>rpt#@?#@?set#%?102043#%?=#%?txt#%?#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>34</cmp><cmp>cond10</cmp><cmp>rpt#@?or#$?regione#%?{}#%?txt#%?&quot;#$?regione#%?{}#%?txt#%?,#@?set#%?102043#%?=#%?txt#%?"#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>35</cmp><cmp>cond10</cmp><cmp>rpt#@?#@?set#%?102043#%?.=#%?var#%?regione#%?txt#%?&quot;#%?txt#%?""#%?</cmp></riga>
-<riga><cmp>36</cmp><cmp>cond10</cmp><cmp>rpt#@?or#$?regione#%?{}#%?txt#%?&quot;#$?regione#%?{}#%?txt#%?,#@?set#%?102043#%?.=#%?txt#%?"#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>37</cmp><cmp>cond10</cmp><cmp>rpt#@?#@?set#%?102044#%?=#%?txt#%?#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>38</cmp><cmp>cond10</cmp><cmp>rpt#@?or#$?citta#%?{}#%?txt#%?&quot;#$?citta#%?{}#%?txt#%?,#@?set#%?102044#%?=#%?txt#%?"#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>39</cmp><cmp>cond10</cmp><cmp>rpt#@?#@?set#%?102044#%?.=#%?var#%?citta#%?txt#%?&quot;#%?txt#%?""#%?</cmp></riga>
-<riga><cmp>40</cmp><cmp>cond10</cmp><cmp>rpt#@?or#$?citta#%?{}#%?txt#%?&quot;#$?citta#%?{}#%?txt#%?,#@?set#%?102044#%?.=#%?txt#%?"#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>41</cmp><cmp>cond10</cmp><cmp>rpt#@?#@?set#%?102050#%?=#%?var#%?via#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>42</cmp><cmp>cond10</cmp><cmp>rpt#@?#$?numcivico#%?!=#%?txt#%?#@?set#%?102050#%?.=#%?txt#%? #%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>43</cmp><cmp>cond10</cmp><cmp>rpt#@?#$?numcivico#%?!=#%?txt#%?#@?set#%?102050#%?.=#%?var#%?numcivico#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>44</cmp><cmp>cond10</cmp><cmp>rpt#@?#@?set#%?102045#%?=#%?txt#%?#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>45</cmp><cmp>cond10</cmp><cmp>rpt#@?or#$?tmp_csv#%?{}#%?txt#%?&quot;#$?tmp_csv#%?{}#%?txt#%?,#@?set#%?102045#%?=#%?txt#%?"#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>46</cmp><cmp>cond10</cmp><cmp>rpt#@?#@?set#%?102045#%?.=#%?var#%?tmp_csv#%?txt#%?&quot;#%?txt#%?""#%?</cmp></riga>
-<riga><cmp>47</cmp><cmp>cond10</cmp><cmp>rpt#@?or#$?tmp_csv#%?{}#%?txt#%?&quot;#$?tmp_csv#%?{}#%?txt#%?,#@?set#%?102045#%?.=#%?txt#%?"#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>48</cmp><cmp>cond10</cmp><cmp>rpt#@?#@?set#%?102046#%?=#%?txt#%?#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>49</cmp><cmp>cond10</cmp><cmp>rpt#@?or#$?cap#%?{}#%?txt#%?&quot;#$?cap#%?{}#%?txt#%?,#@?set#%?102046#%?=#%?txt#%?"#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>50</cmp><cmp>cond10</cmp><cmp>rpt#@?#@?set#%?102046#%?.=#%?var#%?cap#%?txt#%?&quot;#%?txt#%?""#%?</cmp></riga>
-<riga><cmp>51</cmp><cmp>cond10</cmp><cmp>rpt#@?or#$?cap#%?{}#%?txt#%?&quot;#$?cap#%?{}#%?txt#%?,#@?set#%?102046#%?.=#%?txt#%?"#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>52</cmp><cmp>cond10</cmp><cmp>rpt#@?#@?set#%?102047#%?=#%?txt#%?#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>53</cmp><cmp>cond10</cmp><cmp>rpt#@?or#$?cittadinanza#%?{}#%?txt#%?&quot;#$?cittadinanza#%?{}#%?txt#%?,#@?set#%?102047#%?=#%?txt#%?"#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>54</cmp><cmp>cond10</cmp><cmp>rpt#@?#@?set#%?102047#%?.=#%?var#%?cittadinanza#%?txt#%?&quot;#%?txt#%?""#%?</cmp></riga>
-<riga><cmp>55</cmp><cmp>cond10</cmp><cmp>rpt#@?or#$?cittadinanza#%?{}#%?txt#%?&quot;#$?cittadinanza#%?{}#%?txt#%?,#@?set#%?102047#%?.=#%?txt#%?"#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>56</cmp><cmp>cond10</cmp><cmp>rpt#@?#@?set#%?102048#%?=#%?txt#%?#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>57</cmp><cmp>cond10</cmp><cmp>rpt#@?#@?date#%?102048#%?data_nascita#%?da#%?0#%?g</cmp></riga>
-<riga><cmp>58</cmp><cmp>cond10</cmp><cmp>rpt#@?#@?set#%?102049#%?=#%?txt#%?#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>59</cmp><cmp>cond10</cmp><cmp>rpt#@?or#$?partita_iva#%?{}#%?txt#%?&quot;#$?partita_iva#%?{}#%?txt#%?,#@?set#%?102049#%?=#%?txt#%?"#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>60</cmp><cmp>cond10</cmp><cmp>rpt#@?#@?set#%?102049#%?.=#%?var#%?partita_iva#%?txt#%?&quot;#%?txt#%?""#%?</cmp></riga>
-<riga><cmp>61</cmp><cmp>cond10</cmp><cmp>rpt#@?or#$?partita_iva#%?{}#%?txt#%?&quot;#$?partita_iva#%?{}#%?txt#%?,#@?set#%?102049#%?.=#%?txt#%?"#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>62</cmp><cmp>cond10</cmp><cmp>rpt#@?#@?set#%?102051#%?=#%?txt#%?#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>63</cmp><cmp>cond10</cmp><cmp>rpt#@?or#$?email2#%?{}#%?txt#%?&quot;#$?email2#%?{}#%?txt#%?,#@?set#%?102051#%?=#%?txt#%?"#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>64</cmp><cmp>cond10</cmp><cmp>rpt#@?#@?set#%?102051#%?.=#%?var#%?email2#%?txt#%?&quot;#%?txt#%?""#%?</cmp></riga>
-<riga><cmp>65</cmp><cmp>cond10</cmp><cmp>rpt#@?or#$?email2#%?{}#%?txt#%?&quot;#$?email2#%?{}#%?txt#%?,#@?set#%?102051#%?.=#%?txt#%?"#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>66</cmp><cmp>cond10</cmp><cmp>rpt#@?#@?set#%?102052#%?=#%?txt#%?#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>67</cmp><cmp>cond10</cmp><cmp>rpt#@?or#$?email_certificata#%?{}#%?txt#%?&quot;#$?email_certificata#%?{}#%?txt#%?,#@?set#%?102052#%?=#%?txt#%?"#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>68</cmp><cmp>cond10</cmp><cmp>rpt#@?#@?set#%?102052#%?.=#%?var#%?email_certificata#%?txt#%?&quot;#%?txt#%?""#%?</cmp></riga>
-<riga><cmp>69</cmp><cmp>cond10</cmp><cmp>rpt#@?or#$?email_certificata#%?{}#%?txt#%?&quot;#$?email_certificata#%?{}#%?txt#%?,#@?set#%?102052#%?.=#%?txt#%?"#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>70</cmp><cmp>cond10</cmp><cmp>rpt#@?#@?set#%?102053#%?=#%?txt#%?#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>71</cmp><cmp>cond10</cmp><cmp>rpt#@?or#$?telefono2#%?{}#%?txt#%?&quot;#$?telefono2#%?{}#%?txt#%?,#@?set#%?102053#%?=#%?txt#%?"#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>72</cmp><cmp>cond10</cmp><cmp>rpt#@?#@?set#%?102053#%?.=#%?var#%?telefono2#%?txt#%?&quot;#%?txt#%?""#%?</cmp></riga>
-<riga><cmp>73</cmp><cmp>cond10</cmp><cmp>rpt#@?or#$?telefono2#%?{}#%?txt#%?&quot;#$?telefono2#%?{}#%?txt#%?,#@?set#%?102053#%?.=#%?txt#%?"#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>74</cmp><cmp>cond10</cmp><cmp>rpt#@?#@?set#%?102054#%?=#%?txt#%?#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>75</cmp><cmp>cond10</cmp><cmp>rpt#@?or#$?telefono3#%?{}#%?txt#%?&quot;#$?telefono3#%?{}#%?txt#%?,#@?set#%?102054#%?=#%?txt#%?"#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>76</cmp><cmp>cond10</cmp><cmp>rpt#@?#@?set#%?102054#%?.=#%?var#%?telefono3#%?txt#%?&quot;#%?txt#%?""#%?</cmp></riga>
-<riga><cmp>77</cmp><cmp>cond10</cmp><cmp>rpt#@?or#$?telefono3#%?{}#%?txt#%?&quot;#$?telefono3#%?{}#%?txt#%?,#@?set#%?102054#%?.=#%?txt#%?"#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>141</cmp><cmp>cond2</cmp><cmp>rpt#@?#@?oper#%?33#%?price_tot_invo#%?+#%?var#%?costo_tot#%?</cmp></riga>
+<riga><cmp>142</cmp><cmp>cond2</cmp><cmp>rpt#@?#@?oper#%?34#%?price_tot_invo#%?+#%?txt#%?0#%?</cmp></riga>
+<riga><cmp>143</cmp><cmp>cond2</cmp><cmp>rpt#@?#$?codice_fiscale_struttura#%?!=#%?txt#%?#@?set#%?24#%?=#%?txt#%?- Fiscal Code #%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>144</cmp><cmp>cond2</cmp><cmp>rpt#@?#$?codice_fiscale_struttura#%?!=#%?txt#%?#@?set#%?24#%?.=#%?var#%?codice_fiscale_struttura#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>145</cmp><cmp>cond2</cmp><cmp>rpt#@?#$?telefono_struttura#%?!=#%?txt#%?#@?set#%?27#%?=#%?txt#%?Tel. #%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>146</cmp><cmp>cond2</cmp><cmp>rpt#@?#$?telefono_struttura#%?!=#%?txt#%?#@?set#%?27#%?.=#%?var#%?telefono_struttura#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>147</cmp><cmp>cond2</cmp><cmp>inr#@?#@?set#%?30#%?=#%?txt#%?#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>148</cmp><cmp>cond2</cmp><cmp>inr#@?#@?oper#%?48#%?repetition_num_invo#%?+#%?txt#%?1#%?</cmp></riga>
+<riga><cmp>149</cmp><cmp>cond2</cmp><cmp>ind#@?#@?set#%?55#%?=#%?txt#%?YES#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>150</cmp><cmp>cond2</cmp><cmp>ind#@?#@?set#%?58#%?=#%?txt#%?name of extra cost considered as tax#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>151</cmp><cmp>cond2</cmp><cmp>ind#@?#@?set#%?33#%?=#%?txt#%?0#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>152</cmp><cmp>cond2</cmp><cmp>rpt#@?and#$?telefono_struttura#%?!=#%?txt#%?#$?sito_web_struttura#%?!=#%?txt#%?#@?set#%?27#%?.=#%?txt#%? - #%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>153</cmp><cmp>cond2</cmp><cmp>rpt#@?#$?sito_web_struttura#%?!=#%?txt#%?#@?set#%?27#%?.=#%?var#%?sito_web_struttura#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>154</cmp><cmp>cond2</cmp><cmp>ind#@?#@?set#%?32#%?=#%?txt#%?0#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>155</cmp><cmp>cond2</cmp><cmp>rpt#@?#@?set#%?25#%?=#%?var#%?nome#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>156</cmp><cmp>cond2</cmp><cmp>rpt#@?#@?set#%?26#%?=#%?var#%?cognome#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>157</cmp><cmp>cond2</cmp><cmp>rpt#@?#@?set#%?40#%?=#%?txt#%?#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>158</cmp><cmp>cond2</cmp><cmp>rpt#@?#$?numcivico#%?!=#%?txt#%?#@?set#%?40#%?=#%?txt#%?, #%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>159</cmp><cmp>cond2</cmp><cmp>rpt#@?#$?numcivico#%?!=#%?txt#%?#@?set#%?40#%?.=#%?var#%?numcivico#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>160</cmp><cmp>cond2</cmp><cmp>rpt#@?#@?set#%?22#%?=#%?txt#%?#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>161</cmp><cmp>cond2</cmp><cmp>rpt#@?#$?citta#%?!=#%?txt#%?#@?set#%?22#%?.=#%?var#%?citta#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>162</cmp><cmp>cond2</cmp><cmp>rpt#@?#$?regione#%?!=#%?txt#%?#@?set#%?22#%?.=#%?txt#%? (#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>163</cmp><cmp>cond2</cmp><cmp>rpt#@?#$?regione#%?!=#%?txt#%?#@?set#%?22#%?.=#%?var#%?regione#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>164</cmp><cmp>cond2</cmp><cmp>rpt#@?#$?regione#%?!=#%?txt#%?#@?set#%?22#%?.=#%?txt#%?)#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>165</cmp><cmp>cond2</cmp><cmp>rpt#@?#@?set#%?23#%?=#%?txt#%?#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>166</cmp><cmp>cond2</cmp><cmp>rpt#@?#$?cap#%?!=#%?txt#%?#@?set#%?23#%?.=#%?var#%?cap#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>167</cmp><cmp>cond2</cmp><cmp>rpt#@?and#$?cap#%?!=#%?txt#%?#$?nazione#%?!=#%?txt#%?#@?set#%?23#%?.=#%?txt#%? #%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>168</cmp><cmp>cond2</cmp><cmp>rpt#@?#$?nazione#%?!=#%?txt#%?#@?set#%?23#%?.=#%?var#%?nazione#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>169</cmp><cmp>cond2</cmp><cmp>rpt#@?#@?set#%?41#%?=#%?var#%?codice_fiscale#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>170</cmp><cmp>cond2</cmp><cmp>rpt#@?#@?set#%?42#%?=#%?var#%?partita_iva#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>171</cmp><cmp>cond2</cmp><cmp>rpt#@?#@?set#%?43#%?=#%?var#%?via#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>172</cmp><cmp>cond2</cmp><cmp>ind#@?#@?set#%?44#%?=#%?txt#%?0#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>173</cmp><cmp>cond2</cmp><cmp>ind#@?#@?set#%?48#%?=#%?txt#%?0#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>174</cmp><cmp>cond2</cmp><cmp>inr#@?#@?set#%?49#%?=#%?txt#%?0#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>175</cmp><cmp>cond2</cmp><cmp>inr#@?#@?set#%?50#%?=#%?txt#%?0#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>176</cmp><cmp>cond2</cmp><cmp>rpt#@?#$?logo_struttura#%?!=#%?txt#%?#@?set#%?56#%?=#%?txt#%?<img src="#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>177</cmp><cmp>cond2</cmp><cmp>rpt#@?#$?logo_struttura#%?!=#%?txt#%?#@?set#%?56#%?.=#%?var#%?logo_struttura#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>178</cmp><cmp>cond2</cmp><cmp>rpt#@?#$?logo_struttura#%?!=#%?txt#%?#@?set#%?56#%?.=#%?txt#%?" alt="Logo" style="float: right;">#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>179</cmp><cmp>cond2</cmp><cmp>inr#@?#@?set#%?61#%?=#%?txt#%?0#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>1</cmp><cmp>cond11</cmp><cmp>rpt#@?#@?set#%?106#%?=#%?txt#%?#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>2</cmp><cmp>cond11</cmp><cmp>rpt#@?or#$?cognome#%?{}#%?txt#%?&quot;#$?cognome#%?{}#%?txt#%?,#@?set#%?106#%?=#%?txt#%?"#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>3</cmp><cmp>cond11</cmp><cmp>rpt#@?#@?set#%?106#%?.=#%?var#%?cognome#%?txt#%?&quot;#%?txt#%?""#%?</cmp></riga>
+<riga><cmp>4</cmp><cmp>cond11</cmp><cmp>rpt#@?or#$?cognome#%?{}#%?txt#%?&quot;#$?cognome#%?{}#%?txt#%?,#@?set#%?106#%?.=#%?txt#%?"#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>5</cmp><cmp>cond11</cmp><cmp>rpt#@?#@?set#%?107#%?=#%?txt#%?#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>6</cmp><cmp>cond11</cmp><cmp>rpt#@?or#$?nome#%?{}#%?txt#%?&quot;#$?nome#%?{}#%?txt#%?,#@?set#%?107#%?=#%?txt#%?"#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>7</cmp><cmp>cond11</cmp><cmp>rpt#@?#@?set#%?107#%?.=#%?var#%?nome#%?txt#%?&quot;#%?txt#%?""#%?</cmp></riga>
+<riga><cmp>8</cmp><cmp>cond11</cmp><cmp>rpt#@?or#$?nome#%?{}#%?txt#%?&quot;#$?nome#%?{}#%?txt#%?,#@?set#%?107#%?.=#%?txt#%?"#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>9</cmp><cmp>cond11</cmp><cmp>rpt#@?#@?set#%?108#%?=#%?txt#%?#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>10</cmp><cmp>cond11</cmp><cmp>rpt#@?or#$?unita_occupata#%?{}#%?txt#%?&quot;#$?unita_occupata#%?{}#%?txt#%?,#@?set#%?108#%?=#%?txt#%?"#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>11</cmp><cmp>cond11</cmp><cmp>rpt#@?#@?set#%?108#%?.=#%?var#%?unita_occupata#%?txt#%?&quot;#%?txt#%?""#%?</cmp></riga>
+<riga><cmp>12</cmp><cmp>cond11</cmp><cmp>rpt#@?or#$?unita_occupata#%?{}#%?txt#%?&quot;#$?unita_occupata#%?{}#%?txt#%?,#@?set#%?108#%?.=#%?txt#%?"#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>13</cmp><cmp>cond11</cmp><cmp>rpt#@?#@?set#%?109#%?=#%?txt#%?#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>14</cmp><cmp>cond11</cmp><cmp>rpt#@?or#$?nome_tariffa#%?{}#%?txt#%?&quot;#$?nome_tariffa#%?{}#%?txt#%?,#@?set#%?109#%?=#%?txt#%?"#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>15</cmp><cmp>cond11</cmp><cmp>rpt#@?#@?set#%?109#%?.=#%?var#%?nome_tariffa#%?txt#%?&quot;#%?txt#%?""#%?</cmp></riga>
+<riga><cmp>16</cmp><cmp>cond11</cmp><cmp>rpt#@?or#$?nome_tariffa#%?{}#%?txt#%?&quot;#$?nome_tariffa#%?{}#%?txt#%?,#@?set#%?109#%?.=#%?txt#%?"#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>17</cmp><cmp>cond11</cmp><cmp>rpt#@?#@?set#%?110#%?=#%?txt#%?#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>18</cmp><cmp>cond11</cmp><cmp>rpt#@?or#$?email#%?{}#%?txt#%?&quot;#$?email#%?{}#%?txt#%?,#@?set#%?110#%?=#%?txt#%?"#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>19</cmp><cmp>cond11</cmp><cmp>rpt#@?#@?set#%?110#%?.=#%?var#%?email#%?txt#%?&quot;#%?txt#%?""#%?</cmp></riga>
+<riga><cmp>20</cmp><cmp>cond11</cmp><cmp>rpt#@?or#$?email#%?{}#%?txt#%?&quot;#$?email#%?{}#%?txt#%?,#@?set#%?110#%?.=#%?txt#%?"#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>21</cmp><cmp>cond11</cmp><cmp>rpt#@?#@?set#%?111#%?=#%?txt#%?#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>22</cmp><cmp>cond11</cmp><cmp>rpt#@?or#$?telefono#%?{}#%?txt#%?&quot;#$?telefono#%?{}#%?txt#%?,#@?set#%?111#%?=#%?txt#%?"#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>23</cmp><cmp>cond11</cmp><cmp>rpt#@?#@?set#%?111#%?.=#%?var#%?telefono#%?txt#%?&quot;#%?txt#%?""#%?</cmp></riga>
+<riga><cmp>24</cmp><cmp>cond11</cmp><cmp>rpt#@?or#$?telefono#%?{}#%?txt#%?&quot;#$?telefono#%?{}#%?txt#%?,#@?set#%?111#%?.=#%?txt#%?"#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>25</cmp><cmp>cond11</cmp><cmp>rpt#@?#@?set#%?112#%?=#%?txt#%?#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>26</cmp><cmp>cond11</cmp><cmp>rpt#@?or#$?costo_tariffa#%?{}#%?txt#%?&quot;#$?costo_tariffa#%?{}#%?txt#%?,#@?set#%?112#%?=#%?txt#%?"#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>27</cmp><cmp>cond11</cmp><cmp>rpt#@?#@?set#%?112#%?.=#%?var#%?costo_tariffa#%?txt#%?&quot;#%?txt#%?""#%?</cmp></riga>
+<riga><cmp>28</cmp><cmp>cond11</cmp><cmp>rpt#@?or#$?costo_tariffa#%?{}#%?txt#%?&quot;#$?costo_tariffa#%?{}#%?txt#%?,#@?set#%?112#%?.=#%?txt#%?"#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>29</cmp><cmp>cond11</cmp><cmp>rpt#@?#@?set#%?113#%?=#%?txt#%?#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>30</cmp><cmp>cond11</cmp><cmp>rpt#@?or#$?costo_tot#%?{}#%?txt#%?&quot;#$?costo_tot#%?{}#%?txt#%?,#@?set#%?113#%?=#%?txt#%?"#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>31</cmp><cmp>cond11</cmp><cmp>rpt#@?#@?set#%?113#%?.=#%?var#%?costo_tot#%?txt#%?&quot;#%?txt#%?""#%?</cmp></riga>
+<riga><cmp>32</cmp><cmp>cond11</cmp><cmp>rpt#@?or#$?costo_tot#%?{}#%?txt#%?&quot;#$?costo_tot#%?{}#%?txt#%?,#@?set#%?113#%?.=#%?txt#%?"#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>33</cmp><cmp>cond11</cmp><cmp>rpt#@?#@?set#%?114#%?=#%?txt#%?#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>34</cmp><cmp>cond11</cmp><cmp>rpt#@?or#$?pagato#%?{}#%?txt#%?&quot;#$?pagato#%?{}#%?txt#%?,#@?set#%?114#%?=#%?txt#%?"#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>35</cmp><cmp>cond11</cmp><cmp>rpt#@?#@?set#%?114#%?.=#%?var#%?pagato#%?txt#%?&quot;#%?txt#%?""#%?</cmp></riga>
+<riga><cmp>36</cmp><cmp>cond11</cmp><cmp>rpt#@?or#$?pagato#%?{}#%?txt#%?&quot;#$?pagato#%?{}#%?txt#%?,#@?set#%?114#%?.=#%?txt#%?"#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>37</cmp><cmp>cond11</cmp><cmp>rpt#@?#@?set#%?115#%?=#%?txt#%?#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>38</cmp><cmp>cond11</cmp><cmp>rpt#@?or#$?num_persone_tot#%?{}#%?txt#%?&quot;#$?num_persone_tot#%?{}#%?txt#%?,#@?set#%?115#%?=#%?txt#%?"#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>39</cmp><cmp>cond11</cmp><cmp>rpt#@?#@?set#%?115#%?.=#%?var#%?num_persone_tot#%?txt#%?&quot;#%?txt#%?""#%?</cmp></riga>
+<riga><cmp>40</cmp><cmp>cond11</cmp><cmp>rpt#@?or#$?num_persone_tot#%?{}#%?txt#%?&quot;#$?num_persone_tot#%?{}#%?txt#%?,#@?set#%?115#%?.=#%?txt#%?"#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>48</cmp><cmp>cond11</cmp><cmp>rpt#@?#@?set#%?116#%?=#%?txt#%?#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>49</cmp><cmp>cond11</cmp><cmp>rpt#@?or#$?commento#%?{}#%?txt#%?&quot;#$?commento#%?{}#%?txt#%?,#@?set#%?116#%?=#%?txt#%?"#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>50</cmp><cmp>cond11</cmp><cmp>rpt#@?#@?set#%?116#%?.=#%?var#%?commento#%?txt#%?&quot;#%?txt#%?""#%?</cmp></riga>
+<riga><cmp>51</cmp><cmp>cond11</cmp><cmp>rpt#@?#@?set#%?116#%?=#%?var#%?comment_rcsv#%?var#%?avanzamento_riga#%?txt#%?#%?</cmp></riga>
+<riga><cmp>56</cmp><cmp>cond11</cmp><cmp>rpt#@?or#$?commento#%?{}#%?txt#%?&quot;#$?commento#%?{}#%?txt#%?,#@?set#%?116#%?.=#%?txt#%?"#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>79</cmp><cmp>cond11</cmp><cmp>rpt#@?#@?date#%?117#%?data_inizio#%?is#%?0#%?g</cmp></riga>
+<riga><cmp>80</cmp><cmp>cond11</cmp><cmp>rpt#@?#@?date#%?118#%?data_fine#%?is#%?0#%?g</cmp></riga>
+<riga><cmp>1</cmp><cmp>cond10</cmp><cmp>rpt#@?#@?set#%?86#%?=#%?txt#%?#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>2</cmp><cmp>cond10</cmp><cmp>rpt#@?or#$?cognome#%?{}#%?txt#%?&quot;#$?cognome#%?{}#%?txt#%?,#@?set#%?86#%?=#%?txt#%?"#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>3</cmp><cmp>cond10</cmp><cmp>rpt#@?#@?set#%?86#%?.=#%?var#%?cognome#%?txt#%?&quot;#%?txt#%?""#%?</cmp></riga>
+<riga><cmp>4</cmp><cmp>cond10</cmp><cmp>rpt#@?or#$?cognome#%?{}#%?txt#%?&quot;#$?cognome#%?{}#%?txt#%?,#@?set#%?86#%?.=#%?txt#%?"#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>5</cmp><cmp>cond10</cmp><cmp>rpt#@?#@?set#%?87#%?=#%?txt#%?#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>6</cmp><cmp>cond10</cmp><cmp>rpt#@?or#$?nome#%?{}#%?txt#%?&quot;#$?nome#%?{}#%?txt#%?,#@?set#%?87#%?=#%?txt#%?"#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>7</cmp><cmp>cond10</cmp><cmp>rpt#@?#@?set#%?87#%?.=#%?var#%?nome#%?txt#%?&quot;#%?txt#%?""#%?</cmp></riga>
+<riga><cmp>8</cmp><cmp>cond10</cmp><cmp>rpt#@?or#$?nome#%?{}#%?txt#%?&quot;#$?nome#%?{}#%?txt#%?,#@?set#%?87#%?.=#%?txt#%?"#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>9</cmp><cmp>cond10</cmp><cmp>rpt#@?#@?set#%?88#%?=#%?txt#%?#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>10</cmp><cmp>cond10</cmp><cmp>rpt#@?or#$?soprannome#%?{}#%?txt#%?&quot;#$?soprannome#%?{}#%?txt#%?,#@?set#%?88#%?=#%?txt#%?"#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>11</cmp><cmp>cond10</cmp><cmp>rpt#@?#@?set#%?88#%?.=#%?var#%?soprannome#%?txt#%?&quot;#%?txt#%?""#%?</cmp></riga>
+<riga><cmp>12</cmp><cmp>cond10</cmp><cmp>rpt#@?or#$?soprannome#%?{}#%?txt#%?&quot;#$?soprannome#%?{}#%?txt#%?,#@?set#%?88#%?.=#%?txt#%?"#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>13</cmp><cmp>cond10</cmp><cmp>rpt#@?#@?set#%?89#%?=#%?txt#%?#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>14</cmp><cmp>cond10</cmp><cmp>rpt#@?or#$?titolo#%?{}#%?txt#%?&quot;#$?titolo#%?{}#%?txt#%?,#@?set#%?89#%?=#%?txt#%?"#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>15</cmp><cmp>cond10</cmp><cmp>rpt#@?#@?set#%?89#%?.=#%?var#%?titolo#%?txt#%?&quot;#%?txt#%?""#%?</cmp></riga>
+<riga><cmp>16</cmp><cmp>cond10</cmp><cmp>rpt#@?or#$?titolo#%?{}#%?txt#%?&quot;#$?titolo#%?{}#%?txt#%?,#@?set#%?89#%?.=#%?txt#%?"#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>17</cmp><cmp>cond10</cmp><cmp>rpt#@?#@?set#%?90#%?=#%?txt#%?#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>18</cmp><cmp>cond10</cmp><cmp>rpt#@?or#$?email#%?{}#%?txt#%?&quot;#$?email#%?{}#%?txt#%?,#@?set#%?90#%?=#%?txt#%?"#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>19</cmp><cmp>cond10</cmp><cmp>rpt#@?#@?set#%?90#%?.=#%?var#%?email#%?txt#%?&quot;#%?txt#%?""#%?</cmp></riga>
+<riga><cmp>20</cmp><cmp>cond10</cmp><cmp>rpt#@?or#$?email#%?{}#%?txt#%?&quot;#$?email#%?{}#%?txt#%?,#@?set#%?90#%?.=#%?txt#%?"#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>21</cmp><cmp>cond10</cmp><cmp>rpt#@?#@?set#%?91#%?=#%?txt#%?#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>22</cmp><cmp>cond10</cmp><cmp>rpt#@?or#$?telefono#%?{}#%?txt#%?&quot;#$?telefono#%?{}#%?txt#%?,#@?set#%?91#%?=#%?txt#%?"#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>23</cmp><cmp>cond10</cmp><cmp>rpt#@?#@?set#%?91#%?.=#%?var#%?telefono#%?txt#%?&quot;#%?txt#%?""#%?</cmp></riga>
+<riga><cmp>24</cmp><cmp>cond10</cmp><cmp>rpt#@?or#$?telefono#%?{}#%?txt#%?&quot;#$?telefono#%?{}#%?txt#%?,#@?set#%?91#%?.=#%?txt#%?"#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>25</cmp><cmp>cond10</cmp><cmp>rpt#@?#@?set#%?92#%?=#%?txt#%?#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>26</cmp><cmp>cond10</cmp><cmp>rpt#@?or#$?fax#%?{}#%?txt#%?&quot;#$?fax#%?{}#%?txt#%?,#@?set#%?92#%?=#%?txt#%?"#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>27</cmp><cmp>cond10</cmp><cmp>rpt#@?#@?set#%?92#%?.=#%?var#%?fax#%?txt#%?&quot;#%?txt#%?""#%?</cmp></riga>
+<riga><cmp>28</cmp><cmp>cond10</cmp><cmp>rpt#@?or#$?fax#%?{}#%?txt#%?&quot;#$?fax#%?{}#%?txt#%?,#@?set#%?92#%?.=#%?txt#%?"#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>29</cmp><cmp>cond10</cmp><cmp>rpt#@?#@?set#%?93#%?=#%?txt#%?#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>30</cmp><cmp>cond10</cmp><cmp>rpt#@?or#$?nazione#%?{}#%?txt#%?&quot;#$?nazione#%?{}#%?txt#%?,#@?set#%?93#%?=#%?txt#%?"#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>31</cmp><cmp>cond10</cmp><cmp>rpt#@?#@?set#%?93#%?.=#%?var#%?nazione#%?txt#%?&quot;#%?txt#%?""#%?</cmp></riga>
+<riga><cmp>32</cmp><cmp>cond10</cmp><cmp>rpt#@?or#$?nazione#%?{}#%?txt#%?&quot;#$?nazione#%?{}#%?txt#%?,#@?set#%?93#%?.=#%?txt#%?"#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>33</cmp><cmp>cond10</cmp><cmp>rpt#@?#@?set#%?94#%?=#%?txt#%?#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>34</cmp><cmp>cond10</cmp><cmp>rpt#@?or#$?regione#%?{}#%?txt#%?&quot;#$?regione#%?{}#%?txt#%?,#@?set#%?94#%?=#%?txt#%?"#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>35</cmp><cmp>cond10</cmp><cmp>rpt#@?#@?set#%?94#%?.=#%?var#%?regione#%?txt#%?&quot;#%?txt#%?""#%?</cmp></riga>
+<riga><cmp>36</cmp><cmp>cond10</cmp><cmp>rpt#@?or#$?regione#%?{}#%?txt#%?&quot;#$?regione#%?{}#%?txt#%?,#@?set#%?94#%?.=#%?txt#%?"#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>37</cmp><cmp>cond10</cmp><cmp>rpt#@?#@?set#%?95#%?=#%?txt#%?#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>38</cmp><cmp>cond10</cmp><cmp>rpt#@?or#$?citta#%?{}#%?txt#%?&quot;#$?citta#%?{}#%?txt#%?,#@?set#%?95#%?=#%?txt#%?"#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>39</cmp><cmp>cond10</cmp><cmp>rpt#@?#@?set#%?95#%?.=#%?var#%?citta#%?txt#%?&quot;#%?txt#%?""#%?</cmp></riga>
+<riga><cmp>40</cmp><cmp>cond10</cmp><cmp>rpt#@?or#$?citta#%?{}#%?txt#%?&quot;#$?citta#%?{}#%?txt#%?,#@?set#%?95#%?.=#%?txt#%?"#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>41</cmp><cmp>cond10</cmp><cmp>rpt#@?#@?set#%?101#%?=#%?var#%?via#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>42</cmp><cmp>cond10</cmp><cmp>rpt#@?#$?numcivico#%?!=#%?txt#%?#@?set#%?101#%?.=#%?txt#%? #%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>43</cmp><cmp>cond10</cmp><cmp>rpt#@?#$?numcivico#%?!=#%?txt#%?#@?set#%?101#%?.=#%?var#%?numcivico#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>44</cmp><cmp>cond10</cmp><cmp>rpt#@?#@?set#%?96#%?=#%?txt#%?#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>45</cmp><cmp>cond10</cmp><cmp>rpt#@?or#$?tmp_csv#%?{}#%?txt#%?&quot;#$?tmp_csv#%?{}#%?txt#%?,#@?set#%?96#%?=#%?txt#%?"#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>46</cmp><cmp>cond10</cmp><cmp>rpt#@?#@?set#%?96#%?.=#%?var#%?tmp_csv#%?txt#%?&quot;#%?txt#%?""#%?</cmp></riga>
+<riga><cmp>47</cmp><cmp>cond10</cmp><cmp>rpt#@?or#$?tmp_csv#%?{}#%?txt#%?&quot;#$?tmp_csv#%?{}#%?txt#%?,#@?set#%?96#%?.=#%?txt#%?"#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>48</cmp><cmp>cond10</cmp><cmp>rpt#@?#@?set#%?97#%?=#%?txt#%?#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>49</cmp><cmp>cond10</cmp><cmp>rpt#@?or#$?cap#%?{}#%?txt#%?&quot;#$?cap#%?{}#%?txt#%?,#@?set#%?97#%?=#%?txt#%?"#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>50</cmp><cmp>cond10</cmp><cmp>rpt#@?#@?set#%?97#%?.=#%?var#%?cap#%?txt#%?&quot;#%?txt#%?""#%?</cmp></riga>
+<riga><cmp>51</cmp><cmp>cond10</cmp><cmp>rpt#@?or#$?cap#%?{}#%?txt#%?&quot;#$?cap#%?{}#%?txt#%?,#@?set#%?97#%?.=#%?txt#%?"#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>52</cmp><cmp>cond10</cmp><cmp>rpt#@?#@?set#%?98#%?=#%?txt#%?#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>53</cmp><cmp>cond10</cmp><cmp>rpt#@?or#$?cittadinanza#%?{}#%?txt#%?&quot;#$?cittadinanza#%?{}#%?txt#%?,#@?set#%?98#%?=#%?txt#%?"#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>54</cmp><cmp>cond10</cmp><cmp>rpt#@?#@?set#%?98#%?.=#%?var#%?cittadinanza#%?txt#%?&quot;#%?txt#%?""#%?</cmp></riga>
+<riga><cmp>55</cmp><cmp>cond10</cmp><cmp>rpt#@?or#$?cittadinanza#%?{}#%?txt#%?&quot;#$?cittadinanza#%?{}#%?txt#%?,#@?set#%?98#%?.=#%?txt#%?"#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>56</cmp><cmp>cond10</cmp><cmp>rpt#@?#@?set#%?99#%?=#%?txt#%?#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>57</cmp><cmp>cond10</cmp><cmp>rpt#@?#@?date#%?99#%?data_nascita#%?da#%?0#%?g</cmp></riga>
+<riga><cmp>58</cmp><cmp>cond10</cmp><cmp>rpt#@?#@?set#%?100#%?=#%?txt#%?#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>59</cmp><cmp>cond10</cmp><cmp>rpt#@?or#$?partita_iva#%?{}#%?txt#%?&quot;#$?partita_iva#%?{}#%?txt#%?,#@?set#%?100#%?=#%?txt#%?"#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>60</cmp><cmp>cond10</cmp><cmp>rpt#@?#@?set#%?100#%?.=#%?var#%?partita_iva#%?txt#%?&quot;#%?txt#%?""#%?</cmp></riga>
+<riga><cmp>61</cmp><cmp>cond10</cmp><cmp>rpt#@?or#$?partita_iva#%?{}#%?txt#%?&quot;#$?partita_iva#%?{}#%?txt#%?,#@?set#%?100#%?.=#%?txt#%?"#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>62</cmp><cmp>cond10</cmp><cmp>rpt#@?#@?set#%?102#%?=#%?txt#%?#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>63</cmp><cmp>cond10</cmp><cmp>rpt#@?or#$?email2#%?{}#%?txt#%?&quot;#$?email2#%?{}#%?txt#%?,#@?set#%?102#%?=#%?txt#%?"#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>64</cmp><cmp>cond10</cmp><cmp>rpt#@?#@?set#%?102#%?.=#%?var#%?email2#%?txt#%?&quot;#%?txt#%?""#%?</cmp></riga>
+<riga><cmp>65</cmp><cmp>cond10</cmp><cmp>rpt#@?or#$?email2#%?{}#%?txt#%?&quot;#$?email2#%?{}#%?txt#%?,#@?set#%?102#%?.=#%?txt#%?"#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>66</cmp><cmp>cond10</cmp><cmp>rpt#@?#@?set#%?103#%?=#%?txt#%?#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>67</cmp><cmp>cond10</cmp><cmp>rpt#@?or#$?email_certificata#%?{}#%?txt#%?&quot;#$?email_certificata#%?{}#%?txt#%?,#@?set#%?103#%?=#%?txt#%?"#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>68</cmp><cmp>cond10</cmp><cmp>rpt#@?#@?set#%?103#%?.=#%?var#%?email_certificata#%?txt#%?&quot;#%?txt#%?""#%?</cmp></riga>
+<riga><cmp>69</cmp><cmp>cond10</cmp><cmp>rpt#@?or#$?email_certificata#%?{}#%?txt#%?&quot;#$?email_certificata#%?{}#%?txt#%?,#@?set#%?103#%?.=#%?txt#%?"#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>70</cmp><cmp>cond10</cmp><cmp>rpt#@?#@?set#%?104#%?=#%?txt#%?#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>71</cmp><cmp>cond10</cmp><cmp>rpt#@?or#$?telefono2#%?{}#%?txt#%?&quot;#$?telefono2#%?{}#%?txt#%?,#@?set#%?104#%?=#%?txt#%?"#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>72</cmp><cmp>cond10</cmp><cmp>rpt#@?#@?set#%?104#%?.=#%?var#%?telefono2#%?txt#%?&quot;#%?txt#%?""#%?</cmp></riga>
+<riga><cmp>73</cmp><cmp>cond10</cmp><cmp>rpt#@?or#$?telefono2#%?{}#%?txt#%?&quot;#$?telefono2#%?{}#%?txt#%?,#@?set#%?104#%?.=#%?txt#%?"#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>74</cmp><cmp>cond10</cmp><cmp>rpt#@?#@?set#%?105#%?=#%?txt#%?#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>75</cmp><cmp>cond10</cmp><cmp>rpt#@?or#$?telefono3#%?{}#%?txt#%?&quot;#$?telefono3#%?{}#%?txt#%?,#@?set#%?105#%?=#%?txt#%?"#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>76</cmp><cmp>cond10</cmp><cmp>rpt#@?#@?set#%?105#%?.=#%?var#%?telefono3#%?txt#%?&quot;#%?txt#%?""#%?</cmp></riga>
+<riga><cmp>77</cmp><cmp>cond10</cmp><cmp>rpt#@?or#$?telefono3#%?{}#%?txt#%?&quot;#$?telefono3#%?{}#%?txt#%?,#@?set#%?105#%?.=#%?txt#%?"#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>78</cmp><cmp>cond10</cmp><cmp>rpt#@?#$?client_shown_csv(numero_cliente)#%?=#%?txt#%?1#@?set#%?-2#%?=#%?txt#%?1#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>79</cmp><cmp>cond10</cmp><cmp>rpt#@?#@?set#%?a2335#%?=#%?txt#%?1#%?txt#%?#%?txt#%?#%?</cmp></riga>
 <riga><cmp>1</cmp><cmp>cond</cmp><cmp>rpt#@?#$?sesso#%?=#%?txt#%?f#@?set#%?1#%?=#%?txt#%?s#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>3</cmp><cmp>cond</cmp><cmp>rpt#@?#$?sesso#%?!=#%?txt#%?f#@?set#%?3#%?=#%?txt#%?il#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>4</cmp><cmp>cond</cmp><cmp>rpt#@?#$?sesso#%?=#%?txt#%?f#@?set#%?3#%?=#%?txt#%?la#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>5</cmp><cmp>cond</cmp><cmp>rpt#@?#$?sesso#%?!=#%?txt#%?f#@?set#%?4#%?=#%?txt#%?Il#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>6</cmp><cmp>cond</cmp><cmp>rpt#@?#$?sesso#%?=#%?txt#%?f#@?set#%?4#%?=#%?txt#%?La#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>7</cmp><cmp>cond</cmp><cmp>rpt#@?#$?sesso#%?!=#%?txt#%?f#@?set#%?5#%?=#%?txt#%?al#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>8</cmp><cmp>cond</cmp><cmp>rpt#@?#$?sesso#%?=#%?txt#%?f#@?set#%?5#%?=#%?txt#%?alla#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>9</cmp><cmp>cond</cmp><cmp>rpt#@?#$?sesso#%?!=#%?txt#%?f#@?set#%?6#%?=#%?txt#%?e#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>10</cmp><cmp>cond</cmp><cmp>rpt#@?#$?sesso#%?=#%?txt#%?f#@?set#%?6#%?=#%?txt#%?a#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>11</cmp><cmp>cond</cmp><cmp>rpt#@?#$?sesso#%?!=#%?txt#%?f#@?set#%?7#%?=#%?txt#%?o#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>12</cmp><cmp>cond</cmp><cmp>rpt#@?#$?sesso#%?=#%?txt#%?f#@?set#%?7#%?=#%?txt#%?a#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>23</cmp><cmp>cond</cmp><cmp>rpt#@?#$?sesso#%?!=#%?txt#%?f#@?set#%?13#%?=#%?txt#%?el#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>24</cmp><cmp>cond</cmp><cmp>rpt#@?#$?sesso#%?=#%?txt#%?f#@?set#%?13#%?=#%?txt#%?la#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>25</cmp><cmp>cond</cmp><cmp>rpt#@?#$?sesso#%?!=#%?txt#%?f#@?set#%?14#%?=#%?txt#%?El#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>26</cmp><cmp>cond</cmp><cmp>rpt#@?#$?sesso#%?=#%?txt#%?f#@?set#%?14#%?=#%?txt#%?La#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>27</cmp><cmp>cond</cmp><cmp>rpt#@?#$?sesso#%?!=#%?txt#%?f#@?set#%?15#%?=#%?txt#%?al#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>28</cmp><cmp>cond</cmp><cmp>rpt#@?#$?sesso#%?=#%?txt#%?f#@?set#%?15#%?=#%?txt#%?a la#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>29</cmp><cmp>cond</cmp><cmp>rpt#@?#$?sesso#%?=#%?txt#%?f#@?set#%?16#%?=#%?txt#%?a#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>30</cmp><cmp>cond</cmp><cmp>rpt#@?#$?sesso#%?!=#%?txt#%?f#@?set#%?17#%?=#%?txt#%?o#%?txt#%?#%?txt#%?#%?</cmp></riga>
-<riga><cmp>31</cmp><cmp>cond</cmp><cmp>rpt#@?#$?sesso#%?=#%?txt#%?f#@?set#%?17#%?=#%?txt#%?a#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>3</cmp><cmp>cond</cmp><cmp>rpt#@?#$?sesso#%?!=#%?txt#%?f#@?set#%?2#%?=#%?txt#%?il#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>4</cmp><cmp>cond</cmp><cmp>rpt#@?#$?sesso#%?=#%?txt#%?f#@?set#%?2#%?=#%?txt#%?la#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>5</cmp><cmp>cond</cmp><cmp>rpt#@?#$?sesso#%?!=#%?txt#%?f#@?set#%?3#%?=#%?txt#%?Il#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>6</cmp><cmp>cond</cmp><cmp>rpt#@?#$?sesso#%?=#%?txt#%?f#@?set#%?3#%?=#%?txt#%?La#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>7</cmp><cmp>cond</cmp><cmp>rpt#@?#$?sesso#%?!=#%?txt#%?f#@?set#%?4#%?=#%?txt#%?al#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>8</cmp><cmp>cond</cmp><cmp>rpt#@?#$?sesso#%?=#%?txt#%?f#@?set#%?4#%?=#%?txt#%?alla#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>9</cmp><cmp>cond</cmp><cmp>rpt#@?#$?sesso#%?!=#%?txt#%?f#@?set#%?5#%?=#%?txt#%?e#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>10</cmp><cmp>cond</cmp><cmp>rpt#@?#$?sesso#%?=#%?txt#%?f#@?set#%?5#%?=#%?txt#%?a#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>11</cmp><cmp>cond</cmp><cmp>rpt#@?#$?sesso#%?!=#%?txt#%?f#@?set#%?6#%?=#%?txt#%?o#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>12</cmp><cmp>cond</cmp><cmp>rpt#@?#$?sesso#%?=#%?txt#%?f#@?set#%?6#%?=#%?txt#%?a#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>23</cmp><cmp>cond</cmp><cmp>rpt#@?#$?sesso#%?!=#%?txt#%?f#@?set#%?7#%?=#%?txt#%?el#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>24</cmp><cmp>cond</cmp><cmp>rpt#@?#$?sesso#%?=#%?txt#%?f#@?set#%?7#%?=#%?txt#%?la#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>25</cmp><cmp>cond</cmp><cmp>rpt#@?#$?sesso#%?!=#%?txt#%?f#@?set#%?8#%?=#%?txt#%?El#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>26</cmp><cmp>cond</cmp><cmp>rpt#@?#$?sesso#%?=#%?txt#%?f#@?set#%?8#%?=#%?txt#%?La#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>27</cmp><cmp>cond</cmp><cmp>rpt#@?#$?sesso#%?!=#%?txt#%?f#@?set#%?9#%?=#%?txt#%?al#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>28</cmp><cmp>cond</cmp><cmp>rpt#@?#$?sesso#%?=#%?txt#%?f#@?set#%?9#%?=#%?txt#%?a la#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>29</cmp><cmp>cond</cmp><cmp>rpt#@?#$?sesso#%?=#%?txt#%?f#@?set#%?10#%?=#%?txt#%?a#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>30</cmp><cmp>cond</cmp><cmp>rpt#@?#$?sesso#%?!=#%?txt#%?f#@?set#%?11#%?=#%?txt#%?o#%?txt#%?#%?txt#%?#%?</cmp></riga>
+<riga><cmp>31</cmp><cmp>cond</cmp><cmp>rpt#@?#$?sesso#%?=#%?txt#%?f#@?set#%?11#%?=#%?txt#%?a#%?txt#%?#%?txt#%?#%?</cmp></riga>
 <riga><cmp>2</cmp><cmp>compress</cmp><cmp>gz</cmp></riga>
 <riga><cmp>3</cmp><cmp>compress</cmp><cmp>gz</cmp></riga>
 <riga><cmp>6</cmp><cmp>allegato</cmp><cmp>0</cmp></riga>

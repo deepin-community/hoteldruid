@@ -29,6 +29,7 @@ case "mostra permanenza minima":  		$messaggio = "show minimum stay"; break;
 case "raggruppa le date":  			$messaggio = "group dates"; break;
 case "in modo predefinito per la tariffa":  	$messaggio = "by default for rate"; break;
 case "Numero di persone predefinito per la tariffa":	$messaggio = "Default number of people for rate"; break;
+case "Numero di persone minimo per la tariffa":	$messaggio = "Minimum number of people for rate"; break;
 case "Modifica i valori":  			$messaggio = "Modify values"; break;
 case "non definito":  				$messaggio = "undefined"; break;
 case "Fai l'upload di":  			$messaggio = "Upload"; break;

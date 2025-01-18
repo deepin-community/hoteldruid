@@ -1,9 +1,10 @@
 Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
 Upstream-Name: hoteldruid
+Upstream-Contact: Marco Maria Francesco De Santis <marco@digitaldruid.net>
 Source: http://www.hoteldruid.com/en/download.html
 
 Files: *
-Copyright: 2001-2021 Marco Maria Francesco De Santis <marco@digitaldruid.net>
+Copyright: 2001-2023 Marco Maria Francesco De Santis <marco@digitaldruid.net>
 License: AGPL-3
                      GNU AFFERO GENERAL PUBLIC LICENSE
                         Version 3, 19 November 2007
@@ -668,7 +669,7 @@ License: AGPL-3
  <http://www.gnu.org/licenses/>.
 
 Files: debian/*
-Copyright: 2012-2021 Marco Maria Francesco De Santis <marco@digitaldruid.net>
+Copyright: 2012-2023 Marco Maria Francesco De Santis <marco@digitaldruid.net>
 License: GPL-2+
  This package is free software; you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
@@ -687,7 +688,7 @@ License: GPL-2+
  Public License version 2 can be found in "/usr/share/common-licenses/GPL-2".
 
 Files: debian/extra/appdata/hoteldruid.appdata.xml
-Copyright: 2017-2021 Marco Maria Francesco De Santis <marco@digitaldruid.net>
+Copyright: 2017-2023 Marco Maria Francesco De Santis <marco@digitaldruid.net>
 License: CC0-1.0
  On Debian systems, the complete text of the CC0 1.0 Universal License
  can be found in "/usr/share/common-licenses/CC0-1.0".

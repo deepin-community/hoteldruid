@@ -2,7 +2,7 @@
 
 ##################################################################################
 #    HOTELDRUID
-#    Copyright (C) 2001-2021 by Marco Maria Francesco De Santis (marco@digitaldruid.net)
+#    Copyright (C) 2001-2023 by Marco Maria Francesco De Santis (marco@digitaldruid.net)
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published by
@@ -32,7 +32,8 @@ $var_pag[2] = 'tipo_periodi';
 $var_pag[3] = 'giorno_ini_fine';
 $var_pag[4] = 'mese_ini';
 $var_pag[5] = 'mese_fine';
-$n_var_pag = 6;
+$var_pag[6] = 'importa_anno_prec';
+$n_var_pag = 7;
 
 include("./costanti.php");
 include(C_DATI_PATH."/dati_connessione.php");
@@ -51,8 +52,15 @@ if ($tema[$id_utente] and $tema[$id_utente] != "base" and @is_dir("./themes/".$t
 else include("./includes/head.php");
 
 
+$anno_attuale = date("Y",(time() + (C_DIFF_ORE * 3600) - (C_GIORNI_NUOVO_ANNO * 86400)));
+if (@is_file(C_DATI_PATH."/selectperiodi$anno_attuale.1.php")) $anno_attuale_esist = 1;
+else $anno_attuale_esist = 0;
+if ((!$anno_attuale_esist and $anno == $anno_attuale) or $anno < $anno_attuale or (defined('C_CREA_ANNO_MANUALMENTE') and C_CREA_ANNO_MANUALMENTE == "SI")) {
+
 include("./includes/funzioni_anno.php");
 crea_nuovo_anno($anno,$PHPR_TAB_PRE,$DATETIME,$tipo_periodi,$giorno_ini_fine,$mese_ini,$mese_fine,fixset($importa_anno_prec),"",$pag);
+
+} # fine if ((!$anno_attuale_esist and $anno == $anno_attuale) or $anno < $anno_attuale or...
 
 
 echo "<form accept-charset=\"utf-8\" method=\"post\" action=\"inizio.php\"><div>

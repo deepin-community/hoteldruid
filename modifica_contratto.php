@@ -2,7 +2,7 @@
 
 ##################################################################################
 #    HOTELDRUID
-#    Copyright (C) 2001-2021 by Marco Maria Francesco De Santis (marco@digitaldruid.net)
+#    Copyright (C) 2001-2023 by Marco Maria Francesco De Santis (marco@digitaldruid.net)
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published by
@@ -25,34 +25,81 @@ $titolo = "HotelDruid: Modifica Documento";
 
 $var_pag = array();
 $var_pag[0] = 'num_contratto';
-$var_pag[1] = 'torna';
-$var_pag[2] = 'cambia_qualcosa';
-$var_pag[3] = 'pos_curs';
-$var_pag[4] = 'pos_fine_sel';
-$var_pag[5] = 'var_agg';
-$var_pag[6] = 'salva_modifiche';
-$var_pag[7] = 'tipo_rip';
-$var_pag[8] = 'n_contratto';
-$var_pag[9] = 'var_agg2';
-$var_pag[10] = 'tipo_rip2';
-$var_pag[11] = 'lingua_contr';
-$var_pag[12] = 'formato_email';
-$var_pag[13] = 'cambia_formato_email';
-$var_pag[14] = 'cons_api';
-$var_pag[15] = 'cambia_cons_api';
-$var_pag[16] = 'aggiungi_var';
-$var_pag[17] = 'cambia_formato';
-$var_pag[18] = 'nuovo_formato';
-$var_pag[19] = 'salva_contr';
-$var_pag[20] = 'nuova_dir_salva';
-$var_pag[21] = 'cambia_dir_salva';
-$var_pag[22] = 'tipo_estensione_txt';
-$var_pag[23] = 'estensione_pers_txt';
-$var_pag[24] = 'cambia_estenstione_pers';
-$var_pag[25] = 'cambia_nome_file';
-$var_pag[26] = 'tipo_nome_file';
-$var_pag[27] = 'nome_file_salva';
-$n_var_pag = 28;
+$var_pag[1] = 'cambia_qualcosa';
+$var_pag[2] = 'pos_curs';
+$var_pag[3] = 'pos_fine_sel';
+$var_pag[4] = 'var_agg';
+$var_pag[5] = 'salva_modifiche';
+$var_pag[6] = 'tipo_rip';
+$var_pag[7] = 'n_contratto';
+$var_pag[8] = 'var_agg2';
+$var_pag[9] = 'tipo_rip2';
+$var_pag[10] = 'lingua_contr';
+$var_pag[11] = 'formato_email';
+$var_pag[12] = 'cambia_formato_email';
+$var_pag[13] = 'cons_api';
+$var_pag[14] = 'cambia_cons_api';
+$var_pag[15] = 'aggiungi_var';
+$var_pag[16] = 'cambia_formato';
+$var_pag[17] = 'nuovo_formato';
+$var_pag[18] = 'salva_contr';
+$var_pag[19] = 'nuova_dir_salva';
+$var_pag[20] = 'cambia_dir_salva';
+$var_pag[21] = 'tipo_estensione_txt';
+$var_pag[22] = 'estensione_pers_txt';
+$var_pag[23] = 'cambia_estenstione_pers';
+$var_pag[24] = 'cambia_nome_file';
+$var_pag[25] = 'tipo_nome_file';
+$var_pag[26] = 'nome_file_salva';
+$var_pag[27] = 'multi_lingua';
+$var_pag[28] = 'email_bcc';
+$var_pag[29] = 'cambia_bcc';
+$var_pag[30] = 'nuovo_oggetto';
+$var_pag[31] = 'cambia_oggetto';
+$var_pag[32] = 'cambia_compress';
+$var_pag[33] = 'MAX_FILE_SIZE';
+$var_pag[34] = 'upload_allegato';
+$var_pag[35] = 'elimina_allegato';
+$var_pag[36] = 'intestazione_pers';
+$var_pag[37] = 'cambia_intestazione_pers';
+$var_pag[38] = 'lingua_oggetto';
+$var_pag[39] = 'cambia_nome_download';
+$var_pag[40] = 'tipo_nome_download';
+$var_pag[41] = 'lingua_predef';
+$var_pag[42] = 'num_elimina_allegato';
+$var_pag[43] = 'origine_vecchia';
+$var_pag[44] = 'torna_indietro';
+$var_pag[45] = 'indietro';
+$var_pag[46] = 'upload_allegato_mln';
+$var_pag[47] = 'num_all_agg';
+$var_pag[48] = 'ln_upload';
+$var_pag[49] = 'aggiungi_allegato_mln';
+$var_pag[50] = 'num_allegato';
+$var_pag[51] = 'aggiungi_allegato';
+$var_pag[52] = 'aggiungi_ripetizione';
+$var_pag[53] = 'id_utente_api';
+$var_pag[54] = 'indirizzi_ip_api';
+$var_pag[55] = 'cambia_ind_ip_api';
+$var_pag[56] = 'pass_api';
+$var_pag[57] = 'cambia_autosalv';
+$var_pag[58] = 'n_autosalv';
+$var_pag[59] = 'salva_head';
+$var_pag[60] = 'n_head';
+$var_pag[61] = 'salva_foot';
+$var_pag[62] = 'n_foot';
+$var_pag[63] = 'bcc_indirizzo';
+$var_pag[64] = 'bcc_mittente';
+$var_pag[65] = 'cambia_incr_np';
+$var_pag[66] = 'incr_np';
+$var_pag[67] = 'cambia_num_prog';
+$var_pag[68] = 'contr_num_prog';
+$var_pag[69] = 'cambia_formati_dati';
+$var_pag[70] = 'stile_soldi_contr';
+$var_pag[71] = 'stile_data_contr';
+$var_pag[72] = 'compress';
+$var_pag[73] = 'aggiungi_var2';
+$var_pag[74] = 'aggiungi_ripetizione2';
+$n_var_pag = 75;
 
 include("./costanti.php");
 include(C_DATI_PATH."/dati_connessione.php");
@@ -61,6 +108,7 @@ $numconnessione = connetti_db($PHPR_DB_NAME,$PHPR_DB_HOST,$PHPR_DB_PORT,$PHPR_DB
 include("./includes/funzioni.php");
 include("./includes/sett_gio.php");
 include("./includes/funzioni_costi_agg.php");
+include("./includes/funzioni_testo.php");
 $tablenometariffe = $PHPR_TAB_PRE."ntariffe".$anno;
 $tableperiodi = $PHPR_TAB_PRE."periodi".$anno;
 $tableanni = $PHPR_TAB_PRE."anni";
@@ -85,6 +133,7 @@ if (substr($priv_mod_pers,0,1) != "s") $modifica_pers = "NO";
 else $modifica_pers = "SI";
 $priv_mod_doc = substr($priv_mod_pers,2,1);
 $priv_mod_doc_api = substr($priv_mod_pers,4,1);
+$priv_mod_doc_html = substr($priv_mod_pers,9,1);
 $contratti_consentiti = risul_query($privilegi_annuali_utente,0,'contratti_consentiti');
 $attiva_contratti_consentiti = substr($contratti_consentiti,0,1);
 if ($attiva_contratti_consentiti == "s") {
@@ -99,15 +148,20 @@ $anno_utente_attivato = "SI";
 $modifica_pers = "SI";
 $priv_mod_doc = "s";
 $priv_mod_doc_api = "s";
+$priv_mod_doc_html = "s";
 $attiva_contratti_consentiti = "n";
 } # fine else if ($id_utente != 1)
 
 if ($anno_utente_attivato == "SI" and $priv_mod_doc == "s" and $modifica_pers != "NO" and ($attiva_contratti_consentiti == "n" or $contratti_consentiti_vett[(integer) $num_contratto] == "SI")) {
 
-if ($priv_mod_doc_api != "s") {
-$api_esistente = esegui_query("select * from $tablecontratti where numero = '".aggslashdb($num_contratto)."' and tipo = 'api'");
+if ($priv_mod_doc == "s" and $priv_mod_doc_api != "s") {
+$api_esistente = esegui_query("select tipo from $tablecontratti where numero = '".aggslashdb($num_contratto)."' and tipo = 'api'");
 if (numlin_query($api_esistente)) $priv_mod_doc = "n";
-} # fine if ($priv_mod_doc_api != "s")
+} # fine if ($priv_mod_doc == "s" and $priv_mod_doc_api != "s")
+if ($priv_mod_doc == "s" and $priv_mod_doc_html != "s") {
+$contrhtm = esegui_query("select tipo from $tablecontratti where numero = '".aggslashdb($num_contratto)."' and tipo = 'contrhtm'");
+if (numlin_query($contrhtm)) $priv_mod_doc = "n";
+} # fine if ($priv_mod_doc == "s" and $priv_mod_doc_html != "s")
 if ($priv_mod_doc == "s") {
 
 
@@ -121,16 +175,18 @@ $stile_soldi = stile_soldi();
 $stile_data = stile_data();
 
 if (defined("C_CARTELLA_CREA_MODELLI") and C_CARTELLA_CREA_MODELLI != "") {
-if (C_CARTELLA_DOC != "" and @is_dir(C_CARTELLA_CREA_MODELLI."/".C_CARTELLA_DOC)) $dir_salva_home = C_CARTELLA_DOC;
+if (defined('C_CARTELLA_DOC') and C_CARTELLA_DOC != "" and @is_dir(C_CARTELLA_CREA_MODELLI."/".C_CARTELLA_DOC)) $dir_salva_home = C_CARTELLA_DOC;
 else $dir_salva_home = "";
 } # fine if (defined("C_CARTELLA_CREA_MODELLI") and C_CARTELLA_CREA_MODELLI != "")
 else $dir_salva_home = C_DATI_PATH;
 
 
-if (controlla_num_pos($num_contratto) == "NO") $num_contratto = "1";
+if (!isset($num_contratto) or controlla_num_pos($num_contratto) == "NO") $num_contratto = "1";
 if ($num_contratto < 1 or controlla_num_pos($num_contratto) == "NO") $num_contratto = "1";
 if (strlen($num_contratto) == 1) $num_contratto = "0".$num_contratto;
 $num_contratto_int = (integer) $num_contratto;
+
+include("./includes/funzioni_mod_contratti.php");
 
 
 
@@ -148,11 +204,11 @@ return $input_utente;
 
 if (!empty($cambia_formato)) {
 $formato = "";
-if ($nuovo_formato == "HTML") $formato = "contrhtm";
+if ($nuovo_formato == "HTML" and $priv_mod_doc_html == "s") $formato = "contrhtm";
 if ($nuovo_formato == "EMAIL") $formato = "contreml";
 if ($nuovo_formato == "RTF") $formato = "contrrtf";
 if ($nuovo_formato == "TXT") $formato = "contrtxt";
-if ($multi_lingua) $multi_lingua = 1;
+if (!empty($multi_lingua)) $multi_lingua = 1;
 else $multi_lingua = 0;
 if ($formato) {
 $tabelle_lock = array($tablecontratti);
@@ -161,27 +217,46 @@ $vecchio_formato = esegui_query("select * from $tablecontratti where numero = '$
 if (numlin_query($vecchio_formato) == 1) {
 $mostra_form_iniziale = "NO";
 $vecchio_multi_lingua = 0;
-if (substr(risul_query($vecchio_formato,0,'testo'),0,7) == "#!mln!#") $vecchio_multi_lingua = 1;
+if (substr((string) risul_query($vecchio_formato,0,'testo'),0,7) == "#!mln!#") $vecchio_multi_lingua = 1;
 else $vecchio_multi_lingua = 0;
 $vecchio_formato = risul_query($vecchio_formato,0,'tipo');
 if ($vecchio_formato != $formato) {
 if ($vecchio_formato == "contreml") {
 esegui_query("delete from $tablecontratti where numero = '$num_contratto' and tipo = 'oggetto' ");
-$num_all = esegui_query("select * from $tablecontratti where numero = '$num_contratto' and tipo = 'allegato'");
-$num_all = risul_query($num_all,0,'testo');
+$allegati_esist = esegui_query("select * from $tablecontratti where numero = '$num_contratto' and tipo = 'allegato'");
+$allegati_esist = risul_query($allegati_esist,0,'testo');
 esegui_query("delete from $tablecontratti where numero = '$num_contratto' and tipo = 'allegato'");
-if ($num_all) {
-$altri_all = esegui_query("select * from $tablecontratti where testo = '$num_all' and tipo = 'allegato'");
-if (!numlin_query($altri_all)) {
-esegui_query("delete from $tablecontratti where numero = '$num_all' and tipo = 'file_all' ");
-} # fine if (!numlin_query($altri_all))
+if ($allegati_esist) {
+$allegati_esist = explode(",",$allegati_esist);
+$num_allegati = (count($allegati_esist) - 1);
+for ($num1 = 1 ; $num1 < $num_allegati ; $num1++) {
+if (strstr($allegati_esist[$num1],":")) {
+$all_vett = explode(">",$allegati_esist[$num1]);
+$num_ln = count($all_vett);
+} # fine if (strstr($allegati_esist[$num1],":"))
+else $num_ln = 1;
+for ($num2 = 0 ; $num2 < $num_ln ; $num2++) {
+if ($num2 > 0 or strstr($allegati_esist[$num1],":")) $num_all = substr(strstr($all_vett[$num2],":"),1);
+else $num_all = $allegati_esist[$num1];
+$altri_all = esegui_query("select numero from $tablecontratti where (testo $LIKE '%,$num_all,%' or testo $LIKE '%:$num_all,%' or testo $LIKE '%:$num_all>%') and tipo = 'allegato' ");
+if (!numlin_query($altri_all)) esegui_query("delete from $tablecontratti where numero = '$num_all' and tipo = 'file_all' ");
+} # fine for $num2
+} # fine for $num1
 echo "".mex("Allegato eliminato",$pag).".<br>";
-} # fine if ($num_all)
+} # fine if ($allegati_esist)
 esegui_query("delete from $tablecontratti where numero = '$num_contratto' and tipo = 'opzeml'");
 } # fine if ($vecchio_formato == "contreml")
-if ($vecchio_formato == "contrtxt") esegui_query("delete from $tablecontratti where numero = '$num_contratto' and tipo = 'est_txt' ");
+if ($vecchio_formato == "contrtxt" and $formato != "contreml") {
+$dati_download = esegui_query("select testo from $tablecontratti where numero = '$num_contratto' and tipo = 'datdownl' ");
+if (numlin_query($dati_download)) {
+$dati_download = (string) risul_query($dati_download,0,'testo');
+$ndt = strstr($dati_download,">");
+if ($dati_download != $ndt) esegui_query("update $tablecontratti set testo = '".aggslashdb($ndt)."' where numero = '$num_contratto' and tipo = 'datdownl' ");
+} # fine if (numlin_query($dati_download))
+} # fine if ($vecchio_formato == "contrtxt" and $formato != "contreml")
 if ($vecchio_formato == "contrhtm") esegui_query("delete from $tablecontratti where numero = '$num_contratto' and (tipo = 'headhtm' or tipo = 'foothtm') ");
 if ($formato == "contreml") {
+esegui_query("delete from $tablecontratti where numero = '$num_contratto' and tipo = 'datdownl' ");
 esegui_query("delete from $tablecontratti where numero = '$num_contratto' and tipo = 'dir'");
 esegui_query("insert into $tablecontratti (numero,tipo,testo) values ('$num_contratto','oggetto','') ");
 esegui_query("insert into $tablecontratti (numero,tipo,testo) values ('$num_contratto','allegato','') ");
@@ -198,15 +273,93 @@ if (numlin_query($testo_contr)) $testo_contr = risul_query($testo_contr,0,'testo
 else $testo_contr = "";
 esegui_query("update $tablecontratti set testo = '".aggslashdb($testo_contr)."' where numero = '$num_contratto' and tipo $LIKE 'contr%' ");
 esegui_query("delete from $tablecontratti where numero = '$num_contratto' and tipo $LIKE 'mln_%' ");
+if ($formato == "contreml") {
+$oggetto = esegui_query("select testo from $tablecontratti where numero = '$num_contratto' and tipo = 'oggetto' ");
+$oggetto = explode(">",(string) risul_query($oggetto,0,'testo'));
+$n_oggetto = "";
+for ($num1 = 0 ; $num1 < count($oggetto) ; $num1++) {
+$ogg = explode(":",$oggetto[$num1]);
+if ($ogg[0] == "mln_$lingua_def") {
+$n_oggetto = substr(strstr($oggetto[$num1],":"),1);
+break;
+} # fine if ($ogg[0] == "mln_$lingua_def")
+} # fine for $num1
+esegui_query("update $tablecontratti set testo = '".aggslashdb($n_oggetto)."' where numero = '$num_contratto' and tipo = 'oggetto' ");
+$allegati_esist = esegui_query("select * from $tablecontratti where numero = '$num_contratto' and tipo = 'allegato' ");
+$allegati_esist = risul_query($allegati_esist,0,'testo');
+if ($allegati_esist) {
+$allegati_esist = explode(",",$allegati_esist);
+$num_allegati = (count($allegati_esist) - 1);
+for ($num1 = 1 ; $num1 < $num_allegati ; $num1++) {
+$all_vett = explode(">",$allegati_esist[$num1]);
+$num_ln = count($all_vett);
+$allegati_esist[$num1] = "";
+for ($num2 = 0 ; $num2 < $num_ln ; $num2++) {
+$num_all = substr(strstr($all_vett[$num2],":"),1);
+if (strstr($all_vett[$num2],"mln_$lingua_def")) $allegati_esist[$num1] = $num_all;
+else {
+$altri_all = esegui_query("select numero from $tablecontratti where (testo $LIKE '%,$num_all,%' or testo $LIKE '%:$num_all,%' or testo $LIKE '%:$num_all>%') and tipo = 'allegato' and numero != '$num_contratto' ");
+if (!numlin_query($altri_all)) esegui_query("delete from $tablecontratti where numero = '$num_all' and tipo = 'file_all' ");
+} # fine else if (strstr($all_vett[$num2],"mln_$lingua_def"))
+} # fine for $num2
+} # fine for $num1
+$allegati_esist = str_replace(",,",",",implode(",",$allegati_esist));
+if (strlen($allegati_esist) < 3) $allegati_esist = "";
+esegui_query("update $tablecontratti set testo = '".aggslashdb($allegati_esist)."' where numero = '$num_contratto' and tipo = 'allegato' ");
+} # fine if ($allegati_esist)
+} # fine if ($formato == "contreml")
 } # fine if ($vecchio_multi_lingua)
 if ($multi_lingua) {
 $testo_contr = esegui_query("select testo from $tablecontratti where numero = '$num_contratto' and tipo $LIKE 'contr%'");
-$testo_contr = risul_query($testo_contr,0,'testo');
+$testo_contr = (string) risul_query($testo_contr,0,'testo');
 $testo_contr = str_replace("[r]","",str_replace("[/r]","",$testo_contr));
 if (str_replace("[r]","",$testo_contr) != $testo_contr or str_replace("[/r]","",$testo_contr) != $testo_contr) $testo_contr = "";
 esegui_query("insert into $tablecontratti (numero,tipo,testo) values ('$num_contratto','mln_$lingua_mex','".aggslashdb($testo_contr)."') ");
 esegui_query("update $tablecontratti set testo = '#!mln!#$lingua_mex' where numero = '$num_contratto' and tipo $LIKE 'contr%' ");
-echo "<b class=\"colblu\">".mex("Avviso",$pag)."</b>: ".mex("nei documenti in formato multi-lingua non è possibile ripetere una sola parte con i tag [r] e [/r], il documento viene ripetuto interamente per ogni prenotazione",$pag).".<br><br>";
+if ($formato == "contreml") {
+$oggetto = esegui_query("select testo from $tablecontratti where numero = '$num_contratto' and tipo = 'oggetto' ");
+$oggetto = risul_query($oggetto,0,'testo');
+esegui_query("update $tablecontratti set testo = '".aggslashdb("mln_$lingua_mex:$oggetto")."' where numero = '$num_contratto' and tipo = 'oggetto' ");
+$allegati = esegui_query("select testo from $tablecontratti where numero = '$num_contratto' and tipo = 'allegato' ");
+$allegati = risul_query($allegati,0,'testo');
+if ($allegati) {
+$allegati = explode(",",$allegati);
+$num_allegati = (count($allegati) - 1);
+for ($num1 = 1 ; $num1 < $num_allegati ; $num1++) $allegati[$num1] = "mln_$lingua_mex:".$allegati[$num1];
+$allegati = implode(",",$allegati);
+esegui_query("update $tablecontratti set testo = '".aggslashdb($allegati)."' where numero = '$num_contratto' and tipo = 'allegato' ");
+} # fine if ($allegati)
+} # fine if ($formato == "contreml")
+echo "<b class=\"colblu\">".mex("Avviso",$pag)."</b>: ".mex("nei documenti in formato multi-lingua non è possibile ripetere una sola parte con i tag [r] e [/r], il documento viene ripetuto interamente per ogni prenotazione",$pag).".<br>
+<br><br>
+".mex("È comunque possibile mostrare <em>una sola ripetizione per ogni cliente</em> usando le variabili",$pag)." [".mexv("ultima_prenotazione_per_cliente")."] ".mex("e",$pag)." [".mexv("errore_ripetizione")."] ".mex("in una condizione come questa",$pag).":<br>
+<br>
+<a name=\"modcond\"></a>
+<form accept-charset=\"utf-8\" method=\"post\" action=\"modifica_var_contr.php\"><div>
+<input type=\"hidden\" name=\"anno\" value=\"$anno\">
+<input type=\"hidden\" name=\"id_sessione\" value=\"$id_sessione\">
+<input type=\"hidden\" name=\"contr_cond\" value=\"$num_contratto\">
+<input type=\"hidden\" name=\"cambia_qualcosa\" value=\"SI\">
+<input type=\"hidden\" name=\"aggiungi_cond\" value=\"SI\">
+<input type=\"hidden\" name=\"num_se\" value=\"1\">
+<input type=\"hidden\" name=\"inizializza\" value=\"rpt\">
+<input type=\"hidden\" name=\"cond_sempre\" value=\"NO\">
+<input type=\"hidden\" name=\"var_se1\" value=\"ultima_prenotazione_per_cliente\">
+<input type=\"hidden\" name=\"cond1\" value=\"!=\">
+<input type=\"hidden\" name=\"tipo_val_se1\" value=\"txt\">
+<input type=\"hidden\" name=\"val_se_txt1\" value=\"1\">
+<input type=\"hidden\" name=\"azione\" value=\"set\">
+<input type=\"hidden\" name=\"oper_str\" value=\"=\">
+<input type=\"hidden\" name=\"var_allora\" value=\"-2\">
+<input type=\"hidden\" name=\"tipo_val_allora\" value=\"txt\">
+<input type=\"hidden\" name=\"val_allora_txt\" value=\"1\">
+<input type=\"hidden\" name=\"tipo_val_sost1\" value=\"txt\">
+<input type=\"hidden\" name=\"tipo_val_sost2\" value=\"txt\">
+<b>-</b> ".ucfirst(mex("se",'modifica_var_contr.php'))." [".mexv("ultima_prenotazione_per_cliente")."] ".mex("è diverso da",'modifica_var_contr.php')." \"1\" ".mex("allora porre",'modifica_var_contr.php')." [".mexv("errore_ripetizione")."] ".mex("uguale a",'modifica_var_contr.php')." \"1\".
+<input class=\"sbutton\" type=\"submit\" value=\"".ucfirst(mex("aggiungi ora questa condizione al documento",$pag))."\">
+</div></form><br>
+".mex("Così i dati delle ripetizioni precedenti possono essere memorizzati in uno o più array della variabile",$pag)." [".mexv("numero_cliente")."].<br>
+<br><br><br>";
 } # fine if ($multi_lingua)
 } # fine if ($vecchio_multi_lingua != $multi_lingua)
 echo "".mex("Formato del documento cambiato",$pag).".<br>";
@@ -258,7 +411,7 @@ if (!$fileaperto) echo mex("Non ho i permessi di scrittura sulla cartella","pers
 else {
 fclose($fileaperto);
 unlink("$dir_salva/prova.tmp");
-if ($salva_contr == "SI") {
+if (isset($salva_contr) and $salva_contr == "SI") {
 if ($nuova_dir_salva == $dir_salva_home) $nuova_dir_salva = "~";
 $dir_esistente = esegui_query("select testo from $tablecontratti where numero = '$num_contratto' and tipo = 'dir'");
 if (numlin_query($dir_esistente) >= 1) esegui_query("update $tablecontratti set testo = '$nuova_dir_salva' where numero = '$num_contratto' and tipo = 'dir'");
@@ -267,12 +420,12 @@ esegui_query("insert into $tablecontratti (numero,tipo,testo) values ('$num_cont
 esegui_query("insert into $tablecontratti (numero,tipo,testo) values ('$num_contratto','compress','gz')");
 } # fine else if (numlin_query($dir_esistente) >= 1)
 echo "".mex("I documenti verranno salvati nella cartella",$pag)." $dir_salva.<br>";
-} # fine if ($salva_contr == "SI")
+} # fine if (isset($salva_contr) and $salva_contr == "SI")
 else {
 esegui_query("delete from $tablecontratti where numero = '$num_contratto' and (tipo = 'dir' or tipo = 'num_prog' or tipo = 'nomefile' or tipo = 'compress' or tipo = 'autosalv' or tipo = 'incr_np') ");
 esegui_query("delete from $tablecontratti where testo = '$num_contratto_int' and tipo = 'num_prog' ");
 echo "".mex("I documenti non verranno salvati",$pag).".<br>";
-} # fine else if ($salva_contr == "SI")
+} # fine else if (isset($salva_contr) and $salva_contr == "SI")
 } # fine else if (!$fileaperto)
 } # fine else if (!@is_dir($nuova_dir_salva))
 } # fine if ($dir_salva)
@@ -285,18 +438,18 @@ $tabelle_lock = array($tablecontratti);
 $tabelle_lock = lock_tabelle($tabelle_lock);
 $dir_esistente = esegui_query("select * from $tablecontratti where numero = '$num_contratto' and tipo = 'dir'");
 if (numlin_query($dir_esistente)) {
-if (!$compress) {
+if (empty($compress)) {
 $mostra_form_iniziale = "NO";
 esegui_query("delete from $tablecontratti where numero = '$num_contratto' and tipo = 'compress' ");
 echo "".mex("Il documento non verrà salvato compresso su disco",$pag).".<br>";
-} # fine if (!$compress)
+} # fine if (empty($compress))
 else {
 $mostra_form_iniziale = "NO";
 $compress_esistente = esegui_query("select testo from $tablecontratti where numero = '$num_contratto' and tipo = 'compress' ");
 if (numlin_query($compress_esistente)) esegui_query("update $tablecontratti set testo = 'gz' where numero = '$num_contratto' and tipo = 'compress' ");
 else esegui_query("insert into $tablecontratti (numero,tipo,testo) values ('$num_contratto','compress','gz') ");
 echo "".mex("Il documento verrà salvato compresso su disco",$pag).".<br>";
-} # fine else if (!$compress)
+} # fine else if (empty($compress))
 } # fine if (numlin_query($dir_esistente))
 unlock_tabelle($tabelle_lock);
 } # fine if (!empty($cambia_compress))
@@ -333,16 +486,16 @@ $tabelle_lock = lock_tabelle($tabelle_lock);
 $dir_esistente = esegui_query("select * from $tablecontratti where numero = '$num_contratto' and tipo = 'dir'");
 if (numlin_query($dir_esistente)) {
 $mostra_form_iniziale = "NO";
-if (!$incr_np) {
+if (empty($incr_np)) {
 esegui_query("delete from $tablecontratti where numero = '$num_contratto' and tipo = 'incr_np' ");
 echo "".mex("Ogni documento avrà un unico numero progressivo",$pag).".<br>";
-} # fine if (!$incr_np)
+} # fine if (empty($incr_np))
 else {
 $incr_np_esistente = esegui_query("select testo from $tablecontratti where numero = '$num_contratto' and tipo = 'incr_np' ");
 if (numlin_query($incr_np_esistente)) esegui_query("update $tablecontratti set testo = '1' where numero = '$num_contratto' and tipo = 'incr_np' ");
 else esegui_query("insert into $tablecontratti (numero,tipo,testo) values ('$num_contratto','incr_np','1') ");
 echo "".mex("Il numero progressivo verrà incrementato ogni volta che compare nel documento",$pag).".<br>";
-} # fine else if (!$incr_np)
+} # fine else if (empty($incr_np))
 } # fine if (numlin_query($dir_esistente))
 unlock_tabelle($tabelle_lock);
 } # fine if (!empty($cambia_incr_np))
@@ -352,11 +505,11 @@ $tabelle_lock = array($tablecontratti);
 $tabelle_lock = lock_tabelle($tabelle_lock);
 $dir_esistente = esegui_query("select * from $tablecontratti where numero = '$num_contratto' and tipo = 'dir'");
 if (numlin_query($dir_esistente)) {
-if (!strcmp($contr_num_prog,"")) {
+if (!strcmp((string) $contr_num_prog,"")) {
 $mostra_form_iniziale = "NO";
 esegui_query("delete from $tablecontratti where numero = '$num_contratto' and tipo = 'num_prog' ");
 echo ucfirst(mex("il documento",$pag))." $num_contratto ".mex("non condividerà il numero progressivo con nessun documento",$pag).".<br>";
-} # fine if (!strcmp($contr_num_prog,""))
+} # fine if (!strcmp((string) $contr_num_prog,""))
 else {
 if ($contr_num_prog >= 1 and controlla_num_pos($contr_num_prog) != "NO") {
 if ($contr_num_prog != $num_contratto_int and ($attiva_contratti_consentiti == "n" or $contratti_consentiti_vett[$contr_num_prog] == "SI")) {
@@ -376,7 +529,7 @@ echo ucfirst(mex("il documento",$pag))." $num_contratto ".mex("condividerà il n
 } # fine if (numlin_query($dir_esistente))
 } # fine if ($contr_num_prog != $num_contratto_int and...
 } # fine if ($contr_num_prog >= 1 and controlla_num_pos($contr_num_prog) != "NO")
-} # fine else if (!strcmp($contr_num_prog,""))
+} # fine else if (!strcmp((string) $contr_num_prog,""))
 } # fine if (numlin_query($dir_esistente))
 unlock_tabelle($tabelle_lock);
 } # fine if (!empty($cambia_num_prog))
@@ -392,20 +545,20 @@ esegui_query("delete from $tablecontratti where numero = '$num_contratto' and ti
 echo "".mex("I file verranno salvati con il nome del documento",$pag).".<br>";
 } # fine if ($tipo_nome_file != "pers")
 else {
-if (strcmp($nome_file_salva,"") and strlen($nome_file_salva) < 121) {
+if (strcmp((string) $nome_file_salva,"") and strlen($nome_file_salva) < 121) {
 $mostra_form_iniziale = "NO";
 $nome_file_salva = htmlspecialchars($nome_file_salva);
 $nomefile_esistente = esegui_query("select testo from $tablecontratti where numero = '$num_contratto' and tipo = 'nomefile' ");
 if (numlin_query($nomefile_esistente)) esegui_query("update $tablecontratti set testo = '".aggslashdb($nome_file_salva)."' where numero = '$num_contratto' and tipo = 'nomefile' ");
 else esegui_query("insert into $tablecontratti (numero,tipo,testo) values ('$num_contratto','nomefile','".aggslashdb($nome_file_salva)."') ");
 echo "".mex("I file verranno salvati con il nome",$pag)." \"$nome_file_salva\".<br>";
-} # fine if (strcmp($nome_file_salva,"") and strlen($nome_file_salva) < 121)
+} # fine if (strcmp((string) $nome_file_salva,"") and strlen($nome_file_salva) < 121)
 } # fine else if ($tipo_nome_file != "pers")
 } # fine if (numlin_query($dir_esistente))
 unlock_tabelle($tabelle_lock);
 } # fine if (!empty($cambia_nome_file))
 
-if ($priv_mod_doc_api == "s" and (!empty($cambia_cons_api) or (isset($pass_api) and strcmp($pass_api,"")) or !empty($id_utente_api))) {
+if ($priv_mod_doc_api == "s" and (!empty($cambia_cons_api) or (isset($pass_api) and strcmp((string) $pass_api,"")) or !empty($id_utente_api) or !empty($cambia_ind_ip_api))) {
 $tabelle_lock = array($tablecontratti);
 $altre_tab_lock = array($tableutenti);
 $tabelle_lock = lock_tabelle($tabelle_lock,$altre_tab_lock);
@@ -413,49 +566,69 @@ $tipo_contratto = esegui_query("select tipo from $tablecontratti where numero = 
 $tipo_contratto = risul_query($tipo_contratto,0,'tipo');
 if ($tipo_contratto == "contrrtf" or $tipo_contratto == "contrhtm" or $tipo_contratto == "contrtxt") {
 $api_esistente = esegui_query("select testo from $tablecontratti where numero = '$num_contratto' and tipo = 'api' ");
-if (strcmp($pass_api,"") or $id_utente_api) {
+if (strcmp(fixstr($pass_api),"") or !empty($id_utente_api) or !empty($cambia_ind_ip_api)) {
 if (numlin_query($api_esistente)) {
 $pass_api_esist = risul_query($api_esistente,0,'testo');
 $id_utente_api_esist = explode(";",$pass_api_esist);
+$indirizzi_ip_api_esist = $id_utente_api_esist[1];
 $id_utente_api_esist = $id_utente_api_esist[0];
-$pass_api_esist = substr($pass_api_esist,(strlen($id_utente_api_esist) + 1));
-if (strcmp($pass_api,"")) {
+$pass_api_esist = substr($pass_api_esist,(strlen($id_utente_api_esist) + strlen($indirizzi_ip_api_esist) + 2));
+if (strcmp((string) $pass_api,"")) {
 $mostra_form_iniziale = "NO";
 if (@get_magic_quotes_gpc()) $pass_api = stripslashes($pass_api);
-$pass_api = aggslashdb($pass_api);
-esegui_query("update $tablecontratti set testo = '$id_utente_api_esist;$pass_api' where numero = '$num_contratto' and tipo = 'api' ");
+esegui_query("update $tablecontratti set testo = '".aggslashdb("$id_utente_api_esist;$indirizzi_ip_api_esist;$pass_api")."' where numero = '$num_contratto' and tipo = 'api' ");
 echo mex("La password per la API del documento è stata cambiata",$pag).".<br>";
-} # fine if (strcmp($pass_api,""))
-if ($id_utente_api and ($id_utente == 1 or $id_utente_api == $id_utente)) {
+} # fine if (strcmp((string) $pass_api,""))
+if (!empty($cambia_ind_ip_api)) {
+$cont = 0;
+$indirizzi_ip_api = fixstr($indirizzi_ip_api);
+$ip4_reg = '((25[0-5]|(2[0-4]|1\d|[1-9]|)\d)\.?\b){4}';
+if (preg_replace("/^$ip4_reg(,$ip4_reg)*$/","",$indirizzi_ip_api) == "") $cont = 1;
+elseif (function_exists('filter_var') and defined('FILTER_VALIDATE_IP') and defined('FILTER_FLAG_IPV6')) {
+$cont = 1;
+$ind_ip_vett = explode(",",$indirizzi_ip_api);
+for ($num1 = 0 ; $num1 < count($ind_ip_vett) ; $num1++) 
+if (empty($ind_ip_vett[$num1]) or (preg_replace("/^$ip4_reg$/","",$ind_ip_vett[$num1]) != "" and !filter_var($ind_ip_vett[$num1],FILTER_VALIDATE_IP,FILTER_FLAG_IPV6))) $cont = 0;
+} # fine elseif (function_exists('filter_var') and...
+if ($cont) {
+$mostra_form_iniziale = "NO";
+esegui_query("update $tablecontratti set testo = '".aggslashdb("$id_utente_api_esist;$indirizzi_ip_api;$pass_api_esist")."' where numero = '$num_contratto' and tipo = 'api' ");
+echo mex("Gli indirizzi IP da cui è permesso accedere alla API del documento sono stati cambiati",$pag).".<br>";
+} # fine if ($cont)
+} # fine if (!empty($cambia_ind_ip_api))
+if (!empty($id_utente_api) and ($id_utente == 1 or $id_utente_api == $id_utente)) {
 $utente_esistente = esegui_query("select nome_utente from $tableutenti where idutenti = '".aggslashdb($id_utente_api)."' ");
 if (numlin_query($utente_esistente)) {
 $mostra_form_iniziale = "NO";
-esegui_query("update $tablecontratti set testo = '$id_utente_api;$pass_api_esist' where numero = '$num_contratto' and tipo = 'api' ");
+esegui_query("update $tablecontratti set testo = '".aggslashdb("$id_utente_api;$indirizzi_ip_api_esist;$pass_api_esist")."' where numero = '$num_contratto' and tipo = 'api' ");
 echo mex("L'utente per la API del documento è stato cambiato",$pag).".<br>";
 } # fine if (numlin_query($utente_esistente))
-} # fine if ($id_utente_api and ($id_utente == 1 or $id_utente_api == $id_utente))
+} # fine if (!empty($id_utente_api) and ($id_utente == 1 or $id_utente_api == $id_utente))
 } # fine if (numlin_query($api_esistente))
-} # fine if (strcmp($pass_api,"") or $id_utente_api)
+} # fine if (strcmp(fixstr($pass_api),"") or !empty($id_utente_api) or...
 else {
-if ($cons_api == "SI") {
+if (isset($cons_api) and $cons_api == "SI") {
 if (!numlin_query($api_esistente)) {
 $mostra_form_iniziale = "NO";
 $valori = "23456789ABCDEFGHJKLMNPQRSTUVWXZabcdefghijkmnpqrstuvwxyz";
+$pass_generata = "";
+if (function_exists('random_int')) for ($num1 = 0 ; $num1 < 8 ; $num1++) $pass_generata .= substr($valori,random_int(0,54),1);
+else {
 srand((double)microtime() * 1000000);
-unset($pass_generata);
 for ($num1 = 0 ; $num1 < 8 ; $num1++) $pass_generata .= substr($valori,rand(0,54),1);
-esegui_query("insert into $tablecontratti (numero,tipo,testo) values ('$num_contratto','api','1;$pass_generata')");
-echo "".mex("Il documento verrà considerato come una API",$pag)." $dir_salva.<br>";
+} # fine else if (function_exists('random_int'))
+esegui_query("insert into $tablecontratti (numero,tipo,testo) values ('$num_contratto','api','1;;$pass_generata')");
+echo "".mex("Il documento verrà considerato come una API",$pag).".<br>";
 } # fine if (!numlin_query($api_esistente))
-} # fine if ($cons_api == "SI")
+} # fine if (isset($cons_api) and $cons_api == "SI")
 else {
 if (numlin_query($api_esistente)) {
 $mostra_form_iniziale = "NO";
 esegui_query("delete from $tablecontratti where numero = '$num_contratto' and tipo = 'api' ");
 echo mex("Il documento non verrà più considerato come una API",$pag).".<br>";
 } # fine if (numlin_query($api_esistente))
-} # fine else if ($cons_api == "SI")
-} # fine else if (strcmp($pass_api,"") or $id_utente_api)
+} # fine else if (isset($cons_api) and $cons_api == "SI")
+} # fine else if (strcmp(fixstr($pass_api),"") or !empty($id_utente_api) or...
 } # fine if ($tipo_contratto == "contrrtf" or..
 unlock_tabelle($tabelle_lock);
 } # fine if ($priv_mod_doc_api == "s" and (!empty($cambia_cons_api) or (isset($pass_api) and...
@@ -467,17 +640,46 @@ if ($tipo_contratto == "contrhtm") {
 $intestazione_html = esegui_query("select * from $tablecontratti where numero = '$num_contratto' and tipo = 'headhtm'");
 if (numlin_query($intestazione_html) == 1) $intestazione_html = 1;
 else $intestazione_html = 0;
-if (($intestazione_html and !$intestazione_pers) or (!$intestazione_html and $intestazione_pers)) {
+if (($intestazione_html and empty($intestazione_pers)) or (!$intestazione_html and !empty($intestazione_pers))) {
 $mostra_form_iniziale = "NO";
 if ($intestazione_html) esegui_query("delete from $tablecontratti where numero = '$num_contratto' and (tipo = 'headhtm' or tipo = 'foothtm') ");
 else {
-esegui_query("insert into $tablecontratti (numero,tipo,testo) values ('$num_contratto','headhtm','<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01//EN\" \"http://www.w3.org/TR/html4/strict.dtd\">\n<html>\n<head>\n<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" >\n<title>".mex("documento",$pag)." $num_contratto</title>\n</head>\n<body style=\"background-color: #ffffff;\">\n') ");
+esegui_query("insert into $tablecontratti (numero,tipo,testo) values ('$num_contratto','headhtm','<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01//EN\" \"http://www.w3.org/TR/html4/strict.dtd\">\n<html>\n<head>\n<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" >\n<meta name=\"viewport\" content=\"initial-scale=1.0\">\n<title>".mex("documento",$pag)." $num_contratto</title>\n</head>\n<body style=\"background-color: #ffffff;\">\n') ");
 esegui_query("insert into $tablecontratti (numero,tipo,testo) values ('$num_contratto','foothtm','</body>\n</html>\n') ");
 } # fine else if ($intestazione_html)
 echo "".mex("Intestazione html cambiata",$pag).".<br>";
-} # fine if (($intestazione_html and !$intestazione_pers) or...
+} # fine if (($intestazione_html and empty($intestazione_pers)) or...
 } # fine if ($tipo_contratto == "contrhtm")
 } # fine if (!empty($cambia_intestazione_pers))
+
+if (!empty($cambia_nome_download)) {
+$tipo_contratto = esegui_query("select tipo from $tablecontratti where numero = '$num_contratto' and tipo $LIKE 'contr%'");
+$tipo_contratto = risul_query($tipo_contratto,0,'tipo');
+if ($tipo_contratto == "contrtxt" or $tipo_contratto == "contrrtf") {
+if (!isset($tipo_nome_download) or $tipo_nome_download != "var") $tipo_nome_download = "";
+$dati_download = esegui_query("select * from $tablecontratti where numero = '$num_contratto' and tipo = 'datdownl'");
+if (numlin_query($dati_download)) {
+$dati_download = explode(">",(string) risul_query($dati_download,0,'testo'));
+$nome_download = fixset($dati_download[1]);
+} # fine if (numlin_query($dati_download))
+else {
+$dati_download = "";
+$nome_download = "";
+} # fine else if (numlin_query($dati_download))
+if ($tipo_nome_download != $nome_download) {
+$mostra_form_iniziale = "NO";
+if (!$dati_download) esegui_query("insert into $tablecontratti (numero,tipo,testo) values ('$num_contratto','datdownl','>$tipo_nome_download') ");
+else {
+$dati_download[1] = $tipo_nome_download;
+$dati_download = implode(">",$dati_download);
+if (!strcmp(str_replace(">","",$dati_download),"")) esegui_query("delete from $tablecontratti where numero = '$num_contratto' and tipo = 'datdownl' ");
+else esegui_query("update $tablecontratti set testo = '".aggslashdb($dati_download)."' where numero = '$num_contratto' and tipo = 'datdownl' ");
+} # fine else if (!$dati_download)
+if (!$tipo_nome_download) echo "".mex("Verrà usato il nome del documento (o il nome del file salvato) come nome per il file scaricato",$pag).".<br>";
+if ($tipo_nome_download == "var") echo "".mex("Verrà usato il valore della variabile",$pag)." [".mexv("nome_documento_scaricato")."] ".mex("come nome del file scaricato",$pag)." (".mex("escludendo l'estensione",$pag).").<br>".mex("Se la variabile non è definita verrà usato il nome del documento",$pag).".<br>";
+} # fine if ($tipo_nome_download != $nome_download)
+} # fine if ($tipo_contratto == "contrtxt" or $tipo_contratto == "contrrtf")
+} # fine if (!empty($cambia_nome_download))
 
 if (!empty($cambia_estenstione_pers)) {
 $tipo_contratto = esegui_query("select tipo from $tablecontratti where numero = '$num_contratto' and tipo $LIKE 'contr%'");
@@ -485,19 +687,29 @@ $tipo_contratto = risul_query($tipo_contratto,0,'tipo');
 if ($tipo_contratto == "contrtxt") {
 if (@get_magic_quotes_gpc()) $estensione_pers_txt = stripslashes($estensione_pers_txt);
 $estensione_pers_txt = strtolower($estensione_pers_txt);
-if (preg_replace("/[a-z]/","",$estensione_pers_txt) != "" or strlen($estensione_pers_txt) > 10 or strlen($estensione_pers_txt) < 2) $estensione_pers_txt = "";
-$estensione_txt = esegui_query("select * from $tablecontratti where numero = '$num_contratto' and tipo = 'est_txt'");
-if (numlin_query($estensione_txt) == 1) $estensione_txt = risul_query($estensione_txt,0,'testo');
-else $estensione_txt = "";
+if ($tipo_estensione_txt == "predef" or preg_replace("/[a-z]/","",$estensione_pers_txt) != "" or strlen($estensione_pers_txt) > 10 or strlen($estensione_pers_txt) < 2) $estensione_pers_txt = "";
+if ($tipo_estensione_txt == "predef" or $estensione_pers_txt) {
+$dati_download = esegui_query("select * from $tablecontratti where numero = '$num_contratto' and tipo = 'datdownl' ");
+if (numlin_query($dati_download)) {
+$dati_download = explode(">",(string) risul_query($dati_download,0,'testo'));
+$estensione_txt = $dati_download[0];
+} # fine if (numlin_query($dati_download))
+else {
+$dati_download = "";
+$estensione_txt = "";
+} # fine else if (numlin_query($dati_download))
 if (($tipo_estensione_txt == "pers" and $estensione_pers_txt and $estensione_txt != $estensione_pers_txt) or ($tipo_estensione_txt == "predef" and $estensione_txt)) {
 $mostra_form_iniziale = "NO";
-if ($tipo_estensione_txt == "predef") esegui_query("delete from $tablecontratti where numero = '$num_contratto' and tipo = 'est_txt' ");
+if (!$dati_download) esegui_query("insert into $tablecontratti (numero,tipo,testo) values ('$num_contratto','datdownl','$estensione_pers_txt>') ");
 else {
-if (!$estensione_txt) esegui_query("insert into $tablecontratti (numero,tipo,testo) values ('$num_contratto','est_txt','$estensione_pers_txt') ");
-else esegui_query("update $tablecontratti set testo = '$estensione_pers_txt' where numero = '$num_contratto' and tipo = 'est_txt'");
-} # fine else if ($tipo_estensione_txt == "predef")
+$dati_download[0] = $estensione_pers_txt;
+$dati_download = implode(">",$dati_download);
+if (!strcmp(str_replace(">","",$dati_download),"")) esegui_query("delete from $tablecontratti where numero = '$num_contratto' and tipo = 'datdownl' ");
+else esegui_query("update $tablecontratti set testo = '".aggslashdb($dati_download)."' where numero = '$num_contratto' and tipo = 'datdownl' ");
+} # fine else if (!$dati_download)
 echo "".mex("Estensione cambiata",$pag).".<br>";
 } # fine if (($tipo_estensione_txt == "pers" and $estensione_pers_txt and...
+} # fine if ($tipo_estensione_txt == "predef" or $estensione_pers_txt)
 } # fine if ($tipo_contratto == "contrtxt")
 } # fine if (!empty($cambia_estenstione_pers))
 
@@ -505,36 +717,62 @@ if (!empty($cambia_oggetto)) {
 if (@get_magic_quotes_gpc()) $nuovo_oggetto = stripslashes($nuovo_oggetto);
 if (strlen($nuovo_oggetto) > 120) $nuovo_oggetto = substr($nuovo_oggetto,0,120);
 $nuovo_oggetto = htmlspecialchars($nuovo_oggetto);
-$nuovo_oggetto = aggslashdb($nuovo_oggetto);
 $tabelle_lock = array($tablecontratti);
 $tabelle_lock = lock_tabelle($tabelle_lock);
-$tipo_contratto = esegui_query("select tipo from $tablecontratti where numero = '$num_contratto' and tipo $LIKE 'contr%'");
-$tipo_contratto = risul_query($tipo_contratto,0,'tipo');
+$dati_contratto = esegui_query("select tipo,testo from $tablecontratti where numero = '$num_contratto' and tipo $LIKE 'contr%' ");
+$tipo_contratto = risul_query($dati_contratto,0,'tipo');
 if ($tipo_contratto == "contreml") {
 $mostra_form_iniziale = "NO";
-esegui_query("update $tablecontratti set testo = '$nuovo_oggetto' where numero = '$num_contratto' and tipo = 'oggetto'");
+if (substr(risul_query($dati_contratto,0,'testo'),0,7) == "#!mln!#") {
+if (empty($lingua_oggetto)) $lingua_oggetto = "ita";
+if ($lingua_oggetto != "ita" and (preg_replace("/[a-z]{2,3}/","",$lingua_oggetto) != "" or !@is_file("./includes/lang/$lingua_oggetto/l_n"))) $lingua_oggetto = "ita";
+$oggetto = esegui_query("select testo from $tablecontratti where numero = '$num_contratto' and tipo = 'oggetto' ");
+$oggetto = risul_query($oggetto,0,'testo');
+if ($oggetto) {
+$ln_esist = 0;
+$n_ogg = "";
+$oggetto = explode(">",$oggetto);
+for ($num1 = 0 ; $num1 < count($oggetto) ; $num1++) {
+$ogg = explode(":",$oggetto[$num1]);
+if ($ogg[0] == "mln_$lingua_oggetto") {
+$ln_esist = 1;
+if (strcmp($nuovo_oggetto,"")) $oggetto[$num1] = "mln_$lingua_oggetto:$nuovo_oggetto";
+else $oggetto[$num1] = "";
+} # fine if ($ogg[0] == "mln_$lingua_oggetto")
+if ($oggetto[$num1]) {
+if ($n_ogg) $n_ogg .= ">";
+$n_ogg .= $oggetto[$num1];
+} # fine if ($oggetto[$num1])
+} # fine for $num1
+if (!$ln_esist and strcmp($nuovo_oggetto,"")) $n_ogg .= ">mln_$lingua_oggetto:$nuovo_oggetto";
+} # fine if ($oggetto)
+else $n_ogg = "mln_$lingua_oggetto:$nuovo_oggetto";
+esegui_query("update $tablecontratti set testo = '".aggslashdb($n_ogg)."' where numero = '$num_contratto' and tipo = 'oggetto' ");
+} # fine if (substr(risul_query($dati_contratto,0,'testo'),0,7) == "#!mln!#")
+else esegui_query("update $tablecontratti set testo = '".aggslashdb($nuovo_oggetto)."' where numero = '$num_contratto' and tipo = 'oggetto' ");
 echo "".mex("Oggetto cambiato",$pag).".<br>";
 } # fine if ($tipo_contratto == "contreml")
 unlock_tabelle($tabelle_lock);
 } # fine if (!empty($cambia_oggetto))
 
-if (!empty($upload_allegato)) {
+if (!empty($upload_allegato) or !empty($upload_allegato_mln)) {
+if (!empty($upload_allegato)) unset($upload_allegato_mln);
 $errore = "NO";
 $file_tmp = C_DATI_PATH."/allegato_contr$num_contratto.tmp";
-if (!$file_allegato_upload) {
-if ($HTTP_POST_FILES['file_allegato_upload']['tmp_name']) {
+if (empty($file_allegato_upload)) {
+if (!empty($HTTP_POST_FILES['file_allegato_upload']['tmp_name'])) {
 $file_allegato_upload = $HTTP_POST_FILES['file_allegato_upload']['tmp_name'];
 $file_allegato_upload_name = $HTTP_POST_FILES['file_allegato_upload']['name'];
 $file_allegato_upload_type = $HTTP_POST_FILES['file_allegato_upload']['type'];
-} # fine if ($HTTP_POST_FILES['file_allegato_upload']['tmp_name'])
+} # fine if (!empty($HTTP_POST_FILES['file_allegato_upload']['tmp_name']))
 else {
-if ($_FILES['file_allegato_upload']['tmp_name']) {
+if (!empty($_FILES['file_allegato_upload']['tmp_name'])) {
 $file_allegato_upload = $_FILES['file_allegato_upload']['tmp_name'];
 $file_allegato_upload_name = $_FILES['file_allegato_upload']['name'];
 $file_allegato_upload_type = $_FILES['file_allegato_upload']['type'];
-} # fine if ($_FILES['file_allegato_upload']['tmp_name'])
-} # fine else if ($HTTP_POST_FILES['file_allegato_upload']['tmp_name'])
-} # fine if (!$file_allegato_upload)
+} # fine if (!empty($_FILES['file_allegato_upload']['tmp_name']))
+} # fine else if (!empty($HTTP_POST_FILES['file_allegato_upload']['tmp_name']))
+} # fine if (empty($file_allegato_upload))
 if (!move_uploaded_file($file_allegato_upload,$file_tmp)) $errore = "SI";
 if ($errore == "NO") {
 if (!defined("C_MASSIMO_NUM_BYTE_UPLOAD") or C_MASSIMO_NUM_BYTE_UPLOAD == 0 or filesize($file_tmp) <= C_MASSIMO_NUM_BYTE_UPLOAD) {
@@ -549,54 +787,164 @@ fclose($f_allegato);
 unlink($file_tmp);
 $tabelle_lock = array($tablecontratti);
 $tabelle_lock = lock_tabelle($tabelle_lock);
-$tipo_contratto = esegui_query("select tipo from $tablecontratti where numero = '$num_contratto' and tipo $LIKE 'contr%'");
-$tipo_contratto = risul_query($tipo_contratto,0,'tipo');
+$dati_contratto = esegui_query("select * from $tablecontratti where numero = '$num_contratto' and tipo $LIKE 'contr%'");
+$tipo_contratto = risul_query($dati_contratto,0,'tipo');
 if ($tipo_contratto == "contreml") {
-$mostra_form_iniziale = "NO";
-$allegato = chunk_split(base64_encode($allegato));
-if (!$file_allegato_upload_type) $file_allegato_upload_type = "application/unknown";
-if (!$file_allegato_upload_name) $file_allegato_upload_name = mex("Allegato",$pag);
-$allegato = htmlspecialchars($file_allegato_upload_name).",".$file_allegato_upload_type.",".$allegato;
+$errore = 0;
+$allegati_esist = esegui_query("select testo from $tablecontratti where numero = '$num_contratto' and tipo = 'allegato'");
+$allegati_esist = (string) risul_query($allegati_esist,0,'testo');
+if (!empty($upload_allegato) and substr_count($allegati_esist,",") > $num_allegati_max) $errore = 1;
 $max_fa = esegui_query("select max(numero) from $tablecontratti where tipo = 'file_all' ");
 if (numlin_query($max_fa)) $max_fa = risul_query($max_fa,0,0) + 1;
 else $max_fa = 1;
-esegui_query("insert into $tablecontratti (numero,tipo,testo) values ('$max_fa','file_all','".aggslashdb($allegato)."')");
-esegui_query("update $tablecontratti set testo = '$max_fa' where numero = '$num_contratto' and tipo = 'allegato'");
+$max_fa_orig = $max_fa;
+if (substr(risul_query($dati_contratto,0,'testo'),0,7) == "#!mln!#") {
+if (!empty($upload_allegato_mln)) $ln = fixset($ln_upload);
+else $ln = substr(risul_query($dati_contratto,0,'testo'),7);
+if ($ln != "ita" and (preg_replace("/[a-z]{2,3}/","",$ln) != "" or !@is_file("./includes/lang/$ln/l_n"))) $ln = "ita";
+if (!empty($upload_allegato_mln)) {
+$allegati_esist = explode(",",$allegati_esist);
+if (empty($allegati_esist[fixset($num_all_agg)]) or strstr($allegati_esist[$num_all_agg],"mln_$ln:")) $errore = 1;
+else {
+$allegati_esist[$num_all_agg] .= ">mln_$ln:$max_fa";
+$allegati_esist = substr(implode(",",$allegati_esist),0,-1);
+$max_fa = "";
+} # fine else if (empty($allegati_esist[fixset($num_all_agg)]) or...
+} # fine if (!empty($upload_allegato_mln))
+else $max_fa = "mln_$ln:$max_fa";
+} # fine if (substr(risul_query($dati_contratto,0,'testo'),0,7) == "#!mln!#")
+if (!$errore) {
+$mostra_form_iniziale = "NO";
+$allegato = chunk_split(base64_encode($allegato));
+$allegato_esist = esegui_query("select testo from $tablecontratti where testo $LIKE '%,".aggslashdb($allegato)."' and tipo = 'file_all'");
+if (numlin_query($allegato_esist)) {
+$errore = 1;
+$allegato_esist = explode(",",(string) risul_query($allegato_esist,0,'testo'));
+echo "".mex("È stato trovato un allegato uguale",$pag)." (<em class=\"colred\">".htmlspecialchars($allegato_esist[0])."</em>), ".mex("riutilizzare l'allegato esistente o renderlo predefinito per evitare di ingombreare il database",$pag).".<br>";;
+} # fine if (numlin_query($allegato_esist))
+if (!$errore) {
+if (!$file_allegato_upload_type) $file_allegato_upload_type = "application/unknown";
+if (!$file_allegato_upload_name) $file_allegato_upload_name = mex("Allegato",$pag);
+$allegato = htmlspecialchars($file_allegato_upload_name).",".$file_allegato_upload_type.",".$allegato;
+esegui_query("insert into $tablecontratti (numero,tipo,testo) values ('$max_fa_orig','file_all','".aggslashdb($allegato)."')");
+if ($allegati_esist) $str_allegati = "$allegati_esist$max_fa,";
+else $str_allegati = ",$max_fa,";
+esegui_query("update $tablecontratti set testo = '$str_allegati' where numero = '$num_contratto' and tipo = 'allegato'");
 echo "".mex("Allegato salvato",$pag).".<br>";
+} # fine if (!$errore)
+} # fine if (!$errore)
 } # fine if ($tipo_contratto == "contreml")
 unlock_tabelle($tabelle_lock);
 } # fine if (!defined("C_MASSIMO_NUM_BYTE_UPLOAD") or...
 else unlink($file_tmp);
 } # fine if ($errore == "NO")
-} # fine if (!empty($upload_allegato))
+} # fine if (!empty($upload_allegato) or !empty($upload_allegato_mln))
 
-if (!empty($aggiungi_allegato)) {
-$all_esistente = @esegui_query("select * from $tablecontratti where numero = '".aggslashdb($num_allegato)."' and tipo = 'file_all' ");
+if (!empty($aggiungi_allegato) or !empty($aggiungi_allegato_mln)) {
+if (!empty($aggiungi_allegato)) unset($aggiungi_allegato_mln);
+$tabelle_lock = array($tablecontratti);
+$tabelle_lock = lock_tabelle($tabelle_lock);
+$dati_contratto = esegui_query("select * from $tablecontratti where numero = '$num_contratto' and tipo $LIKE 'contr%'");
+$tipo_contratto = risul_query($dati_contratto,0,'tipo');
+if ($tipo_contratto == "contreml") {
+$all_esistente = esegui_query("select * from $tablecontratti where numero = '".aggslashdb($num_allegato)."' and tipo = 'file_all' ");
 if (numlin_query($all_esistente)) {
+$allegati_esist = esegui_query("select testo from $tablecontratti where numero = '$num_contratto' and tipo = 'allegato'");
+$allegati_esist = (string) risul_query($allegati_esist,0,'testo');
+if (!strstr($allegati_esist,",$num_allegato,") and !strstr($allegati_esist,":$num_allegato,") and !strstr($allegati_esist,":$num_allegato>")) {
+$errore = 0;
+if (!empty($aggiungi_allegato) and substr_count($allegati_esist,",") > $num_allegati_max) $errore = 1;
+if (substr(risul_query($dati_contratto,0,'testo'),0,7) == "#!mln!#") {
+if (!empty($aggiungi_allegato_mln)) $ln = fixset($ln_upload);
+else $ln = substr(risul_query($dati_contratto,0,'testo'),7);
+if ($ln != "ita" and (preg_replace("/[a-z]{2,3}/","",$ln) != "" or !@is_file("./includes/lang/$ln/l_n"))) $ln = "ita";
+if (!empty($aggiungi_allegato_mln)) {
+$allegati_esist = explode(",",$allegati_esist);
+if (empty($allegati_esist[fixset($num_all_agg)]) or strstr($allegati_esist[$num_all_agg],"mln_$ln:")) $errore = 1;
+else {
+$allegati_esist[$num_all_agg] .= ">mln_$ln:$num_allegato";
+$allegati_esist = substr(implode(",",$allegati_esist),0,-1);
+$num_allegato = "";
+} # fine else if (empty($allegati_esist[fixset($num_all_agg)]) or...
+} # fine if (!empty($aggiungi_allegato_mln))
+else $num_allegato = "mln_$ln:$num_allegato";
+} # fine if (substr(risul_query($dati_contratto,0,'testo'),0,7) == "#!mln!#")
+if (!$errore) {
 $mostra_form_iniziale = "NO";
-esegui_query("update $tablecontratti set testo = '$num_allegato' where numero = '$num_contratto' and tipo = 'allegato'");
+if ($allegati_esist) $str_allegati = "$allegati_esist$num_allegato,";
+else $str_allegati = ",$num_allegato,";
+esegui_query("update $tablecontratti set testo = '$str_allegati' where numero = '$num_contratto' and tipo = 'allegato'");
 echo "".mex("Allegato salvato",$pag).".<br>";
-} # fine if(numlin_query($all_esistente))
-} # fine if (!empty($aggiungi_allegato))
+} # fine if (!$errore)
+} # fine if (!strstr($allegati_esist,",$num_allegato,") and...
+} # fine if (numlin_query($all_esistente))
+} # fine if ($tipo_contratto == "contreml")
+unlock_tabelle($tabelle_lock);
+} # fine if (!empty($aggiungi_allegato) or !empty($aggiungi_allegato_mln))
 
 if (!empty($elimina_allegato)) {
 $tabelle_lock = array($tablecontratti);
 $tabelle_lock = lock_tabelle($tabelle_lock);
-$tipo_contratto = esegui_query("select tipo from $tablecontratti where numero = '$num_contratto' and tipo $LIKE 'contr%'");
-$tipo_contratto = risul_query($tipo_contratto,0,'tipo');
-if ($tipo_contratto == "contreml") {
+$allegati_esist = esegui_query("select * from $tablecontratti where numero = '$num_contratto' and tipo = 'allegato'");
+$allegati_esist = risul_query($allegati_esist,0,'testo');
+if ($allegati_esist) {
+$num_all = fixstr($num_elimina_allegato);
+if (strstr($allegati_esist,",$num_all,") or strstr($allegati_esist,":$num_all,") or strstr($allegati_esist,":$num_all>")) {
 $mostra_form_iniziale = "NO";
-$num_all = esegui_query("select * from $tablecontratti where numero = '$num_contratto' and tipo = 'allegato'");
-$num_all = risul_query($num_all,0,'testo');
-if ($num_all) {
-esegui_query("update $tablecontratti set testo = '' where numero = '$num_contratto' and tipo = 'allegato'");
-$altri_all = esegui_query("select * from $tablecontratti where testo = '$num_all' and tipo = 'allegato'");
-if (!numlin_query($altri_all)) {
-esegui_query("delete from $tablecontratti where numero = '$num_all' and tipo = 'file_all' ");
-} # fine if (!numlin_query($altri_all))
+$allegati_esist = explode(",",$allegati_esist);
+$num_allegati = (count($allegati_esist) - 1);
+for ($num1 = 1 ; $num1 < $num_allegati ; $num1++) {
+if ($allegati_esist[$num1] == $num_all) $allegati_esist[$num1] = "";
+elseif (strstr($allegati_esist[$num1],":$num_all")) {
+$allegati_esist[$num1] = preg_replace("/mln_[a-z]{2,3}:$num_all(,|>)/","",$allegati_esist[$num1].",");
+if (substr($allegati_esist[$num1],-1) == ">" or substr($allegati_esist[$num1],-1) == ",") $allegati_esist[$num1] = substr($allegati_esist[$num1],0,-1);
+#$allegati_esist[$num1] = preg_replace("/mln_[a-z]{2,3}:$num_all>/","",$allegati_esist[$num1]);
+} # fine elseif (strstr($allegati_esist[$num1],":$num_all"))
+} # fine for $num1
+$allegati_esist = implode(",",$allegati_esist);
+if (strstr($allegati_esist,",,")) {
+$num_all_tot = (substr_count($allegati_esist,",") - 1);
+$num_all_canc = (substr_count(str_replace(strstr($allegati_esist,",,"),"",$allegati_esist),",") + 1);
+elimina_cond_variabile_pers("allegato$num_all_canc",(-100 - $num_all_canc),$num_contratto,$tablecontratti);
+$testi_contr = esegui_query("select * from $tablecontratti where numero = '$num_contratto' and tipo $LIKE 'contr%' ");
+$testi_contr = array('num' => 1, 0 => (string) risul_query($testi_contr,0,'testo'));
+if (substr($testi_contr[0],0,7) == "#!mln!#") {
+$testi_mln_contr = esegui_query("select * from $tablecontratti where numero = '$num_contratto' and tipo $LIKE 'mln_%' ");
+$testi_contr['num'] = numlin_query($testi_mln_contr);
+$testi_contr['mln'] = 1;
+for ($num1 = 0 ; $num1 < $testi_contr['num'] ; $num1++) {
+$testi_contr[$num1] = (string) risul_query($testi_mln_contr,$num1,'testo');
+$testi_contr[$num1] = rinomina_testo_variabile_pers("allegato$num_all_canc","allegato0",$testi_contr[$num1],1);
+$testi_contr[$num1] = rinomina_testo_variabile_pers("attachment$num_all_canc","attachment0",$testi_contr[$num1],1);
+$testi_contr[$num1] = rinomina_testo_variabile_pers("archivo_adjunto$num_all_canc","archivo_adjunto0",$testi_contr[$num1],1);
+if ($lingua_mex != 'ita' and $lingua_mex != 'en' and $lingua_mex != 'es') $testi_contr[$num1] = rinomina_testo_variabile_pers(mexv("allegato").$num_all_canc,mexv("allegato").'0',$testi_contr[$num1],1);
+} # fine for $num1
+} # fine if (substr($testi_contr[0],0,7) == "#!mln!#")
+for ($num1 = ($num_all_canc + 1) ; $num1 <= $num_all_tot ; $num1++) {
+rinomina_cond_variabile_pers("allegato$num1",(-100 - $num1),"allegato".($num1 - 1),(-99 - $num1),$num_contratto,$tablecontratti);
+for ($num2 = 0 ; $num2 < $testi_contr['num'] ; $num2++) {
+$testi_contr[$num2] = rinomina_testo_variabile_pers("allegato$num1","allegato".($num1 - 1),$testi_contr[$num2],1);
+$testi_contr[$num2] = rinomina_testo_variabile_pers("attachment$num1","attachment".($num1 - 1),$testi_contr[$num2],1);
+$testi_contr[$num2] = rinomina_testo_variabile_pers("archivo_adjunto$num1","archivo_adjunto".($num1 - 1),$testi_contr[$num2],1);
+if ($lingua_mex != 'ita' and $lingua_mex != 'en' and $lingua_mex != 'es') $testi_contr[$num2] = rinomina_testo_variabile_pers(mexv("allegato").$num1,mexv("allegato").($num1 - 1),$testi_contr[$num2],1);
+} # fine for $num2
+} # fine for $num1
+if (isset($testi_contr['mln'])) {
+for ($num1 = 0 ; $num1 < $testi_contr['num'] ; $num1++) {
+$tipo = risul_query($testi_mln_contr,$num1,'tipo');
+esegui_query("update $tablecontratti set testo = '".aggslashdb($testi_contr[$num1])."' where numero = '$num_contratto' and tipo = '$tipo' ");
+} # fine for $num1
+} # fine if (isset($testi_contr['mln']))
+else esegui_query("update $tablecontratti set testo = '".aggslashdb($testi_contr[0])."' where numero = '$num_contratto' and tipo $LIKE 'contr%' ");
+$allegati_esist = str_replace(",,",",",$allegati_esist);
+} # fine if (strstr($allegati_esist,",,"))
+if (strlen($allegati_esist) < 3) $allegati_esist = "";
+esegui_query("update $tablecontratti set testo = '$allegati_esist' where numero = '$num_contratto' and tipo = 'allegato' ");
+$altri_all = esegui_query("select * from $tablecontratti where (testo $LIKE '%,".aggslashdb($num_all).",%' or testo $LIKE '%:".aggslashdb($num_all).",%' or testo $LIKE '%:".aggslashdb($num_all).">%') and tipo = 'allegato' ");
+if (!numlin_query($altri_all)) esegui_query("delete from $tablecontratti where numero = '".aggslashdb($num_all)."' and tipo = 'file_all' ");
 echo "".mex("Allegato eliminato",$pag).".<br>";
-} # fine if ($num_all)
-} # fine if ($tipo_contratto == "contreml")
+} # fine if (strstr($allegati_esist,",$num_all,") or strstr($allegati_esist,":$num_all,") or strstr($allegati_esist,":$num_all>"))
+} # fine if ($allegati_esist)
 unlock_tabelle($tabelle_lock);
 } # fine if (!empty($elimina_allegato))
 
@@ -609,7 +957,7 @@ if ($tipo_contratto == "contreml") {
 $mostra_form_iniziale = "NO";
 $opz_eml = esegui_query("select testo from $tablecontratti where numero = '$num_contratto' and tipo = 'opzeml'");
 $opz_eml = explode(";",risul_query($opz_eml,0,'testo'));
-if ($cambia_formato_email) {
+if (!empty($cambia_formato_email)) {
 if ($formato_email == "html") {
 $n_opz = "html;";
 if ($opz_eml[0] != "html") {
@@ -621,15 +969,15 @@ else $n_opz = ";";
 $n_opz .= $opz_eml[1].";".$opz_eml[2];
 esegui_query("update $tablecontratti set testo = '$n_opz' where numero = '$num_contratto' and tipo = 'opzeml' ");
 echo "".mex("Formato dell'email cambiato",$pag).".<br>";
-} # fine if ($cambia_formato_email)
-if ($cambia_bcc) {
+} # fine if (!empty($cambia_formato_email))
+if (!empty($cambia_bcc)) {
 $n_opz = $opz_eml[0].";";
-if ($bcc_mittente == "SI") $n_opz .= "SI";
+if (isset($bcc_mittente) and $bcc_mittente == "SI") $n_opz .= "SI";
 $n_opz .= ";";
-if ($bcc_indirizzo and preg_match('/^[_\.0-9a-z-]+@([0-9a-z][0-9a-z-]+\.)+[a-z]{2,4}$/i',$email_bcc)) $n_opz .= "$email_bcc";
+if (!empty($bcc_indirizzo) and preg_match('/^[_\.0-9a-z-]+@([0-9a-z][0-9a-z-]+\.)+[a-z]{2,4}$/i',$email_bcc)) $n_opz .= "$email_bcc";
 esegui_query("update $tablecontratti set testo = '$n_opz' where numero = '$num_contratto' and tipo = 'opzeml' ");
 echo "".mex("Copie bcc da spedire cambiate",$pag).".<br>";
-} # fine if ($cambia_bcc)
+} # fine if (!empty($cambia_bcc))
 } # fine if ($tipo_contratto == "contreml")
 unlock_tabelle($tabelle_lock);
 } # fine if (!empty($cambia_formato_email) or !empty($cambia_bcc))
@@ -654,7 +1002,7 @@ $vecchio_head = esegui_query("select numero from $tablecontratti where numero = 
 if (numlin_query($vecchio_head)) {
 $mostra_form_iniziale = "NO";
 if (@get_magic_quotes_gpc()) $n_head = stripslashes($n_head);
-$n_head = aggslashdb($n_head);
+$n_head = aggslashdb(fixset($n_head));
 esegui_query("update $tablecontratti set testo = '$n_head' where numero = '$num_contratto' and tipo = 'headhtm' ");
 echo "".mex("Intestazione html cambiata",$pag).".<br>";
 } # fine if (numlin_query($vecchio_head))
@@ -669,7 +1017,7 @@ $tabelle_lock = array($tablecontratti);
 $tabelle_lock = lock_tabelle($tabelle_lock);
 $vecchio_contr = esegui_query("select testo from $tablecontratti where numero = '$num_contratto' and tipo $LIKE 'contr%'");
 if (numlin_query($vecchio_contr)) {
-$vecchio_contr = risul_query($vecchio_contr,0,'testo');
+$vecchio_contr = (string) risul_query($vecchio_contr,0,'testo');
 if (substr($vecchio_contr,0,7) == "#!mln!#") {
 $multilingua = 1;
 if ($lingua_contr != "ita" and (preg_replace("/[a-z]{2,3}/","",$lingua_contr) != "" or !@is_file("./includes/lang/$lingua_contr/l_n"))) $errore = "SI";
@@ -684,7 +1032,7 @@ $contr_controlla_int = preg_replace("/\\[r4 array=\"[A-Za-z]+[A-Za-z0-9_]*\"\\]/
 $contr_controlla = explode("[",$contr_controlla_int);
 $num_contr_controlla = count($contr_controlla);
 $livello = 0;
-unset($tipo_livello);
+$tipo_livello = array(0 => null);
 if (str_replace("[r]","",$contr_controlla_int) == $contr_controlla_int) $tipo_livello[0] = "r";
 for ($num1 = 1 ; $num1 < $num_contr_controlla ; $num1++) {
 $parte = $contr_controlla[$num1];
@@ -696,17 +1044,19 @@ if (substr($parte,0,3) == "r3]") $apertura = "r3";
 if (substr($parte,0,3) == "r4]") $apertura = "r4";
 if (substr($parte,0,3) == "r5]") $apertura = "r5";
 if (substr($parte,0,3) == "r6]") $apertura = "r6";
+if (substr($parte,0,3) == "r7]") $apertura = "r7";
 if (substr($parte,0,3) == "/r]") $chiusura = "r";
 if (substr($parte,0,4) == "/r2]") $chiusura = "r2";
 if (substr($parte,0,4) == "/r3]") $chiusura = "r3";
 if (substr($parte,0,4) == "/r4]") $chiusura = "r4";
 if (substr($parte,0,4) == "/r5]") $chiusura = "r5";
 if (substr($parte,0,4) == "/r6]") $chiusura = "r6";
+if (substr($parte,0,4) == "/r7]") $chiusura = "r7";
 if ($apertura) {
 if ($apertura == "r" and $livello != 0 and ($livello != 1 or ($tipo_livello[1] != "r4" and $tipo_livello[1] != "r6") or $tipo_livello[0] == "r")) $errore = "SI";
-if (($apertura == "r2" or $apertura == "r3" or $apertura == "r5") and $tipo_livello[$livello] != "r") $errore = "SI";
+if (($apertura == "r2" or $apertura == "r3" or $apertura == "r5" or $apertura == "r7") and $tipo_livello[$livello] != "r") $errore = "SI";
 if (($apertura == "r4" or $apertura == "r6") and $tipo_livello[$livello] != "r" and $livello != 0 and ($livello != 1 or ($tipo_livello[1] != "r4" and $tipo_livello[1] != "r6") or $tipo_livello[0] == "r")) $errore = "SI";
-if ($apertura == "r6" and $tipo_livello[1] == "r6") $errore = "SI";
+if ($apertura == "r6" and isset($tipo_livello[1]) and $tipo_livello[1] == "r6") $errore = "SI";
 $livello++;
 $tipo_livello[$livello] = $apertura;
 } # fine ($apertura)
@@ -720,7 +1070,7 @@ if ($errore == "SI") break;
 } # fine for $num1
 if ($livello != 0) $errore = "SI";
 $contr_controlla_int = str_replace("[c]","[c\\]",$contr_controlla_int);
-$contr_controlla_int = preg_replace("/\\[c +[A-Za-z]+[A-Za-z0-9_]*(\\((('[^'\\]\\(]*')|([A-Za-z]+[A-Za-z0-9_]*))\\))? *!?= *\"[^\"]*\" *\\]/","[c]",$contr_controlla_int);
+$contr_controlla_int = preg_replace("/\\[c +[A-Za-z]+[A-Za-z0-9_]*(\\((('[^'\\]\\(]*')|([A-Za-z]+[A-Za-z0-9_]*))\\))? *(!?=|!?%|>|<) *\"[^\"]*\" *((\\||&) *[A-Za-z]+[A-Za-z0-9_]*(\\((('[^'\\]\\(]*')|([A-Za-z]+[A-Za-z0-9_]*))\\))? *(!?=|!?%|>|<) *\"[^\"]*\" *)*\\]/","[c]",$contr_controlla_int);
 $contr_controlla = explode("[c]",$contr_controlla_int);
 $num_contr_controlla = count($contr_controlla);
 for ($num1 = 1 ; $num1 < $num_contr_controlla ; $num1++) {
@@ -744,23 +1094,23 @@ unlock_tabelle($tabelle_lock);
 } # fine if (!empty($salva_modifiche))
 
 if (!empty($aggiungi_var) or !empty($aggiungi_var2)) {
-if ($aggiungi_var2) $var_agg = $var_agg2;
+if (!empty($aggiungi_var2)) $var_agg = $var_agg2;
 if ($var_agg and preg_replace("/[A-Za-z0-9\(\)_]/","",$var_agg) == "") {
 if (@get_magic_quotes_gpc()) $n_contratto = stripslashes($n_contratto);
-if (!strcmp($pos_curs,"")) $testo_contratto_mod = $n_contratto."[".$var_agg."]";
+if (!strcmp((string) $pos_curs,"")) $testo_contratto_mod = $n_contratto."[".$var_agg."]";
 else {
 
-$pos_curs = strlen(utf8_encode(substr(utf8_decode($n_contratto),0,$pos_curs)));
-$pos_curs += (2 * substr_count(substr($n_contratto,0,$pos_curs),"€"));
-$pos_curs += (2 * substr_count(substr($n_contratto,0,$pos_curs),"–"));
-$testo_contratto_mod = substr($n_contratto,0,$pos_curs)."[".$var_agg."]".substr($n_contratto,$pos_curs);
-} # fine else if (!strcmp($pos_curs,""))
+#$pos_curs = strlen(utf8_encode(substr(utf8_decode($n_contratto),0,$pos_curs)));
+#$pos_curs += (2 * substr_count(substr($n_contratto,0,$pos_curs),"€"));
+#$pos_curs += (2 * substr_count(substr($n_contratto,0,$pos_curs),"–"));
+$testo_contratto_mod = sottostringa($n_contratto,0,$pos_curs)."[".$var_agg."]".sottostringa($n_contratto,$pos_curs);
+} # fine else if (!strcmp((string) $pos_curs,""))
 } # fine if ($var_agg and preg_replace("/[A-Za-z0-9\(\)_]/","",$var_agg) == "")
 } # fine if (!empty($aggiungi_var) or !empty($aggiungi_var2))
 
 if (!empty($aggiungi_ripetizione) or !empty($aggiungi_ripetizione2)) {
 if (@get_magic_quotes_gpc()) $n_contratto = stripslashes($n_contratto);
-if ($aggiungi_ripetizione2) $tipo_rip = $tipo_rip2;
+if (!empty($aggiungi_ripetizione2)) $tipo_rip = $tipo_rip2;
 $testo_agg1 = "";
 $testo_agg2 = "";
 $testo_agg3 = "";
@@ -801,18 +1151,19 @@ $testo_agg3 = "[/r7]";
 } # fine if ($tipo_rip == )
 if ($tipo_rip == 8) {
 $testo_agg1 = "[c ".mex("nome_variabile",$pag)."=\"".mex("valore",$pag)."\"]";
-$testo_agg2 = "\n".mex("SOSTITUISCI CON PARTE DA MOSTRARE SOLO SE E' SODDISFATTA LA CONDIZIONE PRECEDENTE",$pag)." (".mex("nome_variabile",$pag)." = ".mex("OPPURE",$pag)." != ".mex("valore",$pag).")\n";
+$testo_agg2 = "\n".mex("SOSTITUISCI CON PARTE DA MOSTRARE SOLO SE E' SODDISFATTA LA CONDIZIONE PRECEDENTE",$pag).": ".mex("nome_variabile",$pag)." = ".mex("OPPURE",$pag)." != ".mex("OPPURE",$pag)." % (".mex("contiene",'modifica_var_contr.php').") ".mex("OPPURE",$pag)." !% ".mex("OPPURE",$pag)." > ".mex("OPPURE",$pag)." < ".mex("valore",$pag).". ";
+$testo_agg2 .= mex("Unisci più condizioni con",$pag)." & (AND) ".strtolower(mex("OPPURE",$pag))." | (OR), ".mex("sempre da sinistra a destra",$pag).": ".mex("nome_variabile",$pag)."1!=\"\" | ".mex("nome_variabile",$pag)."2>\"0\" &...\n";
 $testo_agg3 = "[/c]";
 } # fine if ($tipo_rip == 8)
-if (!strcmp($pos_curs,"")) $testo_contratto_mod = $n_contratto.$testo_agg1.$testo_agg2.$testo_agg3;
+if (!strcmp((string) $pos_curs,"")) $testo_contratto_mod = $n_contratto.$testo_agg1.$testo_agg2.$testo_agg3;
 else {
-$pos_curs = strlen(utf8_encode(substr(utf8_decode($n_contratto),0,$pos_curs)));
-if (!strcmp($pos_fine_sel,"")) $testo_contratto_mod = substr($n_contratto,0,$pos_curs).$testo_agg1.$testo_agg2.$testo_agg3.substr($n_contratto,$pos_curs);
+#$pos_curs = strlen(utf8_encode(substr(utf8_decode($n_contratto),0,$pos_curs)));
+if (!strcmp((string) $pos_fine_sel,"")) $testo_contratto_mod = sottostringa($n_contratto,0,$pos_curs).$testo_agg1.$testo_agg2.$testo_agg3.sottostringa($n_contratto,$pos_curs);
 else {
-$pos_fine_sel = strlen(utf8_encode(substr(utf8_decode($n_contratto),0,$pos_fine_sel)));
-$testo_contratto_mod = substr($n_contratto,0,$pos_curs).$testo_agg1.substr($n_contratto,$pos_curs,($pos_fine_sel - $pos_curs)).$testo_agg3.substr($n_contratto,$pos_fine_sel);
-} # fine else if (!strcmp($pos_fine_sel,""))
-} # fine else if (!strcmp($pos_curs,""))
+#$pos_fine_sel = strlen(utf8_encode(substr(utf8_decode($n_contratto),0,$pos_fine_sel)));
+$testo_contratto_mod = sottostringa($n_contratto,0,$pos_curs).$testo_agg1.sottostringa($n_contratto,$pos_curs,($pos_fine_sel - $pos_curs)).$testo_agg3.sottostringa($n_contratto,$pos_fine_sel);
+} # fine else if (!strcmp((string) $pos_fine_sel,""))
+} # fine else if (!strcmp((string) $pos_curs,""))
 } # fine if (!empty($aggiungi_ripetizione) or !empty($aggiungi_ripetizione2))
 
 if (!empty($salva_foot)) {
@@ -822,7 +1173,7 @@ $vecchio_foot = esegui_query("select numero from $tablecontratti where numero = 
 if (numlin_query($vecchio_foot)) {
 $mostra_form_iniziale = "NO";
 if (@get_magic_quotes_gpc()) $n_foot = stripslashes($n_foot);
-$n_foot = aggslashdb($n_foot);
+$n_foot = aggslashdb(fixset($n_foot));
 esegui_query("update $tablecontratti set testo = '$n_foot' where numero = '$num_contratto' and tipo = 'foothtm' ");
 echo "".mex("Chiusura html cambiata",$pag).".<br>";
 } # fine if (numlin_query($vecchio_foot))
@@ -830,14 +1181,14 @@ unlock_tabelle($tabelle_lock);
 } # fine if (!empty($salva_foot))
 
 
-if ($mostra_form_iniziale == "NO") {
+if (isset($mostra_form_iniziale) and $mostra_form_iniziale == "NO") {
 echo "<br><form accept-charset=\"utf-8\" method=\"post\" action=\"$pag$anchor\"><div>
 <input type=\"hidden\" name=\"anno\" value=\"$anno\">
 <input type=\"hidden\" name=\"id_sessione\" value=\"$id_sessione\">
 <input type=\"hidden\" name=\"num_contratto\" value=\"$num_contratto\">
-<input class=\"sbutton\" type=\"submit\" name=\"torna\" value=\"".mex("Torna indietro",$pag)."\">
+<input class=\"sbutton\" type=\"submit\" value=\"".mex("Torna indietro",$pag)."\">
 </div></form>";
-} # fine if ($mostra_form_iniziale == "NO")
+} # fine if (isset($mostra_form_iniziale) and $mostra_form_iniziale == "NO")
 
 } # fine if (!empty($cambia_qualcosa))
 
@@ -849,16 +1200,8 @@ if (!isset($mostra_form_iniziale) or $mostra_form_iniziale != "NO") {
 
 include("./includes/funzioni_contratti.php");
 $nomi_contratti = trova_nomi_contratti($max_contr,$id_utente,$tablecontratti,$tablepersonalizza,$LIKE,$pag);
-if (!isset($nomi_contratti['pers'][$num_contratto_int]) or !strcmp($nomi_contratti['pers'][$num_contratto_int],"")) $nome_contratto = "";
+if (!isset($nomi_contratti['pers'][$num_contratto_int]) or !strcmp((string) $nomi_contratti['pers'][$num_contratto_int],"")) $nome_contratto = "";
 else $nome_contratto = " (".$nomi_contratti['pers'][$num_contratto_int].")";
-
-unset($trad_var);
-function mex2 ($messaggio) {
-global $trad_var,$lingua_mex;
-if (empty($trad_var) and $lingua_mex != "ita") include("./includes/lang/$lingua_mex/visualizza_contratto_var.php");
-if (!empty($trad_var[$messaggio])) $messaggio = $trad_var[$messaggio];
-return $messaggio;
-} # fine function mex2
 
 
 echo "<h3>".ucfirst(mex("documento",$pag))." $num_contratto$nome_contratto</h3><br>
@@ -871,13 +1214,13 @@ echo "<table><tr><td><form accept-charset=\"utf-8\" method=\"post\" action=\"vis
 <input type=\"hidden\" name=\"id_sessione\" value=\"$id_sessione\">
 <input type=\"hidden\" name=\"numero_contratto\" value=\"$num_contratto\">
 <input type=\"hidden\" name=\"origine\" value=\"./$pag?num_contratto=$num_contratto\">
-<input class=\"sbutton\" type=\"submit\" name=\"torna\" value=\"".mex("Visualizza il documento",$pag)." $num_contratto_int\">
+<input class=\"sbutton\" type=\"submit\" value=\"".mex("Visualizza il documento",$pag)." $num_contratto_int\">
 </div></form></td><td style=\"width: 30px;\"></td>";
 if ($max_contr > 1) {
 echo "<td><form accept-charset=\"utf-8\" method=\"post\" action=\"./personalizza.php\"><div>
 <input type=\"hidden\" name=\"anno\" value=\"$anno\">
 <input type=\"hidden\" name=\"id_sessione\" value=\"$id_sessione\">
-<input type=\"hidden\" name=\"id_utente_mod\" value=\"".htmlspecialchars(fixset($id_utente_mod))."\">
+<input type=\"hidden\" name=\"id_utente_mod\" value=\"".htmlspecialchars(fixstr($id_utente_mod))."\">
 <input type=\"hidden\" name=\"aggiorna_qualcosa\" value=\"SI\">
 <input type=\"hidden\" name=\"elimina_contratto\" value=\"SI\">
 <input type=\"hidden\" name=\"num_contr_elimina\" value=\"$num_contratto_int\">
@@ -888,7 +1231,7 @@ echo "<td><form accept-charset=\"utf-8\" method=\"post\" action=\"./personalizza
 echo "</tr></table><br>";
 
 $tipo_contratto = substr(risul_query($dati_contratto,0,'tipo'),5);
-$testo_contratto = risul_query($dati_contratto,0,'testo');
+$testo_contratto = (string) risul_query($dati_contratto,0,'testo');
 $sel_HTML = "";
 $sel_EMAIL = "";
 $sel_RTF = "";
@@ -911,9 +1254,9 @@ echo "<form accept-charset=\"utf-8\" method=\"post\" action=\"$pag\"><div>
 <input type=\"hidden\" name=\"cambia_qualcosa\" value=\"SI\">
 <input type=\"hidden\" name=\"cambia_formato\" value=\"SI\">
 ".mex("Formato del documento",$pag).":
- <select name=\"nuovo_formato\">
-<option value=\"HTML\"$sel_HTML>HTML</option>
-<option value=\"EMAIL\"$sel_EMAIL>EMAIL</option>
+ <select name=\"nuovo_formato\">";
+if ($priv_mod_doc_html == "s") echo "<option value=\"HTML\"$sel_HTML>HTML</option>";
+echo "<option value=\"EMAIL\"$sel_EMAIL>EMAIL</option>
 <option value=\"RTF\"$sel_RTF>RTF</option>
 <option value=\"TXT\"$sel_TXT>TXT</option>
 </select>
@@ -943,6 +1286,7 @@ echo "<form accept-charset=\"utf-8\" method=\"post\" action=\"$pag\"><div>
 $check_soldi_ut = "";
 $check_soldi_eu = "";
 $check_soldi_usa = "";
+$check_data_ut = "";
 $check_data_eu = "";
 $check_data_usa = "";
 if ($stile_soldi_contr != "europa" and $stile_soldi_contr != "usa") $check_soldi_ut = " selected";
@@ -1014,6 +1358,9 @@ echo "<form accept-charset=\"utf-8\" method=\"post\" action=\"$pag\"><div>
 $autosalv = esegui_query("select * from $tablecontratti where numero = '$num_contratto' and tipo = 'autosalv' ");
 if (!numlin_query($autosalv)) $autosalv = "";
 else $autosalv = risul_query($autosalv,0,'testo');
+$sel_mai = "";
+$sel_checkin = "";
+$sel_checkout = "";
 if (!$autosalv) $sel_mai = " selected";
 else ${"sel_".$autosalv} = " selected";
 echo "<form accept-charset=\"utf-8\" method=\"post\" action=\"$pag\"><div>
@@ -1059,7 +1406,7 @@ if ($num_contr != $num_contratto_int and ($attiva_contratti_consentiti == "n" or
 $num_prog_esistente = esegui_query("select * from $tablecontratti where numero = '$num_contr' and tipo = 'num_prog' ");
 if (!numlin_query($num_prog_esistente)) {
 $nome_contr = mex("il documento",$pag)." ".$num_contr;
-if (strcmp($nomi_contratti['pers'][$num_contr],"")) $nome_contr .= " (".$nomi_contratti['pers'][$num_contr].")";
+if (strcmp(fixstr($nomi_contratti['pers'][$num_contr]),"")) $nome_contr .= " (".$nomi_contratti['pers'][$num_contr].")";
 if ($num_prog != $num_contr) $sel = "";
 else $sel = " selected";
 $opt_num_prog .= "<option value=\"$num_contr\"$sel>$nome_contr</option>";
@@ -1131,8 +1478,9 @@ echo "<form accept-charset=\"utf-8\" method=\"post\" action=\"$pag\"><div>
 if ($checked) {
 $pass_api = risul_query($api_esistente,0,'testo');
 $id_utente_api = explode(";",$pass_api);
+$indirizzi_ip_api = $id_utente_api[1];
 $id_utente_api = $id_utente_api[0];
-$pass_api = substr($pass_api,(strlen($id_utente_api) + 1));
+$pass_api = substr($pass_api,(strlen($id_utente_api) + strlen($indirizzi_ip_api) + 2));
 echo "<table cellspacing=\"0\" cellpadding=\"0\"><tr><td style=\"width: 50px;\"></td><td>
 <form accept-charset=\"utf-8\" method=\"post\" action=\"$pag\"><div style=\"padding-top: 6px;\">
 <input type=\"hidden\" name=\"anno\" value=\"$anno\">
@@ -1141,6 +1489,16 @@ echo "<table cellspacing=\"0\" cellpadding=\"0\"><tr><td style=\"width: 50px;\">
 <input type=\"hidden\" name=\"cambia_qualcosa\" value=\"SI\">
 ".mex("Password",$pag).": <input type=\"text\" name=\"pass_api\" size=\"12\" maxlength=\"60\" value=\"$pass_api\">
 <input class=\"sbutton\" type=\"submit\" value=\"".mex("Cambia",$pag)."\">
+</div></form>
+<form accept-charset=\"utf-8\" method=\"post\" action=\"$pag\"><div style=\"padding-top: 6px;\">
+<input type=\"hidden\" name=\"anno\" value=\"$anno\">
+<input type=\"hidden\" name=\"id_sessione\" value=\"$id_sessione\">
+<input type=\"hidden\" name=\"num_contratto\" value=\"$num_contratto\">
+<input type=\"hidden\" name=\"cambia_qualcosa\" value=\"SI\">
+<input type=\"hidden\" name=\"cambia_ind_ip_api\" value=\"1\">
+".mex("Indirizzi IP",$pag).": <input type=\"text\" name=\"indirizzi_ip_api\" size=\"34\" maxlength=\"300\" value=\"$indirizzi_ip_api\">
+<input class=\"sbutton\" type=\"submit\" value=\"".mex("Cambia",$pag)."\">
+ <small>(".mex("lista separata da virgole, qualsiasi IP se vuota",$pag).")</small>
 </div></form>
 <form accept-charset=\"utf-8\" method=\"post\" action=\"$pag\"><div style=\"padding-top: 6px;\">
 <input type=\"hidden\" name=\"anno\" value=\"$anno\">
@@ -1226,10 +1584,10 @@ echo "<br>";
 
 $contr_head = "";
 $contr_foot = "";
+$checked = "";
 if ($tipo_contratto == "htm") {
 $intestazione_html = esegui_query("select * from $tablecontratti where numero = '$num_contratto' and tipo = 'headhtm'");
 if (numlin_query($intestazione_html) == 1) $checked = " checked";
-else $checked = "";
 echo "<form accept-charset=\"utf-8\" method=\"post\" action=\"$pag\"><div>
 <input type=\"hidden\" name=\"anno\" value=\"$anno\">
 <input type=\"hidden\" name=\"id_sessione\" value=\"$id_sessione\">
@@ -1247,18 +1605,47 @@ $contr_foot = risul_query($contr_foot,0,'testo');
 } # fine if ($tipo_contratto == "htm")
 
 
+if ($tipo_contratto == "rtf" or $tipo_contratto == "txt") {
+$dati_download = esegui_query("select * from $tablecontratti where numero = '$num_contratto' and tipo = 'datdownl'");
+if (numlin_query($dati_download)) {
+$dati_download = explode(">",(string) risul_query($dati_download,0,'testo'));
+$estensione_txt = $dati_download[0];
+$nome_download = fixset($dati_download[1]);
+} # fine if (numlin_query($dati_download))
+else {
+$estensione_txt = "";
+$nome_download = "";
+} # fine else if (numlin_query($dati_download))
+if ($nome_download) {
+$sel_predef = "";
+$sel_var = " selected";
+} # fine if ($nome_download)
+else {
+$sel_predef = " selected";
+$sel_var = "";
+} # fine else if ($nome_download)
+echo "<form accept-charset=\"utf-8\" method=\"post\" action=\"$pag\"><div>
+<input type=\"hidden\" name=\"anno\" value=\"$anno\">
+<input type=\"hidden\" name=\"id_sessione\" value=\"$id_sessione\">
+<input type=\"hidden\" name=\"num_contratto\" value=\"$num_contratto\">
+<input type=\"hidden\" name=\"cambia_qualcosa\" value=\"SI\">
+".mex("Nome con cui vedere e scaricare il documento",$pag).": <select name=\"tipo_nome_download\">
+<option value=\"predef\"$sel_predef>".mex("nome del documento o del file salvato",$pag)."</option>
+<option value=\"var\"$sel_var>".mex("variabile",$pag)." [".mexv("nome_documento_scaricato")."]</option>
+</select>
+<input class=\"sbutton\" type=\"submit\" name=\"cambia_nome_download\" value=\"".mex("Cambia",$pag)."\">
+</div></form>";
 if ($tipo_contratto == "txt") {
-$estensione_txt = esegui_query("select * from $tablecontratti where numero = '$num_contratto' and tipo = 'est_txt'");
-if (numlin_query($estensione_txt) == 1) {
+if ($estensione_txt) {
 $checked_predef = "";
 $checked_pers = " checked";
-$estensione_pers_txt = risul_query($estensione_txt,0,'testo');
-} # fine if (numlin_query($estensione_txt) == 1)
+$estensione_pers_txt = $estensione_txt;
+} # fine if ($estensione_txt)
 else {
 $checked_predef = " checked";
 $checked_pers = "";
 $estensione_pers_txt = "txt";
-} # fine else if (numlin_query($estensione_txt) == 1)
+} # fine else if ($estensione_txt)
 echo "<form accept-charset=\"utf-8\" method=\"post\" action=\"$pag\"><div>
 <input type=\"hidden\" name=\"anno\" value=\"$anno\">
 <input type=\"hidden\" name=\"id_sessione\" value=\"$id_sessione\">
@@ -1271,28 +1658,87 @@ echo "<form accept-charset=\"utf-8\" method=\"post\" action=\"$pag\"><div>
  .</label><input type=\"text\" name=\"estensione_pers_txt\" size=\"8\" maxlength=\"10\" value=\"$estensione_pers_txt\" onclick=\"document.getElementById('te_pers').checked='1'\"><br>
 <input class=\"sbutton\" type=\"submit\" name=\"cambia_estenstione_pers\" value=\"".mex("Cambia",$pag)."\">
 </td></tr></table>
-</div></form><br>";
-if ($checked) {
-$contr_head = risul_query($intestazione_html,0,'testo');
-$contr_foot = esegui_query("select * from $tablecontratti where numero = '$num_contratto' and tipo = 'foothtm'");
-$contr_foot = risul_query($contr_foot,0,'testo');
-} # fine if ($checked)
+</div></form>";
 } # fine if ($tipo_contratto == "txt")
+echo "<br>";
+} # fine if ($tipo_contratto == "rtf" or $tipo_contratto == "txt")
 
 
+$lingue = array();
+if ($multilingua) {
+$num_lingue = 0;
+if ($lingua_default != "ita" and (preg_replace("/[a-z]{2,3}/","",$lingua_default) != "" or !@is_file("./includes/lang/$lingua_default/l_n"))) $lingua_default = $lingua_mex;
+$lingue[$num_lingue] = $lingua_default;
+if ($lingua_default != "ita") {
+$lingue['nome'][$num_lingue] = ucfirst(trim(implode("",file("./includes/lang/$lingua_default/l_n"))));
+$lingue['nome_cod'][$lingue[$num_lingue]] = $lingue['nome'][$num_lingue];
+$num_lingue++;
+$lingue[$num_lingue] = "ita";
+} # fine else if ($lingua_default != "ita")
+$lingue['nome'][$num_lingue] = "Italiano";
+$lingue['nome_cod'][$lingue[$num_lingue]] = $lingue['nome'][$num_lingue];
+$lang_dir = opendir("./includes/lang/");
+while ($ini_lingua = readdir($lang_dir)) {
+if ($ini_lingua != "." and $ini_lingua != ".." and $ini_lingua != $lingua_default) {
+$num_lingue++;
+$lingue[$num_lingue] = $ini_lingua;
+$lingue['nome'][$num_lingue] = ucfirst(trim(implode("",file("./includes/lang/$ini_lingua/l_n"))));
+$lingue['nome_cod'][$lingue[$num_lingue]] = $lingue['nome'][$num_lingue];
+} # fine if ($file != "." and $file != ".." and...
+} # fine while ($file = readdir($lang_dig))
+closedir($lang_dir);
+$num_lingue++;
+} # fine if ($multilingua)
+else $num_lingue = 1;
+
+
+$dati_allegato = array('num' => 0);
 if ($tipo_contratto == "eml") {
 $oggetto = esegui_query("select * from $tablecontratti where numero = '$num_contratto' and tipo = 'oggetto'");
-$oggetto = risul_query($oggetto,0,'testo');
-echo "<div class=\"linhbox\">
-<form accept-charset=\"utf-8\" method=\"post\" action=\"$pag\"><div>
+$oggetto = (string) risul_query($oggetto,0,'testo');
+echo "<div class=\"linhbox\">";
+if ($multilingua) {
+$ogg_vett = explode(">",$oggetto);
+$oggetto = array();
+for ($num1 = 0 ; $num1 < count($ogg_vett) ; $num1++) {
+$ln = explode(":",$ogg_vett[$num1]);
+$ln = substr($ln[0],4);
+$oggetto[$ln] = substr(strstr($ogg_vett[$num1],":"),1);
+} # fine for $num1
+echo "<table><tr><td>".mex("Oggetto",$pag).":&nbsp;</td><td>";
+for ($num_lingua = 0 ; $num_lingua < $num_lingue ; $num_lingua++) {
+if ($num_lingua) echo "<tr><td></td><td>";
+echo "<form accept-charset=\"utf-8\" method=\"post\" action=\"$pag\"><div>
 <input type=\"hidden\" name=\"anno\" value=\"$anno\">
 <input type=\"hidden\" name=\"id_sessione\" value=\"$id_sessione\">
 <input type=\"hidden\" name=\"num_contratto\" value=\"$num_contratto\">
 <input type=\"hidden\" name=\"cambia_qualcosa\" value=\"SI\">
+<input type=\"hidden\" name=\"cambia_oggetto\" value=\"1\">
+<input type=\"hidden\" name=\"lingua_oggetto\" value=\"".$lingue[$num_lingua]."\">
+".$lingue['nome'][$num_lingua];
+if (!$num_lingua) echo " (".mex("predefinito",$pag).")";
+if (isset($oggetto[$lingue[$num_lingua]])) $ogg_corr = $oggetto[$lingue[$num_lingua]];
+else $ogg_corr = "";
+echo ": <input type=\"text\" name=\"nuovo_oggetto\" size=\"50\" maxlength=\"60\" value=\"$ogg_corr\">
+<input class=\"sbutton\" type=\"submit\" value=\"".mex("Cambia",$pag)."\">
+</div></form>
+</td></tr>";
+} # fine for $num_lingua
+echo "</table>";
+} # fine if ($multilingua)
+else {
+echo "<form accept-charset=\"utf-8\" method=\"post\" action=\"$pag\"><div>
+<input type=\"hidden\" name=\"anno\" value=\"$anno\">
+<input type=\"hidden\" name=\"id_sessione\" value=\"$id_sessione\">
+<input type=\"hidden\" name=\"num_contratto\" value=\"$num_contratto\">
+<input type=\"hidden\" name=\"cambia_qualcosa\" value=\"SI\">
+<input type=\"hidden\" name=\"cambia_oggetto\" value=\"1\">
 ".mex("Oggetto",$pag).":
 <input type=\"text\" name=\"nuovo_oggetto\" size=\"50\" maxlength=\"60\" value=\"$oggetto\">
-<input class=\"sbutton\" type=\"submit\" name=\"cambia_oggetto\" value=\"".mex("Cambia",$pag)."\">
+<input class=\"sbutton\" type=\"submit\" value=\"".mex("Cambia",$pag)."\">
 </div></form>";
+} # fine else if ($multilingua)
+
 $opz_eml = esegui_query("select * from $tablecontratti where numero = '$num_contratto' and tipo = 'opzeml'");
 $opz_eml = risul_query($opz_eml,0,'testo');
 $opz_eml = explode(";",$opz_eml);
@@ -1312,22 +1758,113 @@ echo "<option value=\"html\"$sel>".mex("html",$pag)."</option>
 </select>
 <input class=\"sbutton\" type=\"submit\" name=\"cambia_formato_email\" value=\"".mex("Cambia",$pag)."\">
 </div></form>";
-$allegato = esegui_query("select * from $tablecontratti where numero = '$num_contratto' and tipo = 'allegato'");
-$allegato = risul_query($allegato,0,'testo');
-if ($allegato) {
-$allegato = esegui_query("select * from $tablecontratti where numero = '$allegato' and tipo = 'file_all'");
+
+$allegati = esegui_query("select * from $tablecontratti where numero = '$num_contratto' and tipo = 'allegato'");
+$allegati = risul_query($allegati,0,'testo');
+$allegato_presente = array();
+if ($allegati) {
+$allegati = explode(",",$allegati);
+$dati_allegato['num'] = (count($allegati) - 2);
+for ($num1 = 1 ; $num1 <= $dati_allegato['num'] ; $num1++) {
+if ($multilingua) {
+$all_vett = explode(">",$allegati[$num1]);
+$num_ln = count($all_vett);
+} # fine if ($multilingua)
+else $num_ln = 1;
+for ($num2 = 0 ; $num2 < $num_ln ; $num2++) {
+if ($multilingua) $num_all = substr(strstr($all_vett[$num2],":"),1);
+else $num_all = $allegati[$num1];
+$allegato_presente[$num_all] = 1;
+} # fine for $num2
+} # fine for $num1
+} # fine if ($allegati)
+$file_allegati = esegui_query("select * from $tablecontratti where tipo = 'file_all'");
+$num_file_allegati = numlin_query($file_allegati);
+$opt_allegati = "";
+for ($num1 = 0 ; $num1 < $num_file_allegati ; $num1++) {
+$num_all = risul_query($file_allegati,$num1,'numero');
+if (!isset($allegato_presente[$num_all])) {
+$nome_all = explode(",",risul_query($file_allegati,$num1,'testo'));
+$opt_allegati .= "<option value=\"$num_all\">".$nome_all[0]."</option>";
+} # fine if (!isset($allegato_presente[$num_all]))
+} # fine for $num1
+if ($allegati) {
+for ($num1 = 1 ; $num1 <= $dati_allegato['num'] ; $num1++) {
+$lingue_presenti = array();
+if ($multilingua) {
+$all_vett = explode(">",$allegati[$num1]);
+$num_ln = count($all_vett);
+} # fine if ($multilingua)
+else $num_ln = 1;
+echo "<table><tr><td>".mex("Allegato",$pag)." $num1:&nbsp;</td><td>";
+for ($num2 = 0 ; $num2 < $num_ln ; $num2++) {
+if ($multilingua) {
+$ln = explode(":",$all_vett[$num2]);
+$ln = substr($ln[0],4);
+$lingue_presenti[$ln] = 1;
+$num_all = substr(strstr($all_vett[$num2],":"),1);
+} # fine if ($multilingua)
+else {
+$ln = "";
+$num_all = $allegati[$num1];
+} # fine else if ($multilingua)
+$allegato = esegui_query("select * from $tablecontratti where numero = '$num_all' and tipo = 'file_all'");
 $allegato = risul_query($allegato,0,'testo');
 $allegato = explode(",",$allegato);
+if ($num2 > 0) echo "<tr><td></td><td>";
 echo "<form accept-charset=\"utf-8\" method=\"post\" action=\"$pag\"><div>
 <input type=\"hidden\" name=\"anno\" value=\"$anno\">
 <input type=\"hidden\" name=\"id_sessione\" value=\"$id_sessione\">
 <input type=\"hidden\" name=\"num_contratto\" value=\"$num_contratto\">
 <input type=\"hidden\" name=\"cambia_qualcosa\" value=\"SI\">
-".mex("Allegato",$pag).": <b>".$allegato[0]."</b>
-<input class=\"sbutton\" type=\"submit\" name=\"elimina_allegato\" value=\"".mex("Elimina",$pag)."\">
-</div></form>";
-} # fine if ($allegato)
-else {
+<input type=\"hidden\" name=\"num_elimina_allegato\" value=\"$num_all\">
+<b>".$allegato[0]."</b> ";
+if ($ln) {
+echo "(<em>".$lingue['nome_cod'][$ln]."</em>";
+if ($lingue[0] == $ln) echo ", ".mex("predefinito",$pag);
+echo ") ";
+} # fine if ($ln)
+echo "<input class=\"sbutton\" type=\"submit\" name=\"elimina_allegato\" value=\"".mex("Elimina",$pag)."\">
+</div></form></td></tr>";
+} # fine for $num2
+if ($multilingua) {
+$opt_lingue_mancanti = "";
+for ($num_lingua = 0 ; $num_lingua < $num_lingue ; $num_lingua++) {
+if (empty($lingue_presenti[$lingue[$num_lingua]])) $opt_lingue_mancanti .= "<option value=\"".$lingue[$num_lingua]."\">".$lingue['nome'][$num_lingua]."</option>";
+} # fine for $num_lingua
+if ($opt_lingue_mancanti) {
+echo "<tr><td></td><td>
+<form accept-charset=\"utf-8\" enctype=\"multipart/form-data\" method=\"post\" action=\"$pag\"><div>
+<input type=\"hidden\" name=\"MAX_FILE_SIZE\" value=\"50000000\">
+<input type=\"hidden\" name=\"anno\" value=\"$anno\">
+<input type=\"hidden\" name=\"id_sessione\" value=\"$id_sessione\">
+<input type=\"hidden\" name=\"num_contratto\" value=\"$num_contratto\">
+<input type=\"hidden\" name=\"cambia_qualcosa\" value=\"SI\">
+<input type=\"hidden\" name=\"num_all_agg\" value=\"$num1\">
+<select name=\"ln_upload\">$opt_lingue_mancanti</select>:
+<input name=\"file_allegato_upload\" type=\"file\">&nbsp;&nbsp;&nbsp;&nbsp;
+<input class=\"sbutton\" type=\"submit\" name=\"upload_allegato_mln\" value=\"".mex("Aggiungi",$pag)."\">
+</div></form></td></tr>";
+if ($opt_allegati) {
+echo "<tr><td></td><td>
+<form accept-charset=\"utf-8\" enctype=\"multipart/form-data\" method=\"post\" action=\"$pag\"><div>
+<input type=\"hidden\" name=\"anno\" value=\"$anno\">
+<input type=\"hidden\" name=\"id_sessione\" value=\"$id_sessione\">
+<input type=\"hidden\" name=\"num_contratto\" value=\"$num_contratto\">
+<input type=\"hidden\" name=\"cambia_qualcosa\" value=\"SI\">
+<input type=\"hidden\" name=\"num_all_agg\" value=\"$num1\">
+<input type=\"hidden\" name=\"aggiungi_allegato_mln\" value=\"SI\">
+<select name=\"ln_upload\">$opt_lingue_mancanti</select>:
+<select name=\"num_allegato\">$opt_allegati</select>
+<input class=\"sbutton\" type=\"submit\" value=\"".mex("Aggiungi",$pag)."\">
+</div></form></td></tr>";
+} # fine if ($opt_allegati)
+} # fine if ($opt_lingue_mancanti)
+} # fine if ($multilingua)
+echo "</table>";
+} # fine for $num1
+} # fine if ($allegati)
+if ($dati_allegato['num'] < $num_allegati_max) {
 echo "<table cellspacing=\"0\"><tr><td>
 ".mex("Allegato",$pag).":</td><td>
 <form accept-charset=\"utf-8\" enctype=\"multipart/form-data\" method=\"post\" action=\"$pag\"><div>
@@ -1336,17 +1873,9 @@ echo "<table cellspacing=\"0\"><tr><td>
 <input type=\"hidden\" name=\"id_sessione\" value=\"$id_sessione\">
 <input type=\"hidden\" name=\"num_contratto\" value=\"$num_contratto\">
 <input type=\"hidden\" name=\"cambia_qualcosa\" value=\"SI\">
-  <input name=\"file_allegato_upload\" type=\"file\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  <input name=\"file_allegato_upload\" type=\"file\">&nbsp;&nbsp;&nbsp;&nbsp;
 <input class=\"sbutton\" type=\"submit\" name=\"upload_allegato\" value=\"".mex("Aggiungi",$pag)."\">
 </div></form></td></tr>";
-$allegati = esegui_query("select * from $tablecontratti where tipo = 'file_all'");
-$num_allegati = numlin_query($allegati);
-$opt_allegati = "";
-for ($num1 = 0 ; $num1 < $num_allegati ; $num1++) {
-$num_all = risul_query($allegati,$num1,'numero');
-$nome_all = explode(",",risul_query($allegati,$num1,'testo'));
-$opt_allegati .= "<option value=\"$num_all\">".$nome_all[0]."</option>";
-} # fine for $num1
 if ($opt_allegati) {
 echo "<tr><td></td><td>
 <form accept-charset=\"utf-8\" enctype=\"multipart/form-data\" method=\"post\" action=\"$pag\"><div>
@@ -1361,7 +1890,8 @@ $opt_allegati</select>
 </div></form></td></tr>";
 } # fine if ($opt_allegati)
 echo "</table>";
-} # fine else if ($allegato)
+} # fine if ($dati_allegato['num'] < $num_allegati_max)
+
 if ($opz_eml[1] == "SI") $checked_mittente = " checked";
 else $checked_mittente = "";
 if ($opz_eml[2]) {
@@ -1389,33 +1919,7 @@ echo "<form accept-charset=\"utf-8\" method=\"post\" action=\"$pag\"><div>
 } # fine ($tipo_contratto == "eml")
 
 
-$lingue = array();
-if ($multilingua) {
-$num_lingue = 0;
-if ($lingua_default != "ita" and (preg_replace("/[a-z]{2,3}/","",$lingua_default) != "" or !@is_file("./includes/lang/$lingua_default/l_n"))) $lingua_default = $lingua_mex;
-$lingue[$num_lingue] = $lingua_default;
-if ($lingua_default != "ita") {
-$lingue['nome'][$num_lingue] = ucfirst(trim(implode("",file("./includes/lang/$lingua_default/l_n"))));
-$num_lingue++;
-$lingue[$num_lingue] = "ita";
-} # fine else if ($lingua_default != "ita")
-$lingue['nome'][$num_lingue] = "Italiano";
-$lang_dir = opendir("./includes/lang/");
-while ($ini_lingua = readdir($lang_dir)) {
-if ($ini_lingua != "." and $ini_lingua != ".." and $ini_lingua != $lingua_default) {
-$num_lingue++;
-$lingue[$num_lingue] = $ini_lingua;
-$lingue['nome'][$num_lingue] = ucfirst(trim(implode("",file("./includes/lang/$ini_lingua/l_n"))));
-} # fine if ($file != "." and $file != ".." and...
-} # fine while ($file = readdir($lang_dig))
-closedir($lang_dir);
-$num_lingue++;
-} # fine if ($multilingua)
-else {
-$num_lingue = 1;
-echo mex("Modifica il documento",$pag).":<br>";
-} # fine else if ($multilingua) 
-
+if (!$multilingua) echo mex("Modifica il documento",$pag).":<br>";
 
 if ($contr_head) {
 echo "<br><form accept-charset=\"utf-8\" method=\"post\" action=\"$pag\"><div style=\"text-align: center;\">
@@ -1479,9 +1983,10 @@ $num_campi_pers_cliente = count($campi_pers_cliente);
 else $num_campi_pers_cliente = 0;
 include_once("./includes/funzioni_tariffe.php");
 $dati_cat_pers = dati_cat_pers($id_utente,$tablepersonalizza,$lingua_mex,"v",0,1);
-$commento_personalizzato_ = mex2("commento_personalizzato")."_";
-$campo_personalizzato_ = mex2("campo_personalizzato")."_";
-$num_persone_tipo_ = mex2("num_persone_tipo")."_";
+$commento_personalizzato_ = mexv("commento_personalizzato")."_";
+$campo_personalizzato_ = mexv("campo_personalizzato")."_";
+$num_persone_tipo_ = mexv("num_persone_tipo")."_";
+$allegato_ = mexv("allegato");
 include("./includes/variabili_contratto.php");
 $num_var_predef--;
 $num_int_contr = $num_contratto;
@@ -1505,13 +2010,13 @@ $arr_pers_vett = explode(";",risul_query($array_pers,$num1,'testo'));
 $arr_pers = $arr_pers_vett[0];
 $var_arr_pers = $arr_pers_vett[1];
 $num_arr_pers = risul_query($array_pers,$num1,'numero');
-$var_predef[$num_var_predef] = "$arr_pers(".mex2($var_arr_pers).")";
+$var_predef[$num_var_predef] = "$arr_pers(".mexv($var_arr_pers).")";
 $num_var_predef++;
 $option_array .= "<option value=\"a$arr_pers\">".mex("ripetizione array",$pag)." $arr_pers [r4]...[/r4]</option>";
 } # fine for $num1
 
 for ($num1 = 0 ; $num1 < $num_var_predef ; $num1++) {
-$linea_mod .= "<option value=\"".mex2($var_predef[$num1])."\">".mex2($var_predef[$num1]);
+$linea_mod .= "<option value=\"".mexv($var_predef[$num1])."\">".mexv($var_predef[$num1]);
 if (substr($var_predef[$num1],-7) == "_ospite") $linea_mod .= " (r2)";
 if (substr($var_predef[$num1],-10) == "_costo_agg" or substr($var_predef[$num1],-12) == "_costo_agg_p" or substr($var_predef[$num1],0,28) == "valore_costo_agg_senza_tasse") $linea_mod .= " (r3)";
 if ((substr($var_predef[$num1],-10) == "_pagamento" or substr($var_predef[$num1],-12) == "_pagamento_p") and !strstr($var_predef[$num1],"_ultimo_pagamento")) $linea_mod .= " (r5)";
@@ -1566,7 +2071,7 @@ echo "<form accept-charset=\"utf-8\" method=\"post\" action=\"$pag\"><div style=
 echo "<script type=\"text/javascript\">
 <!--
 function resize_contr_txta(numlingue) {
-var height = Math.round(document.body.clientHeight - 80);
+var height = Math.round(document.body.clientHeight - 100);
 var width = Math.round(document.body.clientWidth - 60);
 if (height < 300) height = 300;
 if (width < 300) width = 300;

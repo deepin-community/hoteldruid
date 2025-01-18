@@ -2,7 +2,7 @@
 
 ##################################################################################
 #    HOTELDRUID
-#    Copyright (C) 2001-2021 by Marco Maria Francesco De Santis (marco@digitaldruid.net)
+#    Copyright (C) 2001-2023 by Marco Maria Francesco De Santis (marco@digitaldruid.net)
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published by
@@ -63,80 +63,94 @@ $var_pag[35] = 'n_email2';
 $var_pag[36] = 'n_email_cert';
 $var_pag[37] = 'n_cod_fiscale';
 $var_pag[38] = 'n_partita_iva';
-$var_pag[39] = 'campo_pers0';
-$var_pag[40] = 'campo_pers1';
-$var_pag[41] = 'campo_pers2';
-$var_pag[42] = 'campo_pers3';
-$var_pag[43] = 'campo_pers4';
-$var_pag[44] = 'n_commento';
-$var_pag[45] = 'd_cognome';
-$var_pag[46] = 'd_nome';
-$var_pag[47] = 'd_soprannome';
-$var_pag[48] = 'd_sesso';
-$var_pag[49] = 'd_titolo_cli';
-$var_pag[50] = 'd_datanascita';
-$var_pag[51] = 'd_documento';
-$var_pag[52] = 'd_scadenzadoc';
-$var_pag[53] = 'd_tipodoc';
-$var_pag[54] = 'd_nazionedoc';
-$var_pag[55] = 'd_regionedoc';
-$var_pag[56] = 'd_cittadoc';
-$var_pag[57] = 'd_cittanascita';
-$var_pag[58] = 'd_regionenascita';
-$var_pag[59] = 'd_nazionenascita';
-$var_pag[60] = 'd_nazionalita';
-$var_pag[61] = 'd_nazione';
-$var_pag[62] = 'd_regione';
-$var_pag[63] = 'd_citta';
-$var_pag[64] = 'd_via';
-$var_pag[65] = 'd_numcivico';
-$var_pag[66] = 'd_telefono';
-$var_pag[67] = 'd_telefono2';
-$var_pag[68] = 'd_telefono3';
-$var_pag[69] = 'd_cod_fiscale';
-$var_pag[70] = 'd_partita_iva';
-$var_pag[71] = 'd_fax';
-$var_pag[72] = 'd_cap';
-$var_pag[73] = 'd_email';
-$var_pag[74] = 'd_email2';
-$var_pag[75] = 'd_email_cert';
-$var_pag[76] = 'd_nome_lingua';
-$var_pag[77] = 'd_commento';
-$var_pag[78] = 'd_num_campi_pers';
-$var_pag[79] = 'modifica_cliente';
-$var_pag[80] = 'n_titolo_cli';
-$var_pag[81] = 'id_nuovo_utente_inserimento';
-$var_pag[82] = 'c_nome';
-$var_pag[83] = 'c_soprannome';
-$var_pag[84] = 'c_titolo_cli';
-$var_pag[85] = 'c_datanascita';
-$var_pag[86] = 'c_documento';
-$var_pag[87] = 'c_scadenzadoc';
-$var_pag[88] = 'c_nazionedoc';
-$var_pag[89] = 'c_regionedoc';
-$var_pag[90] = 'c_cittadoc';
-$var_pag[91] = 'c_cittanascita';
-$var_pag[92] = 'c_regionenascita';
-$var_pag[93] = 'c_nazionenascita';
-$var_pag[94] = 'c_nazionalita';
-$var_pag[95] = 'c_telefono';
-$var_pag[96] = 'c_via';
-$var_pag[97] = 'c_numcivico';
-$var_pag[98] = 'c_citta';
-$var_pag[99] = 'c_nazione';
-$var_pag[100] = 'c_regione';
-$var_pag[101] = 'c_cap';
-$var_pag[102] = 'c_fax';
-$var_pag[103] = 'c_email';
-$var_pag[104] = 'c_email2';
-$var_pag[105] = 'c_email_cert';
-$var_pag[106] = 'c_lingua_cli';
-$var_pag[107] = 'c_telefono2';
-$var_pag[108] = 'c_telefono3';
-$var_pag[109] = 'c_cod_fiscale';
-$var_pag[110] = 'c_partita_iva';
-$var_pag[111] = 'mese';
-$n_var_pag = 112;
+$var_pag[39] = 'n_commento';
+$var_pag[40] = 'd_cognome';
+$var_pag[41] = 'd_nome';
+$var_pag[42] = 'd_soprannome';
+$var_pag[43] = 'd_sesso';
+$var_pag[44] = 'd_titolo_cli';
+$var_pag[45] = 'd_datanascita';
+$var_pag[46] = 'd_documento';
+$var_pag[47] = 'd_scadenzadoc';
+$var_pag[48] = 'd_tipodoc';
+$var_pag[49] = 'd_nazionedoc';
+$var_pag[50] = 'd_regionedoc';
+$var_pag[51] = 'd_cittadoc';
+$var_pag[52] = 'd_cittanascita';
+$var_pag[53] = 'd_regionenascita';
+$var_pag[54] = 'd_nazionenascita';
+$var_pag[55] = 'd_nazionalita';
+$var_pag[56] = 'd_nazione';
+$var_pag[57] = 'd_regione';
+$var_pag[58] = 'd_citta';
+$var_pag[59] = 'd_via';
+$var_pag[60] = 'd_numcivico';
+$var_pag[61] = 'd_telefono';
+$var_pag[62] = 'd_telefono2';
+$var_pag[63] = 'd_telefono3';
+$var_pag[64] = 'd_cod_fiscale';
+$var_pag[65] = 'd_partita_iva';
+$var_pag[66] = 'd_fax';
+$var_pag[67] = 'd_cap';
+$var_pag[68] = 'd_email';
+$var_pag[69] = 'd_email2';
+$var_pag[70] = 'd_email_cert';
+$var_pag[71] = 'd_nome_lingua';
+$var_pag[72] = 'd_commento';
+$var_pag[73] = 'd_num_campi_pers';
+$var_pag[74] = 'modifica_cliente';
+$var_pag[75] = 'n_titolo_cli';
+$var_pag[76] = 'id_nuovo_utente_inserimento';
+$var_pag[77] = 'c_nome';
+$var_pag[78] = 'c_soprannome';
+$var_pag[79] = 'c_titolo_cli';
+$var_pag[80] = 'c_datanascita';
+$var_pag[81] = 'c_documento';
+$var_pag[82] = 'c_scadenzadoc';
+$var_pag[83] = 'c_nazionedoc';
+$var_pag[84] = 'c_regionedoc';
+$var_pag[85] = 'c_cittadoc';
+$var_pag[86] = 'c_cittanascita';
+$var_pag[87] = 'c_regionenascita';
+$var_pag[88] = 'c_nazionenascita';
+$var_pag[89] = 'c_nazionalita';
+$var_pag[90] = 'c_telefono';
+$var_pag[91] = 'c_via';
+$var_pag[92] = 'c_numcivico';
+$var_pag[93] = 'c_citta';
+$var_pag[94] = 'c_nazione';
+$var_pag[95] = 'c_regione';
+$var_pag[96] = 'c_cap';
+$var_pag[97] = 'c_fax';
+$var_pag[98] = 'c_email';
+$var_pag[99] = 'c_email2';
+$var_pag[100] = 'c_email_cert';
+$var_pag[101] = 'c_lingua_cli';
+$var_pag[102] = 'c_telefono2';
+$var_pag[103] = 'c_telefono3';
+$var_pag[104] = 'c_cod_fiscale';
+$var_pag[105] = 'c_partita_iva';
+$var_pag[106] = 'mese';
+$var_pag[107] = 'n_campi_pers_passa';
+$var_pag[108] = 'cancella_cliente';
+$var_pag[109] = 'continua';
+$var_pag[110] = 'torna_indietro';
+$var_pag[111] = 'id_utente_mod';
+$var_pag[112] = 'origine_vecchia';
+$var_pag[113] = 'indietro';
+$n_var_pag = 114;
+$num2 = 0;
+if (isset($_POST['n_campi_pers_passa'])) $num2 = (int) $_POST['n_campi_pers_passa'];
+elseif (isset($_GET['n_campi_pers_passa'])) $num2 = (int) $_GET['n_campi_pers_passa'];
+for ($num1 = 0 ; $num1 < $num2 ; $num1++) $var_pag[$n_var_pag++] = "campo_pers$num1";
+$num2 = 0;
+if (isset($_POST['d_num_campi_pers'])) $num2 = (int) $_POST['d_num_campi_pers'];
+elseif (isset($_GET['d_num_campi_pers'])) $num2 = (int) $_GET['d_num_campi_pers'];
+for ($num1 = 0 ; $num1 < $num2 ; $num1++) {
+$var_pag[$n_var_pag++] = "d_campo_pers_nome$num1";
+$var_pag[$n_var_pag++] = "d_campo_pers$num1";
+$var_pag[$n_var_pag++] = "n_campo_pers$num1";
+} # fine for $num1
 
 include("./costanti.php");
 include(C_DATI_PATH."/dati_connessione.php");
@@ -172,6 +186,7 @@ if ($id_utente) {
 if ($id_utente != 1) {
 $tableprivilegi = $PHPR_TAB_PRE."privilegi";
 $tablerelgruppi = $PHPR_TAB_PRE."relgruppi";
+$prendi_gruppi = "";
 $privilegi_annuali_utente = esegui_query("select * from $tableprivilegi where idutente = '$id_utente' and anno = '$anno'");
 if (numlin_query($privilegi_annuali_utente) == 0) $anno_utente_attivato = "NO";
 else {
@@ -238,7 +253,7 @@ $priv_mod_prenota_iniziate = "s";
 $priv_mod_prenota_ore = "000";
 } # fine else if ($id_utente != 1)
 
-$idclienti = aggslashdb($idclienti);
+$idclienti = aggslashdb(fixset($idclienti));
 
 if ($modifica_clienti == "PROPRI" or $vedi_clienti == "PROPRI") {
 $cliente_proprio = esegui_query("select idclienti from $tableclienti where idclienti = '$idclienti' and utente_inserimento = '$id_utente'");
@@ -260,6 +275,7 @@ else include("./includes/head.php");
 
 $stile_soldi = stile_soldi();
 $stile_data = stile_data();
+$tipo_tabella = htmlspecialchars(fixstr($tipo_tabella));
 
 $campi_pers = esegui_query("select valpersonalizza from $tablepersonalizza where idpersonalizza = 'campi_pers_cliente' and idutente = '$id_utente'");
 if (numlin_query($campi_pers) == 1) {
@@ -271,13 +287,13 @@ else $num_campi_pers = 0;
 
 
 if (isset($cancella_cliente) and $cancella_cliente == "SI") {
-if ($continua == "SI") {
+if (isset($continua) and $continua == "SI") {
 # La carta di credito esterna va cancellata prima dei lock, altrimenti il modulo non può controllare i privilegi sul cliente
 if (defined('C_URL_MOD_EXT_CARTE_CREDITO') and C_URL_MOD_EXT_CARTE_CREDITO != "") {
 if (substr(C_URL_MOD_EXT_CARTE_CREDITO,0,17) == "https://localhost") $ext_html = file(C_URL_MOD_EXT_CARTE_CREDITO."modifica_cliente.php?id_sessione=$id_sessione&idclienti=$idclienti&cancella_cliente=SI",false,stream_context_create(array("ssl" => array("verify_peer" => true,"allow_self_signed" => true))));
 else $ext_html = @file(C_URL_MOD_EXT_CARTE_CREDITO."modifica_cliente.php?id_sessione=$id_sessione&idclienti=$idclienti&cancella_cliente=SI");
 } # fine if (defined('C_URL_MOD_EXT_CARTE_CREDITO') and C_URL_MOD_EXT_CARTE_CREDITO != "")
-} # fine if ($continua == "SI")
+} # fine if (isset($continua) and $continua == "SI")
 $anni = esegui_query("select * from $tableanni order by idanni");
 $num_anni = numlin_query($anni);
 $altre_tab_lock = array($tableanni);
@@ -317,7 +333,7 @@ if (numlin_query($prenotazioni) != 0 or numlin_query($prenotazionicanc) != 0 or 
 } # fine for $num1
 if ($prenota_cliente_esistente == "SI") echo mex("Questo cliente non si può cancellare perchè ancora associato a delle prenotazioni",$pag).".<br>";
 else {
-if ($continua != "SI") {
+if (!isset($continua) or $continua != "SI") {
 $cognome = risul_query($cliente_esistente,0,'cognome');
 echo "".mex("Si è sicuri di voler <div style=\"display: inline; color: red;\">cancellare</div> il cliente",$pag)." <b>$cognome</b>?<br>
 <table><tr><td height=2></td></tr><tr><td>
@@ -325,7 +341,7 @@ echo "".mex("Si è sicuri di voler <div style=\"display: inline; color: red;\">c
 <input type=\"hidden\" name=\"anno\" value=\"$anno\">
 <input type=\"hidden\" name=\"id_sessione\" value=\"$id_sessione\">
 <input type=\"hidden\" name=\"tipo_tabella\" value=\"$tipo_tabella\">
-<input type=\"hidden\" name=\"origine\" value=\"".htmlspecialchars($origine)."\">
+<input type=\"hidden\" name=\"origine\" value=\"".htmlspecialchars(fixstr($origine))."\">
 <input type=\"hidden\" name=\"idclienti\" value=\"$idclienti\">
 <input type=\"hidden\" name=\"cancella_cliente\" value=\"SI\">
 <input type=\"hidden\" name=\"continua\" value=\"SI\">
@@ -334,12 +350,12 @@ echo "".mex("Si è sicuri di voler <div style=\"display: inline; color: red;\">c
 <form accept-charset=\"utf-8\" method=\"post\" action=\"$pag\"><div>
 <input type=\"hidden\" name=\"anno\" value=\"$anno\">
 <input type=\"hidden\" name=\"id_sessione\" value=\"$id_sessione\">
-<input type=\"hidden\" name=\"tipo_tabella\" value=\"$tipo_tabella\">
-<input type=\"hidden\" name=\"origine\" value=\"".htmlspecialchars($origine)."\">
+<input type=\"hidden\" name=\"tipo_tabella\" value=\"$$tipo_tabella\">
+<input type=\"hidden\" name=\"origine\" value=\"".htmlspecialchars(fixstr($$origine))."\">
 <input type=\"hidden\" name=\"idclienti\" value=\"$idclienti\">
 <button class=\"gobk\" type=\"submit\"><div>".mex("NO",$pag)."</div></button>
 </div></form></td></tr></table>";
-} # fine if ($continua != "SI")
+} # fine if (!isset($continua) or $continua != "SI")
 else {
 $clienti_compagni = substr(risul_query($cliente_esistente,0,'idclienti_compagni'),1,-1);
 if ($clienti_compagni) {
@@ -359,7 +375,7 @@ echo mex("Cliente cancellato",$pag)."!<br>
 <input type=\"hidden\" name=\"tipo_tabella\" value=\"$tipo_tabella\">
 <button class=\"gobk\" type=\"submit\"><div>".mex("Torna indietro",$pag)."</div></button>
 </div></form>";
-} # fine else if ($continua != "SI")
+} # fine else if (!isset($continua) or $continua != "SI")
 } # fine else if ($prenota_cliente_esistente == "SI")
 } # fine if (numlin_query($cliente_esistente) == 1)
 else echo "<b>".mex("Cliente cancellato",$pag)."!</b><br>";
@@ -414,36 +430,37 @@ $n_email_cert = stripslashes($n_email_cert);
 $n_fax = stripslashes($n_fax);
 $n_commento = stripslashes($n_commento);
 } # fine if (@get_magic_quotes_gpc())
-$n_cognome = htmlspecialchars(fixset($n_cognome));
-$n_nome = htmlspecialchars(fixset($n_nome));
-$n_soprannome = htmlspecialchars(fixset($n_soprannome));
-$n_titolo_cli = htmlspecialchars(fixset($n_titolo_cli));
+$n_cognome = htmlspecialchars(fixstr($n_cognome));
+$n_nome = htmlspecialchars(fixstr($n_nome));
+$n_soprannome = htmlspecialchars(fixstr($n_soprannome));
+$n_titolo_cli = htmlspecialchars(fixstr($n_titolo_cli));
 if (!empty($n_sesso) and $n_sesso != "f") $n_sesso = "m";
-$n_documento = htmlspecialchars(fixset($n_documento));
-$n_tipodoc = htmlspecialchars(fixset($n_tipodoc));
-$n_nazionedoc = htmlspecialchars(fixset($n_nazionedoc));
-$n_regionedoc = htmlspecialchars(fixset($n_regionedoc));
-$n_cittadoc = htmlspecialchars(fixset($n_cittadoc));
-$n_cittanascita = htmlspecialchars(fixset($n_cittanascita));
-$n_regionenascita = htmlspecialchars(fixset($n_regionenascita));
-$n_nazionenascita = htmlspecialchars(fixset($n_nazionenascita));
-$n_nazionalita = htmlspecialchars(fixset($n_nazionalita));
-$n_nazione = htmlspecialchars(fixset($n_nazione));
-$n_regione = htmlspecialchars(fixset($n_regione));
-$n_citta = htmlspecialchars(fixset($n_citta));
-$n_nomevia = htmlspecialchars(fixset($n_nomevia));
-$n_numcivico = htmlspecialchars(fixset($n_numcivico));
-$n_cap = htmlspecialchars(fixset($n_cap));
-$n_telefono = htmlspecialchars(fixset($n_telefono));
-$n_telefono2 = htmlspecialchars(fixset($n_telefono2));
-$n_telefono3 = htmlspecialchars(fixset($n_telefono3));
-$n_cod_fiscale = htmlspecialchars(fixset($n_cod_fiscale));
-$n_partita_iva = htmlspecialchars(fixset($n_partita_iva));
-$n_fax = htmlspecialchars(fixset($n_fax));
-$n_email = htmlspecialchars(fixset($n_email));
-$n_email2 = htmlspecialchars(fixset($n_email2));
-$n_email_cert = htmlspecialchars(fixset($n_email_cert));
-$n_commento = htmlspecialchars(fixset($n_commento));
+$id_nuovo_utente_inserimento = htmlspecialchars(fixstr($id_nuovo_utente_inserimento));
+$n_documento = htmlspecialchars(fixstr($n_documento));
+$n_tipodoc = htmlspecialchars(fixstr($n_tipodoc));
+$n_nazionedoc = htmlspecialchars(fixstr($n_nazionedoc));
+$n_regionedoc = htmlspecialchars(fixstr($n_regionedoc));
+$n_cittadoc = htmlspecialchars(fixstr($n_cittadoc));
+$n_cittanascita = htmlspecialchars(fixstr($n_cittanascita));
+$n_regionenascita = htmlspecialchars(fixstr($n_regionenascita));
+$n_nazionenascita = htmlspecialchars(fixstr($n_nazionenascita));
+$n_nazionalita = htmlspecialchars(fixstr($n_nazionalita));
+$n_nazione = htmlspecialchars(fixstr($n_nazione));
+$n_regione = htmlspecialchars(fixstr($n_regione));
+$n_citta = htmlspecialchars(fixstr($n_citta));
+$n_nomevia = htmlspecialchars(fixstr($n_nomevia));
+$n_numcivico = htmlspecialchars(fixstr($n_numcivico));
+$n_cap = htmlspecialchars(fixstr($n_cap));
+$n_telefono = htmlspecialchars(fixstr($n_telefono));
+$n_telefono2 = htmlspecialchars(fixstr($n_telefono2));
+$n_telefono3 = htmlspecialchars(fixstr($n_telefono3));
+$n_cod_fiscale = htmlspecialchars(fixstr($n_cod_fiscale));
+$n_partita_iva = htmlspecialchars(fixstr($n_partita_iva));
+$n_fax = htmlspecialchars(fixstr($n_fax));
+$n_email = htmlspecialchars(fixstr($n_email));
+$n_email2 = htmlspecialchars(fixstr($n_email2));
+$n_email_cert = htmlspecialchars(fixstr($n_email_cert));
+$n_commento = htmlspecialchars(fixstr($n_commento));
 
 if (!$d_cognome) $d_cognome = "---";
 if (!$d_nome) $d_nome = "---";
@@ -509,35 +526,35 @@ $d_email_cert = stripslashes($d_email_cert);
 $d_nome_lingua = stripslashes($d_nome_lingua);
 $d_commento = stripslashes($d_commento);
 } # fine if (@get_magic_quotes_gpc())
-$d_cognome = htmlspecialchars(fixset($d_cognome));
-$d_nome = htmlspecialchars(fixset($d_nome));
-$d_soprannome = htmlspecialchars(fixset($d_soprannome));
-$d_titolo_cli = htmlspecialchars(fixset($d_titolo_cli));
-$d_documento = htmlspecialchars(fixset($d_documento));
-$d_nazionedoc = htmlspecialchars(fixset($d_nazionedoc));
-$d_regionedoc = htmlspecialchars(fixset($d_regionedoc));
-$d_cittadoc = htmlspecialchars(fixset($d_cittadoc));
-$d_cittanascita = htmlspecialchars(fixset($d_cittanascita));
-$d_regionenascita = htmlspecialchars(fixset($d_regionenascita));
-$d_nazionenascita = htmlspecialchars(fixset($d_nazionenascita));
-$d_nazionalita = htmlspecialchars(fixset($d_nazionalita));
-$d_nazione = htmlspecialchars(fixset($d_nazione));
-$d_regione = htmlspecialchars(fixset($d_regione));
-$d_citta = htmlspecialchars(fixset($d_citta));
-$d_nomevia = htmlspecialchars(fixset($d_nomevia));
-$d_numcivico = htmlspecialchars(fixset($d_numcivico));
-$d_cap = htmlspecialchars(fixset($d_cap));
-$d_telefono = htmlspecialchars(fixset($d_telefono));
-$d_telefono2 = htmlspecialchars(fixset($d_telefono2));
-$d_telefono3 = htmlspecialchars(fixset($d_telefono3));
-$d_cod_fiscale = htmlspecialchars(fixset($d_cod_fiscale));
-$d_partita_iva = htmlspecialchars(fixset($d_partita_iva));
-$d_fax = htmlspecialchars(fixset($d_fax));
-$d_email = htmlspecialchars(fixset($d_email));
-$d_email2 = htmlspecialchars(fixset($d_email2));
-$d_email_cert = htmlspecialchars(fixset($d_email_cert));
-$d_nome_lingua = htmlspecialchars(fixset($d_nome_lingua));
-$d_commento = htmlspecialchars(fixset($d_commento));
+$d_cognome = htmlspecialchars(fixstr($d_cognome));
+$d_nome = htmlspecialchars(fixstr($d_nome));
+$d_soprannome = htmlspecialchars(fixstr($d_soprannome));
+$d_titolo_cli = htmlspecialchars(fixstr($d_titolo_cli));
+$d_documento = htmlspecialchars(fixstr($d_documento));
+$d_nazionedoc = htmlspecialchars(fixstr($d_nazionedoc));
+$d_regionedoc = htmlspecialchars(fixstr($d_regionedoc));
+$d_cittadoc = htmlspecialchars(fixstr($d_cittadoc));
+$d_cittanascita = htmlspecialchars(fixstr($d_cittanascita));
+$d_regionenascita = htmlspecialchars(fixstr($d_regionenascita));
+$d_nazionenascita = htmlspecialchars(fixstr($d_nazionenascita));
+$d_nazionalita = htmlspecialchars(fixstr($d_nazionalita));
+$d_nazione = htmlspecialchars(fixstr($d_nazione));
+$d_regione = htmlspecialchars(fixstr($d_regione));
+$d_citta = htmlspecialchars(fixstr($d_citta));
+$d_nomevia = htmlspecialchars(fixstr($d_nomevia));
+$d_numcivico = htmlspecialchars(fixstr($d_numcivico));
+$d_cap = htmlspecialchars(fixstr($d_cap));
+$d_telefono = htmlspecialchars(fixstr($d_telefono));
+$d_telefono2 = htmlspecialchars(fixstr($d_telefono2));
+$d_telefono3 = htmlspecialchars(fixstr($d_telefono3));
+$d_cod_fiscale = htmlspecialchars(fixstr($d_cod_fiscale));
+$d_partita_iva = htmlspecialchars(fixstr($d_partita_iva));
+$d_fax = htmlspecialchars(fixstr($d_fax));
+$d_email = htmlspecialchars(fixstr($d_email));
+$d_email2 = htmlspecialchars(fixstr($d_email2));
+$d_email_cert = htmlspecialchars(fixstr($d_email_cert));
+$d_nome_lingua = htmlspecialchars(fixstr($d_nome_lingua));
+$d_commento = htmlspecialchars(fixstr($d_commento));
 
 if ($n_cognome) {
 echo mex("Il cognome verrà cambiato da",$pag)." <b>$d_cognome</b> ".mex("a",$pag)." <b>";
@@ -547,11 +564,11 @@ if ($attiva_prefisso_clienti == "s") echo $prefisso_clienti;
 echo "</b>.<br>";
 } # fine if ($n_cognome)
 if ($n_nome) { echo mex("Il nome verrà cambiato da",$pag)." <b>$d_nome</b> ".mex("a",$pag)." <b>".substr($n_nome,0,70)."</b>.<br>"; }
-if ($n_soprannome) { echo mex("Il soprannome verrà cambiato da",$pag)." <b>$d_soprannome</b> ".mex("a",$pag)." <b>$n_soprannome</b>.<br>"; }
-if ($n_titolo_cli) { echo mex("Il titolo verrà cambiato da",$pag)." <b>$d_titolo_cli</b> ".mex("a",$pag)." <b>$n_titolo_cli</b>.<br>"; }
+if ($n_soprannome) { echo mex("Il soprannome verrà cambiato da",$pag)." <b>$d_soprannome</b> ".mex("a",$pag)." <b>".substr($n_soprannome,0,70)."</b>.<br>"; }
+if ($n_titolo_cli) { echo mex("Il titolo verrà cambiato da",$pag)." <b>$d_titolo_cli</b> ".mex("a",$pag)." <b>".substr($n_titolo_cli,0,30)."</b>.<br>"; }
 if ($n_sesso) { echo mex("Il sesso verrà cambiato a",$pag)." <b>$n_sesso</b>.<br>"; }
 
-if ($id_nuovo_utente_inserimento != "" and $id_utente == 1) {
+if ($id_nuovo_utente_inserimento != "" and $id_utente == 1 and controlla_num_pos($id_nuovo_utente_inserimento) == "SI") {
 $id_nuovo_utente_inserimento = aggslashdb($id_nuovo_utente_inserimento);
 $verifica_utente = esegui_query("select * from $tableutenti where idutenti = '$id_nuovo_utente_inserimento'");
 if (numlin_query($verifica_utente) == 1) {
@@ -559,7 +576,7 @@ $nome_utente_nuovo = risul_query($verifica_utente,0,'nome_utente');
 echo mex("Si considererà l'utente",$pag)." <b>$nome_utente_nuovo</b> ".mex("come colui che ha inserito il cliente",$pag).".<br>";
 } # fine if (numlin_query($verifica_utente) == 1)
 else unset($id_nuovo_utente_inserimento);
-} # fine if ($id_nuovo_utente_inserimento != "" and $id_utente == 1)
+} # fine if ($id_nuovo_utente_inserimento != "" and $id_utente == 1 and...
 
 if ($n_nazionalita) { echo mex("La cittadinanza verrà cambiata da",$pag)." <b>$d_nazionalita</b> ".mex("a",$pag)." <b>$n_nazionalita</b>.<br>"; }
 if ($n_telefono) { echo mex("Il telefono verrà cambiato da",$pag)." <b>$d_telefono</b> ".mex("a",$pag)." <b>".substr($n_telefono,0,50)."</b>.<br>"; }
@@ -578,7 +595,7 @@ if ($n_citta) echo mex("La città di residenza verrà cambiata da",$pag)." <b>$d
 if ($n_nomevia) {
 include(C_DATI_PATH."/lingua.php");
 if ($lingua_mex != "ita") include("./includes/lang/$lingua_mex/ordine_frasi.php");
-if ($ordine_strada == 2) $n_nvia = $n_nomevia . " " . $n_via;
+if (isset($ordine_strada) and $ordine_strada == 2) $n_nvia = $n_nomevia . " " . $n_via;
 else $n_nvia = $n_via . " " . $n_nomevia;
 echo mex("La via  verrà cambiata da",$pag)." <b>$d_via</b> ".mex("a",$pag)." <b>".substr($n_nvia,0,70)."</b>.<br>";
 } # fine if ($n_nomevia)
@@ -664,7 +681,7 @@ $d_campi_pers['esist'][${"d_campo_pers_nome".$num1}] = 1;
 for ($num1 = 0 ; $num1 < $num_campi_pers ; $num1++) {
 if (!empty(${"campo_pers".$num1})) {
 $opt = explode("<",$campi_pers[$num1]);
-if (!$d_campi_pers['esist'][$opt[0]]) echo mex("Il campo",$pag)." \"<b>".$opt[0]."</b>\" ".mex("verrà aggiunto",$pag).".<br>";
+if (empty($d_campi_pers['esist'][$opt[0]])) echo mex("Il campo",$pag)." \"<b>".$opt[0]."</b>\" ".mex("verrà aggiunto",$pag).".<br>";
 } # fine if (!empty(${"campo_pers".$num1}))
 } # fine for $num1
 
@@ -673,7 +690,7 @@ echo "<form accept-charset=\"utf-8\" method=\"post\" action=\"modifica_cliente.p
 <input type=\"hidden\" name=\"id_sessione\" value=\"$id_sessione\">
 <input type=\"hidden\" name=\"idclienti\" value=\"$idclienti\">
 <input type=\"hidden\" name=\"tipo_tabella\" value=\"$tipo_tabella\">
-<input type=\"hidden\" name=\"origine\" value=\"".htmlspecialchars($origine)."\">
+<input type=\"hidden\" name=\"origine\" value=\"".htmlspecialchars(fixstr($origine))."\">
 
 <input type=\"hidden\" name=\"n_cognome\" value=\"$n_cognome\">
 <input type=\"hidden\" name=\"n_nome\" value=\"$n_nome\">
@@ -717,41 +734,44 @@ echo "<form accept-charset=\"utf-8\" method=\"post\" action=\"modifica_cliente.p
 <input type=\"hidden\" name=\"d_commento\" value=\"$d_commento\">
 <input type=\"hidden\" name=\"d_num_campi_pers\" value=\"$d_num_campi_pers\">";
 for ($num1 = 0 ; $num1 < $d_num_campi_pers ; $num1++) {
-echo "<input type=\"hidden\" name=\"n_campo_pers$num1\" value=\"".${"n_campo_pers".$num1}."\">
-<input type=\"hidden\" name=\"d_campo_pers_nome$num1\" value=\"".${"d_campo_pers_nome".$num1}."\">";
+echo "<input type=\"hidden\" name=\"n_campo_pers$num1\" value=\"".htmlspecialchars(fixstr(${"n_campo_pers".$num1}))."\">
+<input type=\"hidden\" name=\"d_campo_pers_nome$num1\" value=\"".htmlspecialchars(fixstr(${"d_campo_pers_nome".$num1}))."\">";
 } # fine for for $num1
-for ($num1 = 0 ; $num1 < $num_campi_pers ; $num1++) echo "<input type=\"hidden\" name=\"campo_pers$num1\" value=\"".htmlspecialchars(fixset(${"campo_pers".$num1}))."\">";
+if ($num_campi_pers) {
+for ($num1 = 0 ; $num1 < $num_campi_pers ; $num1++) echo "<input type=\"hidden\" name=\"campo_pers$num1\" value=\"".htmlspecialchars(fixstr(${"campo_pers".$num1}))."\">";
+echo "<input type=\"hidden\" name=\"n_campi_pers_passa\" value=\"$num_campi_pers\">";
+} # fine if ($num_campi_pers)
 
 
-echo "<input type=\"hidden\" name=\"c_nome\" value=\"".htmlspecialchars(fixset($c_nome))."\">
-<input type=\"hidden\" name=\"c_soprannome\" value=\"".htmlspecialchars(fixset($c_soprannome))."\">
-<input type=\"hidden\" name=\"c_titolo_cli\" value=\"".htmlspecialchars(fixset($c_titolo_cli))."\">
-<input type=\"hidden\" name=\"c_datanascita\" value=\"".htmlspecialchars(fixset($c_datanascita))."\">
-<input type=\"hidden\" name=\"c_documento\" value=\"".htmlspecialchars(fixset($c_documento))."\">
-<input type=\"hidden\" name=\"c_scadenzadoc\" value=\"".htmlspecialchars(fixset($c_scadenzadoc))."\">
-<input type=\"hidden\" name=\"c_nazionedoc\" value=\"".htmlspecialchars(fixset($c_nazionedoc))."\">
-<input type=\"hidden\" name=\"c_regionedoc\" value=\"".htmlspecialchars(fixset($c_regionedoc))."\">
-<input type=\"hidden\" name=\"c_cittadoc\" value=\"".htmlspecialchars(fixset($c_cittadoc))."\">
-<input type=\"hidden\" name=\"c_cittanascita\" value=\"".htmlspecialchars(fixset($c_cittanascita))."\">
-<input type=\"hidden\" name=\"c_regionenascita\" value=\"".htmlspecialchars(fixset($c_regionenascita))."\">
-<input type=\"hidden\" name=\"c_nazionenascita\" value=\"".htmlspecialchars(fixset($c_nazionenascita))."\">
-<input type=\"hidden\" name=\"c_nazionalita\" value=\"".htmlspecialchars(fixset($c_nazionalita))."\">
-<input type=\"hidden\" name=\"c_telefono\" value=\"".htmlspecialchars(fixset($c_telefono))."\">
-<input type=\"hidden\" name=\"c_via\" value=\"".htmlspecialchars(fixset($c_via))."\">
-<input type=\"hidden\" name=\"c_numcivico\" value=\"".htmlspecialchars(fixset($c_numcivico))."\">
-<input type=\"hidden\" name=\"c_citta\" value=\"".htmlspecialchars(fixset($c_citta))."\">
-<input type=\"hidden\" name=\"c_nazione\" value=\"".htmlspecialchars(fixset($c_nazione))."\">
-<input type=\"hidden\" name=\"c_regione\" value=\"".htmlspecialchars(fixset($c_regione))."\">
-<input type=\"hidden\" name=\"c_cap\" value=\"".htmlspecialchars(fixset($c_cap))."\">
-<input type=\"hidden\" name=\"c_fax\" value=\"".htmlspecialchars(fixset($c_fax))."\">
-<input type=\"hidden\" name=\"c_email\" value=\"".htmlspecialchars(fixset($c_email))."\">
-<input type=\"hidden\" name=\"c_email2\" value=\"".htmlspecialchars(fixset($c_email2))."\">
-<input type=\"hidden\" name=\"c_email_cert\" value=\"".htmlspecialchars(fixset($c_email_cert))."\">
-<input type=\"hidden\" name=\"c_lingua_cli\" value=\"".htmlspecialchars(fixset($c_lingua_cli))."\">
-<input type=\"hidden\" name=\"c_telefono2\" value=\"".htmlspecialchars(fixset($c_telefono2))."\">
-<input type=\"hidden\" name=\"c_telefono3\" value=\"".htmlspecialchars(fixset($c_telefono3))."\">
-<input type=\"hidden\" name=\"c_cod_fiscale\" value=\"".htmlspecialchars(fixset($c_cod_fiscale))."\">
-<input type=\"hidden\" name=\"c_partita_iva\" value=\"".htmlspecialchars(fixset($c_partita_iva))."\">
+echo "<input type=\"hidden\" name=\"c_nome\" value=\"".htmlspecialchars(fixstr($c_nome))."\">
+<input type=\"hidden\" name=\"c_soprannome\" value=\"".htmlspecialchars(fixstr($c_soprannome))."\">
+<input type=\"hidden\" name=\"c_titolo_cli\" value=\"".htmlspecialchars(fixstr($c_titolo_cli))."\">
+<input type=\"hidden\" name=\"c_datanascita\" value=\"".htmlspecialchars(fixstr($c_datanascita))."\">
+<input type=\"hidden\" name=\"c_documento\" value=\"".htmlspecialchars(fixstr($c_documento))."\">
+<input type=\"hidden\" name=\"c_scadenzadoc\" value=\"".htmlspecialchars(fixstr($c_scadenzadoc))."\">
+<input type=\"hidden\" name=\"c_nazionedoc\" value=\"".htmlspecialchars(fixstr($c_nazionedoc))."\">
+<input type=\"hidden\" name=\"c_regionedoc\" value=\"".htmlspecialchars(fixstr($c_regionedoc))."\">
+<input type=\"hidden\" name=\"c_cittadoc\" value=\"".htmlspecialchars(fixstr($c_cittadoc))."\">
+<input type=\"hidden\" name=\"c_cittanascita\" value=\"".htmlspecialchars(fixstr($c_cittanascita))."\">
+<input type=\"hidden\" name=\"c_regionenascita\" value=\"".htmlspecialchars(fixstr($c_regionenascita))."\">
+<input type=\"hidden\" name=\"c_nazionenascita\" value=\"".htmlspecialchars(fixstr($c_nazionenascita))."\">
+<input type=\"hidden\" name=\"c_nazionalita\" value=\"".htmlspecialchars(fixstr($c_nazionalita))."\">
+<input type=\"hidden\" name=\"c_telefono\" value=\"".htmlspecialchars(fixstr($c_telefono))."\">
+<input type=\"hidden\" name=\"c_via\" value=\"".htmlspecialchars(fixstr($c_via))."\">
+<input type=\"hidden\" name=\"c_numcivico\" value=\"".htmlspecialchars(fixstr($c_numcivico))."\">
+<input type=\"hidden\" name=\"c_citta\" value=\"".htmlspecialchars(fixstr($c_citta))."\">
+<input type=\"hidden\" name=\"c_nazione\" value=\"".htmlspecialchars(fixstr($c_nazione))."\">
+<input type=\"hidden\" name=\"c_regione\" value=\"".htmlspecialchars(fixstr($c_regione))."\">
+<input type=\"hidden\" name=\"c_cap\" value=\"".htmlspecialchars(fixstr($c_cap))."\">
+<input type=\"hidden\" name=\"c_fax\" value=\"".htmlspecialchars(fixstr($c_fax))."\">
+<input type=\"hidden\" name=\"c_email\" value=\"".htmlspecialchars(fixstr($c_email))."\">
+<input type=\"hidden\" name=\"c_email2\" value=\"".htmlspecialchars(fixstr($c_email2))."\">
+<input type=\"hidden\" name=\"c_email_cert\" value=\"".htmlspecialchars(fixstr($c_email_cert))."\">
+<input type=\"hidden\" name=\"c_lingua_cli\" value=\"".htmlspecialchars(fixstr($c_lingua_cli))."\">
+<input type=\"hidden\" name=\"c_telefono2\" value=\"".htmlspecialchars(fixstr($c_telefono2))."\">
+<input type=\"hidden\" name=\"c_telefono3\" value=\"".htmlspecialchars(fixstr($c_telefono3))."\">
+<input type=\"hidden\" name=\"c_cod_fiscale\" value=\"".htmlspecialchars(fixstr($c_cod_fiscale))."\">
+<input type=\"hidden\" name=\"c_partita_iva\" value=\"".htmlspecialchars(fixstr($c_partita_iva))."\">
 <input type=\"hidden\" name=\"modifica_cliente\" value=\"Continua\">
 <button class=\"mcli\" type=\"submit\"><div>".mex("Continua",$pag)."</div></button>
 <hr style=\"width: 95%\">
@@ -815,11 +835,11 @@ $campi_pers_vett['val'][$num1] = ${"campo_pers".$num1};
 
 inserisci_dati_cliente($n_cognome,$n_nome,$n_soprannome,$n_titolo_cli,$n_sesso,$n_mesenascita,$n_giornonascita,$n_annonascita,$n_nazionenascita,$n_cittanascita,$n_regionenascita,$n_documento,$n_tipodoc,$n_mesescaddoc,$n_giornoscaddoc,$n_annoscaddoc,$n_cittadoc,$n_regionedoc,$n_nazionedoc,$n_nazionalita,$n_lingua_cli,$n_nazione,$n_citta,$n_regione,$n_via,$n_nomevia,$n_numcivico,$n_cap,$n_telefono,$n_telefono2,$n_telefono3,$n_fax,$n_email,$n_email2,$n_email_cert,$n_cod_fiscale,$n_partita_iva,"",$id_utente,$attiva_prefisso_clienti,$prefisso_clienti,$idclienti,"",$campi_pers_vett);
 
-if ($id_nuovo_utente_inserimento != "" and $id_utente == 1) {
+if ($id_nuovo_utente_inserimento != "" and $id_utente == 1 and controlla_num_pos($id_nuovo_utente_inserimento) == "SI") {
 $id_nuovo_utente_inserimento = aggslashdb($id_nuovo_utente_inserimento);
 $verifica_utente = esegui_query("select * from $tableutenti where idutenti = '$id_nuovo_utente_inserimento'");
 if (numlin_query($verifica_utente) == 1) esegui_query("update $tableclienti set utente_inserimento = '$id_nuovo_utente_inserimento' where idclienti = '$idclienti' ");
-} # fine if ($id_nuovo_utente_inserimento != "" and $id_utente == 1)
+} # fine if ($id_nuovo_utente_inserimento != "" and $id_utente == 1 and...
 
 if (@get_magic_quotes_gpc()) $n_commento = stripslashes($n_commento);
 $n_commento = htmlspecialchars($n_commento);
@@ -932,7 +952,7 @@ echo "<div style=\"text-align: center;\">
 <input type=\"hidden\" name=\"anno\" value=\"$anno\">
 <input type=\"hidden\" name=\"id_sessione\" value=\"$id_sessione\">
 <input type=\"hidden\" name=\"tipo_tabella\" value=\"$tipo_tabella\">
-<input type=\"hidden\" name=\"origine\" value=\"".htmlspecialchars($origine)."\">
+<input type=\"hidden\" name=\"origine\" value=\"".htmlspecialchars(fixstr($origine))."\">
 <input type=\"hidden\" name=\"idclienti\" value=\"$idclienti\">";
 echo "<button class=\"gobk\" type=\"submit\"><div>".mex("Torna indietro",$pag)."</div></button>
 <br></div></form></div>";
@@ -1061,12 +1081,7 @@ $err_transazioni2 = esegui_query("select * from $tabletransazioni where tipo_tra
 if (numlin_query($err_transazioni) < 7 and numlin_query($err_transazioni2) < 12) {
 
 if (!$pass_cc) {
-$adesso = date("YmdHis",(time() + (C_DIFF_ORE * 3600)));
-list($usec, $sec) = explode(' ', microtime());
-mt_srand((float) $sec + ((float) $usec * 100000));
-$val_casuale = mt_rand(100000,999999);
-$versione_transazione = prendi_numero_versione($tableversioni);
-$id_transazione = $adesso.$val_casuale.$versione_transazione;
+$id_transazione = crea_id_sessione("",$tableversioni,8);
 esegui_query("insert into $tabletransazioni (idtransazioni,idsessione,tipo_transazione,anno,dati_transazione1,dati_transazione2,ultimo_accesso) 
 values ('$id_transazione','$id_sessione','lo_cc','$anno','$idclienti','$id_utente','$ultimo_accesso')");
 unlock_tabelle($tabelle_lock);
@@ -1075,7 +1090,7 @@ echo "<form accept-charset=\"utf-8\" method=\"post\" action=\"$pag\"><div>
 <input type=\"hidden\" name=\"id_sessione\" value=\"$id_sessione\">
 <input type=\"hidden\" name=\"idclienti\" value=\"$idclienti\">
 <input type=\"hidden\" name=\"tipo_tabella\" value=\"$tipo_tabella\">
-<input type=\"hidden\" name=\"origine\" value=\"".htmlspecialchars($origine)."\">
+<input type=\"hidden\" name=\"origine\" value=\"".htmlspecialchars(fixstr($origine))."\">
 <input type=\"hidden\" name=\"vedi_cc\" value=\"SI\">
 <input type=\"hidden\" name=\"id_transazione\" value=\"$id_transazione\">
 ".ucfirst(mex("password per la visualizzazione delle carte di credito",$pag)).":
@@ -1108,11 +1123,11 @@ $d_scad_cc = risul_query($dati_carta,0,'testo4');
 if ($d_scad_cc) $d_scad_cc_f = substr($d_scad_cc,5,2)."-".substr($d_scad_cc,0,4);
 $d_cvc_cc = risul_query($dati_carta,0,'testo5');
 $d_cvc_visto_cc = risul_query($dati_carta,0,'testo6');
-if (strcmp($d_cvc_cc,"")) {
+if (strcmp((string) $d_cvc_cc,"")) {
 openssl_private_decrypt(base64_decode($d_cvc_cc),$d_cvc_cc,$res_pk);
 if ($d_cvc_visto_cc) esegui_query("update $tablerelclienti set testo5 = NULL, testo6 = NULL where idclienti = '$idclienti' and tipo = 'cc'");
 else esegui_query("update $tablerelclienti set testo6 = '1' where idclienti = '$idclienti' and tipo = 'cc'");
-} # fine if (strcmp($d_cvc_cc,""))
+} # fine if (strcmp((string) $d_cvc_cc,""))
 } # fine if (numlin_query($dati_carta))
 $cliente = esegui_query("select * from $tableclienti where idclienti = '$idclienti'");
 if (numlin_query($cliente)) {
@@ -1128,14 +1143,16 @@ echo ")</span></h4><br>
 <input type=\"hidden\" name=\"id_sessione\" value=\"$id_sessione\">
 <input type=\"hidden\" name=\"idclienti\" value=\"$idclienti\">
 <input type=\"hidden\" name=\"tipo_tabella\" value=\"$tipo_tabella\">
-<input type=\"hidden\" name=\"origine\" value=\"".htmlspecialchars($origine)."\">
+<input type=\"hidden\" name=\"origine\" value=\"".htmlspecialchars(fixstr($origine))."\">
 <input type=\"hidden\" name=\"vedi_cc\" value=\"SI\">
 <input type=\"hidden\" name=\"id_transazione\" value=\"$id_transazione\">
 <table cellspacing=0 cellpadding=6>
 <tr style=\"background-color: ".rowbgcolor().";\"><td>".mex("Tipo",$pag).": <b>$d_tipo_cc</b></td>
 <td>".mex("cambia in",$pag).": 
 <input type=\"text\" name=\"n_tipo_cc\" size=\"16\"></td></tr>
-<tr style=\"background-color: ".rowbgcolor().";\"><td>".mex("Numero",$pag).": <b>$d_num_cc</b></td>
+<tr style=\"background-color: ".rowbgcolor().";\"><td><table cellspacing=0 cellpadding=0><tr><td style=\"vertical-align: top;\">".mex("Numero",$pag).":&nbsp;</td><td>";
+if ($d_num_cc) echo "<b>".substr($d_num_cc,0,4)."&nbsp;".substr($d_num_cc,4,4)."&nbsp;".substr($d_num_cc,8,4)."&nbsp;".substr($d_num_cc,12)."</b><br><div style=\"height: 4px;\"></div>$d_num_cc";
+echo "</td></tr></table></td>
 <td>".mex("cambia in",$pag).": 
 <input type=\"text\" name=\"n_num_cc\" size=\"20\"></td></tr>
 <tr style=\"background-color: ".rowbgcolor().";\"><td>".mex("Titolare",$pag).": <b>$d_nome_cc</b></td>
@@ -1163,10 +1180,10 @@ echo "</select></td></tr>";
 
 if ($gest_cvc == "SI") {
 echo "<tr style=\"background-color: ".rowbgcolor().";\"><td>".mex("CVC",$pag).": <b>$d_cvc_cc</b></td><td>";
-if (strcmp($d_cvc_cc,"")) {
+if (strcmp((string) $d_cvc_cc,"")) {
 if ($d_cvc_visto_cc) echo "<b class=\"colwarn\">".mex("NOTA",$pag)."</b>: ".mex("questo valore è gia stato cancellato, questa è l'ultima volta che viene visualizzato",$pag).".";
 else echo mex("Questo valore verrà visualizzato solo un'altra volta",$pag).". <input class=\"sbutton\" type=\"submit\" name=\"delcvc\" value=\"".mex("Cancellalo ora",$pag)."\">";
-} # fine if (strcmp($d_cvc_cc,""))
+} # fine if (strcmp((string) $d_cvc_cc,""))
 else echo mex("cambia in",$pag).": <input type=\"text\" name=\"n_cvc_cc\" size=\"6\">";
 echo "</td></tr>
 <tr><td style=\"height: 1px;\"></td></tr>";
@@ -1183,7 +1200,7 @@ echo "<br><br>
 <input type=\"hidden\" name=\"id_sessione\" value=\"$id_sessione\">
 <input type=\"hidden\" name=\"idclienti\" value=\"$idclienti\">
 <input type=\"hidden\" name=\"tipo_tabella\" value=\"$tipo_tabella\">
-<input type=\"hidden\" name=\"origine\" value=\"".htmlspecialchars($origine)."\">
+<input type=\"hidden\" name=\"origine\" value=\"".htmlspecialchars(fixstr($origine))."\">
 <input type=\"hidden\" name=\"vedi_cc\" value=\"SI\">
 <input type=\"hidden\" name=\"id_transazione\" value=\"$id_transazione\">
 <input type=\"hidden\" name=\"cancella_cc\" value=\"SI\">
@@ -1209,7 +1226,7 @@ echo "<br><br><div style=\"text-align: center;\">
 <input type=\"hidden\" name=\"id_sessione\" value=\"$id_sessione\">
 <input type=\"hidden\" name=\"idclienti\" value=\"$idclienti\">
 <input type=\"hidden\" name=\"tipo_tabella\" value=\"$tipo_tabella\">
-<input type=\"hidden\" name=\"origine\" value=\"".htmlspecialchars($origine)."\">
+<input type=\"hidden\" name=\"origine\" value=\"".htmlspecialchars(fixstr($origine))."\">
 <button class=\"gobk\" type=\"submit\"><div>".mex("Torna indietro",$pag)."</div></button>
 </div></div></form>";
 } # fine if (numlin_query($cert_cc))
@@ -1231,11 +1248,11 @@ echo "<h3 id=\"h_mcli\"><span>".mex("Modifica i dati del cliente",$pag)." $idcli
 $cliente = esegui_query("select * from $tableclienti where idclienti = '$idclienti'");
 if (numlin_query($cliente) != 0) {
 $d_cognome = risul_query($cliente,0,'cognome');
-$d_nome = risul_query($cliente,0,'nome');
-$d_soprannome = risul_query($cliente,0,'soprannome');
+$d_nome = (string) risul_query($cliente,0,'nome');
+$d_soprannome = (string) risul_query($cliente,0,'soprannome');
 $d_titolo_cli = risul_query($cliente,0,'titolo');
 $d_sesso = risul_query($cliente,0,'sesso');
-$d_scadenzadoc = risul_query($cliente,0,'scadenzadoc');
+$d_scadenzadoc = (string) risul_query($cliente,0,'scadenzadoc');
 if ($d_scadenzadoc) $d_scadenzadoc_f = formatta_data($d_scadenzadoc,$stile_data);
 else $d_scadenzadoc_f = "";
 if ($priv_vedi_indirizzo == "s") {
@@ -1249,9 +1266,9 @@ $d_regione = risul_query($cliente,0,'regione');
 if ($priv_vedi_telefoni == "s") {
 $d_telefono = risul_query($cliente,0,'telefono');
 $d_fax = risul_query($cliente,0,'fax');
-$d_email = risul_query($cliente,0,'email');
-$d_email2 = risul_query($cliente,0,'email2');
-$d_email_cert = risul_query($cliente,0,'email3');
+$d_email = (string) risul_query($cliente,0,'email');
+$d_email2 = (string) risul_query($cliente,0,'email2');
+$d_email_cert = (string) risul_query($cliente,0,'email3');
 $d_telefono2 = risul_query($cliente,0,'telefono2');
 $d_telefono3 = risul_query($cliente,0,'telefono3');
 } # fine if ($priv_vedi_telefoni == "s")
@@ -1294,6 +1311,7 @@ elseif ($d_cittadoc) $citta_def = $d_cittadoc;
 elseif ($d_cittanascita) $citta_def = $d_cittanascita;
 $citta_def = addslashes($citta_def);
 
+$d_campi_pers = array();
 $d_cam_per = esegui_query("select * from $tablerelclienti where idclienti = '$idclienti' and tipo = 'campo_pers' ");
 $d_num_campi_pers = numlin_query($d_cam_per);
 for ($num1 = 0 ; $num1 < $d_num_campi_pers ; $num1++) {
@@ -1307,8 +1325,10 @@ echo "<table cellspacing=0 cellpadding=0 border=0 width=\"97%\">
 <tr><td align=\"right\" style=\"font-size: 80%;\">";
 $pass_cc = 0;
 $orig_hd = "";
+$target_cc = "";
 if (defined('C_URL_MOD_EXT_CARTE_CREDITO') and C_URL_MOD_EXT_CARTE_CREDITO != "") {
 $action_cc = C_URL_MOD_EXT_CARTE_CREDITO.$pag;
+if (defined('C_OPZIONI_NASCONDI_MARCA') and substr(C_OPZIONI_NASCONDI_MARCA,0,1) == "s") $target_cc = " target=\"_blank\"";
 $d_cliente = "<input type=\"hidden\" name=\"d_cognome\" value=\"".htmlspecialchars($d_cognome)."\">
 <input type=\"hidden\" name=\"d_nome\" value=\"".htmlspecialchars($d_nome)."\">";
 if (substr(C_URL_MOD_EXT_CARTE_CREDITO,0,17) == "https://localhost") $ext_html = file(C_URL_MOD_EXT_CARTE_CREDITO."personalizza.php?id_sessione=$id_sessione&stato_cc=1",false,stream_context_create(array("ssl" => array("verify_peer" => true,"allow_self_signed" => true))));
@@ -1331,13 +1351,13 @@ if (numlin_query($cert_cc)) $pass_cc = 1;
 } # fine if (function_exists('openssl_pkey_new'))
 } # fine else if (defined('C_URL_MOD_EXT_CARTE_CREDITO') and C_URL_MOD_EXT_CARTE_CREDITO != "")
 if ($pass_cc) {
-echo "<form accept-charset=\"utf-8\" method=\"post\" action=\"$action_cc\"><div>
+echo "<form accept-charset=\"utf-8\" method=\"post\" action=\"$action_cc\"$target_cc><div>
 <input type=\"hidden\" name=\"anno\" value=\"$anno\">
 <input type=\"hidden\" name=\"id_sessione\" value=\"$id_sessione\">
 <input type=\"hidden\" name=\"idclienti\" value=\"$idclienti\">
-<input type=\"hidden\" name=\"tipo_tabella\" value=\"".htmlspecialchars(fixset($tipo_tabella))."\">
+<input type=\"hidden\" name=\"tipo_tabella\" value=\"$tipo_tabella\">
 $orig_hd
-<input type=\"hidden\" name=\"origine\" value=\"".htmlspecialchars(fixset($origine))."\">
+<input type=\"hidden\" name=\"origine\" value=\"".htmlspecialchars(fixstr($origine))."\">
 <input type=\"hidden\" name=\"vedi_cc\" value=\"SI\">
 $d_cliente";
 } # fine if ($pass_cc)
@@ -1357,7 +1377,7 @@ echo "<form accept-charset=\"utf-8\" method=\"post\" action=\"modifica_cliente.p
 <input type=\"hidden\" name=\"id_sessione\" value=\"$id_sessione\">
 <input type=\"hidden\" name=\"idclienti\" value=\"$idclienti\">
 <input type=\"hidden\" name=\"tipo_tabella\" value=\"$tipo_tabella\">
-<input type=\"hidden\" name=\"origine\" value=\"".htmlspecialchars($origine)."\">
+<input type=\"hidden\" name=\"origine\" value=\"".htmlspecialchars(fixstr($origine))."\">
 <table class=\"modres floatleft\">
 <tr style=\"background-color: ".rowbgcolor().";\"><td>".mex("Cognome",$pag).": <b>$d_cognome</b></td><td>".mex("cambia in",$pag).": ";
 if ($attiva_prefisso_clienti == "p") echo $prefisso_clienti;
@@ -1644,7 +1664,7 @@ echo "<td style=\"width: 50px;\">&nbsp;</td>";
 for ($num1 = 0 ; $num1 < $num_campi_pers ; $num1++) {
 $opt = explode("<",$campi_pers[$num1]);
 if (empty($d_campi_pers['esist'][$opt[0]])) {
-if ($opt[1] == "txt") echo "<td>".$opt[0].": <input type=\"text\" name=\"campo_pers$num1\" value=\"".${"campo_pers".$num1}."\"></td>";
+if ($opt[1] == "txt") echo "<td>".$opt[0].": <input type=\"text\" name=\"campo_pers$num1\" value=\"".htmlspecialchars(fixstr(${"campo_pers".$num1}))."\"></td>";
 else echo "<td><label><input type=\"checkbox\" name=\"campo_pers$num1\" value=\"1\">".$opt[0]."</label></td>";
 if ($pari) {
 $pari = 0;
@@ -1656,7 +1676,8 @@ echo "<td style=\"width: 50px;\">&nbsp;</td>";
 } # fine else if ($pari)
 } # fine if (empty($d_campi_pers['esist'][$opt[0]]))
 } # fine for $num1
-echo "</tr></table><div style=\"height: 6px;\"></div>";
+echo "<input type=\"hidden\" name=\"n_campi_pers_passa\" value=\"$num_campi_pers\">
+</tr></table><div style=\"height: 6px;\"></div>";
 } # fine if ($d_num_campi_pers or $num_campi_pers)
 
 echo "".mex("Commento",$pag).":<div>
@@ -1715,7 +1736,7 @@ echo "<div style=\"text-align: center;\"><hr style=\"width: 95%\">
 <form accept-charset=\"utf-8\" method=\"post\" action=\"visualizza_contratto.php\"><div>
 <input type=\"hidden\" name=\"anno\" value=\"$anno\"><input type=\"hidden\" name=\"id_sessione\" value=\"$id_sessione\">
 <input type=\"hidden\" name=\"idclienti\" value=\"$idclienti\">
-<input type=\"hidden\" name=\"origine_vecchia\" value=\"".htmlspecialchars($origine)."\">
+<input type=\"hidden\" name=\"origine_vecchia\" value=\"".htmlspecialchars(fixstr($origine))."\">
 <input type=\"hidden\" name=\"origine\" value=\"modifica_cliente.php?tipo_tabella=$tipo_tabella&amp;idclienti=$idclienti\">
 
 <input type=\"hidden\" name=\"cognome_1\" value=\"$d_cognome\">
@@ -1749,10 +1770,13 @@ echo "<div style=\"text-align: center;\"><hr style=\"width: 95%\">
 <input type=\"hidden\" name=\"email_1\" value=\"$d_email\">
 <input type=\"hidden\" name=\"email2_1\" value=\"$d_email2\">
 <input type=\"hidden\" name=\"email_certificata_1\" value=\"$d_email_cert\">
+<input type=\"hidden\" name=\"numero_cliente_1\" value=\"$idclienti\">
 <input type=\"hidden\" name=\"codice_lingua_1\" value=\"$d_lingua_cli\">";
 for ($num1 = 0 ; $num1 < $d_num_campi_pers ; $num1++) {
-echo "<input type=\"hidden\" name=\"campo_personalizzato_".$d_campi_pers[$num1]['nome']."_1\" value=\"".$d_campi_pers[$num1]['val']."\">";
+echo "<input type=\"hidden\" name=\"campo_personalizzato_".$d_campi_pers[$num1]['nome']."_1\" value=\"".$d_campi_pers[$num1]['val']."\">
+<input type=\"hidden\" name=\"nome_campo_pers_passa_$num1"."_1\" value=\"".$d_campi_pers[$num1]['nome']."\">";
 } # fine for $num1
+echo "<input type=\"hidden\" name=\"num_campi_pers_passa_1\" value=\"$d_num_campi_pers\">";
 
 echo "".ucfirst(mex("documento di tipo",$pag))."
  <select id=\"lcon\" name=\"numero_contratto\">";
@@ -1768,7 +1792,7 @@ $nome_contratto[$dati_nome_contratto[0]] = $dati_nome_contratto[1];
 $max_contr = esegui_query("select max(numero) from $tablecontratti where tipo $LIKE 'contr%'");
 $max_contr = risul_query($max_contr,0,0);
 for ($num_contratto = 1 ; $num_contratto <= $max_contr ; $num_contratto++) {
-if ($attiva_contratti_consentiti == "n" or $contratti_consentiti_vett[$num_contratto] == "SI") {
+if ($attiva_contratti_consentiti == "n" or (isset($contratti_consentiti_vett[$num_contratto]) and $contratti_consentiti_vett[$num_contratto] == "SI")) {
 if (!empty($nome_contratto[$num_contratto])) $num_contratto_vedi = $nome_contratto[$num_contratto];
 else $num_contratto_vedi = $num_contratto;
 echo "<option value=\"$num_contratto\">$num_contratto_vedi</option>";
@@ -1853,7 +1877,7 @@ if ($priv_vedi_tab_prenotazioni == "s" or ($priv_vedi_tab_prenotazioni == "p" an
 
 $numero = risul_query($prenotazioni,($num2 - $ini_q),'idprenota',$tablepren_m);
 $appartamento = risul_query($prenotazioni,($num2 - $ini_q),'idappartamenti',$tablepren_m);
-$commento = risul_query($prenotazioni,($num2 - $ini_q),'commento',$tablepren_m);
+$commento = (string) risul_query($prenotazioni,($num2 - $ini_q),'commento',$tablepren_m);
 if (strstr($commento,">")) {
 $commento = explode(">",$commento);
 $commento = $commento[0];
@@ -1878,7 +1902,7 @@ $num_persone = risul_query($prenotazioni,($num2 - $ini_q),'num_persone',$tablepr
 if (!$num_persone or $num_persone == 0) { $num_persone = "?"; }
 $n_letti_agg = 0;
 $dati_cap = dati_costi_agg_prenota($tablecostiprenota_mostra,$numero);
-unset($num_letti_agg);
+$num_letti_agg = array('max' => 0);
 for ($numca = 0 ; $numca < $dati_cap['num'] ; $numca++) aggiorna_letti_agg_in_periodi($dati_cap,$numca,$num_letti_agg,$id_data_inizio,$id_data_fine,$dati_cap[$numca]['settimane'],$dati_cap[$numca]['moltiplica_costo'],"","");
 $n_letti_agg = $num_letti_agg['max'];
 
@@ -1903,7 +1927,7 @@ if ($priv_mod_prenota_iniziate != "s" and $id_periodo_corrente >= $id_data_inizi
 if ($priv_mod_prenota_ore != "000") {
 $adesso = date("YmdHis",(time() + (C_DIFF_ORE * 3600)));
 $data_ins = risul_query($prenotazioni,($num2 - $ini_q),'datainserimento',$tablepren_m);
-$limite = date("YmdHis",mktime((substr($data_ins,11,2) + $priv_mod_prenota_ore),substr($data_ins,14,2),substr($data_ins,17,2),substr($data_ins,5,2),substr($data_ins,8,2),substr($data_ins,0,4)));
+$limite = date("YmdHis",mktime((substr($data_ins,11,2) + (int) $priv_mod_prenota_ore),substr($data_ins,14,2),substr($data_ins,17,2),substr($data_ins,5,2),substr($data_ins,8,2),substr($data_ins,0,4)));
 if ($adesso > $limite) $link_modifica = "NO";
 } # fine if ($priv_mod_prenota_ore != "000")
 
@@ -1964,7 +1988,7 @@ echo "<form accept-charset=\"utf-8\" method=\"post\" action=\"$pag\"><div>
 <input type=\"hidden\" name=\"anno\" value=\"$anno\">
 <input type=\"hidden\" name=\"id_sessione\" value=\"$id_sessione\">
 <input type=\"hidden\" name=\"tipo_tabella\" value=\"$tipo_tabella\">
-<input type=\"hidden\" name=\"origine\" value=\"".htmlspecialchars($origine)."\">
+<input type=\"hidden\" name=\"origine\" value=\"".htmlspecialchars(fixstr($origine))."\">
 <input type=\"hidden\" name=\"idclienti\" value=\"$idclienti\">
 <input type=\"hidden\" name=\"cancella_cliente\" value=\"SI\">
 <button class=\"ccli\" id=\"canc\" type=\"submit\"><div>".mex("Cancella il cliente",$pag)." $idclienti</div></button>

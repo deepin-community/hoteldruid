@@ -2,7 +2,7 @@
 
 ##################################################################################
 #    HOTELDRUID
-#    Copyright (C) 2001-2021 by Marco Maria Francesco De Santis (marco@digitaldruid.net)
+#    Copyright (C) 2001-2023 by Marco Maria Francesco De Santis (marco@digitaldruid.net)
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published by
@@ -44,7 +44,14 @@ $var_pag[15] = 'data_fine_selezione';
 $var_pag[16] = 'idclienti';
 $var_pag[17] = 'cont_salva';
 $var_pag[18] = 'contr_corr';
-$n_var_pag = 19;
+$var_pag[19] = 'manda_mail';
+$var_pag[20] = 'numero_email';
+$var_pag[21] = 'tariffa_selezionata';
+$var_pag[22] = 'num_tariffe_passa';
+$var_pag[23] = 'num_all_passa';
+$var_pag[24] = 'testo_email_richiesta';
+$var_pag[25] = 'num_cat_pers_passa';
+$n_var_pag = 26;
 $num2 = 1;
 if (isset($_POST['num_ripeti'])) $num2 = (int) $_POST['num_ripeti'];
 elseif (isset($_GET['num_ripeti'])) $num2 = (int) $_GET['num_ripeti'];
@@ -81,6 +88,7 @@ $var_pag[$n_var_pag++] = "cap_$num1";
 $var_pag[$n_var_pag++] = "email_$num1";
 $var_pag[$n_var_pag++] = "email2_$num1";
 $var_pag[$n_var_pag++] = "email_certificata_$num1";
+$var_pag[$n_var_pag++] = "numero_cliente_$num1";
 $var_pag[$n_var_pag++] = "id_data_inizio_$num1";
 $var_pag[$n_var_pag++] = "data_inizio_$num1";
 $var_pag[$n_var_pag++] = "id_data_fine_$num1";
@@ -96,6 +104,9 @@ $var_pag[$n_var_pag++] = "tariffesettimanali_$num1";
 $var_pag[$n_var_pag++] = "percentuale_tasse_tariffa_$num1";
 $var_pag[$n_var_pag++] = "sconto_$num1";
 $var_pag[$n_var_pag++] = "caparra_$num1";
+$var_pag[$n_var_pag++] = "valuta_caparra_$num1";
+$var_pag[$n_var_pag++] = "tasso_cambio_caparra_$num1";
+$var_pag[$n_var_pag++] = "valore_valuta_caparra_$num1";
 $var_pag[$n_var_pag++] = "commissioni_$num1";
 $var_pag[$n_var_pag++] = "num_persone_$num1";
 $var_pag[$n_var_pag++] = "unita_occupata_$num1";
@@ -104,10 +115,12 @@ $var_pag[$n_var_pag++] = "num_persone_tipo_1_$num1";
 $var_pag[$n_var_pag++] = "num_persone_tipo_2_$num1";
 $var_pag[$n_var_pag++] = "num_persone_tipo_3_$num1";
 $var_pag[$n_var_pag++] = "pagato_$num1";
+$var_pag[$n_var_pag++] = "conferma_$num1";
 $var_pag[$n_var_pag++] = "costo_tot_$num1";
 $var_pag[$n_var_pag++] = "n_letti_agg_$num1";
 $var_pag[$n_var_pag++] = "numero_prenotazione_$num1";
 $var_pag[$n_var_pag++] = "codice_prenotazione_$num1";
+$var_pag[$n_var_pag++] = "ultima_prenotazione_per_cliente_$num1";
 $var_pag[$n_var_pag++] = "id_anni_prec_$num1";
 $var_pag[$n_var_pag++] = "data_inserimento_prenotazione_$num1";
 $var_pag[$n_var_pag++] = "utente_inserimento_prenotazione_$num1";
@@ -116,6 +129,13 @@ $var_pag[$n_var_pag++] = "promemoria_entrata_$num1";
 $var_pag[$n_var_pag++] = "promemoria_uscita_$num1";
 $var_pag[$n_var_pag++] = "metodo_pagamento_caparra_$num1";
 $var_pag[$n_var_pag++] = "num_costi_aggiuntivi_$num1";
+$var_pag[$n_var_pag++] = "num_campi_pers_passa_$num1";
+$var_pag[$n_var_pag++] = "num_comm_pers_passa_$num1";
+$var_pag[$n_var_pag++] = "valuta_tariffa_$num1";
+$var_pag[$n_var_pag++] = "tasso_cambio_tariffa_$num1";
+$var_pag[$n_var_pag++] = "costo_valuta_tariffa_$num1";
+$var_pag[$n_var_pag++] = "valore_valuta_sconto_$num1";
+$var_pag[$n_var_pag++] = "costo_valuta_tot_$num1";
 $num4 = 0;
 if (isset($_POST["num_costi_aggiuntivi_$num1"])) $num4 = (int) $_POST["num_costi_aggiuntivi_$num1"];
 elseif (isset($_GET["num_costi_aggiuntivi_$num1"])) $num4 = (int) $_GET["num_costi_aggiuntivi_$num1"];
@@ -136,13 +156,85 @@ if (isset($_POST["num_pagamenti_$num1"])) $num4 = (int) $_POST["num_pagamenti_$n
 elseif (isset($_GET["num_pagamenti_$num1"])) $num4 = (int) $_GET["num_pagamenti_$num1"];
 for ($num3 = 0 ; $num3 < $num4 ; $num3++) {
 $var_pag[$n_var_pag++] = "data_paga$num3"."_$num1";
+$var_pag[$n_var_pag++] = "data_operazione_paga$num3"."_$num1";
 $var_pag[$n_var_pag++] = "utente_paga$num3"."_$num1";
 $var_pag[$n_var_pag++] = "metodo_paga$num3"."_$num1";
+$var_pag[$n_var_pag++] = "id_paga$num3"."_$num1";
+$var_pag[$n_var_pag++] = "note_paga$num3"."_$num1";
 $var_pag[$n_var_pag++] = "saldo_paga$num3"."_$num1";
 $var_pag[$n_var_pag++] = "valuta_paga$num3"."_$num1";
 $var_pag[$n_var_pag++] = "tasso_cambio_paga$num3"."_$num1";
 $var_pag[$n_var_pag++] = "valore_valuta_paga$num3"."_$num1";
 } # fine for $num3
+$num4 = 0;
+if (isset($_POST["num_campi_pers_passa_$num1"])) $num4 = (int) $_POST["num_campi_pers_passa_$num1"];
+elseif (isset($_GET["num_campi_pers_passa_$num1"])) $num4 = (int) $_GET["num_campi_pers_passa_$num1"];
+for ($num3 = 0 ; $num3 < $num4 ; $num3++) {
+$var_pag[$n_var_pag++] = "nome_campo_pers_passa_$num3"."_$num1";
+$num5 = "";
+if (isset($_POST["nome_campo_pers_passa_$num3"."_$num1"])) $num5 = (string) $_POST["nome_campo_pers_passa_$num3"."_$num1"];
+elseif (isset($_GET["nome_campo_pers_passa_$num3"."_$num1"])) $num5 = (string) $_GET["nome_campo_pers_passa_$num3"."_$num1"];
+if (strcmp($num5,"")) $var_pag[$n_var_pag++] = "campo_personalizzato_$num5"."_$num1";
+} # fine for $num3
+$num4 = 0;
+if (isset($_POST["num_comm_pers_passa_$num1"])) $num4 = (int) $_POST["num_comm_pers_passa_$num1"];
+elseif (isset($_GET["num_comm_pers_passa_$num1"])) $num4 = (int) $_GET["num_comm_pers_passa_$num1"];
+for ($num3 = 0 ; $num3 < $num4 ; $num3++) {
+$var_pag[$n_var_pag++] = "nome_comm_pers_passa_$num3"."_$num1";
+$num5 = "";
+if (isset($_POST["nome_comm_pers_passa_$num3"."_$num1"])) $num5 = (string) $_POST["nome_comm_pers_passa_$num3"."_$num1"];
+elseif (isset($_GET["nome_comm_pers_passa_$num3"."_$num1"])) $num5 = (string) $_GET["nome_comm_pers_passa_$num3"."_$num1"];
+if (strcmp($num5,"")) $var_pag[$n_var_pag++] = "commento_personalizzato_$num5"."_$num1";
+} # fine for $num3
+} # fine for $num1
+if ($num2 == 1) {
+$num2 = 0;
+if (isset($_POST['num_tariffe_passa'])) $num2 = (int) $_POST['num_tariffe_passa'];
+elseif (isset($_GET['num_tariffe_passa'])) $num2 = (int) $_GET['num_tariffe_passa'];
+if ($num2) {
+$num5 = 0;
+if (isset($_POST['num_cat_pers_passa'])) $num5 = (int) $_POST['num_cat_pers_passa'];
+elseif (isset($_GET['num_cat_pers_passa'])) $num5 = (int) $_GET['num_cat_pers_passa'];
+for ($num1 = 1 ; $num1 <= $num2 ; $num1++) {
+$var_pag[$n_var_pag++] = "c_tot_selez$num1"."_1";
+$var_pag[$n_var_pag++] = "n_tariffa_selez$num1"."_1";
+$var_pag[$n_var_pag++] = "n_letti_agg_tariffa_selez$num1"."_1";
+$var_pag[$n_var_pag++] = "numpers_tariffa_selez$num1"."_1";
+$var_pag[$n_var_pag++] = "num_costi_aggiuntivi_tsel$num1"."_1";
+$var_pag[$n_var_pag++] = "num_costi_aggiuntivi_tsel$num1"."_1";
+$var_pag[$n_var_pag++] = "c_tariffa_selez$num1"."_1";
+$var_pag[$n_var_pag++] = "tarsett_tariffa_selez$num1"."_1";
+$var_pag[$n_var_pag++] = "perctas_tariffa_selez$num1"."_1";
+$var_pag[$n_var_pag++] = "cap_tariffa_selez$num1"."_1";
+$var_pag[$n_var_pag++] = "comm_tariffa_selez$num1"."_1";
+$num4 = 0;
+if (isset($_POST["num_costi_aggiuntivi_tsel$num1"."_1"])) $num4 = (int) $_POST["num_costi_aggiuntivi_tsel$num1"."_1"];
+elseif (isset($_GET["num_costi_aggiuntivi_tsel$num1"."_1"])) $num4 = (int) $_GET["num_costi_aggiuntivi_tsel$num1"."_1"];
+for ($num3 = 0 ; $num3 < $num4 ; $num3++) {
+$var_pag[$n_var_pag++] = "nome_costo_agg$num3"."_tsel$num1"."_1";
+$var_pag[$n_var_pag++] = "val_costo_agg$num3"."_tsel$num1"."_1";
+$var_pag[$n_var_pag++] = "percentuale_tasse_costo_agg$num3"."_tsel$num1"."_1";
+$var_pag[$n_var_pag++] = "moltiplica_max_costo_agg$num3"."_tsel$num1"."_1";
+$var_pag[$n_var_pag++] = "valore_giornaliero_max_costo_agg$num3"."_tsel$num1"."_1";
+$var_pag[$n_var_pag++] = "giorni_costo_agg$num3"."_tsel$num1"."_1";
+$var_pag[$n_var_pag++] = "tipo_persona_costo_agg$num3"."_tsel$num1"."_1";
+} # fine for $num3
+for ($num3 = 1 ; $num3 <= $num5 ; $num3++) $var_pag[$n_var_pag++] = "numpers_tipo_$num3"."_tariffa_selez$num1"."_1";
+} # fine for $num1
+} # fine if ($num2)
+} # fine ($num2 == 1)
+$num2 = 0;
+if (isset($_POST['numero_email'])) $num2 = (int) $_POST['numero_email'];
+elseif (isset($_GET['numero_email'])) $num2 = (int) $_GET['numero_email'];
+$num4 = 0;
+if (isset($_POST['num_all_passa'])) $num4 = (int) $_POST['num_all_passa'];
+elseif (isset($_GET['num_all_passa'])) $num4 = (int) $_GET['num_all_passa'];
+for ($num1 = 1 ; $num1 <= $num2 ; $num1++) {
+$var_pag[$n_var_pag++] = "mittente_email$num1";
+$var_pag[$n_var_pag++] = "destinatario_email$num1";
+$var_pag[$n_var_pag++] = "oggetto_email$num1";
+$var_pag[$n_var_pag++] = "testo_email$num1";
+for ($num3 = 1 ; $num3 <= $num4 ; $num3++) $var_pag[$n_var_pag++] = "allega$num3"."_$num1";
 } # fine for $num1
 
 include("./costanti.php");
@@ -152,6 +244,7 @@ $numconnessione = connetti_db($PHPR_DB_NAME,$PHPR_DB_HOST,$PHPR_DB_PORT,$PHPR_DB
 include("./includes/funzioni.php");
 include("./includes/funzioni_contratti.php");
 include("./includes/funzioni_testo.php");
+include("./includes/funzioni_email.php");
 $tablecontratti = $PHPR_TAB_PRE."contratti";
 $tableprenota = $PHPR_TAB_PRE."prenota".$anno;
 $tableprenotacanc = $PHPR_TAB_PRE."prenotacanc".$anno;
@@ -175,6 +268,7 @@ $tableappartamenti = $PHPR_TAB_PRE."appartamenti";
 $tablerelclienti = $PHPR_TAB_PRE."relclienti";
 $tablecasse = $PHPR_TAB_PRE."casse";
 $tablecosti = $PHPR_TAB_PRE."costi".$anno;
+$tablecache = $PHPR_TAB_PRE."cache";
 
 
 $id_utente = controlla_login($numconnessione,$PHPR_TAB_PRE,$id_sessione,$nome_utente_phpr,$password_phpr,$anno);
@@ -190,6 +284,7 @@ $numero_contratto = $numero_contratto[0];
 if ($id_utente != 1) {
 $tableprivilegi = $PHPR_TAB_PRE."privilegi";
 $tablerelgruppi = $PHPR_TAB_PRE."relgruppi";
+$prendi_gruppi = "";
 $privilegi_annuali_utente = esegui_query("select * from $tableprivilegi where idutente = '$id_utente' and anno = '$anno'");
 if (numlin_query($privilegi_annuali_utente) == 0) $anno_utente_attivato = "NO";
 else {
@@ -288,6 +383,7 @@ $nome_contratto = $nomi_contratti['salv'][$numero_contratto];
 
 $mostra_contratto = "SI";
 $mostra_foot = "";
+$foothtm = "";
 if (!isset($origine)) $origine = "";
 if (!isset($origine_vecchia)) $origine_vecchia = "";
 $mostra_torna_indietro = 0;
@@ -301,6 +397,7 @@ if (substr($contr_corr,-4) == ".rtf") $tipo_contratto = "contrrtf";
 if (substr($contr_corr,-5) == ".html") $tipo_contratto = "contrhtm";
 if (substr($contr_corr,-4) == ".txt") $tipo_contratto = "contrtxt";
 if (!$tipo_contratto) $mostra_contratto = "NO";
+$suff_file = "";
 if ($tipo_contratto == "contrrtf") $suff_file = "rtf";
 if ($tipo_contratto == "contrhtm") $suff_file = "html";
 if ($tipo_contratto == "contrtxt") $suff_file = "txt";
@@ -308,9 +405,21 @@ $dir_salvato = esegui_query("select * from $tablecontratti where numero = '$nume
 if (numlin_query($dir_salvato)) $dir_salvato = formatta_dir_salva_doc(risul_query($dir_salvato,0,'testo'));
 else $dir_salvato = "";
 if (!$dir_salvato) $mostra_contratto = "NO";
-if (preg_replace("/$nome_contratto"."_[0-9]{4,4}_[0-9]{5,8}(-[0-9]{5,8})?(_[0-9]+(-[0-9]+)?)*\.$suff_file/","",$contr_corr) != "") $mostra_contratto = "NO";
+if (preg_replace("/$nome_contratto"."_[0-9]{4,4}_[0-9]{5,8}(-[0-9]{5,8})?(_[0-9]+(-[0-9]+|\+[0-9]+(\+[0-9]+)?)?)*\.$suff_file/","",$contr_corr) != "") $mostra_contratto = "NO";
 $n_file = 1;
-$nome_file_contr[$n_file] = $contr_corr_orig;
+$nome_file_contr = array(1 => $contr_corr_orig, 'num' => 1);
+if (strstr($contr_corr_orig,"_1+1_") or strstr($contr_corr_orig,"_1+1.")) {
+if (substr($contr_corr_orig,-3) == ".gz") $contr_corr_orig = substr($contr_corr_orig,0,-3);
+$file_dat = explode(".",$contr_corr_orig);
+$file_dat = $file_dat[(count($file_dat) - 1)];
+$file_dat = substr($contr_corr_orig,0,(-1 * (strlen($file_dat) + 1)));
+if (is_file("$dir_salvato/$file_dat.dat")) {
+$file_dat = file("$dir_salvato/$file_dat.dat");
+for ($num1 = 0 ; $num1 < count($file_dat) ; $num1++) {
+if (substr($file_dat[$num1],0,3) == "dn:") $nome_file_contr['downl'] = array(1 => trim(substr($file_dat[$num1],3)), 'num' => 1);
+} # fine for $num1
+} # fine if (is_file("$dir_salvato/$file_dat.dat"))
+} # fine if (strstr($contr_corr_orig,"_1+1_") or strstr($contr_corr_orig,"_1+1."))
 if ($mostra_contratto == "NO") {
 unset($id_transazione);
 $mostra_torna_indietro = 1;
@@ -334,7 +443,7 @@ $nome_file_contr = unserialize(risul_query($dati_transazione,0,'dati_transazione
 $tipo_contratto = risul_query($dati_transazione,0,'dati_transazione3');
 $origine = risul_query($dati_transazione,0,'dati_transazione4');
 $origine_vecchia = risul_query($dati_transazione,0,'dati_transazione5');
-$num_file_salva = count($nome_file_contr);
+$num_file_salva = $nome_file_contr['num'];
 if (isset($cancella) and $cancella == "SI" and $priv_cancella_contratti != "n") {
 $mostra_contratto = "NO";
 $mostra_torna_indietro = 1;
@@ -375,6 +484,8 @@ $mostra_contratto = "NO";
 $mostra_torna_indietro = 1;
 if ($tema[$id_utente] and $tema[$id_utente] != "base" and @is_dir("./themes/".$tema[$id_utente]."/php")) include("./themes/".$tema[$id_utente]."/php/head.php");
 else include("./includes/head.php");
+if (substr((string) risul_query($dati_contratto,0,'testo'),0,7) == "#!mln!#") $contr_multilingua = 1;
+else $contr_multilingua = 0;
 if ($modifica_pers == "NO") {
 $mittente_email = esegui_query("select * from $tablepersonalizza where idpersonalizza = 'dati_struttura' and idutente = '$id_utente'");
 $mittente_email = explode("#@&",risul_query($mittente_email,0,'valpersonalizza'));
@@ -382,18 +493,42 @@ $nome_mittente_email = $mittente_email[5];
 $mittente_email = $mittente_email[2];
 if ($nome_mittente_email) $mittente_email = "$nome_mittente_email <$mittente_email>";
 } # fine if ($modifica_pers == "NO")
-$maschera_envelope = esegui_query("select * from $tablepersonalizza where idpersonalizza = 'maschera_email' and idutente = '1'");
-$maschera_envelope = risul_query($maschera_envelope,0,'valpersonalizza');
-$allegato_email = esegui_query("select * from $tablecontratti where numero = '$numero_contratto' and tipo = 'allegato'");
-$allegato_email = risul_query($allegato_email,0,'testo');
-if ($allegato_email) {
-$allegato_email = esegui_query("select * from $tablecontratti where numero = '$allegato_email' and tipo = 'file_all'");
+#$maschera_envelope = esegui_query("select * from $tablepersonalizza where idpersonalizza = 'maschera_email' and idutente = '1'");
+#$maschera_envelope = risul_query($maschera_envelope,0,'valpersonalizza');
+$dati_allegato = array('num' => 0);
+$allegati_email = esegui_query("select * from $tablecontratti where numero = '$numero_contratto' and tipo = 'allegato'");
+$allegati_email = risul_query($allegati_email,0,'testo');
+if ($allegati_email) {
+$allegati_email = explode(",",$allegati_email);
+$dati_allegato['num'] = (count($allegati_email) - 2);
+for ($num1 = 1 ; $num1 <= $dati_allegato['num'] ; $num1++) {
+if ($contr_multilingua) {
+$all_vett = explode(">",$allegati_email[$num1]);
+$num_ln = count($all_vett);
+} # fine if ($contr_multilingua)
+else $num_ln = 1;
+for ($num2 = 0 ; $num2 < $num_ln ; $num2++) {
+if ($contr_multilingua) {
+$num_all = substr(strstr($all_vett[$num2],":"),1);
+$ln_corr = substr(str_replace(":$num_all","",$all_vett[$num2]),4);
+} # fine if ($contr_multilingua)
+else $num_all = $allegati_email[$num1];
+$allegato_email = esegui_query("select * from $tablecontratti where numero = '$num_all' and tipo = 'file_all'");
 $allegato_email = risul_query($allegato_email,0,'testo');
 $allegato_email_v = explode(",",$allegato_email);
-$nome_allegato = $allegato_email_v[0];
-$tipo_allegato = $allegato_email_v[1];
-$allegato_email = substr($allegato_email,strlen($nome_allegato.",".$tipo_allegato.","));
-} # fine if ($allegato_email)
+if ($contr_multilingua) {
+$dati_allegato["ln$ln_corr"][$num1]['nome'] = $allegato_email_v[0];
+$dati_allegato["ln$ln_corr"][$num1]['tipo'] = $allegato_email_v[1];
+$dati_allegato["ln$ln_corr"][$num1]['valo'] = substr($allegato_email,strlen($dati_allegato["ln$ln_corr"][$num1]['nome'].",".$dati_allegato["ln$ln_corr"][$num1]['tipo'].","));
+} # fine if ($contr_multilingua)
+else {
+$dati_allegato[$num1]['nome'] = $allegato_email_v[0];
+$dati_allegato[$num1]['tipo'] = $allegato_email_v[1];
+$dati_allegato[$num1]['valo'] = substr($allegato_email,strlen($dati_allegato[$num1]['nome'].",".$dati_allegato[$num1]['tipo'].","));
+} # fine else if ($contr_multilingua)
+} # fine for $num2
+} # fine for $num1
+} # fine if ($allegati_email)
 $opz_eml = esegui_query("select * from $tablecontratti where numero = '$numero_contratto' and tipo = 'opzeml'");
 $opz_eml = risul_query($opz_eml,0,'testo');
 $opz_eml = explode(";",$opz_eml);
@@ -401,72 +536,56 @@ $cont_type = "text/plain";
 if ($opz_eml[0] == "html") $cont_type = "text/html";
 $bcc_mittente = $opz_eml[1];
 $bcc_indirizzo = $opz_eml[2];
+if (defined('C_MASSIMO_NUM_EMAIL_GIORNALIERE') and C_MASSIMO_NUM_EMAIL_GIORNALIERE > 0) {
+$dati_manda_email['num_app'] = esegui_query("select idappartamenti from $tableappartamenti ");
+$dati_manda_email['num_app'] = numlin_query($dati_manda_email['num_app']);
+} # fine if (defined('C_MASSIMO_NUM_EMAIL_GIORNALIERE') and C_MASSIMO_NUM_EMAIL_GIORNALIERE > 0)
 
 for ($num1 = 1 ; $num1 <= $numero_email ; $num1++) {
-if (${"destinatario_email".$num1} and strstr(${"destinatario_email".$num1},"@")) {
-$inviato = "";
+if (!empty(${"destinatario_email".$num1}) and strstr(${"destinatario_email".$num1},"@")) {
 if ($modifica_pers != "NO") $mittente_email = ${"mittente_email".$num1};
 $destinatario_email = ${"destinatario_email".$num1};
 if (@get_magic_quotes_gpc()) {
 ${"oggetto_email".$num1} = stripslashes(${"oggetto_email".$num1});
 ${"testo_email".$num1} = stripslashes(${"testo_email".$num1});
 } # fine if (@get_magic_quotes_gpc())
-switch (strtoupper(substr(PHP_OS,0,3))) {
-case "WIN": $mailh_nl = "\r\n"; break;
-case "MAC": $mailh_nl = "\r"; break;
-default: $mailh_nl = "\n"; break;
-} # fine switch (strtoupper(substr(PHP_OS,0,3)))
-if (strstr($mittente_email,"<")) {
-$headers = "From: $mittente_email$mailh_nl";
-$mittente_email = explode("<",$mittente_email);
-$mittente_email = explode(">",$mittente_email[1]);
-$mittente_email = $mittente_email[0];
-} # fine if (strstr($mittente_email,"<"))
-else $headers = "From: <$mittente_email>$mailh_nl";
-if ($bcc_mittente == "SI") $headers .= "Bcc: $mittente_email$mailh_nl";
-if ($bcc_indirizzo) $headers .= "Bcc: $bcc_indirizzo$mailh_nl";
-$testo_email = chunk_split(base64_encode(${"testo_email".$num1}));
-if ($allegato_email and ${"allega".$num1} == "SI") {
-$boundary = "--".md5(uniqid(rand()));
-$headers .= "MIME-Version: 1.0$mailh_nl";
-$headers .= "Content-Type: multipart/mixed;$mailh_nl";
-$headers .= " boundary=\"$boundary\"$mailh_nl";
-$headers .= "X-Sender: $mittente_email$mailh_nl";
-$headers .= "X-Mailer: PHP$mailh_nl";
-$headers .= "X-Priority: 3$mailh_nl";
-$headers .= "Return-Path: $mittente_email$mailh_nl";
-$testo_email = "This is a multi-part message in MIME format.\n--$boundary\nContent-type: $cont_type; charset=utf-8\nContent-Transfer-Encoding: base64\n\n$testo_email";
-$testo_email .= "\n--$boundary\n";
-$testo_email .= "Content-Type: $tipo_allegato;\n";
-$testo_email .= " name=\"$nome_allegato\"\n";
-$testo_email .= "Content-Transfer-Encoding: base64\n";
-$testo_email .= "Content-Disposition: attachment;\n";
-$testo_email .= " filename=\"$nome_allegato\"\n\n";
-$testo_email .= $allegato_email;
-if (substr($testo_email,-1) == "\n") $testo_email .= "--$boundary--";
-else $testo_email .= "\n--$boundary--";
-} # fine if ($allegato_email and ${"allega".$num1} == "SI")
-else {
-if ($cont_type != "text/plain") $headers .= "MIME-Version: 1.0$mailh_nl";
-$headers .= "Content-type: $cont_type; charset=utf-8$mailh_nl";
-$headers .= "Content-Transfer-Encoding: base64$mailh_nl";
-$headers .= "X-Sender: $mittente_email$mailh_nl";
-$headers .= "X-Mailer: PHP$mailh_nl";
-$headers .= "X-Priority: 3$mailh_nl";
-$headers .= "Return-Path: $mittente_email$mailh_nl";
-} # fine else if ($allegato_email and ${"allega".$num1} == "SI")
-#echo nl2br($headers.$testo_email)."QUI<br>";
+$allega = array();
+for ($num2 = 1 ; $num2 <= $dati_allegato['num'] ; $num2++) {
+$allega[$num2] = fixstr(${"allega$num2"."_$num1"});
+if ($contr_multilingua and $allega[$num2]) {
+if (!empty($dati_allegato['ln'.$allega[$num2]][$num2]['nome'])) {
+$dati_allegato[$num2] = $dati_allegato['ln'.$allega[$num2]][$num2];
+$allega[$num2] = "SI";
+} # fine if (!empty($dati_allegato['ln'.$allega[$num2]][$num2]['nome']))
+else $allega[$num2] = "";
+} # fine if ($contr_multilingua and $allega[$num2])
+} # fine for $num2
 if (!defined('C_RESTRIZIONI_DEMO_ADMIN') or C_RESTRIZIONI_DEMO_ADMIN != "SI") {
-if (defined("C_MASCHERA_EMAIL") and C_MASCHERA_EMAIL != "") $maschera_envelope = C_MASCHERA_EMAIL;
-if ($maschera_envelope == "SI") $inviato = mail($destinatario_email,${"oggetto_email".$num1},$testo_email,$headers,"-f$mittente_email");
-else $inviato = mail($destinatario_email,${"oggetto_email".$num1},$testo_email,$headers);
+$inviato = manda_email($mittente_email,"","",$destinatario_email,"",$bcc_mittente,$bcc_indirizzo,${"oggetto_email".$num1},${"testo_email".$num1},$cont_type,$dati_allegato,$allega,$tablepersonalizza,$tablecache);
 } # fine if (!defined('C_RESTRIZIONI_DEMO_ADMIN') or C_RESTRIZIONI_DEMO_ADMIN != "SI")
-if ($inviato) {
+else $inviato = array('ok' => 0);
+if (!empty($inviato['err_spf'])) {
+echo "<br><small>&nbsp;".mex("Non si è potuto mascherare il mittente dell'email perchè attualmente <b class=\"colwarn\">SPF non è configurato correttamente</b> sul dominio della email",$pag)." <b>".htmlspecialchars($mittente_email)."</b>.
+ ".mex("L'utente amministratore può cambiare questa inpostazione in",$pag)." \"";
+if ($id_utente == 1) echo "<a href=\"./personalizza.php?id_sessione=$id_sessione&anno=$anno#sistema\">";
+echo mex("configura e personalizza",$pag);
+if ($id_utente == 1) echo "</a>";
+echo "\".</small><br>";
+} # fine if (!empty($inviato['err_spf']))
+if (!empty($inviato['err_max_email'])) {
+echo "<br>".mex("È stato raggiunto il numero massimo di email giornaliere",$pag)." (<span class=\"colred\">".$inviato['err_max_email']."</span>).
+ ".mex("Per mandare altre email l'utente amministratore può impostare un server remoto in",$pag)." ";
+if ($id_utente == 1) echo "<a href=\"./personalizza.php?id_sessione=$id_sessione&anno=$anno#sistema\">";
+echo mex("configura e personalizza",$pag);
+if ($id_utente == 1) echo "</a>";
+echo ".<br>";
+} # fine if (!empty($inviato['err_max_email']))
+if ($inviato['ok']) {
 echo "<br>&nbsp;".mex("L'email a",$pag)." <b>".htmlspecialchars($destinatario_email)."</b> ".mex("è stata inviata",$pag);
 if ($bcc_mittente == "SI" or $bcc_indirizzo) echo " (".mex("bcc a",$pag)." ";
-if ($bcc_mittente == "SI") echo $mittente_email;
+if ($bcc_mittente == "SI") echo htmlspecialchars($mittente_email);
 if ($bcc_mittente == "SI" and $bcc_indirizzo) echo ", ";
-if ($bcc_indirizzo) echo $bcc_indirizzo;
+if ($bcc_indirizzo) echo htmlspecialchars($bcc_indirizzo);
 if ($bcc_mittente == "SI" or $bcc_indirizzo) echo ")";
 echo ".<br>";
 # inserisco il soggetto di questa email come inviato per i clienti corrispondenti
@@ -481,21 +600,24 @@ if (str_replace("@","",$destinatario_email) != $destinatario_email) {
 $clienti = esegui_query("select * from $tableclienti where email $ILIKE '$destinatario_email%' or email $ILIKE '% $destinatario_email%' or email $ILIKE '%,$destinatario_email%' ");
 for ($num4 = 0 ; $num4 < numlin_query($clienti) ; $num4++) {
 $idclienti = risul_query($clienti,$num4,'idclienti');
-$doc_inviati = risul_query($clienti,$num4,'doc_inviati');
-if (str_replace("#@?".${"oggetto_email".$num1}."#|?","",$doc_inviati) == $doc_inviati) {
+$doc_inviati = (string) risul_query($clienti,$num4,'doc_inviati');
+if (str_replace("#@?".htmlspecialchars(${"oggetto_email".$num1})."#|?","",$doc_inviati) == $doc_inviati) {
 if (!$doc_inviati) $doc_inviati = "#@?";
-$doc_inviati .= str_replace("#|?","",str_replace("#@?","",${"oggetto_email".$num1}))."#|?".date("Y-m-d",(time() + (C_DIFF_ORE * 3600)))."#@?";
-} # fine if (str_replace(${"oggetto_email".$num1},"",$doc_inviati) == $doc_inviati)
-else $doc_inviati = preg_replace("/#@\?".${"oggetto_email".$num1}."#\|\?[^#]*#@\?/","#@?".${"oggetto_email".$num1}."#|?".date("Y-m-d",(time() + (C_DIFF_ORE * 3600)))."#@?",$doc_inviati);
+$doc_inviati .= str_replace("#|?","",str_replace("#@?","",htmlspecialchars(${"oggetto_email".$num1})))."#|?".date("Y-m-d",(time() + (C_DIFF_ORE * 3600)))."#@?";
+} # fine if (str_replace("#@?".htmlspecialchars(${"oggetto_email".$num1})."#|?","",$doc_inviati) == $doc_inviati)
+else $doc_inviati = preg_replace("/#@\?".str_replace('$','\$',str_replace("^","\^",str_replace("{","\{",str_replace("[","\[",str_replace("|","\|",str_replace(")","\)",str_replace("(","\(",str_replace("?","\?",str_replace("+","\+",str_replace(".","\.",str_replace("*","\*",str_replace("/","\/",${"oggetto_email".$num1}))))))))))))."#\|\?[^#]*#@\?/","#@?".htmlspecialchars(${"oggetto_email".$num1})."#|?".date("Y-m-d",(time() + (C_DIFF_ORE * 3600)))."#@?",$doc_inviati);
 esegui_query("update $tableclienti set doc_inviati = '".aggslashdb($doc_inviati)."' where idclienti = '$idclienti' ");
 } # fine for $num4
 } # fine if (str_replace("@","",$destinatario_email) != $destinatario_email)
 } # fine for $num3
 } # fine for $num2
 unlock_tabelle($tabelle_lock);
-} # fine if ($inviato)
-else echo "<br>&nbsp;".mex("Non si è potuto inviare l'email a",$pag)." <b style=\"font-weight: normal; color: red;\">$destinatario_email</b>.<br>";
-} # fine if (${"destinatario_email".$num1} and strstr(${"destinatario_email".$num1},"@"))
+} # fine if ($inviato['ok'])
+else {
+if (!empty($inviato['err'])) echo "<br>".htmlspecialchars($inviato['err'])."<br>";
+echo "<br>&nbsp;".mex("Non si è potuto inviare l'email a",$pag)." <b class=\"colred\">".htmlspecialchars($destinatario_email)."</b>.<br>";
+} # fine else if ($inviato['ok'])
+} # fine if (!empty(${"destinatario_email".$num1}) and strstr(${"destinatario_email".$num1},"@"))
 } # fine for $num1
 
 } # fine if ($tipo_contratto == "contreml")
@@ -524,9 +646,47 @@ $num_campi_pers_cliente = count($campi_pers_cliente);
 else $num_campi_pers_cliente = 0;
 include_once("./includes/funzioni_tariffe.php");
 $dati_cat_pers = dati_cat_pers($id_utente,$tablepersonalizza,$lingua_mex,"v",0,1);
+$dati_allegato = array('num' => 0);
+$allegati_email = esegui_query("select * from $tablecontratti where numero = '$numero_contratto' and tipo = 'allegato'");
+if (numlin_query($allegati_email)) {
+$allegati_email = risul_query($allegati_email,0,'testo');
+if ($allegati_email) {
+if (strstr($allegati_email,":")) $contr_multilingua = 1;
+else $contr_multilingua = 0;
+$allegati_email = explode(",",$allegati_email);
+$dati_allegato['num'] = (count($allegati_email) - 2);
+for ($num1 = 1 ; $num1 <= $dati_allegato['num'] ; $num1++) {
+$dati_allegato['ln_corr'][$num1] = "SI";
+if ($contr_multilingua) {
+$all_vett = explode(">",$allegati_email[$num1]);
+$num_ln = count($all_vett);
+} # fine if ($contr_multilingua)
+else $num_ln = 1;
+for ($num2 = 0 ; $num2 < $num_ln ; $num2++) {
+if ($contr_multilingua) {
+$num_all = substr(strstr($all_vett[$num2],":"),1);
+$ln_corr = substr(str_replace(":$num_all","",$all_vett[$num2]),4);
+} # fine if ($contr_multilingua)
+else $num_all = $allegati_email[$num1];
+$allegato_email = esegui_query("select * from $tablecontratti where numero = '$num_all' and tipo = 'file_all'");
+$allegato_email = risul_query($allegato_email,0,'testo');
+$allegato_email = explode(",",$allegato_email);
+if ($contr_multilingua) $dati_allegato["ln$ln_corr"][$num1] = $allegato_email[0];
+else $dati_allegato['corr'][$num1] = $allegato_email[0];
+} # fine for $num2
+} # fine for $num1
+unset($ln_corr);
+unset($num_all);
+unset($all_vett);
+unset($num_ln);
+unset($allegato_email);
+} # fine if ($allegati_email)
+} # fine if (numlin_query($allegati_email))
+unset($allegati_email);
 $commento_personalizzato_ = "commento_personalizzato_";
 $campo_personalizzato_ = "campo_personalizzato_";
 $num_persone_tipo_ = "num_persone_tipo_";
+$allegato_ = "allegato";
 include("./includes/variabili_contratto.php");
 
 if (empty($num_ripeti) or controlla_num_pos($num_ripeti) == "NO") $num_ripeti = 1;
@@ -569,7 +729,11 @@ include("./includes/dati_lista_cassa.php");
 $mostra_headers = "SI";
 $messaggio_di_errore = "";
 $num_contr_esist = 0;
-if (empty($id_transazione)) $contratto = crea_contratto($numero_contratto,$tipo_contratto,$id_utente,$id_sessione,$origine,$origine_vecchia);
+if (empty($id_transazione)) {
+$contratto = crea_contratto($numero_contratto,$tipo_contratto,$id_utente,$id_sessione,$origine,$origine_vecchia);
+if (!empty($nome_file_contr['downl']['num'])) $n_file = $nome_file_contr['downl']['num'];
+else $n_file = 1;
+} # fine if (empty($id_transazione))
 else {
 if (@is_file($dir_salvato."/".$nome_file_contr[$n_file])) {
 if (substr($nome_file_contr[$n_file],-3) == ".gz") $contratto = @gzfile($dir_salvato."/".$nome_file_contr[$n_file]);
@@ -581,6 +745,7 @@ else $contratto = "";
 } # fine else if (empty($id_transazione))
 
 if ($messaggio_di_errore) {
+$dir_salva = "";
 $tipo_contratto = "contrhtm";
 $contratto = "<div style=\"padding: 5px;\">
 <br><span class=\"colred\">".mex("Errore",$pag)."</span>:<br>
@@ -592,8 +757,13 @@ $mostra_torna_indietro = 1;
 
 
 if ($dir_salva and !$num_contr_esist) $mostra_headers = "NO";
-$foothtm = "";
 
+$dati_download = "";
+if (!empty($nome_file_contr['downl']['datdownl'])) $dati_download = explode(">",$nome_file_contr['downl']['datdownl']);
+else {
+$risul = esegui_query("select testo from $tablecontratti where numero = '$numero_contratto' and tipo = 'datdownl'");
+if (numlin_query($risul)) $dati_download = explode(">",(string) risul_query($risul,0,'testo'));
+} # fine else if (!empty($nome_file_contr['downl']['datdownl']))
 if ($tipo_contratto == "contrhtm" and !$dir_salva) {
 $show_bar = "NO";
 $headhtm = esegui_query("select testo from $tablecontratti where numero = '$numero_contratto' and tipo = 'headhtm'");
@@ -607,9 +777,10 @@ if (numlin_query($foothtm)) $foothtm = risul_query($foothtm,0,'testo');
 if ($tipo_contratto == "contreml") $mostra_torna_indietro = 1;
 if ($tipo_contratto == "contrrtf" and !$dir_salva) {
 $mostra_headers = "NO";
-if ($nome_file_contr) $nome_file = $nome_file_contr[$n_file];
-else $nome_file = str_replace("\\","_",str_replace("/","_",str_replace(" ","_",$nome_contratto))).".rtf";
+if (isset($nome_file_contr[$n_file])) $nome_file = $nome_file_contr[$n_file];
+else $nome_file = str_replace("\"","_",str_replace("\\","_",str_replace("/","_",str_replace(" ","_",$nome_contratto)))).".rtf";
 if (substr($nome_file,-3) == ".gz") $nome_file = substr($nome_file,0,-3);
+if (isset($dati_download[1]) and $dati_download[1] == "var" and isset($nome_file_contr['downl'][$n_file]) and strcmp($nome_file_contr['downl'][$n_file],"")) $nome_file = $nome_file_contr['downl'][$n_file].substr($nome_file,-4);
 header("Pragma: public");
 header("Last-Modified: ".gmdate("D, d M Y H:i:s")." GMT");
 header("Cache-Control: no-store, no-cache, must-revalidate");
@@ -623,16 +794,15 @@ header("Content-Disposition: inline; filename=\"$nome_file\"");
 } # fine if ($tipo_contratto == "contrrtf" and !$dir_salva)
 if ($tipo_contratto == "contrtxt" and !$dir_salva) {
 $mostra_headers = "NO";
-if ($nome_file_contr) {
+if (isset($nome_file_contr[$n_file])) {
 $nome_file = $nome_file_contr[$n_file];
 if (substr($nome_file,-3) == ".gz") $nome_file = substr($nome_file,0,-3);
-} # fine if ($nome_file_contr)
-else $nome_file = str_replace("\\","_",str_replace("/","_",str_replace(" ","_",$nome_contratto))).".txt";
-$est_txt = esegui_query("select * from $tablecontratti where numero = '$numero_contratto' and tipo = 'est_txt'");
-if (numlin_query($est_txt)) {
-$est_txt = risul_query($est_txt,0,'testo');
-$nome_file = substr($nome_file,0,-4).".$est_txt";
-} # fine if (numlin_query($est_txt))
+} # fine if (isset($nome_file_contr[$n_file]))
+else $nome_file = str_replace("\"","_",str_replace("\\","_",str_replace("/","_",str_replace(" ","_",$nome_contratto)))).".txt";
+if ($dati_download) {
+if (isset($dati_download[1]) and $dati_download[1] == "var" and isset($nome_file_contr['downl'][$n_file]) and strcmp($nome_file_contr['downl'][$n_file],"")) $nome_file = $nome_file_contr['downl'][$n_file].substr($nome_file,-4);
+if ($dati_download[0]) $nome_file = substr($nome_file,0,-4).".".$dati_download[0];
+} # fine if ($dati_download)
 header("Pragma: public");
 header("Last-Modified: ".gmdate("D, d M Y H:i:s")." GMT");
 header("Cache-Control: no-store, no-cache, must-revalidate");

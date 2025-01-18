@@ -2,7 +2,7 @@
 
 ##################################################################################
 #    HOTELDRUID
-#    Copyright (C) 2019 by Marco Maria Francesco De Santis (marco@digitaldruid.net)
+#    Copyright (C) 2001-2023 by Marco Maria Francesco De Santis (marco@digitaldruid.net)
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published by
@@ -31,7 +31,7 @@ $url_base_upload = "";
 if (defined('C_CARTELLA_UPLOAD_IMG') and C_CARTELLA_UPLOAD_IMG != "" and @is_dir(C_CARTELLA_CREA_MODELLI."/".C_CARTELLA_UPLOAD_IMG)) $percorso_cartella_upload = C_CARTELLA_UPLOAD_IMG;
 else $percorso_cartella_upload = "";
 if (substr($percorso_cartella_upload,0,1) == "/") $percorso_cartella_upload = substr($percorso_cartella_upload,1);
-if (strcmp($percorso_cartella_upload,"") and substr($percorso_cartella_upload,-1) != "/") $percorso_cartella_upload .= "/";
+if (strcmp((string) $percorso_cartella_upload,"") and substr($percorso_cartella_upload,-1) != "/") $percorso_cartella_upload .= "/";
 if (substr($percorso_cartella_upload,0,2) == "./") $percorso_cartella_upload = substr($percorso_cartella_upload,2);
 if (defined("C_FILE_DOMINIO") and C_FILE_DOMINIO != "" and (!defined('C_NASCONDI_MARCA') or C_NASCONDI_MARCA != "SI")) {
 $altri_domini = @file(C_FILE_DOMINIO);
@@ -79,8 +79,8 @@ function upload_hd_img ($filename,$ord="") {
 if (defined('C_CARTELLA_CREA_MODELLI') and C_CARTELLA_CREA_MODELLI != "") {
 global ${"file_hd_img_upload$ord"};
 if (!${"file_hd_img_upload$ord"}) {
-if ($HTTP_POST_FILES["file_hd_img_upload$ord"]['tmp_name']) ${"file_hd_img_upload$ord"} = $HTTP_POST_FILES["file_hd_img_upload$ord"]['tmp_name'];
-else if ($_FILES["file_hd_img_upload$ord"]['tmp_name']) ${"file_hd_img_upload$ord"} = $_FILES["file_hd_img_upload$ord"]['tmp_name'];
+if (!empty($HTTP_POST_FILES["file_hd_img_upload$ord"]['tmp_name'])) ${"file_hd_img_upload$ord"} = $HTTP_POST_FILES["file_hd_img_upload$ord"]['tmp_name'];
+else if (!empty($_FILES["file_hd_img_upload$ord"]['tmp_name'])) ${"file_hd_img_upload$ord"} = $_FILES["file_hd_img_upload$ord"]['tmp_name'];
 } # fine if (!${"file_hd_img_upload$ord"})
 if (${"file_hd_img_upload$ord"}) {
 
@@ -89,7 +89,7 @@ else $percorso_cartella_upload = "";
 if (substr($percorso_cartella_upload,0,1) == "/") $percorso_cartella_upload = substr($percorso_cartella_upload,1);
 if (substr($percorso_cartella_upload,0,2) == "./") $percorso_cartella_upload = substr($percorso_cartella_upload,2);
 $percorso_cartella_upload = C_CARTELLA_CREA_MODELLI."/$percorso_cartella_upload";
-if (strcmp($percorso_cartella_upload,"") and substr($percorso_cartella_upload,-1) != "/") $percorso_cartella_upload .= "/";
+if (strcmp((string) $percorso_cartella_upload,"") and substr($percorso_cartella_upload,-1) != "/") $percorso_cartella_upload .= "/";
 
 $errore = 0;
 if (strstr($filename,"/")) {

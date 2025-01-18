@@ -26,7 +26,11 @@ $titolo = "HotelDruid: Tabelle Mesi";
 $var_pag = array();
 $var_pag[0] = 'mese';
 $var_pag[1] = 'anno_succ';
-$n_var_pag = 2;
+$var_pag[2] = 'tutti_mesi';
+$var_pag[3] = 'show_bar';
+$var_pag[4] = 'tipo_tabella';
+$var_pag[5] = 'torna_indietro';
+$n_var_pag = 6;
 
 include("./costanti.php");
 include(C_DATI_PATH."/dati_connessione.php");
@@ -566,7 +570,7 @@ if ($priv_mod_prenota_iniziate != "s" and $id_periodo_corrente >= $id_inizio_pre
 if ($priv_mod_prenota_ore != "000") {
 $adesso = date("YmdHis",(time() + (C_DIFF_ORE * 3600)));
 $data_ins = risul_query($prenotazione_presente,$prenota_corr,'datainserimento');
-$limite = date("YmdHis",mktime((substr($data_ins,11,2) + $priv_mod_prenota_ore),substr($data_ins,14,2),substr($data_ins,17,2),substr($data_ins,5,2),substr($data_ins,8,2),substr($data_ins,0,4)));
+$limite = date("YmdHis",mktime((substr($data_ins,11,2) + (int) $priv_mod_prenota_ore),substr($data_ins,14,2),substr($data_ins,17,2),substr($data_ins,5,2),substr($data_ins,8,2),substr($data_ins,0,4)));
 if ($adesso > $limite) $link_modifica = "NO";
 } # fine if ($priv_mod_prenota_ore != "000")
 if ($link_modifica == "SI" and $id_clienti) {

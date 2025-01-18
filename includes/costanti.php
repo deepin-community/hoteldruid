@@ -2,7 +2,7 @@
 
 ##################################################################################
 #    HOTELDRUID
-#    Copyright (C) 2001-2021 by Marco Maria Francesco De Santis (marco@digitaldruid.net)
+#    Copyright (C) 2001-2023 by Marco Maria Francesco De Santis (marco@digitaldruid.net)
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published by
@@ -56,9 +56,10 @@ define('C_BACKUP_E_MODELLI_CON_NUOVI_DATI',"SI");
 define('C_CREA_SUBORDINAZIONI',"SI");
 define('C_CREA_NUOVI_APP',"SI");
 define('C_URL_NUOVI_APP',"");
+define('C_CREA_ANNO_MANUALMENTE',"NO");
 define('C_CREA_ANNO_NON_ATTUALE',"SI");
 define('C_PRIMO_ANNO_CREATO',2001);
-define('C_CANCELLA_ANNO_ATTUALE',"SI");
+define('C_CANCELLA_ANNO_ATTUALE',"NO");
 define('C_CAMBIA_TIPO_PERIODI',"SI");
 define('C_DISABILITA_PASS_ADMIN',"SI");
 define('C_MOSTRA_COPYRIGHT',"SI"); # You are not authorized to remove the copyright notice. Ask info@digitaldruid.net
@@ -73,14 +74,16 @@ define('C_MASSIMO_NUM_STORIA_SOLDI',140000);
 define('C_MASSIMO_NUM_COSTI',90000);
 define('C_MASSIMO_NUM_APP',0);
 define('C_MASSIMO_NUM_BYTE_UPLOAD',12582912);
+define('C_MASSIMO_NUM_EMAIL_GIORNALIERE',200); # NUM + (10%NUM * NUM_APP)
 define('C_CREA_ULTIMO_ACCESSO',"SI");
-#if (!defined('C_CARTELLA_CREA_MODELLI')) define('C_CARTELLA_CREA_MODELLI',"");
+if (!defined('C_CARTELLA_CREA_MODELLI')) define('C_CARTELLA_CREA_MODELLI',"./dati");
 #if (!defined('C_URL_CREA_MODELLI')) define('C_URL_CREA_MODELLI',"");
+#if (!defined('C_PERCORSO_PHPMAILER')) define('C_PERCORSO_PHPMAILER',"");
 define('C_DOMINIO_CREA_MODELLI',"");
 define('C_CHMOD_EXEC_MODELLI',"NO");
 define('C_CARTELLA_DOC',"");
 define('C_CARTELLA_FILES_REALI',"");
-define('C_CARTELLA_UPLOAD_IMG',"");
+define('C_CARTELLA_UPLOAD_IMG',"up_img");
 define('C_UTENTE_AZIONE_IC',"");
 define('C_UTENTE_BACKUP_ESTERNO',"");
 define('C_FILE_SCADENZA_ACCOUNT',"");
@@ -91,12 +94,16 @@ define('C_URL_FAVICON',"");
 define('C_SEC_LIMITE_LIBERA_APP',"");
 define('C_LIMITE_BACKUP_GIORNALIERI',0);
 define('C_LIMITE_CHIAMATE_API_AL_MINUTO',0);
-define('C_MASCHERA_EMAIL',"NO");
+# can be "SI", "NO" or "spf: ..." with spf fields (separated by spaces) that must exists in the domain of the masquerading email
+#if (!defined('C_MASCHERA_EMAIL')) define('C_MASCHERA_EMAIL',"");
 define('C_LIB_MERCADOPAGO',"");
 define('C_URL_MODULO_PAYBOX',"http://");
 define('C_NASCONDI_MARCA',"");
+define('C_OPZIONI_NASCONDI_MARCA',"n"); # 1: s-n open ext module for credit cards in new window yes-no
 define('C_DISABILITA_COD_EMAIL_MODELLI',"NO");
+define('C_USER_BOOKINGCOM_IC',"");
 define('C_PASSWORD_BOOKINGCOM_IC',"");
+define('C_USER_EXPEDIA_IC',"");
 define('C_PASSWORD_EXPEDIA_IC',"");
 define('C_API_KEY_BBLIVERATE_IC',"");
 define('C_URL_MOD_EXT_CARTE_CREDITO',"");

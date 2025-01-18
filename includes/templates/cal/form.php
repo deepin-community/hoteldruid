@@ -34,11 +34,11 @@ esegui_query("insert into $tablepersonalizza (idpersonalizza,valpersonalizza,idu
 
 
 # Prendo i dati dal file se già esistente
-if ($template_file_name[$lingua_modello]) $nome_file = $template_file_name[$lingua_modello];
+if (!empty($template_file_name[$lingua_modello])) $nome_file = $template_file_name[$lingua_modello];
 else {
 $nome_file = mext_cal($template_file_name['ita'],$pag,$lingua_modello);
 if ($nome_file == $template_file_name['en'] or $nome_file == $template_file_name['ita']) $nome_file = $lingua_modello."_".$template_file_name['en'];
-} # fine else if ($template_file_name[$lingua_modello])
+} # fine else if (!empty($template_file_name[$lingua_modello]))
 $modello_esistente = "NO";
 $lingua_mod_esist = $lingua_mex_1;
 unset($id_transazione);
@@ -46,14 +46,14 @@ if (@is_file("$percorso_cartella_modello/$nome_file")) {
 $modello_esistente = "SI";
 $lingua_mex = $lingua_mex_1;
 include("./includes/templates/$template_data_dir/functions.php");
-recupera_var_modello_cal($nome_file,$percorso_cartella_modello,$pag,$fr_frase,$num_frasi,$var_mod,$num_var_mod,$tipo_periodi,"NO",$anno_modello,$PHPR_TAB_PRE);
+recupera_var_modello_cal($nome_file,$percorso_cartella_modello,$pag,$fr_frase,$frase,$num_frasi,$var_mod,$num_var_mod,$tipo_periodi,"NO",$anno_modello,$lingua_modello,$PHPR_TAB_PRE);
 $lingua_mex = $lingua_orig;
 
 $tabelle_lock = array($tableversioni,$tabletransazioni);
 $tabelle_lock = lock_tabelle($tabelle_lock);
 $adesso = date("YmdHis",(time() + (C_DIFF_ORE * 3600)));
 list($usec, $sec) = explode(' ', microtime());
-mt_srand((float) $sec + ((float) $usec * 100000));
+mt_srand($sec + (int) ((float) $usec * 1000000.0));
 $val_casuale = mt_rand(100000,999999);
 $versione_transazione = prendi_numero_versione($tableversioni);
 $id_transazione = $adesso.$val_casuale.$versione_transazione;
@@ -72,20 +72,20 @@ $NO = mex2("NO",$pag,$lingua_mod_esist);
 echo "<form method=\"post\" action=\"crea_modelli.php\" enctype=\"multipart/form-data\"><div>
 <input type=\"hidden\" name=\"anno\" value=\"$anno\">
 <input type=\"hidden\" name=\"id_sessione\" value=\"$id_sessione\">
-<input type=\"hidden\" name=\"id_transazione\" value=\"".htmlspecialchars(fixset($id_transazione))."\">
+<input type=\"hidden\" name=\"id_transazione\" value=\"".htmlspecialchars(fixstr($id_transazione))."\">
 <input type=\"hidden\" name=\"crea_modello\" value=\"SI\">
 <input type=\"hidden\" name=\"fonte_dati_conn\" value=\"$fonte_dati_conn\">
-<input type=\"hidden\" name=\"T_PHPR_DB_TYPE\" value=\"".htmlspecialchars(fixset($T_PHPR_DB_TYPE))."\">
-<input type=\"hidden\" name=\"T_PHPR_DB_NAME\" value=\"".htmlspecialchars(fixset($T_PHPR_DB_NAME))."\">
-<input type=\"hidden\" name=\"T_PHPR_DB_HOST\" value=\"".htmlspecialchars(fixset($T_PHPR_DB_HOST))."\">
-<input type=\"hidden\" name=\"T_PHPR_DB_PORT\" value=\"".htmlspecialchars(fixset($T_PHPR_DB_PORT))."\">
-<input type=\"hidden\" name=\"T_PHPR_DB_USER\" value=\"".htmlspecialchars(fixset($T_PHPR_DB_USER))."\">
-<input type=\"hidden\" name=\"T_PHPR_DB_PASS\" value=\"".htmlspecialchars(fixset($T_PHPR_DB_PASS))."\">
-<input type=\"hidden\" name=\"T_PHPR_LOAD_EXT\" value=\"".htmlspecialchars(fixset($T_PHPR_LOAD_EXT))."\">
-<input type=\"hidden\" name=\"T_PHPR_TAB_PRE\" value=\"".htmlspecialchars(fixset($T_PHPR_TAB_PRE))."\">
+<input type=\"hidden\" name=\"T_PHPR_DB_TYPE\" value=\"".htmlspecialchars(fixstr($T_PHPR_DB_TYPE))."\">
+<input type=\"hidden\" name=\"T_PHPR_DB_NAME\" value=\"".htmlspecialchars(fixstr($T_PHPR_DB_NAME))."\">
+<input type=\"hidden\" name=\"T_PHPR_DB_HOST\" value=\"".htmlspecialchars(fixstr($T_PHPR_DB_HOST))."\">
+<input type=\"hidden\" name=\"T_PHPR_DB_PORT\" value=\"".htmlspecialchars(fixstr($T_PHPR_DB_PORT))."\">
+<input type=\"hidden\" name=\"T_PHPR_DB_USER\" value=\"".htmlspecialchars(fixstr($T_PHPR_DB_USER))."\">
+<input type=\"hidden\" name=\"T_PHPR_DB_PASS\" value=\"".htmlspecialchars(fixstr($T_PHPR_DB_PASS))."\">
+<input type=\"hidden\" name=\"T_PHPR_LOAD_EXT\" value=\"".htmlspecialchars(fixstr($T_PHPR_LOAD_EXT))."\">
+<input type=\"hidden\" name=\"T_PHPR_TAB_PRE\" value=\"".htmlspecialchars(fixstr($T_PHPR_TAB_PRE))."\">
 <input type=\"hidden\" name=\"anno_modello\" value=\"$anno_modello\">
 <input type=\"hidden\" name=\"lingua_modello\" value=\"$lingua_modello\">
-<input type=\"hidden\" name=\"perc_cart_mod_sel\" value=\"".htmlspecialchars(fixset($perc_cart_mod_sel))."\">
+<input type=\"hidden\" name=\"perc_cart_mod_sel\" value=\"".htmlspecialchars(fixstr($perc_cart_mod_sel))."\">
 <input type=\"hidden\" name=\"templ_data_dir\" value=\"$template_data_dir\">
 
 <div style=\"height: 4px;\"></div>
@@ -150,22 +150,26 @@ echo "".str_replace("?",":",mex("Mostrare il quadro indicativo della disponibili
 <option value=\"reg2\"$sel_REG2>".mex("Raggruppando gli appartamenti con la regola di assegnazione 2",'unit.php')."</option>
 <option value=\"pers\"$sel_PERS>".mex("Raggruppando gli appartamenti per numero di persone",'unit.php')."</option>
 </select><br><table><tr><td style=\"width: 25px;\"></td><td>";
-if (empty($stile_tabella_cal)) $stile_tabella_cal = htmlspecialchars("border=1 cellspacing=0 cellpadding=1  style=\"background-color: #dddddd; font-size:70%; text-align: center; margin-left: auto;  margin-right: auto;\"");
+if (empty($stile_tabella_cal)) $stile_tabella_cal = htmlspecialchars("border=1 cellspacing=0 cellpadding=1 style=\"font-size:70%; text-align: center; margin-left: auto;  margin-right: auto;\"");
 else $stile_tabella_cal = htmlspecialchars($stile_tabella_cal);
-if (empty($mostra_quadro_disponibilita) and empty($colore_inizio_settimana_quadro_disponibilita)) $colore_inizio_settimana_quadro_disponibilita = "#bbbbbb";
+if ($modello_esistente != "SI" and empty($colore_sfondo_quadro_disponibilita)) $colore_sfondo_quadro_disponibilita = "#dddddd";
+else $colore_sfondo_quadro_disponibilita = htmlspecialchars(fixstr($colore_sfondo_quadro_disponibilita));
+if ($modello_esistente != "SI" and empty($colore_inizio_settimana_quadro_disponibilita)) $colore_inizio_settimana_quadro_disponibilita = "#bbbbbb";
 else $colore_inizio_settimana_quadro_disponibilita = htmlspecialchars($colore_inizio_settimana_quadro_disponibilita);
-if (empty($mostra_quadro_disponibilita) and empty($colore_libero_quadro_disponibilita)) $colore_libero_quadro_disponibilita = "#0cc80c";
+if ($modello_esistente != "SI" and empty($colore_libero_quadro_disponibilita)) $colore_libero_quadro_disponibilita = "#0cc80c";
 else $colore_libero_quadro_disponibilita = htmlspecialchars($colore_libero_quadro_disponibilita);
-if (empty($mostra_quadro_disponibilita) and empty($colore_occupato_quadro_disponibilita)) $colore_occupato_quadro_disponibilita = "#f8011e";
+if ($modello_esistente != "SI" and empty($colore_occupato_quadro_disponibilita)) $colore_occupato_quadro_disponibilita = "#f8011e";
 else $colore_occupato_quadro_disponibilita = htmlspecialchars($colore_occupato_quadro_disponibilita);
-#if (empty($mostra_quadro_disponibilita) and empty($apertura_font_quadro_disponibilita)) $apertura_font_quadro_disponibilita = "<font size=&quot;-2&quot;>";
-if (empty($mostra_quadro_disponibilita) and empty($apertura_font_quadro_disponibilita)) $apertura_font_quadro_disponibilita = "";
-else $apertura_font_quadro_disponibilita = htmlspecialchars($apertura_font_quadro_disponibilita);
-#if (empty($mostra_quadro_disponibilita) and empty($chiusura_font_quadro_disponibilita)) $chiusura_font_quadro_disponibilita = "</font>";
-if (empty($mostra_quadro_disponibilita) and empty($chiusura_font_quadro_disponibilita)) $chiusura_font_quadro_disponibilita = "";
-else $chiusura_font_quadro_disponibilita = htmlspecialchars($chiusura_font_quadro_disponibilita);
+#if ($modello_esistente != "SI" and empty($apertura_font_quadro_disponibilita)) $apertura_font_quadro_disponibilita = "<font size=&quot;-2&quot;>";
+if ($modello_esistente != "SI" and empty($apertura_font_quadro_disponibilita)) $apertura_font_quadro_disponibilita = "";
+else $apertura_font_quadro_disponibilita = htmlspecialchars(fixstr($apertura_font_quadro_disponibilita));
+#if ($modello_esistente != "SI" and empty($chiusura_font_quadro_disponibilita)) $chiusura_font_quadro_disponibilita = "</font>";
+if ($modello_esistente != "SI" and empty($chiusura_font_quadro_disponibilita)) $chiusura_font_quadro_disponibilita = "";
+else $chiusura_font_quadro_disponibilita = htmlspecialchars(fixstr($chiusura_font_quadro_disponibilita));
 echo "".mext_cal("Stile tabella",$pag).":
  <input type=\"text\" name=\"stile_tabella_cal\" size=\"75\" value=\"$stile_tabella_cal\"><br>
+".mex("Colore di sfondo della tabella",$pag).":
+ <input type=\"text\" name=\"colore_sfondo_quadro_disponibilita\" value=\"$colore_sfondo_quadro_disponibilita\" size=\"10\"><br>
 ".mex("Colore del giorno di inizio settimana",$pag).":
  <input type=\"text\" name=\"colore_inizio_settimana_quadro_disponibilita\" value=\"$colore_inizio_settimana_quadro_disponibilita\" size=\"10\"><br>
 ".mex("Colore dei periodi liberi",$pag).":
@@ -203,7 +207,7 @@ $numero_tariffe = risul_query($rigatariffe,0,'nomecostoagg');
 for ($numtariffa = 1 ; $numtariffa <= $numero_tariffe ; $numtariffa++) {
 if (isset($tariffe_mostra[$numtariffa]) and strtoupper($tariffe_mostra[$numtariffa]) == $SI) $checked = " checked";
 else $checked = "";
-if ($attiva_tariffe_consentite == "n" or $tariffe_consentite_vett[$numtariffa] == "SI" or $checked) {
+if ($attiva_tariffe_consentite == "n" or (isset($tariffe_consentite_vett[$numtariffa]) and $tariffe_consentite_vett[$numtariffa] == "SI") or $checked) {
 if ($celle == 1) echo "<tr>";
 $tariffa = "tariffa".$numtariffa;
 $nometariffa=risul_query($rigatariffe,0,$tariffa);
@@ -223,7 +227,7 @@ echo "</tr>";
 $celle = 0;
 } # fine if ($celle == 3)
 $celle++;
-} # fine if ($attiva_tariffe_consentite == "n" or $tariffe_consentite_vett[$numtariffa] == "SI" or $checked)
+} # fine if ($attiva_tariffe_consentite == "n" or (isset($tariffe_consentite_vett[$numtariffa]) and...
 } # fine for $numtariffa
 if ($celle != 1) {
 for ($num1 = $celle ; $num1 <= $num_colonne ; $num1++) echo "<td>&nbsp;</td>";
@@ -239,7 +243,7 @@ $num_colonne = 3;
 $tableregole_modello = $PHPR_TAB_PRE."regole".$anno_modello;
 $regole = esegui_query("select * from $tableregole_modello where app_agenzia != '' and (motivazione2 != 'x' or motivazione2 is NULL) order by app_agenzia");
 $num_regole = numlin_query($regole);
-unset($motivazioni_presenti);
+$motivazioni_presenti = array();
 $num_motivazioni = 0;
 for ($num1 = 0 ; $num1 < $num_regole ; $num1 = $num1 + 1) {
 $motivazione = risul_query($regole,$num1,'motivazione');
@@ -248,7 +252,7 @@ $motivazione = " ";
 $motivazione_vedi = mex("nessuna",$pag);
 } # fine if (!$motivazione)
 else $motivazione_vedi = $motivazione;
-if (strtoupper($considera_motivazioni_regola1[$motivazione]) == $SI) $checked = " checked";
+if (strtoupper(fixstr($considera_motivazioni_regola1[$motivazione])) == $SI) $checked = " checked";
 else $checked = "";
 $regola1_consentita = 0;
 if ($attiva_regole1_consentite == "n" or $checked) $regola1_consentita = 1;
@@ -256,11 +260,11 @@ else for ($num2 = 0 ; $num2 < count($regole1_consentite) ; $num2++) if ($regole1
 if ($regola1_consentita) {
 if ($celle == 1) echo "<tr>";
 $idregole = risul_query($regole,$num1,'idregole');
-if ($motivazioni_presenti[$motivazione] != "SI") {
-$motivazioni_presenti[$motivazione] = "SI";
+if (!isset($motivazioni_presenti[$motivazione])) {
+$motivazioni_presenti[$motivazione] = 1;
 $var_motivazione = "var_mot_".$num_motivazioni;
 $num_motivazioni++;
-if (!$considera_motivazioni_regola1['array_esistente']) $checked = " checked";
+if (empty($considera_motivazioni_regola1['array_esistente'])) $checked = " checked";
 echo "<td><label><input type=\"checkbox\" name=\"$var_motivazione\" value=\"$motivazione\"$checked> $motivazione_vedi</label></td>";
 if ($celle == $num_colonne) {
 echo "</tr>";
@@ -350,10 +354,10 @@ $colori_tema = array();
 if ($tema_sel) $valori_tema = $template_theme_values[$tema_sel];
 $num_valori = count($valori_tema);
 for ($num1 = 1 ; $num1 <= $num_valori ; $num1++) {
-if (!isset(${"valore_tema_".$num1}) or !strcmp(${"valore_tema_".$num1},"")) ${"valore_tema_".$num1} = $valori_tema[$num1]['default'];
+if (!isset(${"valore_tema_".$num1}) or !strcmp((string) ${"valore_tema_".$num1},"")) ${"valore_tema_".$num1} = $valori_tema[$num1]['default'];
 $valore_sost = ${"valore_tema_".$num1};
-if (!strcmp($valore_sost,"")) $valore_sost = fixset($valori_tema[$num1]['null']);
-elseif (isset($valori_tema[$num1]['replace']) and strcmp($valori_tema[$num1]['replace'],"")) $valore_sost = str_replace("[theme_value_$num1]",$valore_sost,$valori_tema[$num1]['replace']);
+if (!strcmp((string) $valore_sost,"")) $valore_sost = fixstr($valori_tema[$num1]['null']);
+elseif (isset($valori_tema[$num1]['replace']) and strcmp((string) $valori_tema[$num1]['replace'],"")) $valore_sost = str_replace("[theme_value_$num1]",$valore_sost,$valori_tema[$num1]['replace']);
 $template_theme_html_pre[$tema_sel] = str_replace("[theme_value_$num1]",$valore_sost,$template_theme_html_pre[$tema_sel]);
 $template_theme_html_post[$tema_sel] = str_replace("[theme_value_$num1]",$valore_sost,$template_theme_html_post[$tema_sel]);
 } # fine for $num1
@@ -419,7 +423,7 @@ agg_tema_sel();
 -->
 </script>
 
-<input type=\"hidden\" name=\"cambia_frasi\" value=\"".htmlspecialchars(fixset($cambia_frasi))."\">
+<input type=\"hidden\" name=\"cambia_frasi\" value=\"".htmlspecialchars(fixstr($cambia_frasi))."\">
 <input type=\"hidden\" name=\"modello_esistente\" value=\"$modello_esistente\">";
 if (!empty($cambia_frasi)) {
 echo "<br><table style=\"background-color: #000000; margin-left: auto; margin-right: auto;\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"100%\">
@@ -441,13 +445,13 @@ for ($num_fr = 0 ; $num_fr < $num_frasi ; $num_fr++) echo "<input type=\"hidden\
 } # fine elseif ($modello_esistente == "SI")
 
 echo "<br><div style=\"text-align: center;\"><input type=\"hidden\" name=\"$template_name\" value=\"SI\">
-<button class=\"vmon\" type=\"submit\"><div>".mext_cal("Crea la pagina con il calendario della disponibilità",$pag)."</div></button>
+<button class=\"vmon\" id=\"modi\" type=\"submit\"><div>".mext_cal("Crea la pagina con il calendario della disponibilità",$pag)."</div></button>
 </div></div></form><br>
 <hr style=\"width: 95%\"><br><div style=\"text-align: center;\">
 <form method=\"post\" action=\"crea_modelli.php\"><div>
 <input type=\"hidden\" name=\"anno\" value=\"$anno\">
 <input type=\"hidden\" name=\"id_sessione\" value=\"$id_sessione\">
-<button class=\"gobk\" type=\"submit\"><div>".mex("Torna indietro",$pag)."</div></button>
+<button class=\"gobk\" id=\"indi\" type=\"submit\"><div>".mex("Torna indietro",$pag)."</div></button>
 </div></form><br></div>";
 
 } # fine if (function_exists('esegui_query'))

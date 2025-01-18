@@ -2,7 +2,7 @@
 
 ##################################################################################
 #    HOTELDRUID
-#    Copyright (C) 2001-2019 by Marco Maria Francesco De Santis (marco@digitaldruid.net)
+#    Copyright (C) 2001-2023 by Marco Maria Francesco De Santis (marco@digitaldruid.net)
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published by
@@ -49,7 +49,13 @@ $num_var_mod = count($var_mod);
 
 
 
-function recupera_var_modello_rat ($nome_file,$percorso_cartella_modello,$pag,$fr_frase,$num_frasi,$var_mod,$num_var_mod,$tipo_periodi,$var_per_crea_mod,$anno_modello,$PHPR_TAB_PRE) {
+function recupera_var_modello_rat ($nome_file,$percorso_cartella_modello,$pag,&$fr_frase,&$frase,$num_frasi,$var_mod,$num_var_mod,$tipo_periodi,$var_per_crea_mod,$anno_modello,$lingua_modello,$PHPR_TAB_PRE) {
+
+# Se sono state aggiunte frasi prima dell'uscita di una nuova versione
+/*for ($num_fr = 0 ; $num_fr < $num_frasi ; $num_fr++) {
+global ${$fr_frase[$num_fr]};
+${$fr_frase[$num_fr]} = mext_rat($frase[$num_fr],$pag,$lingua_modello);
+} # fine for $num_fr*/
 
 $linee_file = file("$percorso_cartella_modello/$nome_file");
 $num_linee_file = count($linee_file);
@@ -286,17 +292,23 @@ if ($continua != "NO") {
 $SI = mex("SI",$pag);
 $NO = mex("NO",$pag);
 global $M_PHPR_DB_TYPE,$M_PHPR_DB_NAME,$M_PHPR_DB_HOST,$M_PHPR_DB_PORT,$M_PHPR_DB_USER,$M_PHPR_DB_PASS,$M_PHPR_LOAD_EXT,$M_PHPR_TAB_PRE,$m_stile_soldi,$m_stile_data,$m_valuta_sing,$m_valuta_plur;
-if ($tipo_db == "mysql" and @function_exists('mysqli_connect')) $tipo_db = "mysqli";
-$M_PHPR_DB_TYPE = $tipo_db;
-$M_PHPR_DB_NAME = $nome_db;
-$M_PHPR_DB_HOST = $computer_db;
-$M_PHPR_DB_PORT = $porta_db;
-$M_PHPR_DB_USER = $utente_db;
-$M_PHPR_DB_PASS = $password_db;
+if (isset($tipo_db) and $tipo_db == "mysql" and @function_exists('mysqli_connect')) $tipo_db = "mysqli";
+$M_PHPR_DB_TYPE = fixstr($tipo_db);
+$M_PHPR_DB_NAME = fixstr($nome_db);
+$M_PHPR_DB_HOST = fixstr($computer_db);
+$M_PHPR_DB_PORT = fixstr($porta_db);
+$M_PHPR_DB_USER = fixstr($utente_db);
+$M_PHPR_DB_PASS = fixstr($password_db);
+if (strtoupper(fixstr($carica_estensione_db)) == $SI) $carica_estensione_db = "SI";
+else $carica_estensione_db = "NO";
 $M_PHPR_LOAD_EXT = $carica_estensione_db;
-$M_PHPR_TAB_PRE = $prefisso_tabelle_db;
-$m_stile_soldi = $stile_soldi;
-$m_stile_data = $stile_data;
+$M_PHPR_TAB_PRE = fixstr($prefisso_tabelle_db);
+$m_stile_soldi = "";
+if ($stile_soldi == mex("europa",$pag)) $m_stile_soldi = "europa";
+if ($stile_soldi == mex("usa",$pag)) $m_stile_soldi = "usa";
+$m_stile_data = "";
+if ($stile_data == mex("europa",$pag)) $m_stile_data = "europa";
+if ($stile_data == mex("usa",$pag)) $m_stile_data = "usa";
 $m_valuta_sing = $fr_Valuta_sing;
 $m_valuta_plur = $fr_Valuta_plur;
 
@@ -322,7 +334,7 @@ $attiva_costo = "attiva_costo".$dati_ca[$numca]['id'];
 $nome_costo_imposto = "nome_costo_imposto".$dati_ca[$numca]['id'];
 global $$attiva_costo,$$nome_costo_imposto;
 $$attiva_costo = "";
-if (strtoupper($costi_aggiuntivi_mostra[$dati_ca[$numca]['id']]) == $SI) $$attiva_costo = "SI";
+if (strtoupper(fixstr($costi_aggiuntivi_mostra[$dati_ca[$numca]['id']])) == $SI) $$attiva_costo = "SI";
 $$nome_costo_imposto = fixset($nomi_costi_agg_imposti[$dati_ca[$numca]['id']]);
 } # fine for $numca
 if (strtoupper($mostra_caparra) == $SI) $mostra_caparra = "SI";
@@ -392,8 +404,25 @@ if ($mostra_date_passate != "NO") $mostra_date_passate = "SI";
 $date_in_menu = "";
 $idfineperiodo_prec = -10;
 if (!$num_periodi_date or controlla_num_pos($num_periodi_date) == "NO") $num_periodi_date = 1;
+$vett_ini = array();
+$vett_fine = array();
+$vett_int = array();
 for ($num1 = 0 ; $num1 < $num_periodi_date ; $num1++) {
 global ${"inizioperiodo".$num1},${"fineperiodo".$num1},${"intervalloperiodo".$num1};
+$vett_ini[$num1] = ${"inizioperiodo".$num1};
+$vett_fine[$num1] = ${"fineperiodo".$num1};
+$vett_int[$num1] = ${"intervalloperiodo".$num1};
+} # fine for $num1
+$num1 = 0;
+asort($vett_ini);
+reset ($vett_ini);
+foreach ($vett_ini as $ord => $val) {
+${"inizioperiodo".$num1} = $vett_ini[$ord];
+${"fineperiodo".$num1} = $vett_fine[$ord];
+${"intervalloperiodo".$num1} = $vett_int[$ord];
+$num1++;
+} # fine foreach ($vett_ini as $ord => $val)
+for ($num1 = 0 ; $num1 < $num_periodi_date ; $num1++) {
 $inizioperiodo = aggslashdb(${"inizioperiodo".$num1});
 $fineperiodo = aggslashdb(${"fineperiodo".$num1});
 $idinizioperiodo = esegui_query("select idperiodi from $tableperiodi_modello where datainizio = '$inizioperiodo' ");
@@ -531,8 +560,10 @@ if ($file_js_frame == "https://") $file_js_frame = "";
 if (!preg_match("/^((?!php).)+\.js$/i",$file_js_frame)) $file_js_frame = "";
 
 $num_colori = 0;
+$num_valori = 0;
+$tema_trovato = 0;
 $extra_head_frame = "";
-if (strcmp($tema_modello,"")) {
+if (strcmp((string) $tema_modello,"")) {
 include("./includes/templates/$template_data_dir/themes.php");
 $num_temi = count($template_theme_name);
 for ($num1 = 1 ; $num1 <= $num_temi ; $num1++) {
@@ -552,8 +583,8 @@ global ${"valore_tema_".$num1};
 if (!empty($valori_tema[$num1]['pattern']) and !preg_match("/".$valori_tema[$num1]['pattern']."/i",${"valore_tema_".$num1})) ${"valore_tema_".$num1} = "";
 ${"valore_tema_".$num1} = formatta_input_var_x_file(${"valore_tema_".$num1});
 $valore_sost = ${"valore_tema_".$num1};
-if (!strcmp($valore_sost,"")) $valore_sost = fixset($valori_tema[$num1]['null']);
-elseif (isset($valori_tema[$num1]['replace']) and strcmp($valori_tema[$num1]['replace'],"")) $valore_sost = str_replace("[theme_value_$num1]",$valore_sost,$valori_tema[$num1]['replace']);
+if (!strcmp((string) $valore_sost,"")) $valore_sost = fixstr($valori_tema[$num1]['null']);
+elseif (isset($valori_tema[$num1]['replace']) and strcmp((string) $valori_tema[$num1]['replace'],"")) $valore_sost = str_replace("[theme_value_$num1]",$valore_sost,$valori_tema[$num1]['replace']);
 $prima_parte_html = str_replace("[theme_value_$num1]",$valore_sost,$prima_parte_html);
 $ultima_parte_html = str_replace("[theme_value_$num1]",$valore_sost,$ultima_parte_html);
 $extra_head_frame = str_replace("[theme_value_$num1]",$valore_sost,$extra_head_frame);
@@ -575,7 +606,7 @@ $extra_head_frame = str_replace("[theme_color_$num1]",${"colore_tema_".$num1},$e
 } # fine for $num1
 } # fine if ($tema_trovato)
 else $tema_modello = "";
-} # fine if (strcmp($tema_modello,""))
+} # fine if (strcmp((string) $tema_modello,""))
 
 if (defined('C_EXT_DB_DATA_PATH') and C_EXT_DB_DATA_PATH) {
 $HOTELD_DB_TYPE = "";
@@ -589,9 +620,9 @@ include(C_EXT_DB_DATA_PATH);
 if ($HOTELD_DB_TYPE) $M_PHPR_DB_TYPE = "";
 if ($HOTELD_DB_NAME) $M_PHPR_DB_NAME = "";
 if ($HOTELD_DB_HOST) $M_PHPR_DB_HOST = "";
-if (strcmp($HOTELD_DB_PORT,"")) $M_PHPR_DB_PORT = "";
+if (strcmp((string) $HOTELD_DB_PORT,"")) $M_PHPR_DB_PORT = "";
 if ($HOTELD_DB_USER) $M_PHPR_DB_USER = "";
-if (strcmp($HOTELD_DB_PASS,"")) $M_PHPR_DB_PASS = "";
+if (strcmp((string) $HOTELD_DB_PASS,"")) $M_PHPR_DB_PASS = "";
 if ($HOTELD_TAB_PRE) $M_PHPR_TAB_PRE = "";
 } # fine if (defined('C_EXT_DB_DATA_PATH') and C_EXT_DB_DATA_PATH)
 
@@ -665,12 +696,12 @@ else $cost_percorso_a_dati = "./";
 } # fine else if (substr(C_DATI_PATH,0,1) == "/")
 } # fine if ((string) $cost_percorso_a_dati == "")
 
-if ($template_file_name[$lingua_modello]) $nome_file = $template_file_name[$lingua_modello];
+if (!empty($template_file_name[$lingua_modello])) $nome_file = $template_file_name[$lingua_modello];
 else {
 $template_file_name_m = mext_rat($template_file_name['ita'],$pag,$lingua_modello);
 if ($template_file_name_m != $template_file_name['ita'] and $template_file_name_m != $template_file_name['en'] and $template_file_name_m != $template_file_name['es']) $nome_file = $template_file_name_m;
 else $nome_file = $lingua_modello."_".$template_file_name['en'];
-} # fine else if ($template_file_name[$lingua_modello])
+} # fine else if (!empty($template_file_name[$lingua_modello]))
 $file = @fopen("$percorso_cartella_modello/$nome_file","w+");
 if ($file) {
 flock($file,2);
@@ -791,8 +822,10 @@ if (strcmp(\$HOTELD_DB_PASS,\"\")) \$PHPR_DB_PASS = \$HOTELD_DB_PASS;
 if (\$HOTELD_TAB_PRE) \$PHPR_TAB_PRE = \$HOTELD_TAB_PRE;
 ");
 fwrite($file,"\$lingua_modello = \$".mex("var_lingua_modello",$pag).";
+\$stile_soldi = \"\";
 if (\$".mex("var_stile_soldi",$pag)." == \"".mex("europa",$pag)."\") \$stile_soldi = \"europa\";
 if (\$".mex("var_stile_soldi",$pag)." == \"".mex("usa",$pag)."\") \$stile_soldi = \"usa\";
+\$stile_data = \"\";
 if (\$".mex("var_stile_data",$pag)." == \"".mex("europa",$pag)."\") \$stile_data = \"europa\";
 if (\$".mex("var_stile_data",$pag)." == \"".mex("usa",$pag)."\") \$stile_data = \"usa\";
 if (strtoupper(\$".mex("var_anteponi_nome_valuta",$pag).") == \"$SI\") \$anteponi_nome_valuta = \"SI\";
@@ -1001,9 +1034,11 @@ for ($num1 = 0 ; $num1 < $n_num_periodi_date ; $num1++) {
 $inizioperiodo = $n_inizioperiodo[$num1];
 $fineperiodo = $n_fineperiodo[$num1];
 $inizioperiodo = esegui_query("select datainizio from $tableperiodi where idperiodi = '$inizioperiodo' ");
-$inizioperiodo = @risul_query($inizioperiodo,0,datainizio);
+if (numlin_query($inizioperiodo)) $inizioperiodo = risul_query($inizioperiodo,0,'datainizio');
+else $inizioperiodo = null;
 $fineperiodo = esegui_query("select datafine from $tableperiodi where idperiodi = '$fineperiodo' ");
-$fineperiodo = @risul_query($fineperiodo,0,datafine);
+if (numlin_query($fineperiodo)) $fineperiodo = risul_query($fineperiodo,0,'datafine');
+else $fineperiodo = null;
 if (!$inizioperiodo or !$fineperiodo) $n_num_periodi_date = 0;
 ${"inizioperiodo".$num1} = $inizioperiodo;
 ${"fineperiodo".$num1} = $fineperiodo;

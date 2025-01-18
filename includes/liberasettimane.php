@@ -2,7 +2,7 @@
 
 ##################################################################################
 #    HOTELDRUID
-#    Copyright (C) 2001-2019 by Marco Maria Francesco De Santis (marco@digitaldruid.net)
+#    Copyright (C) 2001-2023 by Marco Maria Francesco De Santis (marco@digitaldruid.net)
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published by
@@ -22,7 +22,9 @@
 
 
 
+global $debug,$sec_limite_libsett;
 $debug = "off";
+#if (defined('C_DEBUG_HD') and C_DEBUG_HD == "on") $debug = "on";
 $sec_limite_libsett = 0;
 #apd_set_pprof_trace();
 #if (function_exists('ini_set')) @ini_set('xdebug.max_nesting_level',1000000);
@@ -45,8 +47,9 @@ $limiti_var['tutti_fissi'] = risul_query($prenota_tutte_fisse,0,'valpersonalizza
 if ($limiti_var['tutti_fissi'] != "SI") {
 if (defined("C_SEC_LIMITE_LIBERA_APP") and C_SEC_LIMITE_LIBERA_APP != "") $sec_limite_libsett = C_SEC_LIMITE_LIBERA_APP;
 else $sec_limite_libsett = $limiti_var['tutti_fissi'];
-$limiti_var['t_limite'] = (time() + $sec_limite_libsett);
 } # fine if ($limiti_var['tutti_fissi'] != "SI")
+else $sec_limite_libsett = 2;
+$limiti_var['t_limite'] = (time() + $sec_limite_libsett);
 } # fine if (!isset($limiti_var['tutti_fissi']))
 if (!isset($limiti_var['lim_prenota_temp'])) {
 $minuti_durata_insprenota = esegui_query("select valpersonalizza_num from $tablepersonalizza where idpersonalizza = 'minuti_durata_insprenota' and idutente = '1'");
@@ -55,7 +58,7 @@ $limiti_var['lim_prenota_temp'] = date("Y-m-d H:i:s",(time() + (C_DIFF_ORE * 360
 } # fine if (!isset($limiti_var['lim_prenota_temp']))
 
 # metto i dati della tabella appartamenti in $dati_app
-if (!$dati_app) {
+if (empty($dati_app)) {
 $idapp = esegui_query("select idappartamenti,maxoccupanti,app_vicini from $tableappartamenti order by priorita");
 $numappartamenti = numlin_query($idapp);
 $grp_vicini = array();
@@ -106,7 +109,7 @@ $dati_app['grp_vicini_num'][count($dati_app['grp_vicini_num'])] = count($val_vic
 $dati_app['grp_vicini'][count($dati_app['grp_vicini'])] = ",".implode(",",$val_vicini).",";
 } # fine if ($grp_vicini[$num1])
 } # fine for $num1
-} # fine if (!$dati_app)
+} # fine if (empty($dati_app))
 
 if (!isset($limiti_var['ini']) or (string) $limiti_var['ini'] == "") $limiti_var['ini'] = ($limiti_var['n_fine'] + 1);
 if (!isset($limiti_var['fine']) or (string) $limiti_var['fine'] == "") $limiti_var['fine'] = ($limiti_var['n_ini'] - 1);
@@ -118,11 +121,12 @@ if ($lista_comp) {
 $lista_comp = explode(",",substr($lista_comp,1));
 $num_lista_comp = count($lista_comp);
 for ($num1 = 0 ; $num1 < $num_lista_comp ; $num1++) {
-if (!$app_prenota_id[$lista_comp[$num1]]) {
+if (empty($app_prenota_id[$lista_comp[$num1]])) {
 $query_comp .= "idprenota = '".$lista_comp[$num1]."' or ";
-} # fine if (!$app_prenota_id[$lista_comp[$num1]])
+} # fine if (empty($app_prenota_id[$lista_comp[$num1]]))
 } # fine for $num1
 $query_comp = substr($query_comp,0,-3);
+$lista_comp = "";
 } # fine if ($lista_comp)
 if ($query_comp) $prenota_in_var = esegui_query("select idprenota,idclienti,idappartamenti,iddatainizio,iddatafine,assegnazioneapp,app_assegnabili,num_persone,idprenota_compagna,checkin,datainserimento from $tableprenota where $query_comp ");
 else break;
@@ -275,7 +279,7 @@ function aggiorna_tableprenota ($app_prenota_id,$app_orig_prenota_id,$nome_table
 $fatto = 1;
 if (@is_array($app_orig_prenota_id)) {
 reset($app_orig_prenota_id);
-foreach ($app_orig_prenota_id as $idprenota => $app_prenota) if (!strcmp($app_prenota_id[$idprenota],"")) $fatto = 0;
+foreach ($app_orig_prenota_id as $idprenota => $app_prenota) if (!strcmp(fixstr($app_prenota_id[$idprenota]),"")) $fatto = 0;
 if ($fatto) {
 reset($app_orig_prenota_id);
 foreach ($app_orig_prenota_id as $idprenota => $app_prenota) {
@@ -433,12 +437,12 @@ if (!isset($limiti_var_orig['ini']) or $limiti_var['ini'] < $limiti_var_orig['in
 if (@is_array($app_orig_prenota_id)) {
 reset($app_orig_prenota_id);
 foreach ($app_orig_prenota_id as $idp => $app) {
-if (!strcmp($app_prenota_id[$idp],"")) {
+if (!strcmp(fixstr($app_prenota_id[$idp]),"")) {
 $app_prenota_id[$idp] = $app;
 for ($num1 = $inizio_prenota_id[$idp] ; $num1 <= $fine_prenota_id[$idp] ; $num1++) {
 $prenota_in_app_sett[$app][$num1] = $idp;
 } # fine for $num1
-} # fine if (!strcmp($app_prenota_id[$key2],""))
+} # fine if (!strcmp(fixstr($app_prenota_id[$idp]),""))
 } # fine foreach ($app_orig_prenota_id as $idp => $app)
 } # fine if (@is_array($app_orig_prenota_id))
 } # fine if (!isset($limiti_var_orig['ini']) or $limiti_var['ini'] < $limiti_var_orig['ini'] or...
@@ -520,7 +524,7 @@ if (!isset($profondita['controllato_tutti_occupati']) or $profondita['controllat
 $tutti_occupati = controlla_tutti_occupati($idinizio,$idfine,$app_richiesti,$prenota_in_app_sett,$app_prenota_id,$app_assegnabili_id,$dati_app,$fine_prenota_id);
 $profondita['controllato_tutti_occupati'] = "SI";
 } # fine if (!isset($profondita['controllato_tutti_occupati']) or $profondita[controllato_tutti_occupati] != "SI")
-if ($tutti_occupati == "SI") $fatto = "SI";
+if (isset($tutti_occupati) and $tutti_occupati == "SI") $fatto = "SI";
 else $fatto = "NO";
 $num_da_liberare = 1;
 $num_da_liberare2 = 1;
@@ -578,10 +582,10 @@ $grp_vicini = explode(",",substr($dati_app['grp_vicini'][$num2],1,-1));
 for ($num3 = 0 ; $num3 < $dati_app['grp_vicini_num'][$num2] ; $num3++) {
 $prenotainperiodo = prenota_in_app_e_periodo($grp_vicini[$num3],$idinizio_corr,$idfine_corr,$prenota_in_app_sett,$fine_prenota_id,$num_pp);
 for ($num4 = 1 ; $num4 <= $num_pp ; $num4++) {
-if (!$app_assegnabili_id[$prenotainperiodo[$num4]]) {
+if (empty($app_assegnabili_id[$prenotainperiodo[$num4]])) {
 $num_vicini_disp--;
 break;
-} # fine if (!$app_assegnabili_id[$prenotainperiodo[$num4]])
+} # fine if (empty($app_assegnabili_id[$prenotainperiodo[$num4]]))
 elseif ($app_assegnabili_id[$prenotainperiodo[$num4]] != "v") {
 $vett_assegnabili = explode(",",$app_assegnabili_id[$prenotainperiodo[$num4]]);
 $num_assegnabili = count($vett_assegnabili);
@@ -759,25 +763,25 @@ break;
 } # fine (!$num_pp2 and...
 else {
 # Se non si possono spostare vedere se sono da scambiare
-if ($app_assegnabili_id[0][$idprenotainperiodo]) $prenota_comp_presente = "SI";
+if (!empty($app_assegnabili_id[0][$idprenotainperiodo])) $prenota_comp_presente = "SI";
 $prenota_fissa_presente = "NO";
 for ($num4 = 1 ; $num4 <= $num_pp2 ; $num4++) {
 $idprenotainperiodo2 = $prenotainperiodo2[$num4];
-if (!$app_assegnabili_id[$idprenotainperiodo2]) $prenota_fissa_presente = "SI";
+if (empty($app_assegnabili_id[$idprenotainperiodo2])) $prenota_fissa_presente = "SI";
 else {
 # se $idprenotainperiodo è uguale o minore di $idprenotainperiodo2 e ne contiene gli app. assegnabili è inutile fare lo scambio
 if ($inizio_prenota_id[$idprenotainperiodo2] <= $inizio_prenota_id[$idprenotainperiodo] and $fine_prenota_id[$idprenotainperiodo2] >= $fine_prenota_id[$idprenotainperiodo]) {
 if ($app_assegnabili_id[$idprenotainperiodo] == "v") $prenota_fissa_presente = "SI";
 else {
-if ($app_assegnabili_id[$idprenotainperiodo2] != "v" and !$app_assegnabili_id[0][$idprenotainperiodo]) {
+if ($app_assegnabili_id[$idprenotainperiodo2] != "v" and empty($app_assegnabili_id[0][$idprenotainperiodo])) {
 $vett_assegnabili = explode (",",$app_assegnabili_id[$idprenotainperiodo2]);
 $num_assegnabili = count($vett_assegnabili);
 $lista_app_contenuta = "SI";
 for ($num5 = 0 ; $num5 < $num_assegnabili ; $num5++) {
-if ($app_assegnabili[$idprenotainperiodo][$vett_assegnabili[$num5]] != "SI") { $lista_app_contenuta = "NO"; break; }
+if (!isset($app_assegnabili[$idprenotainperiodo][$vett_assegnabili[$num5]]) or $app_assegnabili[$idprenotainperiodo][$vett_assegnabili[$num5]] != "SI") { $lista_app_contenuta = "NO"; break; }
 } # fine for $num5
 if ($lista_app_contenuta == "SI") $prenota_fissa_presente = "SI";
-} # fine if ($app_assegnabili_id[$idprenotainperiodo2] != "v" and !$app_assegnabili_id[0][$idprenotainperiodo])
+} # fine if ($app_assegnabili_id[$idprenotainperiodo2] != "v" and empty($app_assegnabili_id[0][$idprenotainperiodo]))
 } # fine else if ($app_assegnabili_id[$idprenotainperiodo] == "v")
 } # fine if ($inizio_prenota_id[$idprenotainperiodo2] <= $inizio_prenota_id[$idprenotainperiodo] and...
 } # fine else if (!$app_assegnabili_id[$idprenotainperiodo2])
@@ -872,21 +876,21 @@ $num_pp = $num_pp_da_liberare[$num1];
 # Muovo le prenotazioni liberabili
 for ($num2 = 1 ; $num2 <= $num_pp ; $num2++) {
 $idprenotainperiodo = $prenotainperiodo[$num2];
-if ($liberabile[$idprenotainperiodo] == "SI") {
+if (isset($liberabile[$idprenotainperiodo]) and $liberabile[$idprenotainperiodo] == "SI") {
 $n_app = $nuovo_app[$idprenotainperiodo];
 for ($num3 = $inizio_prenota_id[$idprenotainperiodo] ; $num3 <= $fine_prenota_id[$idprenotainperiodo] ; $num3++) {
 $n_prenota_in_app_sett[$numapp][$num3] = "";
 $n_prenota_in_app_sett[$n_app][$num3] = $idprenotainperiodo;
 } # fine for $num3
 $n_app_prenota_id[$idprenotainperiodo] = $n_app;
-} # fine if ($liberabile[$idpenotainperiodo] == "SI")
+} # fine if (isset($liberabile[$idprenotainperiodo]) and $liberabile[$idpenotainperiodo] == "SI")
 } # fine for $num2
 
 # Riempio gli spazi vuoti con prenotazioni kostanti.
 $idinizio_prenota_falsa = $idinizio;
 $prenota_falsa_da_inserire = "NO";
 for ($num2 = $idinizio ; $num2 <= ($idfine+1) ; $num2++) {
-if ($n_prenota_in_app_sett[$numapp][$num2] or $num2 == ($idfine+1)) {
+if (!empty($n_prenota_in_app_sett[$numapp][$num2]) or $num2 == ($idfine+1)) {
 if ($prenota_falsa_da_inserire == "SI") {
 $nuova_profondita['tot_prenota_attuale']++;
 $n_app_prenota_id[$nuova_profondita['tot_prenota_attuale']] = $numapp;
@@ -898,11 +902,11 @@ $n_prenota_in_app_sett[$numapp][$num3] = $nuova_profondita['tot_prenota_attuale'
 } # fine if ($prenota_falsa_da_inserire == "SI")
 $prenota_falsa_da_inserire = "NO";
 $idinizio_prenota_falsa = $num2 + 1;
-} # fine if ($n_prenota_in_app_sett[$numapp][$num2] or $num2 == ($idfine+1))
+} # fine if (!empty($n_prenota_in_app_sett[$numapp][$num2]) or $num2 == ($idfine+1))
 else {
 $prenota_falsa_da_inserire = "SI";
 $idfine_prenota_falsa = $num2;
-} # fine else if ($n_prenota_in_app_sett[$numapp][$num2] or $num2 == ($idfine+1))
+} # fine else if (!empty($n_prenota_in_app_sett[$numapp][$num2]) or $num2 == ($idfine+1))
 } # fine for $num2
 
 
@@ -969,9 +973,9 @@ $app_assegnabili_id[$idprenotainperiodo] = "";
 $ap_ric = array();
 for ($num3 = 0 ; $num3 < $dati_app['totapp'] ; $num3++) {
 $numapp2 = $dati_app['posizione'][$num3];
-if ($da_scambiare[$idprenotainperiodo][$numapp2] == "SI") {
+if (isset($da_scambiare[$idprenotainperiodo][$numapp2]) and $da_scambiare[$idprenotainperiodo][$numapp2] == "SI") {
 $ap_ric[$numapp2] = "SI";
-} # fine if ($da_scambiare[$idprenotainperiodo][$numapp2] == "SI")
+} # fine if (isset($da_scambiare[$idprenotainperiodo][$numapp2]) and $da_scambiare[$idprenotainperiodo][$numapp2] == "SI")
 } # fine for $num3
 
 # Se la prenotazione da scambiare ne ha altre compagne
@@ -990,16 +994,16 @@ global $passo;
 $passo++;
 echo $passo;
 for ($i = 0 ; $i < $profondita['attuale'] ; $i++) echo "&nbsp;&nbsp;";
-if ($ap_ric[',numero,']) {
+if (!empty($ap_ric[',numero,'])) {
 $ap_ric_ved = $ap_ric[1]." (pren $idprenotainperiodo + ".$app_assegnabili_id[0][$idprenotainperiodo].")";
 $idinizioprenota2_ved = $idinizioprenota2[1];
 $idfineprenota2_ved = $idfineprenota2[1];
-} # fine if ($ap_ric[',numero,']) 
+} # fine if (!empty($ap_ric[',numero,'])) 
 else {
 $ap_ric_ved = implode(",",array_keys($ap_ric))." (pren $idprenotainperiodo)";;
 $idinizioprenota2_ved = $idinizioprenota2;
 $idfineprenota2_ved = $idfineprenota2;
-} # fine else if ($ap_ric[',numero,']) 
+} # fine else if (!empty($ap_ric[',numero,'])) 
 echo "<b>".$profondita['attuale']."</b> <em>".date("H:i:s")."</em> libera il $numapp da $idinizioprenota2_ved a $idfineprenota2_ved negli app $ap_ric_ved<br>";
 } # fine if ($debug == "on")
 liberasettimane($idinizioprenota2,$idfineprenota2,$limiti_var,$anno,$fatto2,$appartamento2,$nuova_profondita,$ap_ric,$n_app_prenota_id,$app_orig_prenota_id,$inizio_prenota_id,$fine_prenota_id,$app_assegnabili_id,$n_prenota_in_app_sett,$dati_app,$nome_tab_prenota);
@@ -1096,21 +1100,21 @@ if ($lista_app_assegnabili) {
 for ($num2 = ($num1 + 1) ; $num2 < $num_da_liberare ; $num2++) {
 $numapp2 = $app_da_liberare[$num2];
 if (($lista_app_assegnabili == "v" or str_replace(",$numapp2,","",$lista_app_assegnabili) != $lista_app_assegnabili) and $numapp2 != ",,NO") {
-if ($prenota_in_app_sett[$numapp2][$idiniziop]) $ini_blocco2 = $inizio_prenota_id[$prenota_in_app_sett[$numapp2][$idiniziop]];
+if (!empty($prenota_in_app_sett[$numapp2][$idiniziop])) $ini_blocco2 = $inizio_prenota_id[$prenota_in_app_sett[$numapp2][$idiniziop]];
 else $ini_blocco2 = $idiniziop;
-if ($prenota_in_app_sett[$numapp2][$idfinep]) $fine_blocco2 = $fine_prenota_id[$prenota_in_app_sett[$numapp2][$idfinep]];
+if (!empty($prenota_in_app_sett[$numapp2][$idfinep])) $fine_blocco2 = $fine_prenota_id[$prenota_in_app_sett[$numapp2][$idfinep]];
 else $fine_blocco2 = $idfinep;
 if ($ini_blocco2 == $idiniziop and $fine_blocco2 == $idfinep) {
 $scambiabili = "SI";
 for ($num3 = $idiniziop ; $num3 <= $idfinep ; $num3++) {
-if ($prenota_in_app_sett[$numapp2][$num3]) {
+if (!empty($prenota_in_app_sett[$numapp2][$num3])) {
 $app_ass_num3 = $app_assegnabili_id[$prenota_in_app_sett[$numapp2][$num3]];
 if ($app_ass_num3 != "v" and str_replace(",$numapp,","",$app_ass_num3) == $app_ass_num3) {
 $scambiabili = "NO";
 break;
 } # fine if ($app_ass_num5 != "v" and...
 $num3 = $fine_prenota_id[$prenota_in_app_sett[$numapp2][$num3]];
-} # fine if ($prenota_in_app_sett[$numapp3][$num3])
+} # fine if (!empty($prenota_in_app_sett[$numapp3][$num3]))
 } # fine for $num3
 if ($scambiabili == "SI") {
 $app_da_liberare[$num2] = ",,NO";
@@ -1129,7 +1133,7 @@ $riprova_app[$numapp2] = "NO";
 
 
 
-if ($tutti_occupati == "SI") $fatto = "NO";
+if (isset($tutti_occupati) and $tutti_occupati == "SI") $fatto = "NO";
 
 
 # Se bisogna liberare altri appartamenti oltre a quello appena liberato
@@ -1243,13 +1247,13 @@ if (!empty($riprova_senza_app_liberato) and ($limiti_var['t_limite'] + 20) >= ti
 $n_lista_app_ric = "";
 for ($num1 = 0 ; $num1 < $dati_app['totapp'] ; $num1++) {
 $numapp = $dati_app['posizione'][$num1];
-if ($numapp != $riprova_senza_app_liberato and $riprova_app[$numapp] != "NO") $n_lista_app_ric .= $numapp.",";
+if ($numapp != $riprova_senza_app_liberato and (!isset($riprova_app[$numapp]) or $riprova_app[$numapp] != "NO")) $n_lista_app_ric .= $numapp.",";
 } # fine for $num1
 $n_lista_app_ric = substr($n_lista_app_ric,0,-1);
 $app_richiesti_vett[$app_richiesti_vett['id']] = incrocia_app_richiesti($app_richiesti_vett[$app_richiesti_vett['id']],$n_lista_app_ric);
 if ((string) $app_richiesti_vett[$app_richiesti_vett['id']] != "") {
 for ($num1 = ($app_richiesti_vett['id'] + 1) ; $num1 <= $app_richiesti_vett[',numero,'] ; $num1++) {
-if ($app_assegnabili_id[0][0][$num1] == $app_assegnabili_id[0][0][$app_richiesti_vett['id']] and $idinizio_vett[$num1] == $idinizio and $idfine_vett[$num1] == $idfine and !$app_richiesti_vett[',succ_non_vicino,'][($num1 - 1)]) {
+if ($app_assegnabili_id[0][0][$num1] == $app_assegnabili_id[0][0][$app_richiesti_vett['id']] and $idinizio_vett[$num1] == $idinizio and $idfine_vett[$num1] == $idfine and empty($app_richiesti_vett[',succ_non_vicino,'][($num1 - 1)])) {
 $app_richiesti_vett[$num1] = $app_richiesti_vett[$app_richiesti_vett['id']];
 } # fine if ($app_assegnabili_id[0][0][$num1] == $app_assegnabili_id[0][0][$app_richiesti_vett['id']] and $idinizio_vett[$num1] == $idinizio and...
 else break;
