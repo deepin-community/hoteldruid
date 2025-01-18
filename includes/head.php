@@ -2,7 +2,7 @@
 
 ##################################################################################
 #    HOTELDRUID
-#    Copyright (C) 2001-2012 by Marco Maria Francesco De Santis (marco@digitaldruid.net)
+#    Copyright (C) 2001-2023 by Marco Maria Francesco De Santis (marco@digitaldruid.net)
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published by
@@ -33,6 +33,7 @@ $t1datesout = "#b7dcff";
 $t1seldate = "#ffffff";
 $t1dropin = "#05e105";
 $t1dropout = "#297929";
+global $vers_hinc,$mobile_device;
 
 
 if ($pag == "punto_vendita.php") $iscale = "0.8";
@@ -54,10 +55,13 @@ elseif (!defined('C_NASCONDI_MARCA') or C_NASCONDI_MARCA != "SI") echo "<link re
 echo "<style type=\"text/css\">
 :root { --t1color: $t1color; }
 .t1color { background-color: $t1color; }
-</style>
+";
+if (empty($cookie_sess)) echo "a:link { user-select: none; -moz-user-select: none; -webkit-user-select: none; -ms-user-select: none; }
+";
+echo "</style>
 <link rel=\"stylesheet\" type=\"text/css\" href=\"./base.css$vers_hinc\">
 ";
-if ($base_js) echo "<script type=\"text/javascript\" src=\"./base.js$vers_hinc\">
+if (isset($base_js)) echo "<script type=\"text/javascript\" src=\"./base.js$vers_hinc\">
 </script>
 ";
 if (defined('C_FILE_CSS_PERS') and C_FILE_CSS_PERS != "" and @is_file(C_FILE_CSS_PERS)) echo "<link rel=\"stylesheet\" type=\"text/css\" href=\"".C_FILE_CSS_PERS."$vers_hinc\" media=\"all\">
@@ -66,7 +70,7 @@ if ($mobile_device and defined('C_FILE_MOB_CSS_PERS') and C_FILE_MOB_CSS_PERS !=
 ";
 echo "</head>
 <body";
-if ($drag_drop) echo " ondragover=\"event.preventDefault();\" ondragenter=\"event.preventDefault();\" ondrop=\"event.preventDefault();drp_out();\"";
+if (isset($drag_drop)) echo " ondragover=\"event.preventDefault();\" ondragenter=\"event.preventDefault();\" ondrop=\"event.preventDefault();drp_out();\"";
 echo " style=\"background-color: #ffffff;\">
 <div>
 ";

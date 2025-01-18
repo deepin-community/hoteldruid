@@ -2,7 +2,7 @@
 
 ##################################################################################
 #    HOTELDRUID
-#    Copyright (C) 2001-2018 by Marco Maria Francesco De Santis (marco@digitaldruid.net)
+#    Copyright (C) 2001-2023 by Marco Maria Francesco De Santis (marco@digitaldruid.net)
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published by
@@ -128,7 +128,7 @@ if (substr($num1,-4) == "0000") http_keep_alive("&nbsp;");
 $riga_corr = "";
 $riga = array();
 for ($num2 = 0 ; $num2 < $num_colonne ; $num2++) {
-$riga[$num2] = risul_query_unbuffered($contenuto_tab,$num1,$num2);
+$riga[$num2] = (string) risul_query_unbuffered($contenuto_tab,$num1,$num2);
 $riga[$num2] = str_replace("@%&@","@%&@@%&@",$riga[$num2]);
 $riga[$num2] = str_replace("</cmp>","</cmp@%&@>",$riga[$num2]);
 if ($id_utente == "b" and $tabella == "utenti") {
@@ -140,7 +140,7 @@ if ($num2 == 4 and $riga[0] != "1") $riga[$num2] = "n";
 } # fine if ($id_utente == "b" and $tabella == "utenti")
 if ($contr and $tabella == "contratti" and $num2 == 2 and $riga[1] == "api") {
 $var_tmp = explode(";",$riga[$num2]);
-$riga[$num2] = substr($riga[$num2],0,(strlen($var_tmp[(count($var_tmp) - 1)]) * -1));
+$riga[$num2] = substr($riga[$num2],0,(strlen($var_tmp[0]) + strlen($var_tmp[1]) + 2));
 } # fine if ($contr and $tabella == "contratti" and $num2 == 2 and $riga[1] == "api")
 $riga_corr .= "<cmp>".$riga[$num2]."</cmp>";
 } # fine for $num2
@@ -354,6 +354,8 @@ $leggendo_tabella = "NO";
 $leggendo_colonne = "NO";
 $leggendo_file = "NO";
 $leggendo_modello = "NO";
+$tab_anno_esistente = array();
+$file_anno_esistente = array();
 
 $ultima_linea = "";
 $fbackup = fopen($file,"r");
@@ -422,7 +424,7 @@ if (substr($nome_tabella,0,5) == "soldi") { $anno_ins = substr($nome_tabella,5);
 if (substr($nome_tabella,0,7) == "periodi") { $anno_ins = substr($nome_tabella,7); $tab_presente[$anno_ins]['periodi'] = "SI"; }
 if (substr($nome_tabella,0,8) == "ntariffe") { $anno_ins = substr($nome_tabella,8); $tab_presente[$anno_ins]['ntariffe'] = "SI"; }
 if ($anno_ins and controlla_anno($anno_ins) == "NO") { $file_coerente = "NO"; $num_err .= "#1"; }
-if ($anno_ins and $tab_anno_esistente[$anno_ins] != "SI") $tab_anno_esistente[$anno_ins] = "SI";
+if ($anno_ins and (!isset($tab_anno_esistente[$anno_ins]) or $tab_anno_esistente[$anno_ins] != "SI")) $tab_anno_esistente[$anno_ins] = "SI";
 } # fine if ($linea == "</colonnetabella>" and $leggendo_righe != "SI")
 if ($leggendo_colonne == "SI") {
 if (substr($linea,0,13) == "<nomecolonna>") {
@@ -460,12 +462,12 @@ if ($nome_tabella == "contratti") {
 $tipo_contr = $riga[$num_colonna['tipo']];
 if (substr($tipo_contr,0,3) == "var") {
 $nome = $riga[$num_colonna['testo']];
-if ($var_riserv[$nome]) { $file_coerente = "NO"; $num_err .= "#3"; }
+if (!empty($var_riserv[$nome])) { $file_coerente = "NO"; $num_err .= "#3"; }
 } # fine if (substr($tipo_contr,0,3) == "var")
 if (substr($tipo_contr,0,4) == "vett") {
 $nome = explode(";",$riga[$num_colonna['testo']]);
-if ($var_riserv[$nome[0]]) { $file_coerente = "NO"; $num_err .= "#4"; }
-if ($var_riserv[$nome[1]]) { $file_coerente = "NO"; $num_err .= "#5"; }
+if (!empty($var_riserv[$nome[0]])) { $file_coerente = "NO"; $num_err .= "#4"; }
+if (!empty($var_riserv[$nome[1]])) { $file_coerente = "NO"; $num_err .= "#5"; }
 } # fine if (substr($tipo_contr,0,4) == "vett")
 } # fine if ($nome_tabella == "contratti")
 
@@ -526,8 +528,8 @@ if ($linea == "<tabella>") $leggendo_tabella = "SI";
 else {
 if ($linea == "</file>") $leggendo_file = "NO";
 if ($leggendo_file == "SI") {
-if ($nome_file) {
-if ($leggendo_contenuto == "SI") {
+if (!empty($nome_file)) {
+if (isset($leggendo_contenuto) and $leggendo_contenuto == "SI") {
 if (substr($linea,-12) == "</contenuto>") {
 $leggendo_contenuto = "NO";
 $leggendo_cont_file_sel = "NO";
@@ -539,17 +541,18 @@ $prima_linea = $linea;
 $leggendo_prima_linea = "NO";
 } # fine if ($leggendo_prima_linea == "SI")
 if ($nome_file == "./dati/versione.php") {
-if ($linea != "" and $linea != "<?php" and $linea != "define('C_VERSIONE_ATTUALE',".C_PHPR_VERSIONE_NUM.");" and preg_replace("/define\('C_DIFF_ORE',-?[0-9]{1,2}\);/","",$linea) != "" and $linea != "?>") { $file_coerente = "NO"; $num_err .= "#34"; }
+if ($linea != "" and $linea != "<?php" and $linea != "define('C_VERSIONE_ATTUALE',".C_PHPR_VERSIONE_NUM.");" and preg_replace("/define\('C_DIFF_ORE',-?[0-9]{1,2}\);/","",$linea) != "" and preg_replace("/define\('C_MIN_SESSIONE',-?[0-9]{1,999}\);/","",$linea) != "" and preg_replace("/define\('C_USA_COOKIES',-?[0-9]{1,1}\);/","",$linea) != "" and $linea != "?>") { $file_coerente = "NO"; $num_err .= "#34"; }
 } # fine if ($nome_file == "./dati/versione.php")
 if ($nome_file == "./dati/selectappartamenti.php") {
-if ($linea == "\";") $leggendo_cont_file_sel = "NO";
-if ($leggendo_cont_file_sel != "SI" and $linea != "" and $linea != "<?php" and $linea != "?>" and $linea != "\";" and $linea != "echo \"") { $file_coerente = "NO"; $num_err .= "#35"; }
+if ($linea == "';") $leggendo_cont_file_sel = "NO";
+if ($leggendo_cont_file_sel != "SI" and $linea != "" and $linea != "<?php" and $linea != "?>" and $linea != "';" and $linea != "echo '") { $file_coerente = "NO"; $num_err .= "#35"; }
 if ($leggendo_cont_file_sel == "SI") {
-if (str_replace("\\\\","",$linea) != $linea) { $file_coerente = "NO"; $num_err .= "#36"; }
-$linea = str_replace("\\\"","",$linea);
-if (str_replace("\"","",$linea) != $linea) { $file_coerente = "NO"; $num_err .= "#37"; }
+#if (str_replace("\\\\","",$linea) != $linea) { $file_coerente = "NO"; $num_err .= "#36"; }
+#$linea = str_replace("\\\"","",$linea);
+#if (str_replace("\"","",$linea) != $linea) { $file_coerente = "NO"; $num_err .= "#37"; }
+if (str_replace("'","",$linea) != $linea) { $file_coerente = "NO"; $num_err .= "#37"; }
 } # fine if ($leggendo_cont_file_sel == "SI")
-if ($linea == "echo \"") $leggendo_cont_file_sel = "SI";
+if ($linea == "echo '") $leggendo_cont_file_sel = "SI";
 } # fine if ($nome_file == "./dati/selectappartamenti.php")
 
 if (substr($nome_file,0,20) == "./dati/selectperiodi" or substr($nome_file,0,21) == "./dati/selperiodimenu") {
@@ -566,14 +569,14 @@ if (str_replace("\$m_ini_menu = array();","",$linea) == "")  $linea_trovata = "S
 if (str_replace("\$d_ini_menu = array();","",$linea) == "")  $linea_trovata = "SI";
 if (str_replace("\$n_dates_menu = array();","",$linea) == "")  $linea_trovata = "SI";
 if (str_replace("\$d_increment = array();","",$linea) == "")  $linea_trovata = "SI";
-if (preg_replace("/\\\$y_ini_menu\\[[0-9]{1,2}\\] = \"[0-9]{1,4}\";/","",$linea) == "") $linea_trovata = "SI";
-if (preg_replace("/\\\$m_ini_menu\\[[0-9]{1,2}\\] = \"[0-9]{1,2}\";/","",$linea) == "") $linea_trovata = "SI";
-if (preg_replace("/\\\$d_ini_menu\\[[0-9]{1,2}\\] = \"[0-9]{1,2}\";/","",$linea) == "") $linea_trovata = "SI";
+if (preg_replace("/\\\$y_ini_menu\\[[0-9]{1,2}\\] = \"[0-9]{0,4}\";/","",$linea) == "") $linea_trovata = "SI";
+if (preg_replace("/\\\$m_ini_menu\\[[0-9]{1,2}\\] = \"[0-9-]{0,2}\";/","",$linea) == "") $linea_trovata = "SI";
+if (preg_replace("/\\\$d_ini_menu\\[[0-9]{1,2}\\] = \"[0-9]{0,2}\";/","",$linea) == "") $linea_trovata = "SI";
 if (preg_replace("/\\\$n_dates_menu\\[[0-9]{1,2}\\] = \"[0-9]{1,4}\";/","",$linea) == "") $linea_trovata = "SI";
-if (preg_replace("/\\\$d_increment\\[[0-9]{1,2}\\] = \"[0-9]{1,2}\";/","",$linea) == "") $linea_trovata = "SI";
+if (preg_replace("/\\\$d_increment\\[[0-9]{1,2}\\] = \"[0-9]{1,3}\";/","",$linea) == "") $linea_trovata = "SI";
 if ($linea == "\$partial_dates = 1;") $linea_trovata = "SI";
-if (preg_replace("/\\\$d_names = \"\\\\\"[^\"]{1,16}\\\\\",\\\\\"[^\"]{1,16}\\\\\",\\\\\"[^\"]{1,16}\\\\\",\\\\\"[^\"]{1,16}\\\\\",\\\\\"[^\"]{1,16}\\\\\",\\\\\"[^\"]{1,16}\\\\\",\\\\\"[^\"]{1,16}\\\\\"\";/","",$linea) == "") $linea_trovata = "SI";
-if (preg_replace("/\\\$m_names = \"\\\\\"[^\"]{1,16}\\\\\",\\\\\"[^\"]{1,16}\\\\\",\\\\\"[^\"]{1,16}\\\\\",\\\\\"[^\"]{1,16}\\\\\",\\\\\"[^\"]{1,16}\\\\\",\\\\\"[^\"]{1,16}\\\\\",\\\\\"[^\"]{1,16}\\\\\",\\\\\"[^\"]{1,16}\\\\\",\\\\\"[^\"]{1,16}\\\\\",\\\\\"[^\"]{1,16}\\\\\",\\\\\"[^\"]{1,16}\\\\\",\\\\\"[^\"]{1,16}\\\\\"\";/","",$linea) == "") $linea_trovata = "SI";
+if (preg_replace("/\\\$d_names = \"\\\\\"[^\"\${}]{1,16}\\\\\",\\\\\"[^\"\${}]{1,16}\\\\\",\\\\\"[^\"\${}]{1,16}\\\\\",\\\\\"[^\"\${}]{1,16}\\\\\",\\\\\"[^\"\${}]{1,16}\\\\\",\\\\\"[^\"\${}]{1,16}\\\\\",\\\\\"[^\"\${}]{1,16}\\\\\"\";/","",$linea) == "") $linea_trovata = "SI";
+if (preg_replace("/\\\$m_names = \"\\\\\"[^\"\${}]{1,16}\\\\\",\\\\\"[^\"\${}]{1,16}\\\\\",\\\\\"[^\"\${}]{1,16}\\\\\",\\\\\"[^\"\${}]{1,16}\\\\\",\\\\\"[^\"\${}]{1,16}\\\\\",\\\\\"[^\"\${}]{1,16}\\\\\",\\\\\"[^\"\${}]{1,16}\\\\\",\\\\\"[^\"\${}]{1,16}\\\\\",\\\\\"[^\"\${}]{1,16}\\\\\",\\\\\"[^\"\${}]{1,16}\\\\\",\\\\\"[^\"\${}]{1,16}\\\\\",\\\\\"[^\"\${}]{1,16}\\\\\"\";/","",$linea) == "") $linea_trovata = "SI";
 if ($linea_trovata != "SI") { $file_coerente = "NO"; $num_err .= "#38"; }
 } # fine if ($leggendo_cont_file_sel != "SI")
 if ($leggendo_cont_file_sel == "SI") {
@@ -602,7 +605,7 @@ if ($linea == "for (\$num1 = 0 ; \$num1 < count(\$car_spec) ; \$num1++) if (subs
 if ($linea_trovata != "SI") { $file_coerente = "NO"; $num_err .= "#42.1"; }
 } # fine if ($nome_file == "./dati/unit.php" or $nome_file == "./dati/unit_single.php")
 if ($nome_file == "./dati/tema.php" and $linea != "" and $linea != "<?php" and $linea != "?>" and preg_replace("/\\\$tema\\[[0-9]{1,8}\\] = \"[a-z]{1,4}\";/","",$linea) != "" and preg_replace("/\\\$parole_sost = [01];/","",$linea) != "") { $file_coerente = "NO"; $num_err .= "#43"; }
-if ($nome_file == "./dati/parole_sost.php" and $linea != "" and $linea != "<?php" and $linea != "?>" and preg_replace("/\\\$messaggio = str_replace\\(\"[^\"]*\",\"[^\"]*\",\\\$messaggio\\);/","",$linea) != "") { $file_coerente = "NO"; $num_err .= "#44"; }
+if ($nome_file == "./dati/parole_sost.php" and $linea != "" and $linea != "<?php" and $linea != "?>" and preg_replace("/\\\$messaggio = str_replace\\(\"[^\"\${}]*\",\"[^\"\${}]*\",\\\$messaggio\\);/","",$linea) != "") { $file_coerente = "NO"; $num_err .= "#44"; }
 if ($nome_file == "./dati/dati_interconnessioni.php") {
 $linea_trovata = "NO";
 if ($linea == "") $linea_trovata = "SI";
@@ -610,19 +613,19 @@ if ($linea == "<?php") $linea_trovata = "SI";
 if ($linea == "?>") $linea_trovata = "SI";
 if (preg_replace("/^#[0-9a-zA-Z _]*/","",$linea) == "") $linea_trovata = "SI";
 if (preg_replace("/^unset\\(\\\$ic_[a-z_]+[0-9a-z_]*\\);/","",$linea) == "") $linea_trovata = "SI";
-if (preg_replace("/\\\$ic_[a-z_]+[0-9a-z_]*\\[?\"?[0-9a-zA-Z_]*\"?\\]?\\[?\"?[0-9a-zA-Z_]*\"?\\]?\\[?\"?[0-9a-zA-Z_]*\"?\\]? = \"[^\"]*\";/","",$linea) == "") $linea_trovata = "SI";
+if (preg_replace("/\\\$ic_[a-z_]+[0-9a-z_]*\\[?\"?[0-9a-zA-Z_]*\"?\\]?\\[?\"?[0-9a-zA-Z_]*\"?\\]?\\[?\"?[0-9a-zA-Z_]*\"?\\]? = \"[^\"\${}]*\";/","",$linea) == "") $linea_trovata = "SI";
 if (preg_replace("/\\\$ic_org[a-z_]+[0-9a-z_]*_ic = C_[A-Z][A-Z_]*[A-Z]_IC;/","",$linea) == "") $linea_trovata = "SI";
-if (preg_replace("/\\\$ic_(org|password)[a-z_]+[0-9a-z_]*_ic = constant\\('C_[A-Z][A-Z_]*[A-Z]_IC'\\);/","",$linea) == "") $linea_trovata = "SI";
+if (preg_replace("/\\\$ic_(org|password|user)[a-z_]+[0-9a-z_]*_ic = constant\\('C_[A-Z][A-Z_]*[A-Z]_IC'\\);/","",$linea) == "") $linea_trovata = "SI";
 if ($linea_trovata != "SI") { $file_coerente = "NO"; $num_err .= "#45<br>".htmlspecialchars($linea)."<br>"; }
 } # fine if ($nome_file == "./dati/dati_interconnessioni.php")
-if ($nome_file == "./dati/log_utenti.php" and ($prima_linea != "<?php exit(); ?>" or ($linea != "<?php exit(); ?>" and preg_replace("/^[a0-9-]{1,1}[0-9]*>[0-9]{4,4}-[0-9]{2,2}-[0-9]{2,2} [0-9]{2,2}:[0-9]{2,2}:[0-9]{2,2}>[a-zA-Z]?.*/","",$linea) != ""))) { $file_coerente = "NO"; $num_err .= "#46"; }
+if ($nome_file == "./dati/log_utenti.php" and ($prima_linea != "<?php exit(); ?>" or ($linea != "<?php exit(); ?>" and preg_replace("/^[a0-9-]{1,1}[0-9]*>[0-9]{4,4}-[0-9]{2,2}-[0-9]{2,2} [0-9]{2,2}:[0-9]{2,2}:[0-9]{2,2}>[a-zA-Z]?.*/","",$linea) != ""))) { $salta_file_log = 1; $num_err .= "#46(NO-STOP)"; }
 if ($leggendo_contenuto == "NO") $nome_file = "";
-} # fine if ($leggendo_contenuto == "SI")
+} # fine if (isset($leggendo_contenuto) and $leggendo_contenuto == "SI")
 if ($linea == "<contenuto>") {
 $leggendo_contenuto = "SI";
 $leggendo_prima_linea = "SI";
 } # fine if ($linea == "<contenuto>")
-} # fine if ($nome_file)
+} # fine if (!empty($nome_file))
 if (substr($linea,0,10) == "<nomefile>") {
 $nome_file = substr($linea,10);
 $nome_file = substr($nome_file,0,-11);
@@ -641,7 +644,10 @@ if ($nome_file == "./dati/parole_sost.php") $nome_file_trovato = "SI";
 if ($nome_file == "./dati/dati_interconnessioni.php") $nome_file_trovato = "SI";
 if ($nome_file == "./dati/log_utenti.php") $nome_file_trovato = "SI";
 if ($nome_file == "./dati/versione.php") $nome_file_trovato = "SI";
-if (substr($nome_file,0,20) == "./dati/selectperiodi") $nome_file_trovato = "SI";
+if (substr($nome_file,0,20) == "./dati/selectperiodi") {
+$nome_file_trovato = "SI";
+if (substr($nome_file,-6) == ".1.php") $file_anno_esistente[substr($nome_file,20,-6)] = "SI";
+} # fine if (substr($nome_file,0,20) == "./dati/selectperiodi")
 if (substr($nome_file,0,21) == "./dati/selperiodimenu") $nome_file_trovato = "SI";
 if ($nome_file_trovato == "NO") { $file_coerente = "NO"; $num_err .= "#50"; }
 } # fine if (substr($linea,0,9) == "<nomefile>")
@@ -667,31 +673,32 @@ else {
 if (count($campo_anno_esistente) != count($tab_anno_esistente)) { $file_coerente = "NO"; $num_err .= "#53"; }
 reset($campo_anno_esistente);
 foreach ($campo_anno_esistente as $key => $val) {
-if ($tab_anno_esistente[$key] != "SI") { $file_coerente = "NO"; $num_err .= "#54"; }
-if ($tab_presente[$key]['prenota'] != "SI") { $file_coerente = "NO"; $num_err .= "#55"; }
-if ($tab_presente[$key]['prenotacanc'] != "SI") { $file_coerente = "NO"; $num_err .= "#100"; }
-if ($tab_presente[$key]['costiprenota'] != "SI") { $file_coerente = "NO"; $num_err .= "#56"; }
-if ($tab_presente[$key]['rclientiprenota'] != "SI") { $file_coerente = "NO"; $num_err .= "#57"; }
-if ($tab_presente[$key]['costi'] != "SI") { $file_coerente = "NO"; $num_err .= "#58"; }
-if ($tab_presente[$key]['regole'] != "SI") { $file_coerente = "NO"; $num_err .= "#59"; }
-if ($tab_presente[$key]['soldi'] != "SI") { $file_coerente = "NO"; $num_err .= "#60"; }
-if ($tab_presente[$key]['periodi'] != "SI") { $file_coerente = "NO"; $num_err .= "#61"; }
-if ($tab_presente[$key]['ntariffe'] != "SI") { $file_coerente = "NO"; $num_err .= "#62"; }
+if (!isset($tab_anno_esistente[$key]) or $tab_anno_esistente[$key] != "SI") { $file_coerente = "NO"; $num_err .= "#54"; }
+if (!isset($file_anno_esistente[$key]) or $file_anno_esistente[$key] != "SI") { $file_coerente = "NO"; $num_err .= "#54b"; }
+if (!isset($tab_presente[$key]['prenota']) or $tab_presente[$key]['prenota'] != "SI") { $file_coerente = "NO"; $num_err .= "#55"; }
+if (!isset($tab_presente[$key]['prenotacanc']) or $tab_presente[$key]['prenotacanc'] != "SI") { $file_coerente = "NO"; $num_err .= "#100"; }
+if (!isset($tab_presente[$key]['costiprenota']) or $tab_presente[$key]['costiprenota'] != "SI") { $file_coerente = "NO"; $num_err .= "#56"; }
+if (!isset($tab_presente[$key]['rclientiprenota']) or $tab_presente[$key]['rclientiprenota'] != "SI") { $file_coerente = "NO"; $num_err .= "#57"; }
+if (!isset($tab_presente[$key]['costi']) or $tab_presente[$key]['costi'] != "SI") { $file_coerente = "NO"; $num_err .= "#58"; }
+if (!isset($tab_presente[$key]['regole']) or $tab_presente[$key]['regole'] != "SI") { $file_coerente = "NO"; $num_err .= "#59"; }
+if (!isset($tab_presente[$key]['soldi']) or $tab_presente[$key]['soldi'] != "SI") { $file_coerente = "NO"; $num_err .= "#60"; }
+if (!isset($tab_presente[$key]['periodi']) or $tab_presente[$key]['periodi'] != "SI") { $file_coerente = "NO"; $num_err .= "#61"; }
+if (!isset($tab_presente[$key]['ntariffe']) or $tab_presente[$key]['ntariffe'] != "SI") { $file_coerente = "NO"; $num_err .= "#62"; }
 if (defined("C_PRIMO_ANNO_CREATO") and C_CREA_ANNO_NON_ATTUALE == "NO" and $key < C_PRIMO_ANNO_CREATO) { $file_coerente = "NO"; $num_err .= "#63"; }
 if (defined('C_CREA_ANNO_NON_ATTUALE') and C_CREA_ANNO_NON_ATTUALE == "NO" and $key > date("Y",(time() + (C_DIFF_ORE * 3600)))) { $file_coerente = "NO"; $num_err .= "#64"; }
-if (!$anno_max or $key > $anno_max) {
+if (empty($anno_max) or $key > $anno_max) {
 $anno_max = $key;
 $ultimo_tipo_periodi = $val;
-} # fine if (!$anno_max or $key > $anno_max)
-if (!$numero_tariffe[$key] or controlla_num_pos($numero_tariffe[$key]) == "NO") { $file_coerente = "NO"; $num_err .= "#65"; }
-if (defined("C_MASSIMO_NUM_TARIFFE") and C_MASSIMO_NUM_TARIFFE != 0 and $numero_tariffe[$key] > C_MASSIMO_NUM_TARIFFE) { $file_coerente = "NO"; $num_err .= "#66"; }
+} # fine if (empty($anno_max) or $key > $anno_max)
+if (empty($numero_tariffe[$key]) or controlla_num_pos($numero_tariffe[$key]) == "NO") { $file_coerente = "NO"; $num_err .= "#65"; }
+elseif (defined("C_MASSIMO_NUM_TARIFFE") and C_MASSIMO_NUM_TARIFFE != 0 and $numero_tariffe[$key] > C_MASSIMO_NUM_TARIFFE) { $file_coerente = "NO"; $num_err .= "#66"; }
 if ($val != "g" and $val != "s") { $file_coerente = "NO"; $num_err .= "#67"; }
-if (($val == "g" and $linee_inserite_in_tabella["periodi".$key] > 1825) or ($val == "s" and $linee_inserite_in_tabella["periodi".$key] > 260)) { $file_coerente = "NO"; $num_err .= "#68"; }
-$prenotazioni_max = ($linee_inserite_in_tabella["periodi".$key] * ($linee_inserite_in_tabella["appartamenti"] + 2));
-if (defined("C_MASSIMO_NUM_COSTI_AGG_IN_PRENOTA") and C_MASSIMO_NUM_COSTI_AGG_IN_PRENOTA != 0 and $linee_inserite_in_tabella["costiprenota".$key] > (C_MASSIMO_NUM_COSTI_AGG_IN_PRENOTA * $prenotazioni_max)) { $file_coerente = "NO"; $num_err .= "#69"; }
-if (defined("C_MASSIMO_NUM_CLIENTI") and C_MASSIMO_NUM_CLIENTI != 0 and $linee_inserite_in_tabella["rclientiprenota".$key] > (C_MASSIMO_NUM_CLIENTI * $prenotazioni_max)) { $file_coerente = "NO"; $num_err .= "#70"; }
-if ($linee_inserite_in_tabella["prenota".$key] > $prenotazioni_max) { $file_coerente = "NO"; $num_err .= "#71"; }
-if ($linee_inserite_in_tabella["regole".$key] > ($prenotazioni_max + ($numero_tariffe[$key] * 2))) { $file_coerente = "NO"; $num_err .= "#72"; }
+if (($val == "g" and fixset($linee_inserite_in_tabella["periodi".$key]) > 1825) or ($val == "s" and fixset($linee_inserite_in_tabella["periodi".$key]) > 260)) { $file_coerente = "NO"; $num_err .= "#68"; }
+$prenotazioni_max = (fixset($linee_inserite_in_tabella["periodi".$key]) * (fixset($linee_inserite_in_tabella["appartamenti"]) + 2));
+if (defined("C_MASSIMO_NUM_COSTI_AGG_IN_PRENOTA") and C_MASSIMO_NUM_COSTI_AGG_IN_PRENOTA != 0 and fixset($linee_inserite_in_tabella["costiprenota".$key]) > (C_MASSIMO_NUM_COSTI_AGG_IN_PRENOTA * $prenotazioni_max)) { $file_coerente = "NO"; $num_err .= "#69"; }
+if (defined("C_MASSIMO_NUM_CLIENTI") and C_MASSIMO_NUM_CLIENTI != 0 and fixset($linee_inserite_in_tabella["rclientiprenota".$key]) > (C_MASSIMO_NUM_CLIENTI * $prenotazioni_max)) { $file_coerente = "NO"; $num_err .= "#70"; }
+if (fixset($linee_inserite_in_tabella["prenota".$key]) > $prenotazioni_max) { $file_coerente = "NO"; $num_err .= "#71"; }
+if (fixset($linee_inserite_in_tabella["regole".$key]) > ($prenotazioni_max + ((int) fixset($numero_tariffe[$key]) * 2))) { $file_coerente = "NO"; $num_err .= "#72"; }
 } # fine foreach ($campo_anno_esistente as $key => $val)
 } # fine else if (!@is_array($campo_anno_esistente) or...
 if (defined('C_CAMBIA_TIPO_PERIODI') and C_CAMBIA_TIPO_PERIODI == "NO" and $tipo_periodi_prec[$ultimo_anno_prec] != $ultimo_tipo_periodi) { $file_coerente = "NO"; $num_err .= "#73"; }
@@ -729,7 +736,7 @@ unset($var_riserv);
 if ($file_coerente == "NO") {
 if ($silenzio != "SI") echo mex("Il formato del file è errato",$pag).".<br>";
 # debug backup COMPLETO
-#if ($num_err) echo mex("Errori",$pag).": $num_err.<br>";
+if ($num_err and defined('C_DEBUG_HD') and C_DEBUG_HD == "on") echo mex("Errors",$pag).": $num_err.<br>";
 } # fine if ($file_coerente == "NO")
 else {
 
@@ -747,14 +754,15 @@ include(C_EXT_DB_DATA_PATH);
 if ($HOTELD_DB_TYPE) $N_PHPR_DB_TYPE = $HOTELD_DB_TYPE;
 if ($HOTELD_DB_NAME) $N_PHPR_DB_NAME = $HOTELD_DB_NAME;
 if ($HOTELD_DB_HOST) $N_PHPR_DB_HOST = $HOTELD_DB_HOST;
-if (strcmp($HOTELD_DB_PORT,"")) $N_PHPR_DB_PORT = $HOTELD_DB_PORT;
+if (strcmp((string) $HOTELD_DB_PORT,"")) $N_PHPR_DB_PORT = $HOTELD_DB_PORT;
 if ($HOTELD_DB_USER) $N_PHPR_DB_USER = $HOTELD_DB_USER;
-if (strcmp($HOTELD_DB_PASS,"")) $N_PHPR_DB_PASS = $HOTELD_DB_PASS;
+if (strcmp((string) $HOTELD_DB_PASS,"")) $N_PHPR_DB_PASS = $HOTELD_DB_PASS;
 if ($HOTELD_TAB_PRE) $N_PHPR_TAB_PRE = $HOTELD_TAB_PRE;
 } # fine if (defined('C_EXT_DB_DATA_PATH') and C_EXT_DB_DATA_PATH)
 if ($N_PHPR_DB_TYPE == "mysql" and @function_exists('mysqli_connect')) $N_PHPR_DB_TYPE = "mysqli";
 
 
+$nuovo_db = "";
 if ($N_PHPR_DB_NAME != $PHPR_DB_NAME or $N_PHPR_DB_HOST != $PHPR_DB_HOST or $N_PHPR_DB_PORT != $PHPR_DB_PORT or $N_PHPR_DB_TYPE != $PHPR_DB_TYPE) {
 $nuovo_db = "SI";
 if ($N_PHPR_DB_NAME == $PHPR_DB_NAME and $N_PHPR_DB_HOST == $PHPR_DB_HOST and $N_PHPR_DB_PORT == $PHPR_DB_PORT and substr($N_PHPR_DB_TYPE,0,5) == "mysql" and substr($PHPR_DB_TYPE,0,5) == "mysql") $database_esistente = "SI";
@@ -990,9 +998,9 @@ if (defined('C_EXT_DB_DATA_PATH') and C_EXT_DB_DATA_PATH) {
 if ($HOTELD_DB_TYPE) $N_PHPR_DB_TYPE = "";
 if ($HOTELD_DB_NAME) $N_PHPR_DB_NAME = "";
 if ($HOTELD_DB_HOST) $N_PHPR_DB_HOST = "";
-if (strcmp($HOTELD_DB_PORT,"")) $N_PHPR_DB_PORT = "";
+if (strcmp((string) $HOTELD_DB_PORT,"")) $N_PHPR_DB_PORT = "";
 if ($HOTELD_DB_USER) $N_PHPR_DB_USER = "";
-if (strcmp($HOTELD_DB_PASS,"")) $N_PHPR_DB_PASS = "";
+if (strcmp((string) $HOTELD_DB_PASS,"")) $N_PHPR_DB_PASS = "";
 if ($HOTELD_TAB_PRE) $N_PHPR_TAB_PRE = "";
 } # fine if (defined('C_EXT_DB_DATA_PATH') and C_EXT_DB_DATA_PATH)
 $N_PHPR_DB_NAME = aggiungi_slash($N_PHPR_DB_NAME);
@@ -1037,9 +1045,9 @@ if ($N_PHPR_DB_TYPE == "mysql" and @function_exists('mysqli_connect')) $N_PHPR_D
 } # fine if ($HOTELD_DB_TYPE)
 if ($HOTELD_DB_NAME) $N_PHPR_DB_NAME = $HOTELD_DB_NAME;
 if ($HOTELD_DB_HOST) $N_PHPR_DB_HOST = $HOTELD_DB_HOST;
-if (strcmp($HOTELD_DB_PORT,"")) $N_PHPR_DB_PORT = $HOTELD_DB_PORT;
+if (strcmp((string) $HOTELD_DB_PORT,"")) $N_PHPR_DB_PORT = $HOTELD_DB_PORT;
 if ($HOTELD_DB_USER) $N_PHPR_DB_USER = $HOTELD_DB_USER;
-if (strcmp($HOTELD_DB_PASS,"")) $N_PHPR_DB_PASS = $HOTELD_DB_PASS;
+if (strcmp((string) $HOTELD_DB_PASS,"")) $N_PHPR_DB_PASS = $HOTELD_DB_PASS;
 if ($HOTELD_TAB_PRE) $N_PHPR_TAB_PRE = $HOTELD_TAB_PRE;
 } # fine if (defined('C_EXT_DB_DATA_PATH') and C_EXT_DB_DATA_PATH)
 fwrite($fileaperto,"?>");
@@ -1122,9 +1130,9 @@ if ($nome_tabella == "relgruppi") {
 esegui_query2("create table ".$N_PHPR_TAB_PRE."relgruppi (idutente integer not null, idgruppo integer, datainserimento $DATETIME, hostinserimento varchar(50), utente_inserimento integer )",$N_PHPR_DB_TYPE);
 crea_indice2($N_PHPR_TAB_PRE.$nome_tabella,"idutente",$N_PHPR_TAB_PRE."iidp".$nome_tabella,$N_PHPR_DB_TYPE);
 } # fine if ($nome_tabella == "relgruppi")
-if ($nome_tabella == "sessioni") esegui_query2("create table ".$N_PHPR_TAB_PRE."sessioni (idsessioni varchar(30) primary key, idutente integer, indirizzo_ip text, tipo_conn varchar(12), user_agent text, ultimo_accesso $DATETIME )",$N_PHPR_DB_TYPE);
-if ($nome_tabella == "transazioni")esegui_query2("create table ".$N_PHPR_TAB_PRE."transazioni (idtransazioni varchar(30) primary key, idsessione varchar(30), tipo_transazione varchar(5), anno integer, spostamenti text, dati_transazione1 text, dati_transazione2 text, dati_transazione3 text, dati_transazione4 text, dati_transazione5 text, dati_transazione6 text, dati_transazione7 text, dati_transazione8 text, dati_transazione9 text, dati_transazione10 text, dati_transazione11 text, dati_transazione12 text, dati_transazione13 text, dati_transazione14 text, dati_transazione15 text, dati_transazione16 text, dati_transazione17 text, dati_transazione18 text, dati_transazione19 text, dati_transazione20 text, dati_transazione21 text, dati_transazione22 text, ultimo_accesso $DATETIME)",$N_PHPR_DB_TYPE);
-if ($nome_tabella == "transazioniweb")esegui_query2("create table ".$N_PHPR_TAB_PRE."transazioniweb (idtransazioni varchar(30) primary key, idsessione varchar(30), tipo_transazione varchar(5), anno integer, spostamenti text, dati_transazione1 text, dati_transazione2 text, dati_transazione3 text, dati_transazione4 text, dati_transazione5 text, dati_transazione6 text, dati_transazione7 text, dati_transazione8 text, dati_transazione9 text, dati_transazione10 text, dati_transazione11 text, dati_transazione12 text, dati_transazione13 text, dati_transazione14 text, dati_transazione15 text, dati_transazione16 text, dati_transazione17 text, dati_transazione18 text, dati_transazione19 text, dati_transazione20 text, dati_transazione21 text, dati_transazione22 text, ultimo_accesso $DATETIME)",$N_PHPR_DB_TYPE);
+if ($nome_tabella == "sessioni") esegui_query2("create table ".$N_PHPR_TAB_PRE."sessioni (idsessioni varchar(42) primary key, idcliente varchar(42), idutente integer, indirizzo_ip text, tipo_conn varchar(12), user_agent text, ultimo_accesso $DATETIME )",$N_PHPR_DB_TYPE);
+if ($nome_tabella == "transazioni")esegui_query2("create table ".$N_PHPR_TAB_PRE."transazioni (idtransazioni varchar(42) primary key, idcliente varchar(42), idsessione varchar(42), tipo_transazione varchar(5), anno integer, spostamenti text, dati_transazione1 text, dati_transazione2 text, dati_transazione3 text, dati_transazione4 text, dati_transazione5 text, dati_transazione6 text, dati_transazione7 text, dati_transazione8 text, dati_transazione9 text, dati_transazione10 text, dati_transazione11 text, dati_transazione12 text, dati_transazione13 text, dati_transazione14 text, dati_transazione15 text, dati_transazione16 text, dati_transazione17 text, dati_transazione18 text, dati_transazione19 text, dati_transazione20 text, dati_transazione21 text, dati_transazione22 text, ultimo_accesso $DATETIME)",$N_PHPR_DB_TYPE);
+if ($nome_tabella == "transazioniweb")esegui_query2("create table ".$N_PHPR_TAB_PRE."transazioniweb (idtransazioni varchar(42) primary key, idcliente varchar(42), idsessione varchar(42), tipo_transazione varchar(5), anno integer, spostamenti text, dati_transazione1 text, dati_transazione2 text, dati_transazione3 text, dati_transazione4 text, dati_transazione5 text, dati_transazione6 text, dati_transazione7 text, dati_transazione8 text, dati_transazione9 text, dati_transazione10 text, dati_transazione11 text, dati_transazione12 text, dati_transazione13 text, dati_transazione14 text, dati_transazione15 text, dati_transazione16 text, dati_transazione17 text, dati_transazione18 text, dati_transazione19 text, dati_transazione20 text, dati_transazione21 text, dati_transazione22 text, ultimo_accesso $DATETIME)",$N_PHPR_DB_TYPE);
 if ($nome_tabella == "descrizioni") esegui_query2("create table ".$N_PHPR_TAB_PRE."descrizioni (nome text not null, tipo varchar(16), lingua varchar(3), numero integer, testo $MEDIUMTEXT )",$N_PHPR_DB_TYPE);
 if ($nome_tabella == "beniinventario") esegui_query2("create table ".$N_PHPR_TAB_PRE."beniinventario (idbeniinventario integer primary key, nome_bene varchar(70), codice_bene varchar(50), descrizione_bene text, datainserimento $DATETIME, hostinserimento varchar(50), utente_inserimento integer )",$N_PHPR_DB_TYPE);
 if ($nome_tabella == "magazzini") esegui_query2("create table ".$N_PHPR_TAB_PRE."magazzini (idmagazzini integer primary key, nome_magazzino varchar(70), codice_magazzino varchar(50), descrizione_magazzino text, numpiano text, numcasa text, datainserimento $DATETIME, hostinserimento varchar(50), utente_inserimento integer )",$N_PHPR_DB_TYPE);
@@ -1143,13 +1151,13 @@ if (substr($nome_tabella,0,12) == "costiprenota") {
 esegui_query2("create table ".$N_PHPR_TAB_PRE."$nome_tabella (idcostiprenota integer primary key, idprenota integer, tipo varchar(2), nome varchar(40), valore float8, valore_perc float8, arrotonda float4, tasseperc float4, associasett varchar(1), settimane text, moltiplica text, categoria text, letto varchar(1), cat_persone text, numlimite integer, idntariffe integer, variazione varchar(10), varmoltiplica text, varnumsett varchar(20), varperiodipermessi text, varbeniinv text, varappincompatibili text, vartariffeassociate varchar(10), vartariffeincomp text, datainserimento $DATETIME, hostinserimento varchar(50), utente_inserimento integer)",$N_PHPR_DB_TYPE);
 crea_indice2($N_PHPR_TAB_PRE.$nome_tabella,"idprenota",$N_PHPR_TAB_PRE."iidp".$nome_tabella,$N_PHPR_DB_TYPE);
 } # fine if (substr($nome_tabella,0,12) == "costiprenota")
-else if (substr($nome_tabella,0,5) == "costi") esegui_query2("create table ".$N_PHPR_TAB_PRE."$nome_tabella (idcosti integer unique,nome_costo text, val_costo float8, tipo_costo text, valuta text, costo_valuta float8, nome_cassa varchar(70), persona_costo text, provenienza_costo text, metodo_pagamento text, datainserimento $DATETIME, hostinserimento varchar(50), utente_inserimento integer)",$N_PHPR_DB_TYPE);
+else if (substr($nome_tabella,0,5) == "costi") esegui_query2("create table ".$N_PHPR_TAB_PRE."$nome_tabella (idcosti integer unique,nome_costo text, val_costo float8, tipo_costo text, valuta text, costo_valuta float8, nome_cassa varchar(70), persona_costo text, provenienza_costo text, id_pagamento text, metodo_pagamento text, data_transazione $DATETIME, data_modifica $DATETIME, datainserimento $DATETIME, hostinserimento varchar(50), utente_inserimento integer)",$N_PHPR_DB_TYPE);
 if (substr($nome_tabella,0,15) == "rclientiprenota") {
 esegui_query2("create table ".$N_PHPR_TAB_PRE."$nome_tabella (idprenota integer, idclienti integer, num_ordine integer, parentela varchar(70), datainserimento $DATETIME, hostinserimento varchar(50), utente_inserimento integer )",$N_PHPR_DB_TYPE);
 crea_indice2($N_PHPR_TAB_PRE.$nome_tabella,"idprenota",$N_PHPR_TAB_PRE."iidp".$nome_tabella,$N_PHPR_DB_TYPE);
 } # fine if (substr($nome_tabella,0,15) == "rclientiprenota")
 if (substr($nome_tabella,0,6) == "regole") esegui_query2("create table ".$N_PHPR_TAB_PRE."$nome_tabella (idregole integer, app_agenzia varchar(100), tariffa_chiusa text, tariffa_per_app text, tariffa_per_utente text, tariffa_per_persone text, tariffa_commissioni integer, iddatainizio integer, iddatafine integer, motivazione text, motivazione2 text, motivazione3 text )",$N_PHPR_DB_TYPE);
-if (substr($nome_tabella,0,5) == "soldi") esegui_query2("create table ".$N_PHPR_TAB_PRE."$nome_tabella (idsoldi integer unique, motivazione text, id_pagamento text, metodo_pagamento text, saldo_prenota float8, saldo_cassa float8, soldi_prima float8, valuta text, saldo_valuta float8, data_inserimento $DATETIME, utente_inserimento integer )",$N_PHPR_DB_TYPE);
+if (substr($nome_tabella,0,5) == "soldi") esegui_query2("create table ".$N_PHPR_TAB_PRE."$nome_tabella (idsoldi integer unique, motivazione text, id_pagamento text, metodo_pagamento text, note text, saldo_prenota float8, saldo_cassa float8, soldi_prima float8, valuta text, saldo_valuta float8, data_transazione $DATETIME, data_modifica $DATETIME, data_inserimento $DATETIME, utente_inserimento integer )",$N_PHPR_DB_TYPE);
 if (substr($nome_tabella,0,7) == "periodi") esegui_query2("create table ".$N_PHPR_TAB_PRE."$nome_tabella (idperiodi integer primary key, datainizio date not null, datafine date$lista_tariffe)",$N_PHPR_DB_TYPE);
 if (substr($nome_tabella,0,8) == "ntariffe") esegui_query2("create table ".$N_PHPR_TAB_PRE."$nome_tabella (idntariffe integer, nomecostoagg varchar(40), tipo_ca varchar(2), valore_ca float8, valore_perc_ca float8, arrotonda_ca float4, tasseperc_ca float4, associasett_ca varchar(1), numsett_ca varchar(20), moltiplica_ca text, periodipermessi_ca text, beniinv_ca text, appincompatibili_ca text, variazione_ca varchar(20), mostra_ca varchar(10), categoria_ca text, letto_ca varchar(1), numlimite_ca integer, regoleassegna_ca varchar(30), utente_inserimento integer$lista_tariffe)",$N_PHPR_DB_TYPE);
 } # fine if ($linea == "</colonnetabella>" and $leggendo_righe != "SI")
@@ -1242,8 +1250,11 @@ if ($linea == "<contenuto>") $leggendo_contenuto = "SI";
 if (substr($linea,0,10) == "<nomefile>") {
 $nome_file = substr($linea,10);
 $nome_file = substr($nome_file,0,-11);
+if (isset($salta_file_log) and $nome_file == "./dati/log_utenti.php") $nome_file = "";
+else {
 if (substr($nome_file,0,7) == "./dati/") $nome_file = C_DATI_PATH.substr($nome_file,6);
 if ($nome_file) $fileaperto = fopen("$nome_file","w+");
+} # fine else if (isset($salta_file_log) and $nome_file == "./dati/log_utenti.php")
 } # fine if (substr($linea,0,10) == "<nomefile>")
 
 } # fine if ($leggendo_file == "SI")
@@ -1264,8 +1275,9 @@ $nome_modello = "";
 
 if ($leggendo_modello == "SI") {
 
-if ($nome_modello) {
-if ($leggendo_contenuto_mod == "SI") {
+if (!empty($nome_modello)) {
+if (isset($leggendo_contenuto_mod) and $leggendo_contenuto_mod == "SI") {
+if (!isset($contenuto_mod[$dir_modello][$nome_modello])) $contenuto_mod[$dir_modello][$nome_modello] = "";
 if (substr($linea,-12) == "</contenuto>") {
 $leggendo_contenuto_mod = "NO";
 $linea = substr($linea,0,-12);
@@ -1277,10 +1289,10 @@ else {
 $contenuto_mod[$dir_modello][$nome_modello] .= $linea."
 ";
 } # fine else if (substr($linea,-12) == "</contenuto>")
-} # fine if ($leggendo_contenuto_mod == "SI")
+} # fine if (isset($leggendo_contenuto_mod) and $leggendo_contenuto_mod == "SI")
 
 if ($linea == "<contenuto>") $leggendo_contenuto_mod = "SI";
-} # fine if ($nome_modello)
+} # fine if (!empty($nome_modello))
 
 else {
 
@@ -1303,7 +1315,7 @@ if (substr($nome_modello,-4) != ".php") $nome_modello = "";
 if (str_replace(".php","",substr($nome_modello,0,-4)) != substr($nome_modello,0,-4)) $nome_modello = "";
 } # fine if (substr($linea,0,13) == "<nomemodello>" and $dir_modello)
 
-} # fine else if ($nome_modello)
+} # fine else if (!empty($nome_modello))
 
 } # fine if ($leggendo_modello == "SI")
 
@@ -1342,7 +1354,7 @@ $datainserimento = risul_query($utenti_vecchi,$num1,'datainserimento');
 if (!$datainserimento) $cond_datainserimento = "datainserimento is NULL";
 else  $cond_datainserimento = "datainserimento = '".aggslashdb($datainserimento)."'";
 $hostinserimento = risul_query($utenti_vecchi,$num1,'hostinserimento');
-if (!strcmp($hostinserimento,"")) $cond_hostinserimento = "(hostinserimento is NULL or hostinserimento = '')";
+if (!strcmp((string) $hostinserimento,"")) $cond_hostinserimento = "(hostinserimento is NULL or hostinserimento = '')";
 else  $cond_hostinserimento = "hostinserimento = '".aggslashdb($hostinserimento)."'";
 $utente_esistente = esegui_query("select idutenti from ".$PHPR_TAB_PRE."utenti where idutenti = '$idutente_vecchio' and $cond_datainserimento and $cond_hostinserimento ");
 if (!numlin_query($utente_esistente)) {
@@ -1385,7 +1397,7 @@ $datainserimento = risul_query($clienti_vecchi,$num1,'datainserimento');
 if (!$datainserimento) $cond_datainserimento = "datainserimento is NULL";
 else  $cond_datainserimento = "datainserimento = '".aggslashdb($datainserimento)."'";
 $hostinserimento = risul_query($clienti_vecchi,$num1,'hostinserimento');
-if (!strcmp($hostinserimento,"")) $cond_hostinserimento = "(hostinserimento is NULL or hostinserimento = '')";
+if (!strcmp((string) $hostinserimento,"")) $cond_hostinserimento = "(hostinserimento is NULL or hostinserimento = '')";
 else  $cond_hostinserimento = "hostinserimento = '".aggslashdb($hostinserimento)."'";
 $cliente_esistente = esegui_query("select idclienti from ".$PHPR_TAB_PRE."clienti where idclienti = '$idcliente_vecchio' and $cond_datainserimento and $cond_hostinserimento ");
 if (!numlin_query($cliente_esistente)) {
@@ -1535,6 +1547,10 @@ include(C_DATI_PATH."/lingua.php");
 $lingua_mex = $lingua[1];
 $pag_orig = $pag;
 $pag = "crea_modelli.php";
+$anno_orig = fixset($anno);
+$anno = $anno_max;
+include("./includes/sett_gio.php");
+$anno = $anno_orig;
 function assegna_var_conn_mod ($N_PHPR_DB_TYPE,$N_PHPR_DB_NAME,$N_PHPR_DB_HOST,$N_PHPR_DB_PORT,$N_PHPR_DB_USER,$N_PHPR_DB_PASS,$N_PHPR_LOAD_EXT,$N_PHPR_TAB_PRE) {
 global $M_PHPR_DB_TYPE,$M_PHPR_DB_NAME,$M_PHPR_DB_HOST,$M_PHPR_DB_PORT,$M_PHPR_DB_USER,$M_PHPR_DB_PASS,$M_PHPR_LOAD_EXT,$M_PHPR_TAB_PRE;
 $M_PHPR_DB_TYPE = $N_PHPR_DB_TYPE;
@@ -1556,24 +1572,25 @@ include("./includes/templates/frasi_mod_disp.php");
 include("./includes/templates/funzioni_mod_disp.php");
 for ($num_cart = 0 ; $num_cart < $num_perc_cart_mod_vett ; $num_cart++) {
 $percorso_cartella_modello = $perc_cart_mod_vett[$num_cart];
-if ($contenuto_mod[$percorso_cartella_modello]['mdl_disponibilita.php']) {
+if (!empty($contenuto_mod[$percorso_cartella_modello]['mdl_disponibilita.php'])) {
 $lingua_modello = "ita";
 $nome_file = mex2("mdl_disponibilita",$pag,$lingua_modello).".php";
 $nome_file_tmp = substr($nome_file,0,-4).".tmp";
 $num_periodi_date = "";
 $anno_modello = "";
 scrivi_file("<?php exit(); ?>
-".$contenuto_mod[$percorso_cartella_modello]["$nome_file"],"$percorso_cartella_modello/$nome_file_tmp");
-recupera_var_modello_disponibilita($nome_file_tmp,$percorso_cartella_modello,$pag,$fr_frase,$num_frasi,$var_mod,$num_var_mod,$tipo_periodi,"SI",$anno_modello,$PHPR_TAB_PRE);
+".$contenuto_mod[$percorso_cartella_modello][$nome_file],"$percorso_cartella_modello/$nome_file_tmp");
+recupera_var_modello_disponibilita($nome_file_tmp,$percorso_cartella_modello,$pag,$fr_frase,$frase,$num_frasi,$var_mod,$num_var_mod,$tipo_periodi,"SI",$anno_modello,$lingua_modello,$PHPR_TAB_PRE);
 $prima_parte_html = str_replace("<?php exit(); ?>
-","",$prima_parte_html);
+","",fixstr($prima_parte_html));
 if (substr($prima_parte_html,0,70) == "<?php if (!@\$framed and !@\$_GET['framed'] and !@\$_POST['framed']) { ?>") $prima_parte_html = substr($prima_parte_html,70);
 if (substr($prima_parte_html,0,74) == "<?php if (!@\$framed and !@\$_GET[\\'framed\\'] and !@\$_POST[\\'framed\\']) { ?>") $prima_parte_html = substr($prima_parte_html,74);
+if (substr($prima_parte_html,0,85) == "<?php if (empty(\$framed) and empty(\$_GET['framed']) and empty(\$_POST['framed'])) { ?>") $prima_parte_html = substr($prima_parte_html,85);
 unlink("$percorso_cartella_modello/$nome_file_tmp");
 assegna_var_conn_mod($N_PHPR_DB_TYPE,$N_PHPR_DB_NAME,$N_PHPR_DB_HOST,$N_PHPR_DB_PORT,$N_PHPR_DB_USER,$N_PHPR_DB_PASS,$N_PHPR_LOAD_EXT,$N_PHPR_TAB_PRE);
 $anno_modello = $anno_modello_presente;
 crea_modello_disponibilita($percorso_cartella_modello,$anno_modello,$PHPR_TAB_PRE,$pag,$lingua_modello,$silenzio_mod,$fr_frase,$frase,$num_frasi,$tipo_periodi);
-} # fine if ($contenuto_mod[$percorso_cartella_modello]["mdl_disponibilita.php"])
+} # fine if (!empty($contenuto_mod[$percorso_cartella_modello]["mdl_disponibilita.php"]))
 } # fine for $num_cart
 $lang_dir = opendir("./includes/lang/");
 include(C_DATI_PATH."/lingua.php");
@@ -1583,22 +1600,23 @@ $nome_file = mex2("mdl_disponibilita",$pag,$ini_lingua).".php";
 $nome_file_tmp = substr($nome_file,0,-4).".tmp";
 for ($num_cart = 0 ; $num_cart < $num_perc_cart_mod_vett ; $num_cart++) {
 $percorso_cartella_modello = $perc_cart_mod_vett[$num_cart];
-if ($contenuto_mod[$percorso_cartella_modello][$nome_file]) {
+if (!empty($contenuto_mod[$percorso_cartella_modello][$nome_file])) {
 $lingua_modello = $ini_lingua;
 $num_periodi_date = "";
 $anno_modello = "";
 scrivi_file("<?php exit(); ?>
 ".$contenuto_mod[$percorso_cartella_modello][$nome_file],"$percorso_cartella_modello/$nome_file_tmp");
-recupera_var_modello_disponibilita($nome_file_tmp,$percorso_cartella_modello,$pag,$fr_frase,$num_frasi,$var_mod,$num_var_mod,$tipo_periodi,"SI",$anno_modello,$PHPR_TAB_PRE);
+recupera_var_modello_disponibilita($nome_file_tmp,$percorso_cartella_modello,$pag,$fr_frase,$frase,$num_frasi,$var_mod,$num_var_mod,$tipo_periodi,"SI",$anno_modello,$lingua_modello,$PHPR_TAB_PRE);
 $prima_parte_html = str_replace("<?php exit(); ?>
-","",$prima_parte_html);
+","",fixstr($prima_parte_html));
 if (substr($prima_parte_html,0,70) == "<?php if (!@\$framed and !@\$_GET['framed'] and !@\$_POST['framed']) { ?>") $prima_parte_html = substr($prima_parte_html,70);
 if (substr($prima_parte_html,0,74) == "<?php if (!@\$framed and !@\$_GET[\\'framed\\'] and !@\$_POST[\\'framed\\']) { ?>") $prima_parte_html = substr($prima_parte_html,74);
+if (substr($prima_parte_html,0,85) == "<?php if (empty(\$framed) and empty(\$_GET['framed']) and empty(\$_POST['framed'])) { ?>") $prima_parte_html = substr($prima_parte_html,85);
 unlink("$percorso_cartella_modello/$nome_file_tmp");
 assegna_var_conn_mod($N_PHPR_DB_TYPE,$N_PHPR_DB_NAME,$N_PHPR_DB_HOST,$N_PHPR_DB_PORT,$N_PHPR_DB_USER,$N_PHPR_DB_PASS,$N_PHPR_LOAD_EXT,$N_PHPR_TAB_PRE);
 $anno_modello = $anno_modello_presente;
 crea_modello_disponibilita($percorso_cartella_modello,$anno_modello,$PHPR_TAB_PRE,$pag,$lingua_modello,$silenzio_mod,$fr_frase,$frase,$num_frasi,$tipo_periodi);
-} # fine if ($contenuto_mod[$percorso_cartella_modello][$nome_file])
+} # fine if (!empty($contenuto_mod[$percorso_cartella_modello][$nome_file]))
 } # fine for $num_cart
 } # fine if ($file != "." && $file != "..")
 } # fine while ($file = readdir($lang_dig))
@@ -1617,47 +1635,49 @@ else $nome_file = "ita_".$template_file_name["en"];
 $nome_file_tmp = substr($nome_file,0,-4).".tmp";
 for ($num_cart = 0 ; $num_cart < $num_perc_cart_mod_vett ; $num_cart++) {
 $percorso_cartella_modello = $perc_cart_mod_vett[$num_cart];
-if ($contenuto_mod[$percorso_cartella_modello][$nome_file]) {
+if (!empty($contenuto_mod[$percorso_cartella_modello][$nome_file])) {
 $lingua_modello = "ita";
 $num_periodi_date = "";
 $anno_modello = "";
 scrivi_file("<?php exit(); ?>
 ".$contenuto_mod[$percorso_cartella_modello][$nome_file],"$percorso_cartella_modello/$nome_file_tmp");
-$funz_recupera_var_modello($nome_file_tmp,$percorso_cartella_modello,$pag,$fr_frase,$num_frasi,$var_mod,$num_var_mod,$tipo_periodi,"SI",$anno_modello,$PHPR_TAB_PRE);
+$funz_recupera_var_modello($nome_file_tmp,$percorso_cartella_modello,$pag,$fr_frase,$frase,$num_frasi,$var_mod,$num_var_mod,$tipo_periodi,"SI",$anno_modello,$lingua_modello,$PHPR_TAB_PRE);
 $prima_parte_html = str_replace("<?php exit(); ?>
-","",$prima_parte_html);
+","",fixstr($prima_parte_html));
 if (substr($prima_parte_html,0,70) == "<?php if (!@\$framed and !@\$_GET['framed'] and !@\$_POST['framed']) { ?>") $prima_parte_html = substr($prima_parte_html,70);
 if (substr($prima_parte_html,0,74) == "<?php if (!@\$framed and !@\$_GET[\\'framed\\'] and !@\$_POST[\\'framed\\']) { ?>") $prima_parte_html = substr($prima_parte_html,74);
+if (substr($prima_parte_html,0,85) == "<?php if (empty(\$framed) and empty(\$_GET['framed']) and empty(\$_POST['framed'])) { ?>") $prima_parte_html = substr($prima_parte_html,85);
 unlink("$percorso_cartella_modello/$nome_file_tmp");
 assegna_var_conn_mod($N_PHPR_DB_TYPE,$N_PHPR_DB_NAME,$N_PHPR_DB_HOST,$N_PHPR_DB_PORT,$N_PHPR_DB_USER,$N_PHPR_DB_PASS,$N_PHPR_LOAD_EXT,$N_PHPR_TAB_PRE);
 $anno_modello = $anno_modello_presente;
 $funz_crea_modello($percorso_cartella_modello,$anno_modello,$PHPR_TAB_PRE,$pag,$lingua_modello,$silenzio_mod,$fr_frase,$frase,$num_frasi,$tipo_periodi);
-} # fine if ($contenuto_mod[$percorso_cartella_modello][$nome_file])
+} # fine if (!empty($contenuto_mod[$percorso_cartella_modello][$nome_file]))
 } # fine for $num_cart
 $lang_dir = opendir("./includes/lang/");
 while ($ini_lingua = readdir($lang_dir)) {
 if ($ini_lingua != "." && $ini_lingua != "..") {
-if ($template_file_name[$ini_lingua]) $nome_file = $template_file_name[$ini_lingua];
+if (!empty($template_file_name[$ini_lingua])) $nome_file = $template_file_name[$ini_lingua];
 else $nome_file = $ini_lingua."_".$template_file_name['en'];
 $nome_file_tmp = substr($nome_file,0,-4).".tmp";
 for ($num_cart = 0 ; $num_cart < $num_perc_cart_mod_vett ; $num_cart++) {
 $percorso_cartella_modello = $perc_cart_mod_vett[$num_cart];
-if ($contenuto_mod[$percorso_cartella_modello][$nome_file]) {
+if (!empty($contenuto_mod[$percorso_cartella_modello][$nome_file])) {
 $lingua_modello = $ini_lingua;
 $num_periodi_date = "";
 $anno_modello = "";
 scrivi_file("<?php exit(); ?>
-".$contenuto_mod[$percorso_cartella_modello]["$nome_file"],"$percorso_cartella_modello/$nome_file_tmp");
-$funz_recupera_var_modello($nome_file_tmp,$percorso_cartella_modello,$pag,$fr_frase,$num_frasi,$var_mod,$num_var_mod,$tipo_periodi,"SI",$anno_modello,$PHPR_TAB_PRE);
+".$contenuto_mod[$percorso_cartella_modello][$nome_file],"$percorso_cartella_modello/$nome_file_tmp");
+$funz_recupera_var_modello($nome_file_tmp,$percorso_cartella_modello,$pag,$fr_frase,$frase,$num_frasi,$var_mod,$num_var_mod,$tipo_periodi,"SI",$anno_modello,$lingua_modello,$PHPR_TAB_PRE);
 $prima_parte_html = str_replace("<?php exit(); ?>
-","",$prima_parte_html);
+","",fixstr($prima_parte_html));
 if (substr($prima_parte_html,0,70) == "<?php if (!@\$framed and !@\$_GET['framed'] and !@\$_POST['framed']) { ?>") $prima_parte_html = substr($prima_parte_html,70);
 if (substr($prima_parte_html,0,74) == "<?php if (!@\$framed and !@\$_GET[\\'framed\\'] and !@\$_POST[\\'framed\\']) { ?>") $prima_parte_html = substr($prima_parte_html,74);
+if (substr($prima_parte_html,0,85) == "<?php if (empty(\$framed) and empty(\$_GET['framed']) and empty(\$_POST['framed'])) { ?>") $prima_parte_html = substr($prima_parte_html,85);
 unlink("$percorso_cartella_modello/$nome_file_tmp");
 assegna_var_conn_mod($N_PHPR_DB_TYPE,$N_PHPR_DB_NAME,$N_PHPR_DB_HOST,$N_PHPR_DB_PORT,$N_PHPR_DB_USER,$N_PHPR_DB_PASS,$N_PHPR_LOAD_EXT,$N_PHPR_TAB_PRE);
 $anno_modello = $anno_modello_presente;
 $funz_crea_modello($percorso_cartella_modello,$anno_modello,$PHPR_TAB_PRE,$pag,$lingua_modello,$silenzio_mod,$fr_frase,$frase,$num_frasi,$tipo_periodi);
-} # fine if ($contenuto_mod[$percorso_cartella_modello][$nome_file])
+} # fine if (!empty($contenuto_mod[$percorso_cartella_modello][$nome_file]))
 } # fine for $num_cart
 } # fine if ($file != "." && $file != "..")
 } # fine while ($file = readdir($lang_dir))
@@ -1702,7 +1722,7 @@ $versione_file = substr($versione_file,0,-11);
 break;
 } # fine if (substr($linea,0,10) == "<versione>")
 } # fine for $num1
-if ($versione_file and ($versione_file <= $versione_corrente and $versione_file >= "2.22")) {
+if ($versione_file and ($versione_file <= $versione_corrente and $versione_file >= "3.05")) {
 
 if ($modalita != "aggiungi") $contr_agg = "";
 $contr_agg_var = $contr_agg;
@@ -1712,6 +1732,8 @@ $leggendo_backup = "NO";
 $leggendo_database = "NO";
 $leggendo_tabella = "NO";
 $leggendo_colonne = "NO";
+$min_var_vecchio = array();
+$var_vecchie = array();
 
 # Prima lettura di controllo del file contratti
 $file_coerente = "SI";
@@ -1771,6 +1793,12 @@ $tipo_contr = $riga[$num_colonna['tipo']];
 if (substr($tipo_contr,0,3) == "var") {
 $nome = $riga[$num_colonna['testo']];
 if (!empty($var_riserv[$nome])) { $file_coerente = "NO"; $num_err .= "#2"; }
+$contr_cond = substr($tipo_contr,3);
+if (!$contr_cond) $contr_cond = 0;
+$vecchio_num = $riga[$num_colonna['numero']];
+if (!isset($min_var_vecchio[$contr_cond]) or $vecchio_num < $min_var_vecchio[$contr_cond]) $min_var_vecchio[$contr_cond] = $vecchio_num;
+if (!isset($min_var_vecchio[-1]) or $vecchio_num < $min_var_vecchio[-1]) $min_var_vecchio[-1] = $vecchio_num;
+$var_vecchie[$vecchio_num] = 1;
 } # fine if (substr($tipo_contr,0,3) == "var")
 if (substr($tipo_contr,0,4) == "vett") {
 $nome = explode(";",$riga[$num_colonna['testo']]);
@@ -1784,7 +1812,7 @@ if (substr($riga[$num_colonna['tipo']],0,5) == "contr" and $riga[$num_colonna['n
 if ($contr_agg and $riga[$num_colonna['numero']] == $contr_agg) {
 if (substr($riga[$num_colonna['tipo']],0,5) == "contr") $contr_agg_trovato = 1;
 if ($riga[$num_colonna['tipo']] == "impor_vc") $contr_agg_var = $riga[$num_colonna['testo']];
-if ($riga[$num_colonna['tipo']] == "allegato") $contr_agg_all .= ",".$riga[$num_colonna['testo']].",";
+if ($riga[$num_colonna['tipo']] == "allegato") $contr_agg_all .= $riga[$num_colonna['testo']];
 } # fine if ($contr_agg and $riga[$num_colonna['numero']] == $contr_agg)
 } # fine if ($nome_tabella == "contratti")
 
@@ -1826,13 +1854,14 @@ if ($contr_agg and !$contr_agg_trovato) { $file_coerente = "NO"; $num_err .= "#7
 if ($file_coerente == "NO") {
 if ($silenzio != "SI") echo mex("Il formato del file è errato",$pag).".<br>";
 # debug backup DOCUMENTI
-#if ($num_err) echo $num_err.".<br>";
+if ($num_err and defined('C_DEBUG_HD') and C_DEBUG_HD == "on") echo $num_err.".<br>";
 } # fine if ($file_coerente == "NO")
 else {
 
 unset($var_riserv);
 if ($modalita == "info") return $info_contr;
 
+include("./includes/funzioni_mod_contratti.php");
 if ($modalita == "rimpiazza") esegui_query("delete from ".$PHPR_TAB_PRE."contratti");
 $max_contr = esegui_query("select max(numero) from ".$PHPR_TAB_PRE."contratti where tipo $LIKE 'contr%'");
 if (numlin_query($max_contr) != 0) $max_contr = risul_query($max_contr,0,0);
@@ -1858,8 +1887,24 @@ unset($nuovo_num_contr);
 unset($nuovo_num_var);
 $nuovo_num_var['-1'] = '-1';
 $nuovo_num_var['-2'] = '-2';
+$nuovo_num_var['-3'] = '-3';
+for ($num1 = 1 ; $num1 <= $num_allegati_max ; $num1++) $nuovo_num_var[(-100 - $num1)] = (-100 - $num1);
 $nuovo_nome_var = null;
 unset($nuovo_num_all);
+
+ksort ($var_vecchie);
+reset ($var_vecchie);
+$num1 = 0;
+$var_vecchie_ord = array();
+foreach ($var_vecchie as $id_var_vecchia => $val) {
+$num1++;
+$var_vecchie_ord[$id_var_vecchia] = $num1;
+} # fine foreach ($var_vecchie as $id_var_vecchia => $val)
+unset($var_vecchie);
+if (!$contr_agg) $min_var_vecchio = fixset($var_vecchie_ord[$min_var_vecchio[-1]]);
+else $min_var_vecchio = fixset($var_vecchie_ord[fixset($min_var_vecchio[$contr_agg_var])]);
+if (!$min_var_vecchio) $min_var_vecchio = 0;
+else $min_var_vecchio = $min_var_vecchio - 1;
 
 $leggendo_backup = "NO";
 $leggendo_database = "NO";
@@ -1869,7 +1914,8 @@ $leggendo_righe = "NO";
 $leggendo_file = "NO";
 $leggendo_contenuto = "NO";
 $nome_file = "";
-unset($linee_inserite_in_tabella);
+$linee_inserite_in_tabella = array();
+$numero_tariffe = array();
 if (defined('C_CARTELLA_CREA_MODELLI') and C_CARTELLA_CREA_MODELLI != "") {
 if (defined('C_CARTELLA_DOC') and C_CARTELLA_DOC != "" and @is_dir(C_CARTELLA_CREA_MODELLI."/".C_CARTELLA_DOC)) $dir_salva_home = C_CARTELLA_CREA_MODELLI."/".C_CARTELLA_DOC;
 else $dir_salva_home = C_CARTELLA_CREA_MODELLI;
@@ -1934,7 +1980,7 @@ $inserire_riga = "SI";
 $tipo_contr = $riga[$num_colonna['tipo']];
 $vecchio_num = $riga[$num_colonna['numero']];
 
-if (substr($tipo_contr,0,5) == "contr" or $tipo_contr == "opzeml" or $tipo_contr == "oggetto" or $tipo_contr == "allegato" or $tipo_contr == "headhtm" or $tipo_contr == "foothtm" or $tipo_contr == "est_txt" or $tipo_contr == "dir" or substr($tipo_contr,0,4) == "mln_" or $tipo_contr == "impor_vc" or $tipo_contr == "num_prog" or $tipo_contr == "nomefile" or $tipo_contr == "autosalv" or $tipo_contr == "compress" or $tipo_contr == "incr_np" or $tipo_contr == "api" or $tipo_contr == "formati") {
+if (substr($tipo_contr,0,5) == "contr" or $tipo_contr == "opzeml" or $tipo_contr == "oggetto" or $tipo_contr == "allegato" or $tipo_contr == "headhtm" or $tipo_contr == "foothtm" or $tipo_contr == "datdownl" or $tipo_contr == "dir" or substr($tipo_contr,0,4) == "mln_" or $tipo_contr == "impor_vc" or $tipo_contr == "num_prog" or $tipo_contr == "nomefile" or $tipo_contr == "autosalv" or $tipo_contr == "compress" or $tipo_contr == "incr_np" or $tipo_contr == "api" or $tipo_contr == "formati") {
 if (!$contr_agg or $vecchio_num == $contr_agg) {
 if (empty($nuovo_num_contr[$vecchio_num])) {
 if ($contr_agg) $nuovo_num_contr[$vecchio_num] = $max_contr + 1;
@@ -1945,18 +1991,7 @@ if (substr($tipo_contr,0,5) == "contr" or substr($tipo_contr,0,4) == "mln_") {
 if (@is_array($nuovo_nome_var)) {
 reset($nuovo_nome_var);
 foreach ($nuovo_nome_var as $v_nome => $n_nome) {
-$riga[$num_colonna['testo']] = str_replace("[$v_nome]","[$n_nome]",$riga[$num_colonna['testo']]);
-$riga[$num_colonna['testo']] = str_replace("[c $v_nome=","[c $n_nome=",$riga[$num_colonna['testo']]);
-$riga[$num_colonna['testo']] = str_replace("[c $v_nome!=","[c $n_nome!=",$riga[$num_colonna['testo']]);
-if (substr($v_nome,-1) == ")") {
-$v_nome_arr = explode("(",$v_nome);
-$v_nome_arr = $v_nome_arr[0];
-$n_nome_arr = explode("(",$n_nome);
-$n_nome_arr = $n_nome_arr[0];
-$riga[$num_colonna['testo']] = str_replace("[r4 array=\"$v_nome_arr\"]","[r4 array=\"$n_nome_arr\"]",$riga[$num_colonna['testo']]);
-$riga[$num_colonna['testo']] = str_replace("[$v_nome_arr('","[$n_nome_arr('",$riga[$num_colonna['testo']]);
-$riga[$num_colonna['testo']] = str_replace("[c $v_nome_arr('","[c $n_nome_arr('",$riga[$num_colonna['testo']]);
-} # fine if (substr($v_nome,-1) == ")")
+$riga[$num_colonna['testo']] = rinomina_testo_variabile_pers($v_nome,$n_nome,$riga[$num_colonna['testo']]);
 } # fine foreach ($nuovo_nome_var as $v_nome => $n_nome)
 } # fine if (@is_array($nuovo_nome_var))
 } # fine if (substr($tipo_contr,0,5) == "contr" or substr($tipo_contr,0,4) == "mln_")
@@ -1976,10 +2011,26 @@ unlink("$dir_salva/prova.tmp");
 } # fine if ($tipo_contr == "dir")
 if ($tipo_contr == "allegato") {
 $vecchio_all = $riga[$num_colonna['testo']];
-if (strcmp($vecchio_all,"")) {
-if (empty($nuovo_num_all[$vecchio_all])) $nuovo_num_all[$vecchio_all] = $max_all + $vecchio_all;
-$riga[$num_colonna['testo']] = $nuovo_num_all[$vecchio_all];
-} # fine if (strcmp($vecchio_all,""))
+if (strcmp((string) $vecchio_all,"")) {
+$allegati_esist = explode(",",$vecchio_all);
+$num_allegati = (count($allegati_esist) - 1);
+for ($num2 = 1 ; $num2 < $num_allegati ; $num2++) {
+if (strstr($allegati_esist[$num2],":")) {
+$all_vett = explode(">",$allegati_esist[$num2]);
+$num_ln = count($all_vett);
+} # fine if (strstr($allegati_esist[$num2],":"))
+else $num_ln = 1;
+for ($num3 = 0 ; $num3 < $num_ln ; $num3++) {
+if ($num3 > 0 or strstr($allegati_esist[$num2],":")) $num_all = substr(strstr($all_vett[$num3],":"),1);
+else $num_all = $allegati_esist[$num2];
+if (empty($nuovo_num_all[$num_all])) $nuovo_num_all[$num_all] = $max_all + $num_all;
+$vecchio_all = str_replace(",$num_all,",",".$nuovo_num_all[$num_all].",",$vecchio_all);
+$vecchio_all = str_replace(":$num_all,",":".$nuovo_num_all[$num_all].",",$vecchio_all);
+$vecchio_all = str_replace(":$num_all>",":".$nuovo_num_all[$num_all].">",$vecchio_all);
+} # fine for $num3
+} # fine for $num2
+$riga[$num_colonna['testo']] = $vecchio_all;
+} # fine if (strcmp((string) $vecchio_all,""))
 } # fine if ($tipo_contr == "allegato")
 if ($tipo_contr == "impor_vc") {
 if (!$contr_agg) {
@@ -2000,7 +2051,7 @@ else $inserire_riga = "NO";
 if ($tipo_contr == "api") {
 $valori = "23456789ABCDEFGHJKLMNPQRSTUVWXZabcdefghijkmnpqrstuvwxyz";
 srand((double)microtime() * 1000000);
-unset($pass_generata);
+$pass_generata = "";
 for ($num2 = 0 ; $num2 < 8 ; $num2++) $pass_generata .= substr($valori,rand(0,54),1);
 $riga[$num_colonna['testo']] .= $pass_generata;
 } # fine if ($tipo_contr == "api")
@@ -2011,7 +2062,7 @@ else $inserire_riga = "NO";
 if (substr($tipo_contr,0,3) == "var") {
 $contr_cond = substr($tipo_contr,3);
 if (!$contr_agg or $contr_agg_var == $contr_cond) {
-if (strcmp($contr_cond,"")) {
+if (strcmp((string) $contr_cond,"")) {
 if (empty($nuovo_num_contr[$contr_cond])) {
 if ($contr_agg) $nuovo_num_contr[$contr_cond] = $max_contr + 1;
 else $nuovo_num_contr[$contr_cond] = $max_contr + $contr_cond;
@@ -2019,7 +2070,7 @@ else $nuovo_num_contr[$contr_cond] = $max_contr + $contr_cond;
 $contr_cond = $nuovo_num_contr[$contr_cond];
 $tipo_contr = "var$contr_cond";
 $riga[$num_colonna['tipo']] = $tipo_contr;
-} # fine if (strcmp($contr_cond,""))
+} # fine if (strcmp((string) $contr_cond,""))
 if (empty($nuovo_num_var[$vecchio_num])) {
 $num_var_esistente = "";
 $testo = $riga[$num_colonna['testo']];
@@ -2030,7 +2081,7 @@ $nuovo_num_var[$vecchio_num] = risul_query($var_esistente,($num_var_esistente - 
 $inserire_riga = "NO";
 } # fine if ($num_var_esistente)
 else {
-$nuovo_num_var[$vecchio_num] = $max_var + $vecchio_num;
+$nuovo_num_var[$vecchio_num] = $max_var + $var_vecchie_ord[$vecchio_num] - $min_var_vecchio;
 if (numlin_query($var_esistente)) {
 $nuovo_nome_trovato = "NO";
 $nuovo_nome = $testo;
@@ -2068,7 +2119,7 @@ else $inserire_riga = "NO";
 if (substr($tipo_contr,0,4) == "vett") {
 $contr_cond = substr($tipo_contr,4);
 if (!$contr_agg or $contr_agg_var == $contr_cond) {
-if (strcmp($contr_cond,"")) {
+if (strcmp((string) $contr_cond,"")) {
 if (empty($nuovo_num_contr[$contr_cond])) {
 if ($contr_agg) $nuovo_num_contr[$contr_cond] = $max_contr + 1;
 else $nuovo_num_contr[$contr_cond] = $max_contr + $contr_cond;
@@ -2076,7 +2127,7 @@ else $nuovo_num_contr[$contr_cond] = $max_contr + $contr_cond;
 $contr_cond = $nuovo_num_contr[$contr_cond];
 $tipo_contr = "vett$contr_cond";
 $riga[$num_colonna['tipo']] = $tipo_contr;
-} # fine if (strcmp($contr_cond,""))
+} # fine if (strcmp((string) $contr_cond,""))
 if (empty($nuovo_num_var["a$vecchio_num"])) {
 $num_arr_esistente = "";
 $testo = $riga[$num_colonna['testo']];
@@ -2114,7 +2165,7 @@ else $inserire_riga = "NO";
 if (substr($tipo_contr,0,4) == "cond") {
 $contr_cond = substr($tipo_contr,4);
 if (!$contr_agg or $contr_agg_var == $contr_cond) {
-if (!strcmp($contr_cond,"")) $riga[$num_colonna['numero']] = $max_cond + $vecchio_num;
+if (!strcmp((string) $contr_cond,"")) $riga[$num_colonna['numero']] = $max_cond + $vecchio_num;
 else {
 $vecchio_num = $contr_cond;
 if (!$nuovo_num_contr[$vecchio_num]) {
@@ -2123,7 +2174,7 @@ else $nuovo_num_contr[$vecchio_num] = $max_contr + $vecchio_num;
 } # fine if (!$nuovo_num_contr[$vecchio_num])
 $riga[$num_colonna['tipo']] = "cond".$nuovo_num_contr[$vecchio_num];
 $contr_cond = $nuovo_num_contr[$vecchio_num];
-} # fine else if (!strcmp($contr_cond,""))
+} # fine else if (!strcmp((string) $contr_cond,""))
 $cond_vecchia = $riga[$num_colonna['testo']];
 $cond_vecchia = explode("#@?",$cond_vecchia);
 $azione_vecchia = explode("#%?",$cond_vecchia[2]);
@@ -2179,10 +2230,10 @@ else $inserire_riga = "NO";
 
 if ($tipo_contr == "file_all") {
 $vecchio_all = $riga[$num_colonna['numero']];
-if (!$contr_agg or str_replace(",$vecchio_all,","",$contr_agg_all) != $contr_agg_all) {
-if (!$nuovo_num_all[$vecchio_all]) $nuovo_num_all[$vecchio_all] = $max_all + $vecchio_all;
+if (!$contr_agg or strstr($contr_agg_all,",$vecchio_all,") or strstr($contr_agg_all,":$vecchio_all,") or strstr($contr_agg_all,":$vecchio_all>")) {
+if (empty($nuovo_num_all[$vecchio_all])) $nuovo_num_all[$vecchio_all] = $max_all + $vecchio_all;
 $riga[$num_colonna['numero']] = $nuovo_num_all[$vecchio_all];
-} # fine if (!$contr_agg or str_replace(",$vecchio_all,","",$contr_agg_all) != $contr_agg_all)
+} # fine if (!$contr_agg or strstr($contr_agg_all,",$vecchio_all,") or...
 else $inserire_riga = "NO";
 } # fine if ($tipo_contr == "file_all")
 
@@ -2247,7 +2298,10 @@ if ($silenzio != "SI") echo mex("Documenti ripristinati",$pag).".<br>";
 } # fine else if ($file_coerente == "NO")
 
 } # fine if ($versione_file and ($versione_file <= $versione_corrente and...
-else if ($silenzio != "SI") echo mex("La versione attuale di hoteldruid e quella del file non coincidono",$pag).".<br>";
+elseif ($silenzio != "SI") {
+if (defined('C_NASCONDI_MARCA') and C_NASCONDI_MARCA == "SI") echo mex("La versione attuale e quella del file non coincidono",$pag).".<br>";
+else echo mex("La versione attuale di HotelDruid e quella del file non coincidono",$pag).".<br>";
+} # fine elseif ($silenzio != "SI")
 
 } # fine function ripristina_backup_contr
 

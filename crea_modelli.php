@@ -2,7 +2,7 @@
 
 ##################################################################################
 #    HOTELDRUID
-#    Copyright (C) 2001-2021 by Marco Maria Francesco De Santis (marco@digitaldruid.net)
+#    Copyright (C) 2001-2023 by Marco Maria Francesco De Santis (marco@digitaldruid.net)
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published by
@@ -147,7 +147,18 @@ $var_pag[118] = 'cancella_modelli';
 $var_pag[119] = 'perc_mod_elimina';
 $var_pag[120] = 'continua';
 $var_pag[121] = 'file_js_frame';
-$n_var_pag = 122;
+$var_pag[122] = 'n_met_paga_passa';
+$var_pag[123] = 'MAX_FILE_SIZE';
+$var_pag[124] = 'aggiungicampipers';
+$var_pag[125] = 'eliminacampipers';
+$var_pag[126] = 'form_modello_disponibilita';
+$var_pag[127] = 'form_passa';
+$var_pag[128] = 'form_ricaricata';
+$var_pag[129] = 'lista_idc_passa';
+$var_pag[130] = 'importa_modelli';
+$var_pag[131] = 'cartella_da';
+$var_pag[132] = 'cartella_a';
+$n_var_pag = 133;
 $num2 = 0;
 if (isset($_POST['num_periodi_date'])) $num2 = (int) $_POST['num_periodi_date'];
 elseif (isset($_GET['num_periodi_date'])) $num2 = (int) $_GET['num_periodi_date'];
@@ -176,8 +187,8 @@ if (isset($_POST['num_motivazioni'])) $num2 = (int) $_POST['num_motivazioni'];
 elseif (isset($_GET['num_motivazioni'])) $num2 = (int) $_GET['num_motivazioni'];
 for ($num1 = 0 ; $num1 < $num2 ; $num1++) $var_pag[$n_var_pag++] = "var_mot_$num1";
 $num2 = 0;
-if (isset($_POST['num_metodi_pagamento'])) $num2 = (int) $_POST['num_metodi_pagamento'];
-elseif (isset($_GET['num_metodi_pagamento'])) $num2 = (int) $_GET['num_metodi_pagamento'];
+if (isset($_POST['n_met_paga_passa'])) $num2 = (int) $_POST['n_met_paga_passa'];
+elseif (isset($_GET['n_met_paga_passa'])) $num2 = (int) $_GET['n_met_paga_passa'];
 for ($num1 = 0 ; $num1 < $num2 ; $num1++) {
 $var_pag[$n_var_pag++] = "var_met_paga_$num1";
 $var_pag[$n_var_pag++] = "nome_met_paga_imposto_$num1";
@@ -205,21 +216,69 @@ $num2 = 0;
 if (isset($_POST['n_val_tema'])) $num2 = (int) $_POST['n_val_tema'];
 elseif (isset($_GET['n_val_tema'])) $num2 = (int) $_GET['n_val_tema'];
 for ($num1 = 1 ; $num1 <= $num2 ; $num1++) $var_pag[$n_var_pag++] = "valore_tema_$num1";
-if (@is_array($_POST)) {
+$num2 = 0;
+if (isset($_POST['lista_idc_passa'])) $num2 = $_POST['lista_idc_passa'];
+elseif (isset($_GET['lista_idc_passa'])) $num2 = $_GET['lista_idc_passa'];
+if ($num2) {
+$num2 = explode(",",$num2);
+$num3 = count($num2);
+for ($num1 = 1 ; $num1 < $num3 ; $num1++) {
+$num4 = (int) $num2[$num1];
+$var_pag[$n_var_pag++] = "attiva_costo$num4";
+$var_pag[$n_var_pag++] = "nome_costo_imposto$num4";
+$var_pag[$n_var_pag++] = "nome_cat_imp$num4";
+} # fine for $num1
+} # fine if ($num2)
+$num1 = "";
+if (isset($_POST['modello_disponibilita'])) $num1 = $_POST['modello_disponibilita'];
+elseif (isset($_GET['modello_disponibilita'])) $num1 = $_GET['modello_disponibilita'];
+if ($num1 == "SI") {
+$num2 = "";
+if (isset($_POST['cambia_frasi'])) $num2 = $_POST['cambia_frasi'];
+elseif (isset($_GET['cambia_frasi'])) $num2 = $_GET['cambia_frasi'];
+$num3 = "";
+if (isset($_POST['modello_esistente'])) $num3 = $_POST['modello_esistente'];
+elseif (isset($_GET['modello_esistente'])) $num3 = $_GET['modello_esistente'];
+if ($num2 or $num3 == "SI") {
+$parola_La = "";
+$parola_settimana = "";
+$lettera_a = "";
+$parola_settimane = "";
+$parola_le = "";
+include("includes/templates/frasi_mod_disp.php");
+for ($num2 = 0 ; $num2 < $num_frasi ; $num2++) $var_pag[$n_var_pag++] = $fr_frase[$num2];
+} # fine if ($num2 or $num3 == "SI")
+} # fine if ($num1 == "SI")
+else {
+$num2 = 0;
+if (isset($_POST['form_passa'])) $num2 = (int) $_POST['form_passa'];
+elseif (isset($_GET['form_passa'])) $num2 = (int) $_GET['form_passa'];
+if ($num2) {
+$num1 = opendir("./includes/templates/");
+while ($num2 = readdir($num1)) {
+if ($num2 != "." and $num2 != ".." and @is_dir("./includes/templates/$num2")) {
+include("./includes/templates/$num2/name.php");
+$var_pag[$n_var_pag++] = "form_$template_name";
+} # fine if ($num2 != "." and $num2 != ".." and...
+} # fine while ($file = readdir($num1))
+closedir($num1);
+} # fine if ($num2)
+$num1 = "";
+if (isset($_POST['templ_data_dir'])) $num1 = $_POST['templ_data_dir'];
+elseif (isset($_GET['templ_data_dir'])) $num1 = $_GET['templ_data_dir'];
+if ($num1 and strlen($num1) < 4 and preg_match("/[a-z]/",$num1) and @is_file("includes/templates/$num1/var.php")) include("includes/templates/$num1/var.php");
+} # fine else if ($num1 == "SI")
+if (@is_array($_POST) and 0) {
 reset($_POST);
 $num2 = count($_POST);
 for ($num1 = 0 ; $num1 < $num2; $num1++) {
 $var_POST = key($_POST);
 if (!isset($$var_POST)) {
-if (substr($var_POST,0,5) == "form_" or substr($var_POST,0,3) == "fr_" or substr($var_POST,0,12) == "attiva_costo" or substr($var_POST,0,18) == "nome_costo_imposto" or substr($var_POST,0,12) == "nome_cat_imp") $var_pag[$n_var_pag++] = $var_POST;
+if (substr($var_POST,0,12) == "attiva_costo" or substr($var_POST,0,18) == "nome_costo_imposto" or substr($var_POST,0,12) == "nome_cat_imp") $var_pag[$n_var_pag++] = $var_POST;
 } # fine if (!isset($$var_POST))
 next($_POST);
 } # fine for $num1
 } # fine if (@is_array($_POST))
-$templ_data_dir = "";
-if (isset($_POST['templ_data_dir'])) $templ_data_dir = $_POST['templ_data_dir'];
-elseif (isset($_GET['templ_data_dir'])) $templ_data_dir = $_GET['templ_data_dir'];
-if ($templ_data_dir and strlen($templ_data_dir) < 4 and preg_match("/[a-z]/",$templ_data_dir) and @is_file("includes/templates/$templ_data_dir/var.php")) include("includes/templates/$templ_data_dir/var.php");
 
 include("./costanti.php");
 include(C_DATI_PATH."/dati_connessione.php");
@@ -341,14 +400,14 @@ $ultima_parte_html = stripslashes($ultima_parte_html);
 if (!empty($eliminacampipers) or !empty($aggiungicampipers) or !empty($eliminacampicond) or !empty($aggiungicampicond) or !empty($eliminacodpromo) or !empty($aggiungicodpromo) or !empty($eliminacampickin) or !empty($aggiungicampickin)) {
 unset($crea_modello);
 $$nome_form_modello_passa = "SI";
-if ($aggiungicampipers) $num_campi_pers++;
-if ($eliminacampipers) $num_campi_pers--;
-if ($aggiungicampicond) $num_campi_doc_cond++;
-if ($eliminacampicond) $num_campi_doc_cond--;
-if ($aggiungicodpromo) $num_codici_promo++;
-if ($eliminacodpromo) $num_codici_promo--;
-if ($eliminacampickin) $num_campi_doc_checkin--;
-if ($aggiungicampickin) $num_campi_doc_checkin++;
+if (!empty($aggiungicampipers)) $num_campi_pers++;
+if (!empty($eliminacampipers)) $num_campi_pers--;
+if (!empty($aggiungicampicond)) $num_campi_doc_cond++;
+if (!empty($eliminacampicond)) $num_campi_doc_cond--;
+if (!empty($aggiungicodpromo)) $num_codici_promo++;
+if (!empty($eliminacodpromo)) $num_codici_promo--;
+if (!empty($eliminacampickin)) $num_campi_doc_checkin--;
+if (!empty($aggiungicampickin)) $num_campi_doc_checkin++;
 if (@get_magic_quotes_gpc()) {
 $stile_riquadro_calendario = stripslashes($stile_riquadro_calendario);
 $stile_tabella_calendario = stripslashes($stile_tabella_calendario);
@@ -470,17 +529,12 @@ if (@is_file("$percorso_cartella_modello/$nome_file") and (!defined('C_RESTRIZIO
 $modello_esistente = "SI";
 $lingua_mex = $lingua_mex_1;
 include("./includes/templates/funzioni_mod_disp.php");
-recupera_var_modello_disponibilita($nome_file,$percorso_cartella_modello,$pag,$fr_frase,$num_frasi,$var_mod,$num_var_mod,$tipo_periodi,"NO",$anno_modello,$PHPR_TAB_PRE);
+recupera_var_modello_disponibilita($nome_file,$percorso_cartella_modello,$pag,$fr_frase,$frase,$num_frasi,$var_mod,$num_var_mod,$tipo_periodi,"NO",$anno_modello,$lingua_modello,$PHPR_TAB_PRE);
 $lingua_mex = $lingua_orig;
 
 $tabelle_lock = array($tableversioni,$tabletransazioni);
 $tabelle_lock = lock_tabelle($tabelle_lock);
-$adesso = date("YmdHis",(time() + (C_DIFF_ORE * 3600)));
-list($usec, $sec) = explode(' ', microtime());
-mt_srand((float) $sec + ((float) $usec * 100000));
-$val_casuale = mt_rand(100000,999999);
-$versione_transazione = prendi_numero_versione($tableversioni);
-$id_transazione = $adesso.$val_casuale.$versione_transazione;
+$id_transazione = crea_id_sessione("",$tableversioni,8);
 $ultimo_accesso = date("Y-m-d H:i:s",(time() + (C_DIFF_ORE * 3600)));
 esegui_query("delete from $tabletransazioni where spostamenti = '$modello_ext' and tipo_transazione = 'cpweb' ");
 $dati_tr1 = aggslashdb($utente_liste);
@@ -612,7 +666,7 @@ echo "<tr><td colspan=2>
 <option value=\"NO\"$sel_NO>".mex("NO",$pag)."</option>
 </select></td></tr><tr><td style=\"height: 2px;\" colspan=5></td></tr>";
 
-if (!isset($utente_lis) or !strcmp($utente_lis,"")) $utente_lis = fixset($utente_liste);
+if (!isset($utente_lis) or !strcmp((string) $utente_lis,"")) $utente_lis = fixset($utente_liste);
 $tutti_utenti = esegui_query("select idutenti,nome_utente from $tableutenti order by idutenti");
 $num_tutti_utenti = numlin_query($tutti_utenti);
 $option_utenti = "";
@@ -624,7 +678,7 @@ if ($id_utente == 1 or $id_utente == $num_utente) {
 $option_utenti .= "<option value=\"$nome_utente\">$nome_utente</option>";
 $num_utenti[$nome_utente] = $num_utente;
 } # fine if ($id_utente == 1 or $id_utente == $num_utente)
-elseif ($nome_utente == $utente_liste or $nome_utente == $utente_messaggio) $num_utenti[$nome_utente] = $num_utente;
+elseif ($nome_utente == $utente_liste or $nome_utente == fixset($utente_messaggio)) $num_utenti[$nome_utente] = $num_utente;
 } # fine for $num1
 echo "<tr><td colspan=5>
 ".mex("Utilizzare le personalizzazioni (tipi di persone, liste di nazioni, regioni, ecc.) dell'utente",$pag)."
@@ -647,7 +701,7 @@ $numero_tariffe = risul_query($rigatariffe,0,'nomecostoagg');
 for ($numtariffa = 1 ; $numtariffa <= $numero_tariffe ; $numtariffa++) {
 if (isset($tariffe_mostra[$numtariffa]) and strtoupper($tariffe_mostra[$numtariffa]) == $SI) $checked = " checked";
 else $checked = "";
-if ($attiva_tariffe_consentite == "n" or $tariffe_consentite_vett[$numtariffa] == "SI" or $checked) {
+if ($attiva_tariffe_consentite == "n" or (isset($tariffe_consentite_vett[$numtariffa]) and $tariffe_consentite_vett[$numtariffa] == "SI") or $checked) {
 if ($celle == 1) echo "<tr>";
 $tariffa = "tariffa".$numtariffa;
 $nometariffa = risul_query($rigatariffe,0,$tariffa);
@@ -667,7 +721,7 @@ echo "</tr>";
 $celle = 0;
 } # fine if ($celle == $num_colonne)
 $celle++;
-} # fine if ($attiva_tariffe_consentite == "n" or $tariffe_consentite_vett[$numtariffa] == "SI" or $checked)
+} # fine if ($attiva_tariffe_consentite == "n" or (isset($tariffe_consentite_vett[$numtariffa]) and...
 } # fine for $numtariffa
 if ($celle != 1) {
 for ($num1 = $celle ; $num1 <= $num_colonne ; $num1++) echo "<td>&nbsp;</td>";
@@ -687,7 +741,7 @@ if ($dati_ca[$numca]['letto'] == "s" and $dati_ca[$numca]['numsett'] != "c" and 
 } # fine for $numca
 if (empty($chiedi_numero_persone) or strtoupper($chiedi_numero_persone) != $NO) { $sel_NO = ""; $sel_SI = " selected"; }
 else { $sel_SI = ""; $sel_NO = " selected"; }
-if (isset($massimo_numero_persone) and strcmp($massimo_numero_persone,"")) $val = $massimo_numero_persone;
+if (isset($massimo_numero_persone) and strcmp((string) $massimo_numero_persone,"")) $val = $massimo_numero_persone;
 else {
 $val = 0;
 $max_maxocc = esegui_query("select max(maxoccupanti) from $tableappartamenti");
@@ -698,7 +752,7 @@ $val = $max_maxocc;
 if ($select_costi_letto) $val += 2;
 } # fine if ($max_maxocc)
 } # fine if (numlin_query($max_maxocc))
-} # fine else if (strcmp($massimo_numero_persone,""))
+} # fine else if (strcmp((string) $massimo_numero_persone,""))
 echo "".mex("Chiedere il numero di persone?",$pag)."
 <select name=\"chiedi_num_persone\">
 <option value=\"SI\"$sel_SI>".mex("SI",$pag)."</option>
@@ -748,7 +802,10 @@ echo "".mex("Chiedere il numero di appartamenti per ogni tipologia?",'unit.php')
 if (empty($aggiungi_altre_tipologie) or strtoupper($aggiungi_altre_tipologie) == $SI) { $sel_SI = " selected"; $sel_NO = ""; }
 else { $sel_NO = " selected"; $sel_SI = ""; }
 if (!empty($massimo_numero_altre_tipologie)) $val = $massimo_numero_altre_tipologie;
-else $val = 3;
+else {
+$val = 5;
+if ($val > $numero_tariffe) $val = $numero_tariffe;
+} # fine else if (!empty($massimo_numero_altre_tipologie))
 echo "".mex("Possibilità di aggiungere più tipologie da controllare contemporaneamente?",$pag)."
 <select name=\"aggiungi_tipologie\">
 <option value=\"SI\"$sel_SI>".mex("SI",$pag)."</option>
@@ -805,10 +862,12 @@ echo "".mex("Aggiungere al prezzo i costi aggiuntivi fissi associati alle tariff
 $celle = 1;
 $num_colonne = 2;
 unset($categorie_combina);
+$lista_idc_passa = "";
 for ($numca = 0 ; $numca < $dati_ca['num'] ; $numca++) {
 if (isset($costi_aggiuntivi_mostra[$dati_ca[$numca]['id']]) and strtoupper($costi_aggiuntivi_mostra[$dati_ca[$numca]['id']]) == $SI) $checked = " checked";
 else $checked = "";
 if ($attiva_costi_agg_consentiti == "n" or $costi_agg_consentiti_vett[$dati_ca[$numca]['id']] == "SI" or $checked) {
+$lista_idc_passa .= ",".$dati_ca[$numca]['id'];
 if ($celle == 1) echo "<tr>";
 if ($dati_ca[$numca]['tipo'] == "u") $tipo_costo = "Costo unico";
 if ($dati_ca[$numca]['tipo'] == "s") $tipo_costo = "Costo $parola_settimanale";
@@ -829,7 +888,7 @@ $celle++;
 if (@is_array($categorie_combina)) {
 reset($categorie_combina);
 foreach ($categorie_combina as $categoria => $id_costo_cat) {
-$val = htmlspecialchars(fixset($categorie_costi_agg_imposte[$categoria]));
+$val = htmlspecialchars(fixstr($categorie_costi_agg_imposte[$categoria]));
 $categoria = htmlspecialchars($categoria);
 echo "<td>".mex("Categoria",$pag)." <em>$categoria</em>:
  <input type=\"text\" name=\"nome_cat_imp$id_costo_cat\" value=\"$val\" size=\"22\"></td>";
@@ -846,14 +905,15 @@ echo "</tr>";
 } # fine if ($celle != 1)
 elseif ($dati_ca['num'] == 0) echo "<tr><td style=\"width: 250px;\">&nbsp;</td></tr>";
 echo "</table><br>";
+if ($lista_idc_passa) echo "<input type=\"hidden\" name=\"lista_idc_passa\" value=\"$lista_idc_passa\">";
 
 echo "<a name=\"codprom\"></a>".mex("Codici promozionali",$pag).":<br>
 <table><tr><td style=\"width: 25px;\"></td><td valign=\"top\">";
 if (empty($num_codici_promo) and !empty($campi_codici_promo['array_esistente'])) $num_codici_promo = (count($campi_codici_promo) - 1);
 if (empty($num_codici_promo) or controlla_num_pos($num_codici_promo) == "NO") $num_codici_promo = 1;
 for ($num1 = 1 ; $num1 <= $num_codici_promo ; $num1++) {
-if (empty(${"codice_promo".$num1})) ${"codice_promo".$num1} = fixset($campi_codici_promo[$num1]);
-if (empty(${"tipo_codice_promo".$num1})) ${"tipo_codice_promo".$num1} = substr(fixset($costi_campi_codici_promo[$num1]),0,1);
+if (empty(${"codice_promo".$num1})) ${"codice_promo".$num1} = fixstr($campi_codici_promo[$num1]);
+if (empty(${"tipo_codice_promo".$num1})) ${"tipo_codice_promo".$num1} = substr(fixstr($costi_campi_codici_promo[$num1]),0,1);
 if (${"tipo_codice_promo".$num1} != "-") ${"tipo_codice_promo".$num1} = "+";
 if (${"tipo_codice_promo".$num1} == "+") { $sel_agg = " selected"; $sel_rim = ""; }
 else { $sel_agg = ""; $sel_rim = " selected"; }
@@ -863,7 +923,7 @@ echo "$num1".". ".mex("Il codice",$pag)." <input type=\"text\" name=\"codice_pro
 <option value=\"-\"$sel_rim>".mex("rimuove",$pag)."</option>
 </select>
  ".mex("il",$pag)." <select name=\"costo_codice_promo$num1\">";
-if (empty(${"costo_codice_promo".$num1})) ${"costo_codice_promo".$num1} = substr(fixset($costi_campi_codici_promo[$num1]),1);
+if (empty(${"costo_codice_promo".$num1})) ${"costo_codice_promo".$num1} = substr(fixstr($costi_campi_codici_promo[$num1]),1);
 for ($numca = 0 ; $numca < $dati_ca['num'] ; $numca++) {
 if (!isset($costo_aggiungi_letti) or $dati_ca[$numca]['id'] != $costo_aggiungi_letti) {
 if ($attiva_costi_agg_consentiti == "n" or $costi_agg_consentiti_vett[$dati_ca[$numca]['id']] == "SI" or $dati_ca[$numca]['id'] == substr($costi_campi_codici_promo[$num1],1)) {
@@ -922,7 +982,7 @@ if (!isset($motivazioni_presenti[$motivazione])) {
 $motivazioni_presenti[$motivazione] = 1;
 $var_motivazione = "var_mot_".$num_motivazioni;
 $num_motivazioni++;
-if (!$considera_motivazioni_regola1['array_esistente']) $checked = " checked";
+if (empty($considera_motivazioni_regola1['array_esistente'])) $checked = " checked";
 echo "<td><label><input type=\"checkbox\" name=\"$var_motivazione\" value=\"$motivazione\"$checked> $motivazione_vedi</label></td>";
 if ($celle == $num_colonne) {
 echo "</tr>";
@@ -995,18 +1055,18 @@ else $sel_tutti = "";
 echo "<option value=\"\"$sel_nessuno>".mex("----",$pag)."</option>
 <option value=\"tutti\"$sel_tutti>".mex("tutti",$pag)."</option>";
 echo str_replace("\"$utente_mess\">","\"$utente_mess\" selected>",$option_utenti);
-if (!strstr($option_utenti,"\"$utente_messaggio\">") and $num_utenti[$utente_messaggio]) {
+if (!strstr($option_utenti,"\"$utente_messaggio\">") and !empty($num_utenti[$utente_messaggio])) {
 if ($utente_messaggio == $utente_mess) $sel = " selected";
 else $sel = "";
 echo "<option value=\"$utente_messaggio\"$sel>$utente_messaggio</option>";
-} # fine if (!strstr($option_utenti,"\"$utente_messaggio\">") and $num_utenti[$nome_utente])
+} # fine if (!strstr($option_utenti,"\"$utente_messaggio\">") and !empty($num_utenti[$nome_utente]))
 echo "</select><br>";
 
 $origini_prenota = esegui_query("select valpersonalizza from $tablepersonalizza where idpersonalizza = 'origini_prenota' and idutente = '$id_utente' ");
 $origini_prenota = risul_query($origini_prenota,0,'valpersonalizza');
 if (!isset($origine_prenotazione)) $origine_prenotazione = null;
-if ($origini_prenota or strcmp($origine_prenotazione,"")) {
-if (!isset($orig_prenota) or !strcmp($orig_prenota,"")) $orig_prenota = $origine_prenotazione;
+if ($origini_prenota or strcmp((string) $origine_prenotazione,"")) {
+if (!isset($orig_prenota) or !strcmp((string) $orig_prenota,"")) $orig_prenota = $origine_prenotazione;
 $orig_esist_trovata = 0;
 echo "<table><tr><td style=\"width: 25px;\"></td><td>
 ".mex("Origine della prenotazione",$pag).":
@@ -1023,13 +1083,13 @@ else $sel = "";
 echo "<option value=\"".htmlspecialchars($origine_p)."\"$sel>$origine_p</option>";
 } # fine for $num1
 } # fine if ($origini_prenota)
-if (!$orig_esist_trovata and strcmp($origine_prenotazione,"")) {
+if (!$orig_esist_trovata and strcmp((string) $origine_prenotazione,"")) {
 if ($origine_prenotazione == $orig_prenota) $sel = " selected";
 else $sel = "";
 echo "<option value=\"".htmlspecialchars($origine_prenotazione)."\"$sel>$origine_prenotazione</option>";
-} # fine if (!$orig_esist_trovata and strcmp($origine_prenotazione,""))
+} # fine if (!$orig_esist_trovata and strcmp((string) $origine_prenotazione,""))
 echo "</select></td></tr></table>";
-} # fine if ($origini_prenota or strcmp($origine_prenotazione,""))
+} # fine if ($origini_prenota or strcmp((string) $origine_prenotazione,""))
 
 echo "".mex("Indirizzo email a cui inviare le richieste di prenotazione",$pag).":
  <input type=\"text\"$readonly name=\"ind_email\" value=\"".htmlspecialchars($ind_email)."\" size=\"25\"><br>";
@@ -1040,21 +1100,6 @@ echo "".mex("Inviare una copia della email di richiesta prenotazione al richiede
 if (!defined('C_RESTRIZIONI_DEMO_ADMIN') or C_RESTRIZIONI_DEMO_ADMIN != "SI") echo "<option value=\"SI\"$sel_SI>".mex("SI",$pag)."</option>";
 echo "<option value=\"NO\"$sel_NO>".mex("NO",$pag)."</option>
 </select><br>";
-if (!defined("C_MASCHERA_EMAIL") or C_MASCHERA_EMAIL == "") {
-if (!$maschera_email) {
-$maschera_email = esegui_query("select valpersonalizza from $tablepersonalizza where idpersonalizza = 'maschera_email' and idutente = '1' ");
-$maschera_email = risul_query($maschera_email,0,'valpersonalizza');
-if ($maschera_email == "NO") $maschera_email = $NO;
-else $maschera_email = $SI;
-} # fine if (!$maschera_email)
-if (strtoupper($maschera_email) == $NO) { $sel_SI = ""; $sel_NO = " selected"; }
-else { $sel_NO = ""; $sel_SI = " selected"; }
-echo "".mex("Mascherare la provenienza dell'email sull'envelope?",$pag)."
-<select name=\"maschera_envelope\">
-<option value=\"SI\"$sel_SI>".mex("SI",$pag)."</option>
-<option value=\"NO\"$sel_NO>".mex("NO",$pag)."</option>
-</select> (".mex("provare a cambiare se non si riescono a spedire le email",$pag).")<br>";
-} # fine if (!defined("C_MASCHERA_EMAIL") or C_MASCHERA_EMAIL == "")
 echo "".mex("Campi della form da chiedere",$pag).":<br>
 <table>";
 $f_necessario = mex("necessario",$pag);
@@ -1368,7 +1413,7 @@ if (!empty(${"nome_met_paga_imposto_".$num1})) $val = ${"nome_met_paga_imposto_"
 else $val = "";
 } # fine if (isset($utilizza_var_passate) and $utilizza_var_passate == "SI")
 else {
-if (empty($metodi_pagamento_da_chiedere['array_esistente']) or strtoupper($metodi_pagamento_da_chiedere[$metodo]) == $SI) $checked = " checked";
+if (empty($metodi_pagamento_da_chiedere['array_esistente']) or strtoupper(fixset($metodi_pagamento_da_chiedere[$metodo])) == $SI) $checked = " checked";
 else $checked = "";
 if (!empty($nomi_metodi_pagamento_imposti[$metodo])) $val = $nomi_metodi_pagamento_imposti[$metodo];
 else $val = "";
@@ -1385,20 +1430,20 @@ $celle++;
 if (!empty($metodi_pagamento_da_chiedere['array_esistente'])) {
 reset($metodi_pagamento_da_chiedere);
 foreach ($metodi_pagamento_da_chiedere as $metodo => $val_m) {
-if (!$metodi_pagamenti_chiesti[$metodo]) {
+if (empty($metodi_pagamenti_chiesti[$metodo])) {
 $num1++;
 if ($celle == 1) echo "<tr>";
-if ($utilizza_var_passate == "SI") {
+if (isset($utilizza_var_passate) and $utilizza_var_passate == "SI") {
 if (${"var_met_paga_".$num1}) $checked = " checked";
 else $checked = "";
 if (${"nome_met_paga_imposto_".$num1}) $val = ${"nome_met_paga_imposto_".$num1};
 else $val = "";
-} # fine if ($utilizza_var_passate == "SI")
+} # fine if (isset($utilizza_var_passate) and $utilizza_var_passate == "SI")
 else {
 $checked = " checked";
-if ($nomi_metodi_pagamento_imposti[$metodo]) $val = $nomi_metodi_pagamento_imposti[$metodo];
+if (!empty($nomi_metodi_pagamento_imposti[$metodo])) $val = $nomi_metodi_pagamento_imposti[$metodo];
 else $val = "";
-} # fine else if ($utilizza_var_passate == "SI")
+} # fine else if (isset($utilizza_var_passate) and $utilizza_var_passate == "SI")
 echo "<td><label><input type=\"checkbox\" name=\"var_met_paga_"."$num1\" value=\"".htmlspecialchars($metodo)."\"$checked>$metodo"."</label>:
  <input type=\"text\" name=\"nome_met_paga_imposto_"."$num1\" value=\"$val\" size=\"22\"></td>";
 if ($celle == $num_colonne) {
@@ -1406,15 +1451,17 @@ echo "</tr>";
 $celle = 0;
 } # fine if ($celle == 3)
 $celle++;
-} # fine if (!$metodi_pagamenti_chiesti[$metodo])
+} # fine if (empty($metodi_pagamenti_chiesti[$metodo]))
 } # fine foreach ($metodi_pagamento_da_chiedere as $metodo => $val_m)
 } # fine if (!empty($metodi_pagamento_da_chiedere['array_esistente']))
+$n_met_paga_passa = ($num1 + 1);
 if ($celle != 1) {
 for ($num1 = $celle ; $num1 <= $num_colonne ; $num1++) echo "<td>&nbsp;</td>";
 echo "</tr>";
 } # fine if ($celle != 1)
 echo "</table>
 <input type=\"hidden\" name=\"num_metodi_pagamento\" value=\"$num_metodi_pagamento\">
+<input type=\"hidden\" name=\"n_met_paga_passa\" value=\"$n_met_paga_passa\">
 </td></tr>";
 } # fine if ($metodi_pagamento)
 echo "<tr><td style=\"height: 5px;\"></td></tr></table>";
@@ -1427,7 +1474,7 @@ echo "<a name=\"campers\"></a>".mex("Campi della form personalizzati",$pag).":<b
 if (empty($num_campi_pers) and !empty($campi_form_personalizzati['array_esistente'])) $num_campi_pers = (count($campi_form_personalizzati) - 1);
 if (empty($num_campi_pers) or controlla_num_pos($num_campi_pers) == "NO") $num_campi_pers = 1;
 for ($num1 = 1 ; $num1 <= $num_campi_pers ; $num1++) {
-if (empty(${"campo_pers".$num1})) ${"campo_pers".$num1} = fixset($campi_form_personalizzati[$num1]);
+if (empty(${"campo_pers".$num1})) ${"campo_pers".$num1} = fixstr($campi_form_personalizzati[$num1]);
 if (empty(${"chiedi_campo_pers".$num1})) ${"chiedi_campo_pers".$num1} = fixset($chiedi_campi_form_personalizzati[$num1]);
 if (${"chiedi_campo_pers".$num1} == "SI") ${"chiedi_campo_pers".$num1} = $SI;
 if (${"chiedi_campo_pers".$num1} == $SI) { $sel_SI = " selected"; $sel_opz = ""; }
@@ -1437,7 +1484,7 @@ echo "$num1".". <input type=\"text\" name=\"campo_pers$num1\" value=\"".htmlspec
 <option value=\"SI\"$sel_SI>$f_necessario</option>
 <option value=\"opzionale\"$sel_opz>$f_opzionale</option>
 </select>";
-if ($campi_pers_comm or (isset($ins_campi_form_personalizzati[$num1]) and strcmp($ins_campi_form_personalizzati[$num1],""))) {
+if ($campi_pers_comm or (isset($ins_campi_form_personalizzati[$num1]) and strcmp((string) $ins_campi_form_personalizzati[$num1],""))) {
 echo " <select name=\"ins_campo_pers$num1\">
 <option value=\"\">".mex("aggiunto al commento",$pag)."</option>";
 if (empty(${"ins_campo_pers".$num1})) ${"ins_campo_pers".$num1} = fixset($ins_campi_form_personalizzati[$num1]);
@@ -1450,11 +1497,11 @@ else $sel = "";
 echo "<option value=\"".$campi_pers_comm[$num2]."\"$sel>".mex("aggiunto al commento",$pag)." \"".$campi_pers_comm[$num2]."\"</option>";
 } # fine for $num2
 } # fine if ($campi_pers_comm)
-if (strcmp($ins_campi_form_personalizzati[$num1],"") and !$comm_pers_trovato) {
+if (strcmp((string) $ins_campi_form_personalizzati[$num1],"") and !$comm_pers_trovato) {
 if (${"ins_campo_pers".$num1} == $ins_campi_form_personalizzati[$num1]) $sel = " selected";
 else $sel = "";
 echo "<option value=\"".$ins_campi_form_personalizzati[$num1]."\"$sel>".mex("aggiunto al commento",$pag)." \"".$ins_campi_form_personalizzati[$num1]."\"</option>";
-} # fine if (strcmp($ins_campi_form_personalizzati[$num1],"") and !$comm_pers_trovato)
+} # fine if (strcmp((string) $ins_campi_form_personalizzati[$num1],"") and !$comm_pers_trovato)
 echo "</select><br>";
 } # fine if ($campi_pers_comm or (isset($ins_campi_form_personalizzati[$num1]) and...
 else echo " (".mex("aggiunto al commento",$pag).")<br>";
@@ -1485,7 +1532,7 @@ $nomi_contratti = explode("#@&",$nomi_contratti);
 $num_nomi_contratti = count($nomi_contratti);
 for ($num1 = 0 ; $num1 < $num_nomi_contratti ; $num1++) {
 $dati_nome_contratto = explode("#?&",$nomi_contratti[$num1]);
-if (strcmp($dati_nome_contratto[1],"")) $nome_contratto_ut[$dati_nome_contratto[0]] = $dati_nome_contratto[1];
+if (strcmp((string) $dati_nome_contratto[1],"")) $nome_contratto_ut[$dati_nome_contratto[0]] = $dati_nome_contratto[1];
 } # fine for $num1
 } # fine if (numlin_query($nomi_contratti))
 } # fine if (isset($num_utenti[$utente_lis]) and controlla_num_pos($num_utenti[$utente_lis]) == "SI" and $num_utenti[$utente_lis] != "1")
@@ -1495,7 +1542,7 @@ $num_contr = risul_query($contr_txt,$num1,'numero');
 $salva_contr = esegui_query("select * from $tablecontratti where numero = '$num_contr' and tipo = 'dir' ");
 if (!numlin_query($salva_contr)) {
 $nomi_contr_salva[$num_contr] = mex("documento",$pag).$num_contr;
-if (isset($nome_contratto_ut[$num_contr]) and strcmp($nome_contratto_ut[$num_contr],"")) $nomi_contr_salva[$num_contr] .= " (".$nome_contratto_ut[$num_contr].")";
+if (isset($nome_contratto_ut[$num_contr]) and strcmp((string) $nome_contratto_ut[$num_contr],"")) $nomi_contr_salva[$num_contr] .= " (".$nome_contratto_ut[$num_contr].")";
 if ($attiva_contratti_consentiti == "n" or $contratti_consentiti_vett[$num_contr] == "SI") {
 $lista_contr .= "<option value=\"$num_contr\">".$nomi_contr_salva[$num_contr]."</option>";
 $num_campi_doc_cond_max++;
@@ -1551,11 +1598,11 @@ if (${"chiedi_num_doc_cond".$num1} == "op_".$campo_pers_cliente) $sel = " select
 else $sel = "";
 echo "<option value=\"op_".$campo_pers_cliente."\"$sel>$f_opzionale, ".mex("aggiunto al campo",$pag)." \"$campo_pers_cliente\" ".mex("del cliente",$pag)."</option>";
 } # fine for $num2
-if (substr($chiedi_campi_form_doc_condizioni[$num1],0,3) == "op_" and !$campo_pers_trovato) {
+if (substr(fixstr($chiedi_campi_form_doc_condizioni[$num1]),0,3) == "op_" and !$campo_pers_trovato) {
 if (${"chiedi_num_doc_cond".$num1} == $chiedi_campi_form_doc_condizioni[$num1]) $sel = " selected";
 else $sel = "";
 echo "<option value=\"".$chiedi_campi_form_doc_condizioni[$num1]."\"$sel>$f_opzionale, ".mex("aggiunto al campo",$pag)." \"".substr($chiedi_campi_form_doc_condizioni[$num1],3)."\" ".mex("del cliente",$pag)."</option>";
-} # fine if (substr($chiedi_campi_form_doc_condizioni[$num1],0,3) == "op_" and !$campo_pers_trovato)
+} # fine if (substr(fixstr($chiedi_campi_form_doc_condizioni[$num1]),0,3) == "op_" and !$campo_pers_trovato)
 echo "</select><br>";
 } # fine for $num1
 echo "</td><td style=\"width: 14px;\"></td><td valign=\"bottom\">";
@@ -1576,7 +1623,7 @@ $template_name_show_orig = fixset($template_name_show);
 $template_file_name_orig = fixset($template_file_name);
 $template_data_dir_orig = fixset($template_data_dir);
 @include("./includes/templates/pay/name.php");
-if ($template_file_name[$lingua_modello]) $val = $template_file_name[$lingua_modello];
+if (!empty($template_file_name[$lingua_modello])) $val = $template_file_name[$lingua_modello];
 else $val = $lingua_modello."_".$template_file_name['en'];
 $template_name = $template_name_orig;
 $template_name_show = $template_name_show_orig;
@@ -1610,7 +1657,7 @@ echo "".mex("Mostrare il quadro indicativo della disponibilità?",$pag)."
 $sel_APP = "";
 $sel_REG2 = "";
 $sel_PERS = "";
-if ((!isset($raggruppa_quadro_disponibilita_con_regola_2) or !strcmp($raggruppa_quadro_disponibilita_con_regola_2,"")) and (!isset($raggruppa_quadro_disponibilita_con_persone) or !strcmp($raggruppa_quadro_disponibilita_con_persone,""))) $sel_REG2 = " selected";
+if ((!isset($raggruppa_quadro_disponibilita_con_regola_2) or !strcmp((string) $raggruppa_quadro_disponibilita_con_regola_2,"")) and (!isset($raggruppa_quadro_disponibilita_con_persone) or !strcmp((string) $raggruppa_quadro_disponibilita_con_persone,""))) $sel_REG2 = " selected";
 else {
 if (isset($raggruppa_quadro_disponibilita_con_regola_2) and strtoupper($raggruppa_quadro_disponibilita_con_regola_2) == $SI) $sel_REG2 = " selected";
 else {
@@ -1800,10 +1847,10 @@ $colori_tema = array();
 if ($tema_sel) $valori_tema = $template_theme_values[$tema_sel];
 $num_valori = count($valori_tema);
 for ($num1 = 1 ; $num1 <= $num_valori ; $num1++) {
-if (!isset(${"valore_tema_".$num1}) or !strcmp(${"valore_tema_".$num1},"")) ${"valore_tema_".$num1} = $valori_tema[$num1]['default'];
+if (!isset(${"valore_tema_".$num1}) or !strcmp((string) ${"valore_tema_".$num1},"")) ${"valore_tema_".$num1} = $valori_tema[$num1]['default'];
 $valore_sost = ${"valore_tema_".$num1};
-if (!strcmp($valore_sost,"")) $valore_sost = fixset($valori_tema[$num1]['null']);
-elseif (isset($valori_tema[$num1]['replace']) and strcmp($valori_tema[$num1]['replace'],"")) $valore_sost = str_replace("[theme_value_$num1]",$valore_sost,$valori_tema[$num1]['replace']);
+if (!strcmp((string) $valore_sost,"")) $valore_sost = fixstr($valori_tema[$num1]['null']);
+elseif (isset($valori_tema[$num1]['replace']) and strcmp((string) $valori_tema[$num1]['replace'],"")) $valore_sost = str_replace("[theme_value_$num1]",$valore_sost,$valori_tema[$num1]['replace']);
 $template_theme_html_pre[$tema_sel] = str_replace("[theme_value_$num1]",$valore_sost,$template_theme_html_pre[$tema_sel]);
 $template_theme_html_post[$tema_sel] = str_replace("[theme_value_$num1]",$valore_sost,$template_theme_html_post[$tema_sel]);
 } # fine for $num1
@@ -1870,7 +1917,7 @@ agg_tema_sel();
 </script>
 
 
-<input type=\"hidden\" name=\"cambia_frasi\" value=\"".htmlspecialchars(fixset($cambia_frasi))."\">
+<input type=\"hidden\" name=\"cambia_frasi\" value=\"".htmlspecialchars(fixstr($cambia_frasi))."\">
 <input type=\"hidden\" name=\"modello_esistente\" value=\"$modello_esistente\">";
 if (!empty($cambia_frasi)) {
 echo "<br><table style=\"background-color: #000000; margin-left: auto; margin-right: auto;\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"100%\">
@@ -1893,13 +1940,13 @@ for ($num_fr = 0 ; $num_fr < $num_frasi ; $num_fr++) echo "<input type=\"hidden\
 
 echo "<br><div style=\"text-align: center;\"><input type=\"hidden\" name=\"modello_disponibilita\" value=\"SI\">
 <input type=\"hidden\" name=\"form_ricaricata\" value=\"SI\">
-<button class=\"chav\" type=\"submit\"><div>".mex("Crea la pagina per la disponibilità",$pag)."</div></button>
+<button class=\"chav\" id=\"modi\" type=\"submit\"><div>".mex("Crea la pagina per la disponibilità",$pag)."</div></button>
 </div></div></form><br>
 <hr style=\"width: 95%\"><br><div style=\"text-align: center;\">
 <form accept-charset=\"utf-8\" method=\"post\" action=\"crea_modelli.php\"><div>
 <input type=\"hidden\" name=\"anno\" value=\"$anno\">
 <input type=\"hidden\" name=\"id_sessione\" value=\"$id_sessione\">
-<button class=\"gobk\" type=\"submit\"><div>".mex("Torna indietro",$pag)."</div></button>
+<button class=\"gobk\" id=\"indi\" type=\"submit\"><div>".mex("Torna indietro",$pag)."</div></button>
 </div></form><br></div>";
 } # fine if (!empty($form_modello_disponibilita))
 
@@ -1944,22 +1991,22 @@ $templates_dir = opendir("./includes/templates/");
 while ($modello_ext = readdir($templates_dir)) {
 if ($modello_ext != "." && $modello_ext != ".." and @is_dir("./includes/templates/$modello_ext")) {
 include("./includes/templates/$modello_ext/name.php");
-if ($template_name_show['tpl_type'] != "interconnection") {
-if ($template_file_name['ita']) $nome_file = $template_file_name['ita'];
+if (!isset($template_name_show['tpl_type']) or $template_name_show['tpl_type'] != "interconnection") {
+if (!empty($template_file_name['ita'])) $nome_file = $template_file_name['ita'];
 else $nome_file = "ita_".$template_file_name['en'];
 $perc_mod = "$percorso_cartella_modello/$nome_file";
 if (@is_file($perc_mod) and (!$perc_mod_elimina or $perc_mod_elimina == $perc_mod)) $mod_presente = "SI";
 $lang_dir = opendir("./includes/lang/");
 while ($ini_lingua = readdir($lang_dir)) {
 if ($ini_lingua != "." && $ini_lingua != "..") {
-if ($template_file_name[$ini_lingua]) $nome_file = $template_file_name[$ini_lingua];
+if (!empty($template_file_name[$ini_lingua])) $nome_file = $template_file_name[$ini_lingua];
 else $nome_file = $ini_lingua."_".$template_file_name['en'];
 $perc_mod = "$percorso_cartella_modello/$nome_file";
 if (@is_file($perc_mod) and (!$perc_mod_elimina or $perc_mod_elimina == $perc_mod)) $mod_presente = "SI";
 } # fine if ($file != "." && $file != "..")
 } # fine while ($file = readdir($lang_dir))
 closedir($lang_dir);
-} # fine if ($template_name_show['tpl_type'] != "interconnection")
+} # fine if (!isset($template_name_show['tpl_type']) or $template_name_show['tpl_type'] != "interconnection")
 } # fine if ($modello_ext != "." and $modello_ext != ".." and...
 } # fine while ($file = readdir($lang_dig))
 closedir($templates_dir);
@@ -2069,7 +2116,7 @@ if ($cartella_a == $perc_cart_mod_vett[$num_cart]) $cart_a_trovata = "SI";
 if ($cart_da_trovata != "SI" or $cart_a_trovata != "SI") $errore = "SI";
 if ($errore != "SI") {
 $mostra_form_creazione = "NO";
-if (!$continua) {
+if (empty($continua)) {
 echo "".mex("Si è sicuri di voler importare le pagine dalla cartella",$pag)." \"<b>$cartella_da</b>\" ".mex("alla cartella",$pag)." \"<b>$cartella_a</b>\"?<br>
 (".mex("eventuali pagine già presenti nella cartella",$pag)." \"<b>$cartella_a</b>\" ".mex("verranno <b style=\"font-weight: normal; color: red;\">sovrascritte</b>",$pag).")<br>
 <table><tr><td style=\"height: 2px;\"></td></tr><tr><td>
@@ -2087,7 +2134,7 @@ echo "".mex("Si è sicuri di voler importare le pagine dalla cartella",$pag)." \
 <input type=\"hidden\" name=\"id_sessione\" value=\"$id_sessione\">
 <input class=\"sbutton\" type=\"submit\" value=\"".mex("NO",$pag)."\">
 </div></form></td></tr></table>";
-} # fine if (!$continua)
+} # fine if (empty($continua))
 else {
 $percorso_cartella_modello = $cartella_da;
 $perc_mod = "$percorso_cartella_modello/mdl_disponibilita.php";
@@ -2106,7 +2153,7 @@ $templates_dir = opendir("./includes/templates/");
 while ($modello_ext = readdir($templates_dir)) {
 if ($modello_ext != "." and $modello_ext != ".." and @is_dir("./includes/templates/$modello_ext")) {
 include("./includes/templates/$modello_ext/name.php");
-if ($template_name_show['tpl_type'] != "interconnection") {
+if (!isset($template_name_show['tpl_type']) or $template_name_show['tpl_type'] != "interconnection") {
 if ($template_file_name['ita']) $nome_file = $template_file_name['ita'];
 else $nome_file = "ita_".$template_file_name['en'];
 $perc_mod = "$percorso_cartella_modello/$nome_file";
@@ -2119,7 +2166,7 @@ if (@is_file($perc_inc)) copy($perc_inc,"$cartella_a/$nome_file_inc");
 $lang_dir = opendir("./includes/lang/");
 while ($ini_lingua = readdir($lang_dir)) {
 if ($ini_lingua != "." && $ini_lingua != "..") {
-if ($template_file_name[$ini_lingua]) $nome_file = $template_file_name[$ini_lingua];
+if (!empty($template_file_name[$ini_lingua])) $nome_file = $template_file_name[$ini_lingua];
 else $nome_file = $ini_lingua."_".$template_file_name["en"];
 $perc_mod = "$percorso_cartella_modello/$nome_file";
 if (@is_file($perc_mod)) {
@@ -2131,7 +2178,7 @@ if (@is_file($perc_inc)) copy($perc_inc,"$cartella_a/$nome_file_inc");
 } # fine if ($file != "." && $file != "..")
 } # fine while ($file = readdir($lang_dir))
 closedir($lang_dir);
-} # fine if ($template_name_show['tpl_type'] != "interconnection")
+} # fine if (!isset($template_name_show['tpl_type']) or $template_name_show['tpl_type'] != "interconnection")
 } # fine if ($modello_ext != "." and $modello_ext != ".." and...
 } # fine while ($file = readdir($lang_dig))
 closedir($templates_dir);
@@ -2139,9 +2186,9 @@ echo mex("Pagine importate",$pag).".<br>
 <form accept-charset=\"utf-8\" method=\"post\" action=\"crea_modelli.php\"><div>
 <input type=\"hidden\" name=\"anno\" value=\"$anno\">
 <input type=\"hidden\" name=\"id_sessione\" value=\"$id_sessione\">
-<button class=\"cont\" type=\"submit\"><div<".mex("OK",$pag)."</div></button>
+<button class=\"cont\" type=\"submit\"><div>".mex("OK",$pag)."</div></button>
 </div></form>";
-} # fine else if (!$continua)
+} # fine else if (empty($continua))
 } # fine if ($errore != "SI")
 } # fine if (isset($importa_modelli) and $importa_modelli == "SI" and $mostra_form_creazione != "NO")
 
@@ -2156,6 +2203,7 @@ echo "<br><div style=\"text-align: center;\">".mex("Dati comuni",$pag)."</div><b
 <form accept-charset=\"utf-8\" method=\"post\" action=\"crea_modelli.php\"><div>
 <input type=\"hidden\" name=\"anno\" value=\"$anno\">
 <input type=\"hidden\" name=\"id_sessione\" value=\"$id_sessione\">
+<input type=\"hidden\" name=\"form_passa\" value=\"1\">
 <label><input type=\"radio\" name=\"fonte_dati_conn\" value=\"attuali\" checked> ".mex("Utilizza i dati attuali per la connessione al database",$pag)."</label><br>";
 if (!defined('C_BACKUP_E_MODELLI_CON_NUOVI_DATI') or C_BACKUP_E_MODELLI_CON_NUOVI_DATI != "NO") {
 echo "<label><input type=\"radio\" name=\"fonte_dati_conn\" value=\"nuovi\"> ".mex("Utilizza altri dati per la connessione al database",$pag)."</label>:<br>
@@ -2253,7 +2301,7 @@ while ($modello_ext = readdir($templates_dir)) {
 if ($modello_ext != "." and $modello_ext != ".." and @is_dir("./includes/templates/$modello_ext")) {
 include("./includes/templates/$modello_ext/name.php");
 if (!isset($template_name_show['tpl_type']) or $template_name_show['tpl_type'] != "interconnection") {
-if ($template_name_show[$lingua_mex]) $nome_modello_ext = $template_name_show[$lingua_mex];
+if (!empty($template_name_show[$lingua_mex])) $nome_modello_ext = $template_name_show[$lingua_mex];
 else {
 $messaggio = "";
 if (@is_file("./includes/lang/$lingua_mex/modt_$modello_ext.php")) {
@@ -2263,7 +2311,7 @@ if ($messaggio == $template_name_show['ita']) $messaggio = "";
 } # fine if (@is_file("./includes/lang/$lingua_mex/modt_rat.php"))
 if ($messaggio) $nome_modello_ext = $messaggio;
 else $nome_modello_ext = $template_name_show['en'];
-} # fine else if ($template_name_show[$lingua_mex])
+} # fine else if (!empty($template_name_show[$lingua_mex]))
 echo "<hr style=\"width: 85%\"><div style=\"text-align: center;\">
 <button class=\"$template_class\" type=\"submit\" name=\"form_$template_name\" value=\"1\"><div>".$nome_modello_ext."</div></button>
 </div>";

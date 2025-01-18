@@ -2,7 +2,7 @@
 
 ##################################################################################
 #    HOTELDRUID
-#    Copyright (C) 2001-2019 by Marco Maria Francesco De Santis (marco@digitaldruid.net)
+#    Copyright (C) 2001-2023 by Marco Maria Francesco De Santis (marco@digitaldruid.net)
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published by
@@ -95,7 +95,7 @@ else $risultato = $risul;
 
 if (!$risul and $silenzio != "totale") {
 global $PHPR_TAB_PRE;
-if (!$silenzio) echo "<br>ERROR in: ".str_replace(" ".$PHPR_TAB_PRE," ",$query)."<br>";
+if (!$silenzio) echo "<br>ERROR in: ".htmlspecialchars(str_replace(" ".$PHPR_TAB_PRE," ",$query))."<br>";
 error_log("IN ".$_SERVER['PHP_SELF']." SQLITE ERROR: ".substr(str_replace(" ".$PHPR_TAB_PRE," ",$query),0,25)."...");
 } # fine (!$risul and $silenzio != "totale")
 
@@ -154,7 +154,7 @@ return $query['num'];
 function aggslashdb ($stringa) {
 global $numconnessione;
 
-$risul = $numconnessione->escapeString($stringa);
+$risul = $numconnessione->escapeString((string) $stringa);
 return $risul;
 
 } # fine function aggslashdb
@@ -222,10 +222,11 @@ return $risul;
 
 
 
-function unlock_tabelle ($tabelle_lock,$azione = "") {
+function unlock_tabelle (&$tabelle_lock,$azione = "") {
 global $numconnessione;
 
 $numconnessione->exec("commit transaction");
+$tabelle_lock = null;
 
 } # fine function unlock_tabelle
 

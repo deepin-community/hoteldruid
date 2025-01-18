@@ -75,24 +75,44 @@ $template_theme_html_pre[1] = "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01//EN
  div.homebox a { padding-left: 20px }
  div.mainbox { text-align: center; padding: 10px; }
  a { color: [theme_color_1]; }
+ .t1top { position: -webkit-sticky; position: sticky; top: 0; background-clip: padding-box; }
+ .t1left { position: -webkit-sticky; position: sticky; left: 0; background-clip: padding-box; }
  @media only screen and (max-width: 790px) {
-  .tab_disp_cont { overflow-x: scroll }
+  .tab_cont { overflow-x: scroll; padding-bottom: 6px; }
  }
-</style>[theme_value_4]
+</style>
+<script type=\"text/javascript\">
+var hd_webpage_type = 'calendar';
+var hd_webpage_lang = '".urlencode($lingua_modello)."';
+</script>[theme_value_4]
 </head>
 <body style=\"background-color: [theme_color_2]; color: [theme_color_1]; padding: 0; margin: 0;\">
+<div id=\"container01\">
+<div id=\"container02\">
 <div id=\"html_pre\"></div>
+<div id=\"container03\">
 [theme_value_1]
+<div id=\"container04\">
 <div id=\"logo_post\"></div>
+<div id=\"container05\">
+<div id=\"container06\">
 
 <div class=\"mainbox\">";
 $template_theme_html_post[1] = "
 ";
-if (!defined('C_NASCONDI_MARCA') or C_NASCONDI_MARCA != "SI") $template_theme_html_post[1] .= "<small><small>Powered by 
+if (!defined('C_NASCONDI_MARCA') or C_NASCONDI_MARCA != "SI") $template_theme_html_post[1] .= "<div id=\"powered_by_hd\"><small><small>Powered by 
 <a href=\"https://www.hoteldruid.com\" style=\"color: [theme_color_1];\">
-HotelDruid management software</a></small></small>";
+HotelDruid management software</a></small></small></div>";
 $template_theme_html_post[1] .= "</div>
+
+</div>
+</div>
 <div id=\"html_post\"></div>
+</div>
+</div>
+<div id=\"html_post2\"></div>
+</div>
+</div>
 [theme_value_6]
 </body>
 </html>";

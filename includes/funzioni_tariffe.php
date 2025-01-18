@@ -2,7 +2,7 @@
 
 ##################################################################################
 #    HOTELDRUID
-#    Copyright (C) 2001-2020 by Marco Maria Francesco De Santis (marco@digitaldruid.net)
+#    Copyright (C) 2001-2021 by Marco Maria Francesco De Santis (marco@digitaldruid.net)
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published by
@@ -65,9 +65,9 @@ if ($tableregole) {
 $regole = esegui_query("select * from $tableregole where (tariffa_commissioni is not NULL) or (tariffa_chiusa != '' and tariffa_chiusa is not NULL) order by iddatainizio ");
 $num_regole = numlin_query($regole);
 for ($num1 = 0 ; $num1 < $num_regole ; $num1++) {
-$tariffa_commissioni = risul_query($regole,$num1,'tariffa_commissioni');
-if (strcmp($tariffa_commissioni,"") and (!$tariffa_sel or $tariffa_sel == $tariffa_commissioni)) {
-$comm_percent = risul_query($regole,$num1,'motivazione');
+$tariffa_commissioni = (string) risul_query($regole,$num1,'tariffa_commissioni');
+if (strcmp((string) $tariffa_commissioni,"") and (!$tariffa_sel or $tariffa_sel == $tariffa_commissioni)) {
+$comm_percent = (string) risul_query($regole,$num1,'motivazione');
 $comm_base = "t";
 if (substr($comm_percent,0,1) == "s" or substr($comm_percent,0,1) == "c") {
 $comm_base = substr($comm_percent,0,1);
@@ -85,7 +85,7 @@ $dati_tariffe['tariffa'.$tariffa_commissioni]['commissioni_percent']["$iddataini
 $dati_tariffe['tariffa'.$tariffa_commissioni]['commissioni_base']["$iddataini-$iddatafin"] = $comm_base;
 $dati_tariffe['tariffa'.$tariffa_commissioni]['commissioni_arrotond']["$iddataini-$iddatafin"] = risul_query($regole,$num1,'motivazione2');
 } # fine else if (!$iddataini)
-} # fine if (strcmp($tariffa_commissioni,"") and (!$tariffa_sel or...
+} # fine if (strcmp((string) $tariffa_commissioni,"") and (!$tariffa_sel or...
 $tariffa_chiusa = risul_query($regole,$num1,'tariffa_chiusa');
 if ($tariffa_chiusa and (!$tariffa_sel or $tariffa_sel == substr($tariffa_chiusa,7))) {
 $iddataini = risul_query($regole,$num1,'iddatainizio');
@@ -110,7 +110,7 @@ return $dati_tariffe;
 
 
 
-function dati_regole2 (&$dati_r2,&$app_regola2_predef,$tipotariffa,$idinizioperiodo,$idfineperiodo,&$id_periodo_corrente,$tipo_periodi,$anno,$tableregole) {
+function dati_regole2 (&$dati_r2,&$app_regola2_predef,$tipotariffa,$inizioperiodo,$fineperiodo,&$id_periodo_corrente,$tipo_periodi,$anno,$tableregole) {
 
 if (!is_array($dati_r2)) {
 $dati_r2 = array('napp' => array());
@@ -120,11 +120,11 @@ $dati_r2['num'] = numlin_query($regole2);
 for ($num1 = 0 ; $num1 < $dati_r2['num'] ; $num1++) {
 $tariffa_r2 = risul_query($regole2,$num1,'tariffa_per_app');
 $dati_r2[$tariffa_r2] = risul_query($regole2,$num1,'motivazione');
-$dati_r2['l2'][$tariffa_r2] = risul_query($regole2,$num1,'motivazione2');
-if (strcmp($dati_r2['l2'][$tariffa_r2],"")) {
+$dati_r2['l2'][$tariffa_r2] = (string) risul_query($regole2,$num1,'motivazione2');
+if (strcmp((string) $dati_r2['l2'][$tariffa_r2],"")) {
 $dati_r2['dini'][$tariffa_r2] = risul_query($regole2,$num1,'iddatainizio');
 if (!$dati_r2['dini'][$tariffa_r2]) $dati_r2['dfine'][$tariffa_r2] = risul_query($regole2,$num1,'iddatafine');
-} # fine if (strcmp($dati_r2['l2'][$tariffa_r2],""))
+} # fine if (strcmp((string) $dati_r2['l2'][$tariffa_r2],""))
 $napp = risul_query($regole2,$num1,'motivazione3');
 if ($napp) {
 if (substr($napp,0,1) == "v") {
@@ -140,20 +140,34 @@ $app_regola2_predef = "";
 $lista_app = "";
 if ($tipotariffa) {
 if (isset($dati_r2[$tipotariffa])) $lista_app = $dati_r2[$tipotariffa];
-if (isset($dati_r2['l2'][$tipotariffa]) and strcmp($dati_r2['l2'][$tipotariffa],"")) {
+if (isset($dati_r2['l2'][$tipotariffa]) and strcmp((string) $dati_r2['l2'][$tipotariffa],"")) {
+global $PHPR_TAB_PRE;
+$tableperiodi = $PHPR_TAB_PRE."periodi".$anno;
 if (!$id_periodo_corrente) $id_periodo_corrente = calcola_id_periodo_corrente($anno);
 $ngiorni_reg2b = $dati_r2['dini'][$tipotariffa];
-if ($ngiorni_reg2b) $diff_giorni = $idinizioperiodo - $id_periodo_corrente + 1;
+if ($ngiorni_reg2b) {
+if (strstr($inizioperiodo,"-")) {
+$inizioperiodo = esegui_query("select idperiodi from $tableperiodi where datainizio = '".aggslashdb($inizioperiodo)."' ");
+if (numlin_query($inizioperiodo)) $inizioperiodo = risul_query($inizioperiodo,0,'idperiodi');
+else $inizioperiodo = 100000;
+} # fine if (strstr($inizioperiodo,"-"))
+$diff_giorni = $inizioperiodo - $id_periodo_corrente + 1;
+} # fine if ($ngiorni_reg2b)
 else {
+if (strstr($fineperiodo,"-")) {
+$fineperiodo = esegui_query("select idperiodi from $tableperiodi where datafine = '".aggslashdb($fineperiodo)."' ");
+if (numlin_query($fineperiodo)) $fineperiodo = risul_query($fineperiodo,0,'idperiodi');
+else $fineperiodo = 100000;
+} # fine if (strstr($fineperiodo,"-"))
 $ngiorni_reg2b = $dati_r2['dfine'][$tipotariffa];
-$diff_giorni = $idfineperiodo - $id_periodo_corrente + 1;
+$diff_giorni = $fineperiodo - $id_periodo_corrente + 1;
 } # fine else if ($ngiorni_reg2b)
 if ($tipo_periodi == "s") $diff_giorni = $diff_giorni * 7;
 if ($diff_giorni < $ngiorni_reg2b) {
 $app_regola2_predef = $dati_r2[$tipotariffa];
 $lista_app = $dati_r2['l2'][$tipotariffa];
 } # fine if ($diff_giorni < $ngiorni_reg2b)
-} # fine if (isset($dati_r2['l2'][$tipotariffa]) and strcmp($dati_r2['l2'][$tipotariffa],""))
+} # fine if (isset($dati_r2['l2'][$tipotariffa]) and strcmp((string) $dati_r2['l2'][$tipotariffa],""))
 
 return $lista_app;
 } # fine if ($tipotariffa)
@@ -355,7 +369,7 @@ if ($tipo_percent == "p") $perc = (round(($perc / $importa_arrotond),0) * $impor
 $prezzo_a = $prezzo_a + $perc;
 } # fine if ($perc)
 } # fine if ($dati_tariffe[$tariffa]['parte_prezzo'][$num_ord] != "p")
-if ($prezzo_a) esegui_query("update $tableperiodi set $tariffa = '$prezzo_a' where idperiodi = '$num1'");
+if (($prezzo_a and strcmp((string) $prezzoperiodo,"")) or ((string) $prezzo_a == "0" and (string) $prezzoperiodo == "0")) esegui_query("update $tableperiodi set $tariffa = '$prezzo_a' where idperiodi = '$num1'");
 else esegui_query("update $tableperiodi set $tariffa = NULL where idperiodi = '$num1'");
 } # fine if ((string) $prezzoperiodo != "NO")
 
@@ -374,7 +388,7 @@ if ($tipo_percent == "p") $perc = (round(($perc / $importa_arrotond),0) * $impor
 $prezzo_a_p = $prezzo_a_p + $perc;
 } # fine if ($perc)
 } # fine if ($dati_tariffe[$tariffa]['parte_prezzo'][$num_ord] != "f")
-if ($prezzo_a_p) esegui_query("update $tableperiodi set $tariffa"."p = '$prezzo_a_p' where idperiodi = '$num1'");
+if (($prezzo_a_p and strcmp((string) $prezzoperiodop,"")) or ((string) $prezzo_a_p == "0" and (string) $prezzoperiodop == "0")) esegui_query("update $tableperiodi set $tariffa"."p = '$prezzo_a_p' where idperiodi = '$num1'");
 else esegui_query("update $tableperiodi set $tariffa"."p = NULL where idperiodi = '$num1'");
 } # fine if ((string) $prezzoperiodop != "NO")
 
@@ -398,7 +412,7 @@ for ($num1 = 1 ; $num1 < $dati_tariffe[$tariffa]['num_per_importa'] ; $num1++) {
 if ($dati_tariffe[$tariffa]['periodo_importa_f'][$num1] >= $idperiodo and $dati_tariffe[$tariffa]['periodo_importa_i'][$num1] <= $idperiodo) {
 $imp_periodo = $dati_tariffe[$tariffa]['importa_prezzi'][$num1];
 break;
-} # fine if ($dati_tariffe[$tariffa]['periodo_importa_f'][$num1] >= $idinizioperiodo and...
+} # fine if ($dati_tariffe[$tariffa]['periodo_importa_f'][$num1] >= $idperiodo and...
 } # fine for $num1
 } # fine if ($dati_tariffe[$tariffa]['imp_prezzi_int'])
 return $imp_periodo;
@@ -412,7 +426,7 @@ function dati_cat_pers ($id_utente,$tablepersonalizza,$lingua_mex,$priv_ins_num_
 $dati_cat_pers = array();
 if ($priv_ins_num_persone != "n") {
 $cat_pers = esegui_query("select * from $tablepersonalizza where idpersonalizza = 'num_categorie_persone' and idutente = '$id_utente' ");
-if ($dati_perc) $perc_cat_persone = explode(";",risul_query($cat_pers,0,'valpersonalizza'));
+if ($dati_perc) $perc_cat_persone = explode(";",(string) risul_query($cat_pers,0,'valpersonalizza'));
 $dati_cat_pers['num'] = risul_query($cat_pers,0,'valpersonalizza_num');
 if ($dati_cat_pers['num'] > 1) {
 for ($num1 = 0 ; $num1 < $dati_cat_pers['num'] ; $num1++) $dati_cat_pers[$num1] = array();
@@ -541,12 +555,12 @@ else $esist = 0;
 if ($dati_perc) {
 $dati_cat_pers_p[$num1]['osp_princ'] = $cat_pers_corr[2];
 $dati_cat_pers_p[$num1]['perc'] = $cat_pers_corr[3];
-if ($esist and isset($dati_cat_pers[$cat_pers]['perc']) and strcmp($dati_cat_pers[$cat_pers]['perc'],"") and $dati_cat_pers[$cat_pers]['perc'] != $cat_pers_corr[3]) {
+if ($esist and isset($dati_cat_pers[$cat_pers]['perc']) and strcmp((string) $dati_cat_pers[$cat_pers]['perc'],"") and $dati_cat_pers[$cat_pers]['perc'] != $cat_pers_corr[3]) {
 $esist = 0;
 $dati_cat_pers_p[$num1]['n_sing'] .= " (".$cat_pers_corr[3]."%)";
 $dati_cat_pers_p[$num1]['n_plur'] .= " (".$cat_pers_corr[3]."%)";
 if ($lingua_mex) $dati_cat_pers_p[$num1]['n_corr'] .= " (".$cat_pers_corr[3]."%)";
-} # fine if ($esist and isset($dati_cat_pers[$cat_pers]['perc']) and strcmp($dati_cat_pers[$cat_pers]['perc'],"") and...
+} # fine if ($esist and isset($dati_cat_pers[$cat_pers]['perc']) and strcmp((string) $dati_cat_pers[$cat_pers]['perc'],"") and...
 } # fine if ($dati_perc)
 else $dati_cat_pers_p['int'] .= "<".$cat_pers.">".$cat_pers_corr[1].">".$cat_pers_corr[4].">".$cat_pers_corr[5].">".$cat_pers_corr[6];
 if ($esist) {

@@ -51,6 +51,8 @@ table.m1 tr td { padding: 0; height: 12px; }
 hr.pos { width: 70px; }
 .buttonbar td { float: left; padding-bottom: 4px; padding-right: 8px; }
 .buttonbar table td { float: none; }
+table.buttontab td { display: inline-block; padding-top: 2px; padding-bottom: 2px; }
+table.buttontab table td { display: table-cell; }
 .t1left {  max-width: 190px; overflow-wrap: break-word; }
 .t1left1 { max-width: 100px; overflow-wrap: break-word; }
 .t1left2 { max-width: 100px; overflow-wrap: break-word; }

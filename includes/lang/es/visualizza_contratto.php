@@ -29,6 +29,11 @@ case "<span class=\"colblu\">Attenzione</span>: una email con lo stesso oggetto 
 case "Errore":  			$messaggio = "Error"; break;
 case "ha scritto":  			$messaggio = "ha escrito"; break;
 case "in data":  			$messaggio = "en la fecha"; break;
+case "Non si è potuto mascherare il mittente dell'email perchè attualmente <b class=\"colwarn\">SPF non è configurato correttamente</b> sul dominio della email":	$messaggio = "No se ha podido enmascarar al remitente del correo electrónico porque actualmente <b class=\"colwarn\">SPF no está configurado correctamente</b> en el dominio de correo electrónico"; break;
+case "L'utente amministratore può cambiare questa inpostazione in":	$messaggio = "El usuario administrador puede cambiar esta configuración en"; break;
+case "configura e personalizza":  	$messaggio = "configurar y personalizar"; break;
+case "È stato raggiunto il numero massimo di email giornaliere":	$messaggio = "Se ha alcanzado el número máximo de correos electrónicos diarios"; break;
+case "Per mandare altre email l'utente amministratore può impostare un server remoto in":	$messaggio = "Para enviar más correos el usuario administrador puede configurar un servidor remoto en"; break;
 case "":  		$messaggio = ""; break;
 case "":  		$messaggio = ""; break;
 

@@ -4,15 +4,16 @@ Priority: optional
 Maintainer: Marco Maria Francesco De Santis <marco@digitaldruid.net>
 Build-Depends: debhelper-compat (= 13), po-debconf
 Rules-Requires-Root: binary-targets
-Standards-Version: 4.6.0
+Standards-Version: 4.6.2
 Homepage: http://www.hoteldruid.com/
 
 Package: hoteldruid
 Architecture: all
 Depends: ${misc:Depends}, ucf, apache2 | httpd, libapache2-mod-php | php-cgi | php,
  php-sqlite3, php-xml
-Recommends: php-imap
-Suggests: firefox | www-browser, php-mysql | php-pgsql, sensible-utils
+Recommends: php-imap, php-mbstring
+Suggests: firefox | www-browser, php-mysql | php-pgsql, sensible-utils,
+ libphp-phpmailer
 Description: web-based property management system for hotels or B&Bs
  HotelDruid is designed to make hotel rooms, bed and breakfast apartments,
  or any other kind of daily rental easy to manage from a web browser.

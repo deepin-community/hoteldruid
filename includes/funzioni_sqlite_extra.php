@@ -2,7 +2,7 @@
 
 ##################################################################################
 #    HOTELDRUID
-#    Copyright (C) 2018-2019 by Marco Maria Francesco De Santis (marco@digitaldruid.net)
+#    Copyright (C) 2018-2023 by Marco Maria Francesco De Santis (marco@digitaldruid.net)
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published by
@@ -57,6 +57,7 @@ return $risul;
 
 function numlin_query_unbuffered ($query) {
 
+$num1 = null;
 while ($risul = $query['risul']->fetchArray(SQLITE3_NUM)) $num1++;
 $query['risul']->reset();
 return $num1;

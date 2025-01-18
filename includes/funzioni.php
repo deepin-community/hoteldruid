@@ -2,7 +2,7 @@
 
 ##################################################################################
 #    HOTELDRUID
-#    Copyright (C) 2001-2021 by Marco Maria Francesco De Santis (marco@digitaldruid.net)
+#    Copyright (C) 2001-2023 by Marco Maria Francesco De Santis (marco@digitaldruid.net)
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published by
@@ -21,11 +21,15 @@
 ##################################################################################
 
 
-#ini_set('display_errors','Off');
-#error_reporting(E_ALL ^ E_NOTICE);
-#error_reporting(E_ALL);
+define('C_DEBUG_HD',"off");
+
 if (function_exists('version_compare') and version_compare(PHP_VERSION, '8.0.0', '>=')) error_reporting(E_ALL & ~E_NOTICE & ~E_STRICT & ~E_DEPRECATED & ~E_WARNING);
 else error_reporting(E_ALL & ~E_NOTICE & ~E_STRICT & ~E_DEPRECATED);
+/*if (C_DEBUG_HD == "on") {
+error_reporting(E_ALL);
+#if (function_exists('ini_set')) @ini_set('display_errors','Off');
+} # fine if (C_DEBUG_HD == "on")
+else error_reporting(E_ALL & ~E_STRICT & ~E_DEPRECATED);*/
 if (function_exists('mb_internal_encoding')) mb_internal_encoding('UTF-8');
 if (function_exists('date_default_timezone_set')) if (!ini_get('date.timezone')) date_default_timezone_set('UTC');
 
@@ -40,33 +44,25 @@ $var_pag[$n_var_pag++] = 'anno';
 $var_pag[$n_var_pag++] = 'nome_utente_phpr';
 $var_pag[$n_var_pag++] = 'password_phpr';
 $var_pag[$n_var_pag++] = 'vers_hinc';
+$var_pag[$n_var_pag++] = 'test_cookie';
 for ($num1 = 0 ; $num1 < $n_var_pag; $num1++) {
-if (!isset(${$var_pag[$num1]})) {
-if (isset($_POST[$var_pag[$num1]])) ${$var_pag[$num1]} = $_POST[$var_pag[$num1]];
-elseif (isset($_GET[$var_pag[$num1]])) ${$var_pag[$num1]} = $_GET[$var_pag[$num1]];
-} # fine if (!isset(${$var_pag[$num1]}))
+if (isset($_REQUEST[$var_pag[$num1]]) and !isset(${$var_pag[$num1]})) ${$var_pag[$num1]} = $_REQUEST[$var_pag[$num1]];
 } # fine for $num1
 unset($var_pag);
 
+if (C_DEBUG_HD == "on") {
+if (@is_array($_REQUEST)) reset($_REQUEST);
+for ($num1 = 0 ; $num1 < count($_REQUEST); $num1++) {
+$var_REQUEST = key($_REQUEST);
+if (!isset($$var_REQUEST)) {
 # nel caso fosse settato register_globals = Off
-if (@is_array($_POST)) reset($_POST);
-for ($num1 = 0 ; $num1 < count($_POST); $num1++) {
-$var_POST = key($_POST);
-if (!isset($$var_POST)) {
-$$var_POST = $_POST[$var_POST];
-#echo "\$var_pag[".($n_var_pag++ - 5)."] = '".htmlspecialchars($var_POST)."';<br>";
-} # fine (!isset($$var_POST))
-next($_POST);
+#$$var_REQUEST = $_REQUEST[$var_REQUEST];
+error_log("PHP not registered variable in $pag: \$var_pag[".($n_var_pag++ - 6)."] = '$var_REQUEST';");
+echo "\$var_pag[".($n_var_pag - 7)."] = '".htmlspecialchars($var_REQUEST)."';<br>";
+} # fine (!isset($$var_REQUEST))
+next($_REQUEST);
 } # fine for $num1
-if (@is_array($_GET)) reset($_GET);
-for ($num1 = 0 ; $num1 < count($_GET); $num1++) {
-$var_GET = key($_GET);
-if (!isset($$var_GET)) {
-$$var_GET = $_GET[$var_GET];
-#echo "\$var_pag[".($n_var_pag++ - 5)."] = '".htmlspecialchars($var_GET)."';<br>";
-} # fine if (!isset($$var_GET))
-next($_GET);
-} # fine for $num1
+} # fine if (C_DEBUG_HD == "on")
 unset($n_var_pag);
 
 
@@ -74,26 +70,28 @@ if (defined('C_DATI_PATH') and @is_file(C_DATI_PATH."/tema.php")) include(C_DATI
 else {
 unset($tema);
 $trad_ui = 0;
+$parole_sost = 0;
 } # fine else if (@is_file(C_DATI_PATH."/tema.php"))
 
 #@include("./includes/costanti.php");
 #@include(C_DATI_PATH."/costanti.php");
-define('C_PHPR_VERSIONE_NUM',3.03);
-define('C_PHPR_VERSIONE_TXT',"3.0.3");
+define('C_PHPR_VERSIONE_NUM',3.06);
+define('C_PHPR_VERSIONE_TXT',"3.0.6");
 
-if (!isset($nome_utente_phpr)) $nome_utente_phpr = "";;
-if (!isset($password_phpr)) $password_phpr = "";;
-if (!isset($id_sessione)) $id_sessione = "";;
+if (!isset($nome_utente_phpr)) $nome_utente_phpr = "";
+if (!isset($password_phpr)) $password_phpr = "";
+if (!isset($id_sessione)) $id_sessione = "";
 
-if (!function_exists('utf8_encode')) {
+/*if (!function_exists('utf8_encode')) {
 function utf8_encode ($testo) { return ($testo); }
 function utf8_decode ($testo) { return ($testo); }
-} # fine if (!function_exists('utf8_encode'))
+} # fine if (!function_exists('utf8_encode'))*/
 if (!function_exists('get_magic_quotes_gpc')) {
 function get_magic_quotes_gpc () { return 0; }
 } # fine if (!function_exists('get_magic_quotes_gpc'))
 
 $id_sessione = htmlspecialchars($id_sessione);
+unset($cookie_sess);
 
 # Se non si specifica nessun anno uso l'attuale
 if (!defined('C_DIFF_ORE')) {
@@ -188,13 +186,22 @@ return $var;
 
 
 
+function fixstr (&$var) {
+
+if (isset($var)) return (string) $var;
+else return (string) "";
+
+} # fine function fixstr
+
+
+
 function controlla_anno (&$anno) {
 
 $verificato = "SI";
 if (!isset($anno)) $verificato = "NO";
 else {
 $verifica_num = preg_replace("/[0-9]/","",$anno);
-if (strcmp($verifica_num,"")) $verificato = "NO";
+if (strcmp((string) $verifica_num,"")) $verificato = "NO";
 if (strlen($anno) != 4) $verificato = "NO";
 $prime_cifre = substr($anno,0,2);
 if ($prime_cifre != 18 and $prime_cifre != 19 and $prime_cifre != 20 and $prime_cifre != 21) $verificato = "NO";
@@ -213,9 +220,9 @@ if (controlla_anno($anno) != "SI") $anno = "";
 function controlla_num_pos ($num) {
 
 $verificato = "SI";
-if (!strcmp($num,"")) $verificato = "NO";
-$verifica_num = preg_replace("/[0-9]/","",$num);
-if (strcmp($verifica_num,"")) $verificato = "NO";
+if (!strcmp((string) $num,"")) $verificato = "NO";
+$verifica_num = preg_replace("/[0-9]/","",(string) $num);
+if (strcmp((string) $verifica_num,"")) $verificato = "NO";
 
 return $verificato;
 
@@ -229,7 +236,7 @@ $verificato = "SI";
 $uno = substr($num,0,1);
 if ($uno == "-") $num = substr($num,1);
 $verifica_num = preg_replace("/[0-9]/","",$num);
-if (strcmp($verifica_num,"")) $verificato = "NO";
+if (strcmp((string) $verifica_num,"")) $verificato = "NO";
 
 return $verificato;
 
@@ -289,9 +296,10 @@ return $stile_data;
 
 function formatta_data ($data,$stile_data="europa") {
 
-$giorno = substr($data,8,2);
-$mese = substr($data,5,2);
-$anno = substr($data,0,4);
+$data = (string) $data;
+$giorno = htmlspecialchars(substr($data,8,2));
+$mese = htmlspecialchars(substr($data,5,2));
+$anno = htmlspecialchars(substr($data,0,4));
 #$formato = "d-m-Y";
 #if ($stile_data == 'usa') $formato = "m-d-Y";
 #$data_formattata = date ($formato, mktime(0,0,0,$mese,$giorno,$anno));
@@ -299,7 +307,7 @@ switch ($stile_data) {
 case "usa": $data_formattata = $mese."-".$giorno."-".$anno; break;
 default: $data_formattata = $giorno."-".$mese."-".$anno;
 } # fine switch ($stile_data)
-$data_formattata .= substr($data,10);
+$data_formattata .= htmlspecialchars(substr($data,10));
 
 return $data_formattata;
 
@@ -331,10 +339,10 @@ function punti_in_num ($num,$stile_soldi="europa",$decimali="") {
 #$num = strrev($num);
 #if ($uno == "-") { $num = "-".$num; }
 
-if (!strcmp($decimali,"")) {
-if (!strstr($num,".") or substr(strstr($num,"."),1) == 0) $decimali = 0;
+if (!strcmp((string) $decimali,"")) {
+if (!strstr((string) $num,".") or substr(strstr((string) $num,"."),1) == 0) $decimali = 0;
 else $decimali = 2;
-} # fine (!strcmp($decimali,""))
+} # fine (!strcmp((string) $decimali,""))
 if ($stile_soldi == "usa") $num = number_format((double) $num,$decimali);
 else $num = number_format((double) $num,$decimali,",",".");
 
@@ -346,7 +354,7 @@ return $num;
 
 function virgola_in_num ($num,$stile_soldi="europa") {
 
-if ($stile_soldi == "europa") $num = str_replace(".",",",$num);
+if ($stile_soldi == "europa") $num = str_replace(".",",",(string) $num);
 
 return $num;
 
@@ -357,14 +365,15 @@ return $num;
 function controlla_soldi ($num,$pos="NO") {
 
 $verificato = "SI";
-$uno = substr ($num,0,1);
+$num = (string) $num;
+$uno = substr($num,0,1);
 if ($uno == "-" and $pos == "NO") $num = substr($num,1);
 #$num = str_replace(",",".",$num);
 $parti = explode(".",$num);
 if (count($parti) > 2) $verificato = "NO";
 $num = str_replace(".","",$num);
 $verifica_num = preg_replace("/[0-9]/","",$num);
-if (strcmp($verifica_num,"")) $verificato = "NO";
+if (strcmp((string) $verifica_num,"")) $verificato = "NO";
 
 return $verificato;
 
@@ -374,7 +383,7 @@ return $verificato;
 
 function formatta_soldi ($num) {
 
-if (strcmp($num,"")) {
+if (strcmp((string) $num,"")) {
 $num = str_replace(",",".",$num);
 if (strstr($num,".")) {
 $parti = explode(".",$num);
@@ -394,7 +403,7 @@ settype($num,'double');
 else $num = (int) $parti[0];
 } # fine if (strstr($num,"."))
 else $num = (int) $num;
-} # fine if (strcmp($num,""))
+} # fine if (strcmp((string) $num,""))
 
 return $num;
 
@@ -404,7 +413,7 @@ return $num;
 
 function togli_acapo($stringa) {
 
-$stringa = str_replace("\r\n","",$stringa);
+$stringa = str_replace("\r\n","",(string) $stringa);
 $stringa = str_replace("\r","",$stringa);
 $stringa = str_replace("\n","",$stringa);
 $stringa = str_replace("
@@ -455,6 +464,43 @@ return $versione;
 
 
 
+function crea_val_casuale ($lung=16) {
+
+$car = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+$val_casuale = "";
+if (function_exists('random_int')) {
+for ($num1 = 0 ; $num1 < $lung ; $num1++) $val_casuale .= substr($car,random_int(0,61),1);
+} # fine if (function_exists('random_int')) 
+else {
+list($usec, $sec) = explode(' ', microtime());
+mt_srand($sec + (int) ((float) $usec * 1000000.0));
+for ($num1 = 0 ; $num1 < $lung ; $num1++) $val_casuale .= substr($car,mt_rand(0,61),1);
+} # fine else if (function_exists('random_int')) 
+
+return $val_casuale;
+
+} # fine function crea_val_casuale
+
+
+
+function crea_id_sessione ($anno,$tableversioni,$lung=16,$diff_ore=1,$idversioni="idversioni",$num_versione="num_versione") {
+
+if ($anno) $adesso = $anno.date("mdHis",(time() + (C_DIFF_ORE * 3600)));
+else {
+if ($diff_ore) $adesso = date("YmdHis",(time() + (C_DIFF_ORE * 3600)));
+else $adesso = date("YmdHis");
+} # fine else if ($anno)
+if (is_numeric($tableversioni)) $versione_unica = $tableversioni;
+else $versione_unica = prendi_numero_versione($tableversioni,$idversioni,$num_versione);
+$val_casuale = crea_val_casuale($lung);
+$id_sessione = $adesso.$val_casuale.$versione_unica;
+
+return $id_sessione;
+
+} # fine function crea_id_sessione
+
+
+
 #Funzione per controllare le sessioni
 
 $id_utente = "";
@@ -483,20 +529,24 @@ if ($scadenza < $limite_giorni_avviso) $avviso_giorni_scadenza = 1;
 } # fine (defined("C_FILE_SCADENZA_ACCOUNT") and C_FILE_SCADENZA_ACCOUNT != "")
 if (!isset($disattivato)) {
 
-global $lingua_mex,$tema,$pag,$ILIKE,$LIKE,$DATETIME,$nome_utente_login,$PHPR_LOG;
+global $lingua_mex,$tema,$pag,$ILIKE,$LIKE,$DATETIME,$nome_utente_login,$PHPR_LOG,$cookie_sess;
 @include(C_DATI_PATH."/lingua.php");
 #@include_once(C_DATI_PATH."/versione.php");
-if ($lingua[1] and @is_dir("./includes/lang/".$lingua[1])) $lingua_mex = $lingua[1];
+if (!empty($lingua[1]) and @is_dir("./includes/lang/".$lingua[1])) $lingua_mex = $lingua[1];
 else $lingua_mex = "ita";
 $nome_utente_login = "";
 
 
 if (!is_file(C_DATI_PATH."/abilita_login")) {
-if ($pag == "inizio.php" or $pag == "creadb.php" or @is_file(C_DATI_PATH."/selectperiodi$anno.1.php")) $id_utente = 1;
-else echo "<br>The requested year does not exists.<br><br><a href=\"./inizio.php\">Go back</a><br>";
+if ($pag == "inizio.php" or $pag == "creadb.php" or $pag == "aggiorna.php" or @is_file(C_DATI_PATH."/selectperiodi$anno.1.php")) $id_utente = 1;
+else echo "<br>The requested year does not exist.<br><br><a href=\"./inizio.php\">Go back</a><br>";
 } # fine if (!is_file(C_DATI_PATH."/abilita_login"))
 
 else {
+if (C_VERSIONE_ATTUALE < 3.04) {
+define('C_MIN_SESSIONE',90);
+define('C_USA_COOKIES',0);
+} # fine if (C_VERSIONE_ATTUALE < 3.04)
 
 if (!$id_sessione) {
 if ($nome_utente_phpr and $password_phpr) {
@@ -504,15 +554,16 @@ if (!$numconnessione) {
 include(C_DATI_PATH."/dati_connessione.php");
 include("./includes/funzioni_$PHPR_DB_TYPE.php");
 $numconnessione = connetti_db($PHPR_DB_NAME,$PHPR_DB_HOST,$PHPR_DB_PORT,$PHPR_DB_USER,$PHPR_DB_PASS,$PHPR_LOAD_EXT);
+if (!$numconnessione) exit('No database cnnection');
 } # fine if (!$numconnessione)
 $tableutenti = $PHPR_TAB_PRE."utenti";
 $tablesessioni = $PHPR_TAB_PRE."sessioni";
 $tableversioni = $PHPR_TAB_PRE."versioni";
 $tabletransazioni = $PHPR_TAB_PRE."transazioni";
-$tablepersonalizza = $PHPR_TAB_PRE."personalizza";
 $tabelle_lock = array($tableversioni,$tablesessioni,$tabletransazioni);
-$altre_tab_lock = array($tablepersonalizza,$tableutenti);
+$altre_tab_lock = array($tableutenti);
 $tabelle_lock = lock_tabelle($tabelle_lock,$altre_tab_lock);
+$nome_utente_phpr = trim($nome_utente_phpr);
 
 $sec_log_sbagliati = 5;
 $limite_login_sbagliati = date("Y-m-d H:i:s",(time() - $sec_log_sbagliati + (C_DIFF_ORE * 3600)));
@@ -522,18 +573,16 @@ $mostra_form_login = 1;
 $messaggio_errore .= mex("Dopo un login <div style=\"display: inline; color: red;\">errato</div> si devono attendere","funzioni.php")." $sec_log_sbagliati ".mex("secondi","funzioni.php").".<br><br>";
 } # fine if (numlin_query($ultimo_login_sbagliato) > 0)
 else {
-$num_log_sbagliati = 7;
+$max_log_sbagliati = 7;
 $num_log_avviso = 3;
-$minuti_durata_sessione = esegui_query("select valpersonalizza_num from $tablepersonalizza where idpersonalizza = 'minuti_durata_sessione' and idutente = '1'");
-$minuti_durata_sessione = risul_query($minuti_durata_sessione,0,'valpersonalizza_num');
-$limite_transazioni_vecchie = date("Y-m-d H:i:s",(time() - ($minuti_durata_sessione * 60) + (C_DIFF_ORE * 3600)));
+$limite_transazioni_vecchie = date("Y-m-d H:i:s",(time() - (C_MIN_SESSIONE * 60) + (C_DIFF_ORE * 3600)));
 esegui_query("delete from $tabletransazioni where ultimo_accesso <= '$limite_transazioni_vecchie'");
 $login_sbagliati = esegui_query("select tipo_transazione from $tabletransazioni where tipo_transazione = 'err_l' and dati_transazione1 = '".aggslashdb($nome_utente_phpr)."' ");
 $login_sbagliati = numlin_query($login_sbagliati);
-if ($login_sbagliati >= $num_log_sbagliati) {
-$messaggio_errore .= mex("Numero eccesivo di login <div style=\"display: inline; color: red;\">errati</div> negli ultimi","funzioni.php")." $minuti_durata_sessione ".mex("minuti","funzioni.php").".<br><br>";
+if ($login_sbagliati >= $max_log_sbagliati) {
+$messaggio_errore .= mex("Numero eccesivo di login <div style=\"display: inline; color: red;\">errati</div> negli ultimi","funzioni.php")." ".C_MIN_SESSIONE." ".mex("minuti","funzioni.php").".<br><br>";
 if (defined("C_HTML_POST_LOGIN") and C_HTML_POST_LOGIN != "") $messaggio_errore .= mex("È possibile reimpostare la password dal proprio account di hosting","funzioni.php").".".C_HTML_POST_LOGIN;
-} # fine if ($login_sbagliati >= $num_log_sbagliati)
+} # fine if ($login_sbagliati >= $max_log_sbagliati)
 else {
 if ($pag != "inizio.php" and !@is_file(C_DATI_PATH."/selectperiodi$anno.1.php")) {
 if ($_SERVER['REQUEST_METHOD'] == "GET") {
@@ -561,6 +610,7 @@ else {
 
 $nome_utente_phpr = aggslashdb($nome_utente_phpr);
 $password_phpr = aggslashdb($password_phpr);
+if (trim($password_phpr) != $password_phpr) $password_phpr_orig = $password_phpr;
 $utente = esegui_query("select * from $tableutenti where nome_utente = '$nome_utente_phpr'");
 if (numlin_query($utente) == 1) {
 $nome_utente_login = risul_query($utente,0,'nome_utente');
@@ -568,33 +618,45 @@ $tipo_pass = risul_query($utente,0,'tipo_pass');
 $password = risul_query($utente,0,'password');
 if ($tipo_pass == "5") {
 if (C_VERSIONE_ATTUALE > 1.32) {
-$salt = risul_query($utente,0,'salt');
+$salt = (string) risul_query($utente,0,'salt');
 for ($num1 = 0 ; $num1 < 15 ; $num1++) $password_phpr = md5($password_phpr.substr($salt,0,(20 - $num1)));
 } # fine if (C_VERSIONE_ATTUALE > 1.32)
 else $password_phpr = md5($password_phpr);
 } # fine if ($tipo_pass == "5")
+if ($password != $password_phpr and isset($password_phpr_orig)) {
+$password_phpr = trim($password_phpr_orig);
+if ($tipo_pass == "5" and C_VERSIONE_ATTUALE > 1.32) for ($num1 = 0 ; $num1 < 15 ; $num1++) $password_phpr = md5($password_phpr.substr($salt,0,(20 - $num1)));
+} # fine if ($password != $password_phpr and isset($password_phpr_orig))
 
 # login effettuato con successo
 if ($password == $password_phpr and $tipo_pass != "n") {
 $id_utente = risul_query($utente,0,'idutenti');
-$adesso = $anno.date("mdHis",(time() + (C_DIFF_ORE * 3600)));
-$versione_unica = prendi_numero_versione($tableversioni);
-list($usec, $sec) = explode(' ', microtime());
-mt_srand((float) $sec + ((float) $usec * 100000));
-$val_casuale = mt_rand(100000,999999);
-$id_sessione = $adesso.$val_casuale.$versione_unica;
+$id_sessione = crea_id_sessione($anno,$tableversioni);
 $ultimo_accesso = date("Y-m-d H:i:s",(time() + (C_DIFF_ORE * 3600)));
-global $_SERVER,$REMOTE_ADDR,$REMOTE_PORT,$HTTP_USER_AGENT;
+global $_SERVER,$REMOTE_ADDR,$REMOTE_PORT,$HTTP_USER_AGENT,$test_cookie;
 if ($_SERVER['REMOTE_ADDR']) $REMOTE_ADDR = $_SERVER['REMOTE_ADDR'];
 $REMOTE_ADDR = aggslashdb($REMOTE_ADDR);
 if ($_SERVER['REMOTE_PORT']) $REMOTE_PORT = $_SERVER['REMOTE_PORT'];
 $REMOTE_PORT = aggslashdb($REMOTE_PORT);
 if ($_SERVER['HTTP_USER_AGENT']) $HTTP_USER_AGENT = $_SERVER['HTTP_USER_AGENT'];
 $HTTP_USER_AGENT = aggslashdb($HTTP_USER_AGENT);
-if ($_SERVER['HTTPS'] == "on" or $_SERVER['SERVER_PORT'] == "443") $tipo_conn = "HTTPS";
+if ((isset($_SERVER['HTTPS']) and $_SERVER['HTTPS'] == "on") or (isset($_SERVER['SERVER_PORT']) and $_SERVER['SERVER_PORT'] == "443")) $tipo_conn = "HTTPS";
 else $tipo_conn = "HTTP";
-if (C_VERSIONE_ATTUALE >= 2.1) esegui_query("insert into $tablesessioni (idsessioni,idutente,indirizzo_ip,tipo_conn,user_agent,ultimo_accesso) values ('$id_sessione','$id_utente','$REMOTE_ADDR','$tipo_conn','$HTTP_USER_AGENT','$ultimo_accesso')","",$id_utente);
+if (C_USA_COOKIES) {
+$id_cliente = crea_val_casuale();
+if (function_exists('version_compare') and version_compare(PHP_VERSION, '5.2.0', '>=')) setcookie('HD_session_'.substr($id_sessione,30),$id_cliente,0,'','',1,1);
+else setcookie('HD_session_'.substr($id_sessione,30),$id_cliente,0,'','',1);
+if (empty($test_cookie) or fixset($_COOKIE['HD_test']) != $test_cookie) $id_cliente = "-$id_cliente";
+else $cookie_sess = 1;
+esegui_query("insert into $tablesessioni (idsessioni,idcliente,idutente,indirizzo_ip,tipo_conn,user_agent,ultimo_accesso) values ('$id_sessione','$id_cliente','$id_utente','$REMOTE_ADDR','$tipo_conn','$HTTP_USER_AGENT','$ultimo_accesso')","",$id_utente);
+} # fine if (C_USA_COOKIES)
+else {
+if (C_VERSIONE_ATTUALE < 3.04) $id_sessione = substr($id_sessione,0,20).substr($id_sessione,30);
+if (C_VERSIONE_ATTUALE >= 2.1) {
+esegui_query("insert into $tablesessioni (idsessioni,idutente,indirizzo_ip,tipo_conn,user_agent,ultimo_accesso) values ('$id_sessione','$id_utente','$REMOTE_ADDR','$tipo_conn','$HTTP_USER_AGENT','$ultimo_accesso')","",$id_utente);
+} # fine if (C_VERSIONE_ATTUALE >= 2.1)
 else esegui_query("insert into $tablesessioni (idsessioni,idutente,indirizzo_ip,user_agent,ultimo_accesso) values ('$id_sessione','$id_utente','$REMOTE_ADDR','$HTTP_USER_AGENT','$ultimo_accesso')","",$id_utente);
+} # fine else if (C_USA_COOKIES)
 } # fine if ($password == $password_phpr and $tipo_pass != "n")
 
 else $login_fallito = 1;
@@ -603,26 +665,21 @@ else $login_fallito = 1;
 if (isset($login_fallito)) {
 $mostra_form_login = 1;
 $messaggio_errore .= mex("Nome utente o password <div style=\"display: inline; color: red;\">errati</div>","funzioni.php").".<br>";
-if ($login_sbagliati >= ($num_log_sbagliati - $num_log_avviso - 1)) {
-if (($num_log_sbagliati - $login_sbagliati - 1) > 1) $messaggio_errore .= mex("Mancano solo","funzioni.php")." <span class=\"colred\"><b>".($num_log_sbagliati - $login_sbagliati - 1)."</b></span> ".mex("tentativi prima del blocco dei login","funzioni.php").".<br>";
-if (($num_log_sbagliati - $login_sbagliati - 1) == 1) $messaggio_errore .= mex("Manca solo","funzioni.php")." <span class=\"colred\"><b>1</b></span> ".mex("tentativo prima del blocco dei login","funzioni.php").".<br>";
+if ($login_sbagliati >= ($max_log_sbagliati - $num_log_avviso - 1)) {
+if (($max_log_sbagliati - $login_sbagliati - 1) > 1) $messaggio_errore .= mex("Mancano solo","funzioni.php")." <span class=\"colred\"><b>".($max_log_sbagliati - $login_sbagliati - 1)."</b></span> ".mex("tentativi prima del blocco dei login","funzioni.php").".<br>";
+if (($max_log_sbagliati - $login_sbagliati - 1) == 1) $messaggio_errore .= mex("Manca solo","funzioni.php")." <span class=\"colred\"><b>1</b></span> ".mex("tentativo prima del blocco dei login","funzioni.php").".<br>";
 } # fine if (numlin_query($utente) == 1)
 $messaggio_errore .= "<br>";
-$versione_transazione = prendi_numero_versione($tableversioni);
-$adesso = date("YmdHis",(time() + (C_DIFF_ORE * 3600)));
-list($usec, $sec) = explode(' ', microtime());
-mt_srand((float) $sec + ((float) $usec * 100000));
-$val_casuale = mt_rand(100000,999999);
 $ultimo_accesso = date("Y-m-d H:i:s",(time() + (C_DIFF_ORE * 3600)));
 global $_SERVER,$REMOTE_ADDR;
 if ($_SERVER['REMOTE_ADDR']) $REMOTE_ADDR = $_SERVER['REMOTE_ADDR'];
 $REMOTE_ADDR = aggslashdb($REMOTE_ADDR);
-$id_transazione = $adesso.$val_casuale.$versione_transazione;
+$id_transazione = crea_id_sessione("",$tableversioni,8);
 esegui_query("insert into $tabletransazioni (idtransazioni,tipo_transazione,dati_transazione1,dati_transazione2,ultimo_accesso) values ('$id_transazione','err_l','$nome_utente_phpr','$REMOTE_ADDR','$ultimo_accesso')");
 } # fine if (isset($login_fallito))
 
 } # fine else if ($pag != "inizio.php" and !@is_file(C_DATI_PATH."/selectperiodi$anno.1.php")
-} # fine else if ($login_sbagliati >= $num_log_sbagliati)
+} # fine else if ($login_sbagliati >= $max_log_sbagliati)
 } # fine else if (numlin_query($ultimo_login_sbagliato) > 0)
 unlock_tabelle($tabelle_lock);
 } # fine if ($nome_utente and $password)
@@ -637,15 +694,10 @@ $numconnessione = connetti_db($PHPR_DB_NAME,$PHPR_DB_HOST,$PHPR_DB_PORT,$PHPR_DB
 } # fine if ($numconnessione)
 $tableutenti = $PHPR_TAB_PRE."utenti";
 $tablesessioni = $PHPR_TAB_PRE."sessioni";
-$tablepersonalizza = $PHPR_TAB_PRE."personalizza";
 $tabelle_lock = array($tableutenti,$tablesessioni);
-$altre_tab_lock = array($tablepersonalizza);
-$tabelle_lock = lock_tabelle($tabelle_lock,$altre_tab_lock);
-$minuti_durata_sessione = esegui_query("select valpersonalizza_num from $tablepersonalizza where idpersonalizza = 'minuti_durata_sessione' and idutente = '1'");
-$minuti_durata_sessione = risul_query($minuti_durata_sessione,0,'valpersonalizza_num');
-$limite_sessioni_vecchie = date("Y-m-d H:i:s",(time() - ($minuti_durata_sessione * 60) + (C_DIFF_ORE * 3600)));
+$tabelle_lock = lock_tabelle($tabelle_lock);
+$limite_sessioni_vecchie = date("Y-m-d H:i:s",(time() - (C_MIN_SESSIONE * 60) + (C_DIFF_ORE * 3600)));
 esegui_query("delete from $tablesessioni where ultimo_accesso <= '$limite_sessioni_vecchie'");
-$ultimo_accesso = date("Y-m-d H:i:s",(time() + (C_DIFF_ORE * 3600)));
 global $_SERVER,$REMOTE_ADDR,$REMOTE_PORT,$HTTP_USER_AGENT;
 if ($_SERVER['REMOTE_ADDR']) $REMOTE_ADDR = $_SERVER['REMOTE_ADDR'];
 $REMOTE_ADDR = aggslashdb($REMOTE_ADDR);
@@ -653,12 +705,30 @@ if ($_SERVER['REMOTE_PORT']) $REMOTE_PORT = $_SERVER['REMOTE_PORT'];
 $REMOTE_PORT = aggslashdb($REMOTE_PORT);
 if ($_SERVER['HTTP_USER_AGENT']) $HTTP_USER_AGENT = $_SERVER['HTTP_USER_AGENT'];
 $HTTP_USER_AGENT = aggslashdb($HTTP_USER_AGENT);
+$ultimo_accesso = date("Y-m-d H:i:s",(time() + (C_DIFF_ORE * 3600)));
 $sessione = esegui_query("select * from $tablesessioni where idsessioni = '$id_sessione'");
 if (numlin_query($sessione) == 1) {
 $indirizzo_ip = risul_query($sessione,0,'indirizzo_ip');
 $tipo_conn = @risul_query($sessione,0,'tipo_conn');
 $user_agent = risul_query($sessione,0,'user_agent');
 if (($indirizzo_ip == $REMOTE_ADDR and $user_agent == $HTTP_USER_AGENT) or ($tipo_conn == "HTTPS" and ($_SERVER['HTTPS'] == "on" or $_SERVER['SERVER_PORT'] == "443"))) {
+if (C_USA_COOKIES) {
+$id_cliente = (string) risul_query($sessione,0,'idcliente');
+if ($id_cliente) {
+if (substr($id_cliente,0,1) == "-") {
+if (fixset($_COOKIE['HD_session_'.substr($id_sessione,30)]) == substr($id_cliente,1)) {
+esegui_query("update $tablesessioni set idcliente = '".substr($id_cliente,1)."' where idsessioni = '$id_sessione'");
+$cookie_sess = 1;
+} # fine if (fixset($_COOKIE['HD_session_'.substr($id_sessione,30)]) == substr($id_cliente,1))
+else esegui_query("update $tablesessioni set idcliente = '' where idsessioni = '$id_sessione'");
+} # fine if (substr($id_cliente,0,1) == "-")
+else {
+if (fixset($_COOKIE['HD_session_'.substr($id_sessione,30)]) != $id_cliente) $sessione_scaduta = 1;
+else $cookie_sess = 1;
+} # fine else if (substr($id_cliente,0,1) == "-")
+} # fine if ($id_cliente)
+} # fine if (C_USA_COOKIES)
+if (!isset($sessione_scaduta)) {
 $id_utente_presunto = risul_query($sessione,0,'idutente');
 $utente_presente = esegui_query("select nome_utente from $tableutenti where idutenti = '$id_utente_presunto'");
 if (numlin_query($utente_presente) == 1) {
@@ -667,14 +737,35 @@ $id_utente = $id_utente_presunto;
 esegui_query("update $tablesessioni set ultimo_accesso = '$ultimo_accesso' where idsessioni = '$id_sessione'");
 } # fine if (numlin_query($utente_presente) == 1)
 else $sessione_scaduta = 1;
+} # fine if (!isset($sessione_scaduta))
 } # fine if (($indirizzo_ip == $REMOTE_ADDR and $user_agent == $HTTP_USER_AGENT) or...
 else $sessione_scaduta = 1;
 } # fine if (numlin_query($sessione) == 1)
 else $sessione_scaduta = 1;
 unlock_tabelle($tabelle_lock);
+
 if (isset($sessione_scaduta)) {
 $mostra_form_login = 1;
+$tableversioni = $PHPR_TAB_PRE."versioni";
+$tabletransazioni = $PHPR_TAB_PRE."transazioni";
+$tabelle_lock = array($tableversioni,$tablesessioni,$tabletransazioni);
+$tabelle_lock = lock_tabelle($tabelle_lock);
+esegui_query("delete from $tabletransazioni where ultimo_accesso <= '$limite_sessioni_vecchie' ");
+$max_sessioni_sbagliate = 300;
+$sessioni_sbagliate = esegui_query("select tipo_transazione from $tabletransazioni where tipo_transazione = 'err_s' and dati_transazione1 = '$REMOTE_ADDR' ");
+$sessioni_sbagliate = numlin_query($sessioni_sbagliate);
+if ($sessioni_sbagliate >= $max_sessioni_sbagliate) {
+# Cancellando tutte le sessioni chi volesse scoprirne una dovrà ripartire da zero e anche a eventuali altri utenti verrà mostrato questo errore
+esegui_query("delete from $tablesessioni where indirizzo_ip = '$REMOTE_ADDR'");
+$messaggio_errore .= mex("Numero eccesivo di sessioni <span style=\"color: red;\">errate</span> originate dal tuo indirizzo IP negli ultimi","funzioni.php")." ".C_MIN_SESSIONE." ".mex("minuti","funzioni.php").".
+ ".mex("È possibile che qualcuno dalla tua stessa rete stia tentando di rubare il tuo accesso","funzioni.php").".<br><br>";
+} # fine if ($sessioni_sbagliate >= $max_sessioni_sbagliate)
+else {
 $messaggio_errore .= "".mex("Sessione <div style=\"display: inline; color: red;\">scaduta</div>","funzioni.php").".<br><br>";
+$id_transazione = crea_id_sessione("",$tableversioni,8);
+esegui_query("insert into $tabletransazioni (idtransazioni,tipo_transazione,dati_transazione1,ultimo_accesso) values ('$id_transazione','err_s','$REMOTE_ADDR','$ultimo_accesso')");
+} # fine else if ($sessioni_sbagliate >= $max_sessioni_sbagliate)
+unlock_tabelle($tabelle_lock);
 } # fine if (isset($sessione_scaduta))
 } # fine else if (!$id_sessione)
 
@@ -694,7 +785,7 @@ if (@is_array($_POST)) {
 reset($_POST);
 for ($num1 = 0 ; $num1 < count($_POST); $num1++) {
 $key = key($_POST);
-if ($key != "id_sessione" and $key != "nome_utente_phpr" and $key != "password_phpr" and $key != "pass_cc" and $key != "logout") $input_var_passate .= "<input type=\"hidden\" name=\"$key\" value=\"".htmlspecialchars(strip_magic_slashs(current($_POST)))."\">";
+if ($key != "id_sessione" and $key != "nome_utente_phpr" and $key != "password_phpr" and $key != "pass_cc" and $key != "logout" and $key != "test_cookie") $input_var_passate .= "<input type=\"hidden\" name=\"$key\" value=\"".htmlspecialchars(strip_magic_slashs(current($_POST)))."\">";
 next($_POST);
 } # fine for $num1
 } # fine if (@is_array($_POST))
@@ -702,13 +793,19 @@ if (@is_array($_GET)) {
 reset($_GET);
 for ($num1 = 0 ; $num1 < count($_GET); $num1++) {
 $key = key($_GET);
-if ($key != "id_sessione" and $key != "nome_utente_phpr" and $key != "password_phpr" and $key != "pass_cc" and $key != "logout") $input_var_passate .= "<input type=\"hidden\" name=\"$key\" value=\"".htmlspecialchars(strip_magic_slashs(current($_GET)))."\">";
+if ($key != "id_sessione" and $key != "nome_utente_phpr" and $key != "password_phpr" and $key != "pass_cc" and $key != "logout" and $key != "test_cookie") $input_var_passate .= "<input type=\"hidden\" name=\"$key\" value=\"".htmlspecialchars(strip_magic_slashs(current($_GET)))."\">";
 next($_GET);
 } # fine for $num1
 } # fine if (@is_array($_GET))
 } # fine if ((@is_array($_POST) or @is_array($_GET)) and $pag)
 else $action = "inizio.php";
 } # fine else if ($pag == "aggiorna.php")
+if (C_USA_COOKIES) {
+$test_cookie = crea_val_casuale();
+if (function_exists('version_compare') and version_compare(PHP_VERSION, '5.2.0', '>=')) setcookie('HD_test',$test_cookie,0,'','',1,1);
+else setcookie('HD_test',$test_cookie,0,'','',1);
+$input_var_passate = "<input type=\"hidden\" name=\"test_cookie\" value=\"$test_cookie\">".$input_var_passate;
+} # fine if (C_USA_COOKIES)
 $pag = "login";
 if (defined('C_NASCONDI_MARCA') and C_NASCONDI_MARCA == "SI") $titolo = "Login";
 else $titolo = mex("Login per HotelDruid","funzioni.php");
@@ -756,11 +853,11 @@ if ($tema[1] and $tema[1] != "base" and @is_dir("./themes/".$tema[1]."/php")) in
 else include("./includes/foot.php");
 } # fine if ($messaggio_errore or isset($mostra_form_login))
 
-if ($id_utente and ($lingua[$id_utente] == "ita" or @is_dir("./includes/lang/".$lingua[$id_utente]))) $lingua_mex = $lingua[$id_utente];
+if ($id_utente and (isset($lingua[$id_utente]) and ($lingua[$id_utente] == "ita" or @is_dir("./includes/lang/".$lingua[$id_utente])))) $lingua_mex = $lingua[$id_utente];
 } # fine else if (!is_file(C_DATI_PATH."/abilita_login"))
 
 
-if ($id_utente and $tema[$id_utente] != "base" and (!$tema[$id_utente] or !@is_dir("./themes/".$tema[$id_utente]."/php"))) $tema[$id_utente] = "base";
+if ($id_utente and (!isset($tema[$id_utente]) or $tema[$id_utente] != "base") and (empty($tema[$id_utente]) or !@is_dir("./themes/".$tema[$id_utente]."/php"))) $tema[$id_utente] = "base";
 
 if (defined('C_VERSIONE_ATTUALE') and C_VERSIONE_ATTUALE < C_PHPR_VERSIONE_NUM and $id_utente and $pag != "aggiorna.php") {
 if (@is_file(C_DATI_PATH."/dati_connessione.php") or @is_file("./dati/connessione_db.php") or @is_file("./datipermanenti/connessione_db.inc")) {
@@ -787,7 +884,7 @@ echo "<form method=\"post\" action=\"aggiorna.php\"><div>
 if ($tema[$id_utente] and $tema[$id_utente] != "base" and @is_dir("./themes/".$tema[$id_utente]."/php")) include("./themes/".$tema[$id_utente]."/php/foot.php");
 else include("./includes/foot.php");
 } # fine else if ($id_utente == $id_utente_azione_ic) 
-unset($id_utente);
+$id_utente = "";
 } # fine if (@is_file(C_DATI_PATH."/dati_connessione.php") or...
 } # fine if (defined('C_VERSIONE_ATTUALE') and C_VERSIONE_ATTUALE < C_PHPR_VERSIONE_NUM and...
 
@@ -835,7 +932,7 @@ $num_linee2++;
 else $ultima_linea = $sub_linee[$num2];
 } # fine for $num2
 } # fine for $num1
-if (togli_acapo($linee2[$num_linee2]) != $ultima_linea) $scrittura_corretta = "NO";
+if (togli_acapo(fixset($linee2[$num_linee2])) != $ultima_linea) $scrittura_corretta = "NO";
 if ($scrittura_corretta != "NO") {
 if (@is_file("$nome_file.tmp")) {
 @unlink("$nome_file");
@@ -884,13 +981,16 @@ fclose($filelock);
 
 
 
-function elimina_caratteri_slash ($var) {
+function elimina_caratteri_slash (&$var) {
 
-$var = str_replace ("'","",$var);
-$var = str_replace ("\\","",$var);
-$var = str_replace ("\"","",$var);
+if (isset($var)) {
+$vr = str_replace ("'","",(string) $var);
+$vr = str_replace ("\\","",$vr);
+$vr = str_replace ("\"","",$vr);
+} # fine if (isset($var))
+else $vr = "";
 
-return $var;
+return $vr;
 
 } # fine function elimina_caratteri_slash
 
@@ -992,7 +1092,7 @@ else if (!$standalone_dates_menu) $current_dates_menu++;
 
 if ($blank_selected) $date_selected = "";
 $num_periodi_date = count($d_increment);
-if (($num_periodi_date > 1 or $d_increment[0] > 1) and $date_selected) {
+if (($num_periodi_date > 1 or (isset($d_increment[0]) and $d_increment[0] > 1)) and $date_selected) {
 for ($num1 = 0 ; $num1 < $num_periodi_date ; $num1++) {
 for ($num2 = 0 ; $num2 < $n_dates_menu[$num1] ; $num2++) {
 $data_corr = date("Y-m-d",mktime(0,0,0,($m_ini_menu[$num1] + 1),($d_ini_menu[$num1] + ($num2 * $d_increment[$num1])),$y_ini_menu[$num1]));
@@ -1006,7 +1106,7 @@ $data_prec = $data_corr;
 } # fine for $num2
 if ($data_corr == $date_selected or $data_prec == $date_selected) break;
 } # fine for $num1
-} # fine if (($num_periodi_date > 1 or $d_increment[0] > 1) and $date_selected)
+} # fine if (($num_periodi_date > 1 or (isset($d_increment[0]) and...
 
 if ($tema[$id_utente] != "base") include("./themes/".$tema[$id_utente]."/php/selectperiod.php");
 
@@ -1024,16 +1124,13 @@ else unset($dates_options_list);
 
 if (substr($file,0,(strlen(C_DATI_PATH) + 15)) == C_DATI_PATH."/selperiodimenu" and floor($current_dates_menu / 2) != (($current_dates_menu - 1) / 2) and $mos_tut_dat != "SI" and $modifica_pers != "NO" and $partial_dates) {
 $lista_var = "";
-if (@is_array($_POST)) reset($_POST);
-for($num1 = 0 ; $num1 < count($_POST); $num1++) {
-if (key($_POST) != "mos_tut_dat" and substr(key($_POST),0,8) != "modifica") $lista_var .= "&amp;".urlencode(key($_POST))."=".urlencode(strip_magic_slashs($_POST[key($_POST)]));
-next($_POST);
+if (isset($_REQUEST) and is_array($_REQUEST)) {
+reset($_REQUEST);
+for($num1 = 0 ; $num1 < count($_REQUEST); $num1++) {
+if (key($_REQUEST) != "mos_tut_dat" and substr(key($_REQUEST),0,8) != "modifica") $lista_var .= "&amp;".urlencode(key($_REQUEST))."=".urlencode(strip_magic_slashs($_REQUEST[key($_REQUEST)]));
+next($_REQUEST);
 } # fine for $num1
-if (@is_array($_GET)) reset($_GET);
-for($num1 = 0 ; $num1 < count($_GET); $num1++) {
-if (key($_GET) != "mos_tut_dat" and substr(key($_GET),0,8) != "modifica") $lista_var .= "&amp;".urlencode(key($_GET))."=".urlencode(strip_magic_slashs($_GET[key($_GET)]));
-next($_GET);
-} # fine for $num1
+} # fine if (isset($_REQUEST) and is_array($_REQUEST))
 if ($lista_var) {
 global $pag;
 $lista_var = "?mos_tut_dat=SI".$lista_var;
@@ -1054,11 +1151,11 @@ if (isset($mos_tut_dat)) $mos_tut_dat = "SI";
 function allunga_tempo_limite ($n_lim="",$agg_lim="") {
 
 if (function_exists('set_time_limit')) {
-if (!strcmp($n_lim,"")) $n_lim = 420;
+if (!strcmp((string) $n_lim,"")) $n_lim = 420;
 $lim_att = 30;
 if (function_exists('ini_get')) {
 $lim_att = ini_get('max_execution_time');
-if (strcmp($agg_lim,"")) $n_lim = $lim_att + $agg_lim;
+if (strcmp((string) $agg_lim,"")) $n_lim = $lim_att + $agg_lim;
 } # fine if (function_exists('ini_get'))
 if ($lim_att < $n_lim) set_time_limit($n_lim);
 } # fine if (function_exists('set_time_limit')
@@ -1077,15 +1174,27 @@ if (function_exists('ob_flush')) ob_flush();
 
 
 
-function controlla_pag_origine ($origine) {
+function controlla_pag_origine (&$origine_passa) {
 
-$origine = trim($origine);
+if (isset($origine_passa)) {
+$origine = trim((string) $origine_passa);
 if (substr($origine,0,2) == "./") $origine = substr($origine,2);
 if (strstr($origine,"http") or strstr($origine,"..") or strstr($origine,"/") or strstr($origine,"\\")) $origine = "inizio.php";
+} # fine if (isset($origine_passa))
+else $origine = "";
 
 return str_replace("\"","",str_replace(">","",str_replace("<","",$origine)));
 
 } # fine function controlla_pag_origine
+
+
+
+if (function_exists('mb_strcut')) {
+function par_taglia (&$str,$ini,$fine) { return mb_strcut($str,$ini,$fine); }
+} # fine if (function_exists('mb_strcut'))
+else {
+function par_taglia (&$str,$ini,$fine) { return substr($str,$ini,$fine); }
+} # fine else if (function_exists(''))
 
 
 

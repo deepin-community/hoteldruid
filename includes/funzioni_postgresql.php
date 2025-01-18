@@ -2,7 +2,7 @@
 
 ##################################################################################
 #    HOTELDRUID
-#    Copyright (C) 2001-2019 by Marco Maria Francesco De Santis (marco@digitaldruid.net)
+#    Copyright (C) 2001-2023 by Marco Maria Francesco De Santis (marco@digitaldruid.net)
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published by
@@ -61,7 +61,7 @@ function esegui_query ($query,$silenzio = "",$idlog = "") {
 $risul = pg_exec($query);
 if (!$risul and $silenzio != "totale") {
 global $PHPR_TAB_PRE;
-if (!$silenzio) echo "<br>ERROR in: ".str_replace(" ".$PHPR_TAB_PRE," ",$query)."<br>";
+if (!$silenzio) echo "<br>ERROR in: ".htmlspecialchars(str_replace(" ".$PHPR_TAB_PRE," ",$query))."<br>";
 error_log("IN ".$_SERVER['PHP_SELF']." PGSQL ERROR: ".substr(str_replace(" ".$PHPR_TAB_PRE," ",$query),0,25)."...");
 } # fine (!$risul and $silenzio != "totale")
 return $risul;
@@ -79,7 +79,7 @@ function esegui_query ($query,$silenzio = "",$idlog = "") {
 $risul = pg_exec($query);
 if (!$risul and $silenzio != "totale") {
 global $PHPR_TAB_PRE;
-if (!$silenzio) echo "<br>ERROR in: ".str_replace(" ".$PHPR_TAB_PRE," ",$query)."<br>";
+if (!$silenzio) echo "<br>ERROR in: ".htmlspecialchars(str_replace(" ".$PHPR_TAB_PRE," ",$query))."<br>";
 error_log("IN ".$_SERVER['PHP_SELF']." PGSQL ERROR: ".substr(str_replace(" ".$PHPR_TAB_PRE," ",$query),0,25)."...");
 } # fine (!$risul and $silenzio != "totale")
 
@@ -204,12 +204,13 @@ return $risul;
 
 
 
-function unlock_tabelle ($tabelle_lock,$azione = "") {
+function unlock_tabelle (&$tabelle_lock,$azione = "") {
 
 if ($tabelle_lock != "nocommit") {
 if ($azione == "rollback") pg_exec("rollback");
 else pg_exec("commit");
 } # fine if ($tabelle_lock != "nocommit")
+$tabelle_lock = null;
 
 } # fine function unlock_tabelle
 

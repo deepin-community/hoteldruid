@@ -24,7 +24,15 @@ $pag = "dati_relutenti.php";
 $titolo = "dati_rel";
 
 $var_pag = array();
-$n_var_pag = 0;
+$var_pag[0] = 'id';
+$var_pag[1] = 'rel';
+$var_pag[2] = 'rel_sup';
+$var_pag[3] = 'id_ut_sel';
+$var_pag[4] = 'cmp';
+$var_pag[5] = 'mostra_cod';
+$var_pag[6] = 'pieno';
+$var_pag[7] = 'd';
+$n_var_pag = 8;
 
 include("./costanti.php");
 include(C_DATI_PATH."/dati_connessione.php");
@@ -53,6 +61,7 @@ $anno_utente_attivato = "SI";
 $privilegi_globali_utente = esegui_query("select * from $tableprivilegi where idutente = '$id_utente' and anno = '1'");
 $priv_mod_pers = risul_query($privilegi_globali_utente,0,'priv_mod_pers');
 if (substr($priv_mod_pers,0,1) != "s") $modifica_pers = "NO";
+else $modifica_pers = "SI";
 $priv_ins_clienti = risul_query($privilegi_globali_utente,0,'priv_ins_clienti');
 if (substr($priv_ins_clienti,0,1) == "s") $inserimento_nuovi_clienti = "SI";
 else $inserimento_nuovi_clienti = "NO";

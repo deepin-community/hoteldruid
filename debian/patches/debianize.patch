@@ -6,7 +6,7 @@ Last-Update: 2012-06-24
 Forwarded: not-needed
 --- a/costanti.php
 +++ b/costanti.php
-@@ -22,11 +22,11 @@
+@@ -22,15 +22,15 @@
  
  
  # Path to dati folder and database data file
@@ -22,6 +22,11 @@ Forwarded: not-needed
  
  # costanti generali
  define('C_GIORNI_NUOVO_ANNO',"9");
+-#define('C_PERCORSO_PHPMAILER',"");
++define('C_PERCORSO_PHPMAILER',"/usr/share/php/libphp-phpmailer/autoload.php");
+ 
+ 
+ 
 --- a/includes/costanti.php
 +++ b/includes/costanti.php
 @@ -43,7 +43,7 @@

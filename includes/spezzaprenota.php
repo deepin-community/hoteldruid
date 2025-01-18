@@ -2,7 +2,7 @@
 
 ##################################################################################
 #    HOTELDRUID
-#    Copyright (C) 2001-2018 by Marco Maria Francesco De Santis (marco@digitaldruid.net)
+#    Copyright (C) 2001-2023 by Marco Maria Francesco De Santis (marco@digitaldruid.net)
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published by
@@ -21,7 +21,7 @@
 ##################################################################################
 
 
-function spezzaprenota ($idinizio,$idfine,$anno,&$limiti_var,$profondita,&$n_tronchi,&$vet_appartamenti,&$vett_idinizio,&$vett_idfine,$num_persone,&$app_prenota_id,&$app_orig_prenota_id,&$inizio_prenota_id,&$fine_prenota_id,&$app_assegnabili_id,&$prenota_in_app_sett,&$dati_app,$nome_tab_prenota = "prenota") {
+function spezzaprenota ($idinizio,$idfine,$anno,&$limiti_var,$profondita,$app_richiesti,&$n_tronchi,&$vet_appartamenti,&$vett_idinizio,&$vett_idfine,$num_persone,&$app_prenota_id,&$app_orig_prenota_id,&$inizio_prenota_id,&$fine_prenota_id,&$app_assegnabili_id,&$prenota_in_app_sett,&$dati_app,$nome_tab_prenota = "prenota") {
 global $debug;
 
 $limiti_var['n_ini'] = $idinizio;
@@ -29,9 +29,9 @@ $limiti_var['n_fine'] = $idfine;
 if (!is_array($profondita)) {
 $primo_ciclo = 1;
 $prof_copia = $profondita;
-$profondita = "";
+$profondita = array();
 $profondita['iniziale'] = $prof_copia;
-$profondita['attuale'] = $prof_copia;
+$profondita['attuale'] = (int) $prof_copia;
 $tableprenota = $nome_tab_prenota . $anno . $profondita['iniziale'];
 $max_prenota = esegui_query("select max(idprenota) from $tableprenota");
 $tot_prenota = risul_query($max_prenota,0,0);
@@ -39,18 +39,27 @@ $profondita['tot_prenota_ini'] = $tot_prenota;
 $profondita['tot_prenota_attuale'] = $tot_prenota;
 tab_a_var($limiti_var,$app_prenota_id,$app_orig_prenota_id,$inizio_prenota_id,$fine_prenota_id,$app_assegnabili_id,$prenota_in_app_sett,$anno,$dati_app,$profondita,$nome_tab_prenota);
 } # fine if (!is_array($profondita))
+if (!is_array($app_richiesti)) {
+if ($app_richiesti == ",tutti,") $app_richiesti = array();
+if (!empty($app_richiesti)) {
+$vett_app = explode(",",$app_richiesti);
+$n_vett_app = count($vett_app);
+$app_richiesti = array();
+for ($num1 = 0 ; $num1 < $n_vett_app ; $num1++) $app_richiesti[$vett_app[$num1]] = "SI";
+} # fine if (!empty($app_richiesti))
+} # fine if (!is_array($app_richiesti))
 
-if (!$n_tronchi) $n_tronchi = 0;
+if (empty($n_tronchi)) $n_tronchi = 0;
 
 # ciclo da ripetere per ogni appartamento che non inizia con una
 # prenotazione fissa, non spostabile o con $maxoccupanti troppo basso
 $numsettimane = $idfine - $idinizio + 1;
 $n_tronchi3 = -1;
-if ($limiti_var['tutti_fissi'] != "SI" and $limiti_var['t_limite'] >= time()) {
+if ($limiti_var['t_limite'] >= time()) {
 
 for ($num1 = 0 ; $num1 < $dati_app['totapp'] ; $num1++) {
 $numapp = $dati_app['posizione'][$num1];
-if ($dati_app['maxocc'][$numapp] >= $num_persone) {
+if ((!$num_persone or $dati_app['maxocc'][$numapp] >= $num_persone) and (empty($app_richiesti) or (isset($app_richiesti[$numapp]) and $app_richiesti[$numapp] == "SI"))) {
 $prima_prenota = prenota_in_app_e_periodo($numapp,$idinizio,$idinizio,$prenota_in_app_sett,$fine_prenota_id,$num_pp);
 if ($num_pp != 0) $idprima_prenota = $prima_prenota[1];
 else $idprima_prenota = "";
@@ -86,7 +95,10 @@ $inizio_prenota_id[$nuova_profondita['tot_prenota_attuale']] = $id_settimana;
 $fine_prenota_id[$nuova_profondita['tot_prenota_attuale']] = $id_settimana;
 $prenota_in_app_sett2[$numapp][$id_settimana] = $nuova_profondita['tot_prenota_attuale'];
 } # fine if ($fatto_libera == "SI")
-else break;
+else {
+aggiorna_app_aggiunti($limiti_var,$limiti_var_orig,$app_orig_prenota_id,$app_prenota_id2,$inizio_prenota_id,$fine_prenota_id,$prenota_in_app_sett2);
+break;
+} # fine else if ($fatto_libera == "SI")
 } # fine for $num2
 
 if ($fatto_libera == "SI" or $id_settimana != $idinizio) {
@@ -102,12 +114,15 @@ if ($debug == "on") {
 for ($i = 0 ; $i < $profondita['attuale'] ; $i++) echo "&nbsp;&nbsp;";
 echo "<b>".$profondita['attuale']."</b> <em>".date("H:i:s")."</em> spezza  da $id_settimana a $idfine<br>";
 } # fine if ($debug == "on")
-spezzaprenota($id_settimana,$idfine,$anno,$limiti_var,$nuova_profondita,$n_tronchi2,$vet_appartamenti2,$vett_idinizio2,$vett_idfine2,$num_persone,$app_prenota_id2,$app_orig_prenota_id,$inizio_prenota_id,$fine_prenota_id,$app_assegnabili_id,$prenota_in_app_sett2,$dati_app,$nome_tab_prenota);
+spezzaprenota($id_settimana,$idfine,$anno,$limiti_var,$nuova_profondita,$app_richiesti,$n_tronchi2,$vet_appartamenti2,$vett_idinizio2,$vett_idfine2,$num_persone,$app_prenota_id2,$app_orig_prenota_id,$inizio_prenota_id,$fine_prenota_id,$app_assegnabili_id,$prenota_in_app_sett2,$dati_app,$nome_tab_prenota);
 if ($debug == "on") {
 for ($i = 0 ; $i < $profondita['attuale'] ; $i++) echo "&nbsp;&nbsp;";
 echo "<b>".$profondita['attuale']."</b> finito <em>".date("H:i:s")."</em> spezza $fatto_libera $app_liber<br>";
 } # fine if ($debug == "on")
-if ($n_tronchi2 == -1) { break; }
+if ($n_tronchi2 == -1) {
+aggiorna_app_aggiunti($limiti_var,$limiti_var_orig,$app_orig_prenota_id,$app_prenota_id,$inizio_prenota_id,$fine_prenota_id,$prenota_in_app_sett);
+break;
+} # fine if ($n_tronchi2 == -1)
 } # fine if ($fatto_libera != "SI")
 
 if ($n_tronchi3 == -1 or $n_tronchi2 < $n_tronchi3) {
@@ -123,7 +138,7 @@ $prenota_in_app_sett2[$numapp][$num3] = "";
 } # fine for $num2
 $app_prenota_id_mod = $app_prenota_id2;
 $prenota_in_app_sett_mod = $prenota_in_app_sett2;
-} # fine if (!$n_tronchi3 or $n_tronchi2 < $n_tronchi3)
+} # fine if ($n_tronchi3 == -1 or $n_tronchi2 < $n_tronchi3)
 
 if ($n_tronchi3 == 1) break;
 
@@ -134,12 +149,13 @@ $inizio_prenota_id[$num2] = "";
 $fine_prenota_id[$num2] = "";
 } # fine for $num2
 aggiorna_app_aggiunti($limiti_var,$limiti_var_orig,$app_orig_prenota_id,$app_prenota_id,$inizio_prenota_id,$fine_prenota_id,$prenota_in_app_sett);
+if (isset($app_prenota_id_mod)) aggiorna_app_aggiunti($limiti_var,$limiti_var_orig,$app_orig_prenota_id,$app_prenota_id_mod,$inizio_prenota_id,$fine_prenota_id,$prenota_in_app_sett_mod);
 
 } # fine if (!$idprima_prenota or !empty($app_assegnabili_id[$idprima_prenota]))
-} # fine if ($dati_app['maxocc'][$numapp] >= $num_persone)
+} # fine if ((!$num_persone or $dati_app['maxocc'][$numapp] >= $num_persone) and (empty($app_richiesti) or...
 } # fine for $num1
 
-} # fine if ($limiti_var['tutti_fissi'] != "SI" and...
+} # fine if ($limiti_var['t_limite'] >= time())
 
 $n_tronchi = $n_tronchi3;
 if ($n_tronchi != -1) {

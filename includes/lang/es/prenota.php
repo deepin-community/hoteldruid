@@ -82,6 +82,7 @@ case "è diverso da quello contenuto nel messaggio di richiesta di prenotazione"
 case "Origine":  				$messaggio = "Origen"; break;
 case "<b>Attenzione</b>: il prezzo totale":  	$messaggio = "<b>Atención</b>: el precio total"; break;
 case "non coincide con il prezzo remoto":  	$messaggio = "no coincide con el precio remoto"; break;
+case "OVERBOOKING":  				$messaggio = "OVERBOOKING"; break;
 case "Modifica come gruppo le prenotazioni inserite":	$messaggio = "Modificar como grupo las reservas insertadas"; break;
 case "prezzo totale":  				$messaggio = "precio total"; break;
 case "prezzo totale giornaliero":  		$messaggio = "precio total diario"; break;
@@ -101,6 +102,10 @@ case "per la prenotazione":  			$messaggio = "para la reserva"; break;
 case "per un promemoria all'entrata":  		$messaggio = "para un recordatorio a la entrada"; break;
 case "per un promemoria all'uscita":  		$messaggio = "para un recordatorio a la salida"; break;
 case "valuta":  				$messaggio = "divisa"; break;
+case "Il numero di persone inserite non include i bambini (vedere il commento per il numero di bambini)":	$messaggio = "El número de personas insertado no incluye los niños (ver el comentario para el número de niños)"; break;
+case "da":  					$messaggio = "desde"; break;
+case "Si è dovuto diminuire il <b>numero di persone</b> per inserire la prenotazione":	$messaggio = "Hubo que disminuir el <b>número de personas</b> para insertar la reserva"; break;
+case "Prenotazione non inserita":  		$messaggio = "Reserva no insertada"; break;
 case "":  		$messaggio = ""; break;
 case "":  		$messaggio = ""; break;
 

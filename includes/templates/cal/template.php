@@ -2,7 +2,7 @@
 
 ##################################################################################
 #    HOTELDRUID
-#    Copyright (C) 2001-2021 by Marco Maria Francesco De Santis (marco@digitaldruid.net)
+#    Copyright (C) 2001-2023 by Marco Maria Francesco De Santis (marco@digitaldruid.net)
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published by
@@ -34,6 +34,9 @@ $tableclienti = $PHPR_TAB_PRE."clienti";
 $tabletransazioniweb = $PHPR_TAB_PRE."transazioniweb";
 $tablesoldi = $PHPR_TAB_PRE."soldi".$anno;
 $tableanni = $PHPR_TAB_PRE."anni";
+
+$anno_esist = esegui_query("select tipo_periodi from $tableanni where idanni = '".aggslashdb((int) $anno)."' ");
+if (!numlin_query($anno_esist)) exit("Sorry, year $anno does not exist in database.<br>");
 
 
 if (!empty($framed)) {
@@ -199,10 +202,10 @@ $num_regole2 = numlin_query($regole2);
 unset($app_regola2_orig);
 for ($num1 = 0 ; $num1 < $num_regole2 ; $num1++) {
 $numtariffa_regola2 = str_replace("tariffa","",risul_query($regole2,$num1,'tariffa_per_app'));
-if ($tariffe_mostra[$numtariffa_regola2] == "SI") {
+if (isset($tariffe_mostra[$numtariffa_regola2]) and $tariffe_mostra[$numtariffa_regola2] == "SI") {
 $app_regola2_orig[$numtariffa_regola2] = risul_query($regole2,$num1,'motivazione');
 if (!empty($dati_r2['napp']["tariffa$numtariffa_regola2"])) $app_regola2_orig['napp'][$numtariffa_regola2] = $dati_r2['napp']["tariffa$numtariffa_regola2"];
-} # fine if ($tariffe_mostra[$numtariffa_regola2] == "SI")
+} # fine if (isset($tariffe_mostra[$numtariffa_regola2]) and $tariffe_mostra[$numtariffa_regola2] == "SI")
 } # fine for $num1
 
 $colonna_destra_tab_disp = "NO";
@@ -244,9 +247,10 @@ echo "<div class=\"cal_title\">$apertura_tag_font
 $fr_Quadro_indicativo_disponibilita
 <a href=\"./$pag?id_data_inizio_tab_disp=".($id_data_inizio_tab_disp + $num_colonne_tab_disp)."\">".str_replace("->",htmlspecialchars("->"),$fr_freccia_destra)."</a>
 $chiusura_tag_font</div>
-<div class=\"tab_disp_cont\"><table class=\"tab_disp\" $stile_tabella_cal>
+<div class=\"tab_disp_cont\"><div class=\"tab_cont\">
+<table class=\"tab_disp\" $stile_tabella_cal>
 $righe_tab_disp
-</table></div>";
+</table></div></div>";
 } # fine if ($righe_tab_disp)
 
 

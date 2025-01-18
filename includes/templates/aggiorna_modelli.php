@@ -49,7 +49,7 @@ $lingua_modello = "ita";
 $nome_file = mex2("mdl_disponibilita",$pag,$lingua_modello).".php";
 $num_periodi_date = "";
 $anno_modello = "";
-recupera_var_modello_disponibilita($nome_file,$percorso_cartella_modello,$pag,$fr_frase,$num_frasi,$var_mod,$num_var_mod,$tipo_periodi,"SI",$anno_modello,$PHPR_TAB_PRE);
+recupera_var_modello_disponibilita($nome_file,$percorso_cartella_modello,$pag,$fr_frase,$frase,$num_frasi,$var_mod,$num_var_mod,$tipo_periodi,"SI",$anno_modello,$lingua_modello,$PHPR_TAB_PRE);
 if ($anno_modello_presente == $anno) {
 $anno_modello = $anno_modello_presente;
 $crea_modello = 1;
@@ -69,7 +69,7 @@ if (@is_file("$percorso_cartella_modello/$nome_file")) {
 $lingua_modello = $ini_lingua;
 $num_periodi_date = "";
 $anno_modello = "";
-recupera_var_modello_disponibilita($nome_file,$percorso_cartella_modello,$pag,$fr_frase,$num_frasi,$var_mod,$num_var_mod,$tipo_periodi,"SI",$anno_modello,$PHPR_TAB_PRE);
+recupera_var_modello_disponibilita($nome_file,$percorso_cartella_modello,$pag,$fr_frase,$frase,$num_frasi,$var_mod,$num_var_mod,$tipo_periodi,"SI",$anno_modello,$lingua_modello,$PHPR_TAB_PRE);
 if ($anno_modello_presente == $anno) {
 $anno_modello = $anno_modello_presente;
 $crea_modello = 1;
@@ -98,7 +98,7 @@ if (@is_file("$percorso_cartella_modello/$nome_file")) {
 $lingua_modello = "ita";
 $num_periodi_date = "";
 $anno_modello = "";
-$funz_recupera_var_modello($nome_file,$percorso_cartella_modello,$pag,$fr_frase,$num_frasi,$var_mod,$num_var_mod,$tipo_periodi,"SI",$anno_modello,$PHPR_TAB_PRE);
+$funz_recupera_var_modello($nome_file,$percorso_cartella_modello,$pag,$fr_frase,$frase,$num_frasi,$var_mod,$num_var_mod,$tipo_periodi,"SI",$anno_modello,$lingua_modello,$PHPR_TAB_PRE);
 if ($anno_modello_presente == $anno) {
 $anno_modello = $anno_modello_presente;
 $crea_modello = 1;
@@ -110,7 +110,7 @@ if ($crea_modello) $funz_crea_modello($percorso_cartella_modello,$anno_modello,$
 $lang_dir = opendir("./includes/lang/");
 while ($ini_lingua = readdir($lang_dir)) {
 if ($ini_lingua != "." && $ini_lingua != "..") {
-if ($template_file_name[$ini_lingua]) $nome_file = $template_file_name[$ini_lingua];
+if (!empty($template_file_name[$ini_lingua])) $nome_file = $template_file_name[$ini_lingua];
 else $nome_file = $ini_lingua."_".$template_file_name['en'];
 for ($num_cart = 0 ; $num_cart < $num_perc_cart_mod_vett ; $num_cart++) {
 $percorso_cartella_modello = $perc_cart_mod_vett[$num_cart];
@@ -118,7 +118,7 @@ if (@is_file("$percorso_cartella_modello/$nome_file")) {
 $lingua_modello = $ini_lingua;
 $num_periodi_date = "";
 $anno_modello = "";
-$funz_recupera_var_modello($nome_file,$percorso_cartella_modello,$pag,$fr_frase,$num_frasi,$var_mod,$num_var_mod,$tipo_periodi,"SI",$anno_modello,$PHPR_TAB_PRE);
+$funz_recupera_var_modello($nome_file,$percorso_cartella_modello,$pag,$fr_frase,$frase,$num_frasi,$var_mod,$num_var_mod,$tipo_periodi,"SI",$anno_modello,$lingua_modello,$PHPR_TAB_PRE);
 if ($anno_modello_presente == $anno) {
 $anno_modello = $anno_modello_presente;
 $crea_modello = 1;

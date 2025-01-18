@@ -2,7 +2,7 @@
 
 ##################################################################################
 #    HOTELDRUID
-#    Copyright (C) 2001-2021 by Marco Maria Francesco De Santis (marco@digitaldruid.net)
+#    Copyright (C) 2001-2023 by Marco Maria Francesco De Santis (marco@digitaldruid.net)
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published by
@@ -34,6 +34,9 @@ $tableclienti = $PHPR_TAB_PRE."clienti";
 $tabletransazioniweb = $PHPR_TAB_PRE."transazioniweb";
 $tablesoldi = $PHPR_TAB_PRE."soldi".$anno;
 $tableanni = $PHPR_TAB_PRE."anni";
+
+$anno_esist = esegui_query("select tipo_periodi from $tableanni where idanni = '".aggslashdb((int) $anno)."' ");
+if (!numlin_query($anno_esist)) exit("Sorry, year $anno does not exist in database.<br>");
 
 
 if (!empty($framed)) {
@@ -149,7 +152,7 @@ unlock_tabelle($tabelle_lock);
 $num_tariffe_mostra = 0;
 
 for ($num1 = 1 ; $num1 <= $dati_tariffe['num'] ; $num1++) {
-if ($tariffe_mostra[$num1] == "SI") {
+if (isset($tariffe_mostra[$num1]) and $tariffe_mostra[$num1] == "SI") {
 $num_tariffe_mostra++;
 ${"numtariffa".$num_tariffe_mostra} = $num1;
 $tariffa[$num_tariffe_mostra] = "tariffa".${"numtariffa".$num_tariffe_mostra};
@@ -163,7 +166,7 @@ if (!empty($n_tariffe_imposte[$num1])) $nometariffa_vedi[$num_tariffe_mostra] = 
 if (num_caratteri_testo($nometariffa_vedi[$num_tariffe_mostra]) > 10) $nometariffa_vedi[$num_tariffe_mostra] = "<small>".$nometariffa_vedi[$num_tariffe_mostra]."</small>";
 if ($dati_tariffe[$tariffa[$num_tariffe_mostra]]['moltiplica'] == "p") $per_persona[$num_tariffe_mostra] = 1;
 else $per_persona[$num_tariffe_mostra] = 0;
-} # fine if ($tariffe_mostra[$num1] == "SI")
+} # fine if (isset($tariffe_mostra[$num1]) and $tariffe_mostra[$num1] == "SI")
 } # fine for $num1
 
 $num_colonne_periodi = 0;
@@ -334,7 +337,7 @@ $lista_tutte_tariffe = substr($lista_tutte_tariffe,0,-2);
 $testo_costi_agg = "";
 for ($numca = 0 ; $numca < $dati_ca['num'] ; $numca++) {
 $idcostoagg = $dati_ca[$numca]['id'];
-if ($costi_agg_mostra[$idcostoagg] == "SI") {
+if (isset($costi_agg_mostra[$idcostoagg]) and $costi_agg_mostra[$idcostoagg] == "SI") {
 if (!empty($n_costi_agg_imposti[$idcostoagg])) $nomecosto_imposto = $n_costi_agg_imposti[$idcostoagg];
 else $nomecosto_imposto = $dati_ca[$numca]['nome'];
 $numcostoagg = "costoagg".($numca + 1);
@@ -368,7 +371,7 @@ $lista_tariffe_ass = substr($lista_tariffe_ass,0,-2);
 if ($lista_tutte_tariffe and $lista_tariffe_ass == $lista_tutte_tariffe) $testo_costi_agg .= " ($fr_obbligatorio_con $fr_tutte_le_tariffe)";
 else if ($lista_tariffe_ass) $testo_costi_agg .= " ($fr_obbligatorio_con $lista_tariffe_ass)";
 $testo_costi_agg .= ".$chiusura_tag_font</li>";
-} # fine if ($costi_agg_mostra[$idcostoagg] == "SI")
+} # fine if (isset($costi_agg_mostra[$idcostoagg]) and $costi_agg_mostra[$idcostoagg] == "SI")
 } # fine for $numca
 
 if ($testo_costi_agg) {

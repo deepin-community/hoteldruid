@@ -2,7 +2,7 @@
 
 ##################################################################################
 #    HOTELDRUID
-#    Copyright (C) 2001-2021 by Marco Maria Francesco De Santis (marco@digitaldruid.net)
+#    Copyright (C) 2001-2023 by Marco Maria Francesco De Santis (marco@digitaldruid.net)
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published by
@@ -39,7 +39,8 @@ $var_pag[11] = 'commentofoto';
 $var_pag[12] = 'numfoto';
 $var_pag[13] = 'n_commento_ita';
 $var_pag[14] = 'cancurlfoto';
-$n_var_pag = 15;
+$var_pag[15] = 'MAX_FILE_SIZE';
+$n_var_pag = 16;
 $num2 = 0;
 if (isset($_POST['num_app_modifica'])) $num2 = (int) $_POST['num_app_modifica'];
 elseif (isset($_GET['num_app_modifica'])) $num2 = (int) $_GET['num_app_modifica'];
@@ -58,6 +59,8 @@ $var_pag[$n_var_pag++] = "d_maxoccupanti$num1";
 $var_pag[$n_var_pag++] = "d_priorita$num1";
 $var_pag[$n_var_pag++] = "d_app_vicini$num1";
 $var_pag[$n_var_pag++] = "d_commento$num1";
+$var_pag[$n_var_pag++] = "nome_unita_app$num1";
+$var_pag[$n_var_pag++] = "num_unita_app$num1";
 } # fine for $num1
 $num2 = opendir("./includes/lang/");
 while ($num1 = readdir($num2)) {
@@ -95,7 +98,7 @@ else include("./includes/head.php");
 
 
 
-$idapp_contr = str_replace("&amp;","",str_replace("&quot;","",str_replace("&lt;","",str_replace("&gt;","",$idappartamenti))));
+$idapp_contr = str_replace("&amp;","",str_replace("&quot;","",str_replace("&lt;","",str_replace("&gt;","",fixstr($idappartamenti)))));
 if (strstr($idapp_contr,">") or strstr($idapp_contr,"<") or strstr($idapp_contr,"\"") or strstr($idapp_contr,"&")) $idappartamenti = htmlspecialchars($idappartamenti);
 $dest = "";
 
@@ -237,13 +240,13 @@ $id_appartamenti = esegui_query("select idappartamenti from $tableappartamenti o
 $num_appartamenti = numlin_query($id_appartamenti);
 $fileaperto = fopen(C_DATI_PATH."/selectappartamenti.php","w+");
 flock($fileaperto,2);
-fwrite($fileaperto,"<?php \necho \"\n");
+fwrite($fileaperto,"<?php \necho '\n");
 for ( $num = 0; $num < $num_appartamenti; $num = $num + 1) {
 $numapp = risul_query($id_appartamenti,$num,'idappartamenti');
-fwrite($fileaperto,"<option value=\\\"$numapp\\\">$numapp</option>
+fwrite($fileaperto,"<option value=\"$numapp\">$numapp</option>
 ");
 } # fine for $num
-fwrite($fileaperto,"\"; \n?>");
+fwrite($fileaperto,"';\n?>");
 flock($fileaperto,3);
 fclose($fileaperto);
 
@@ -308,12 +311,13 @@ $modificadescr = "";
 $commentofoto = "";
 $cancurlfoto = "";
 $aggurlfoto = "";
+if (!isset($form_tabella)) $form_tabella = "";
 
 if (!$num_app_modifica or controlla_num_pos($num_app_modifica) != "SI") $num_app_modifica = 1;
 
-unset($cambia_nome_app);
+$cambia_nome_app = null;
 for ($num1 = 0 ; $num1 < $num_app_modifica ; $num1++) {
-if (${"num_unita_app".$num1} and strcmp(${"nome_unita_app".$num1},"")) {
+if (!empty(${"num_unita_app".$num1}) and strcmp((string) ${"nome_unita_app".$num1},"")) {
 $n_nome_app_unita = ${"n_nome_app".$num1};
 $n_numc_app_unita = ${"n_numcasa".$num1};
 $n_nump_app_unita = ${"n_numpiano".$num1};
@@ -326,7 +330,7 @@ ${"n_numcasa".$num2} = $n_numc_app_unita;
 ${"n_numpiano".$num2} = $n_nump_app_unita;
 } # fine if (substr(${"idappartamenti".$num1},0,strlen(${"nome_unita_app".$num1})) == ${"nome_unita_app".$num1})
 } # fine for $num2
-} # fine if (${"num_unita_app".$num1} and strcmp(${"nome_unita_app".$num1},""))
+} # fine if (!empty(${"num_unita_app".$num1}) and strcmp((string) ${"nome_unita_app".$num1},""))
 ${"idappartamenti".$num1} = htmlspecialchars(${"idappartamenti".$num1});
 ${"idappartamenti".$num1} = aggslashdb(${"idappartamenti".$num1});
 if (@get_magic_quotes_gpc()) {
@@ -346,21 +350,21 @@ ${"n_maxoccupanti".$num1} = elimina_caratteri_slash(${"n_maxoccupanti".$num1});
 ${"n_priorita".$num1} = elimina_caratteri_slash(${"n_priorita".$num1});
 ${"n_app_vicini".$num1} = elimina_caratteri_slash(${"n_app_vicini".$num1});
 ${"n_app_vicini".$num1} = htmlspecialchars(${"n_app_vicini".$num1});
-if (controlla_num(${"n_maxoccupanti".$num1}) != "SI") unset(${"n_maxoccupanti".$num1});
-if (controlla_num(${"n_priorita".$num1}) != "SI") unset(${"n_priorita".$num1});
-${"n_commento".$num1} = htmlspecialchars(${"n_commento".$num1});
+if (controlla_num(${"n_maxoccupanti".$num1}) != "SI") ${"n_maxoccupanti".$num1} = "";
+if (controlla_num(${"n_priorita".$num1}) != "SI") ${"n_priorita".$num1} = "";
+${"n_commento".$num1} = htmlspecialchars(fixstr(${"n_commento".$num1}));
 ${"d_numcasa".$num1} = htmlspecialchars(${"d_numcasa".$num1});
 ${"d_numpiano".$num1} = htmlspecialchars(${"d_numpiano".$num1});
 ${"d_maxoccupanti".$num1} = htmlspecialchars(${"d_maxoccupanti".$num1});
 ${"d_priorita".$num1} = htmlspecialchars(${"d_priorita".$num1});
-${"d_commento".$num1} = htmlspecialchars(${"d_commento".$num1});
-if (($form_tabella and strcmp(${"idappartamenti".$num1},${"n_nome_app".$num1})) or (!$form_tabella and ${"n_nome_app".$num1})) $cambia_nome_app = "SI";
+${"d_commento".$num1} = htmlspecialchars(fixstr(${"d_commento".$num1}));
+if (strcmp(${"n_nome_app".$num1},"") and (($form_tabella and strcmp((string) ${"idappartamenti".$num1},${"n_nome_app".$num1})) or !$form_tabella)) $cambia_nome_app = "SI";
 } # fine for $num1
 
 $anni_esistenti = esegui_query("select * from $tableanni order by idanni");
 $num_anni_esistenti = numlin_query($anni_esistenti);
-unset($tabelle_lock);
-unset($altre_tab_lock);
+$tabelle_lock = array();
+$altre_tab_lock = array();
 $num_tab = 0;
 $num_altre_tab = 0;
 if ($cambia_nome_app and $modificaappartamento == "Continua") {
@@ -408,11 +412,12 @@ $n_commento = ${"n_commento".$num1};
 $n_nome_app = (string) ${"n_nome_app".$num1};
 $n_numcasa = ${"n_numcasa".$num1};
 $n_numpiano = ${"n_numpiano".$num1};
-$n_maxoccupanti = ${"n_maxoccupanti".$num1};
+$n_maxoccupanti = fixset(${"n_maxoccupanti".$num1});
 $n_priorita = ${"n_priorita".$num1};
 $n_app_vicini = ${"n_app_vicini".$num1};
 ${"d_app_vicini".$num1} = esegui_query("select app_vicini from $tableappartamenti where idappartamenti = '".aggslashdb($idappartamenti)."' ");
-if (numlin_query(${"d_app_vicini".$num1})) ${"d_app_vicini".$num1} = risul_query(${"d_app_vicini".$num1},0,'app_vicini');
+if (numlin_query(${"d_app_vicini".$num1})) ${"d_app_vicini".$num1} = (string) risul_query(${"d_app_vicini".$num1},0,'app_vicini');
+else ${"d_app_vicini".$num1} = "";
 
 if ($cambia_nome_app and $modificaappartamento == "Continua") {
 $anni_esistenti2 = esegui_query("select * from $tableanni order by idanni");
@@ -423,8 +428,8 @@ $anno_esistente = risul_query($anni_esistenti,$num2,'idanni');
 $anno_esistente2 = risul_query($anni_esistenti2,$num2,'idanni');
 if ($anno_esistente != $anno_esistente2) $modificare = "NO";
 } # fine for $num2
-if ($modificare == "NO") echo mex("<b>L'appartamento non è stato modificato</b> perchè il database è cambiato nel frattempo",'unit.php').".<br>";
-} # fine if ($n_nome_app and $modificaappartamento == "Continua")
+if (isset($modificare) and $modificare == "NO") echo mex("<b>L'appartamento non è stato modificato</b> perchè il database è cambiato nel frattempo",'unit.php').".<br>";
+} # fine if ($cambia_nome_app and $modificaappartamento == "Continua")
 
 $app_esiste = esegui_query("select * from $tableappartamenti where idappartamenti = '".aggslashdb($idappartamenti)."'");
 $num_app_esiste = numlin_query($app_esiste);
@@ -437,20 +442,24 @@ else {
 $tornare_a = $pag;
 $d_letto[$idappartamenti] = risul_query($app_esiste,0,'letto');
 } # fine else if ($num_app_esiste != 1)
-if ($n_nome_app and strcmp($n_nome_app,$idappartamenti)) {
+if (!strcmp($n_nome_app,"") and $form_tabella) {
+echo mex("L'appartamento",'unit.php')." $n_nome_app ".mex("esiste già",$pag).".<br>";
+$modificare = "NO";
+} # fine if (!strcmp($n_nome_app,"") and $form_tabella)
+if (strcmp($n_nome_app,"") and strcmp($n_nome_app,$idappartamenti)) {
 $app_esiste = esegui_query("select * from $tableappartamenti where idappartamenti = '".aggslashdb($n_nome_app)."'");
 $num_app_esiste = numlin_query($app_esiste);
 if ($num_app_esiste != 0) {
 echo mex("L'appartamento",'unit.php')." $n_nome_app ".mex("esiste già",$pag).".<br>";
 $modificare = "NO";
 } # fine if ($num_app_esiste != 0)
-} # fine if ($n_nome_app and strcmp($n_nome_app,$idappartamenti))
+} # fine if (strcmp($n_nome_app,"") and strcmp($n_nome_app,$idappartamenti))
 
 if ((string) $n_app_vicini != "") {
 $n_app_vicini_vett = explode(",",$n_app_vicini);
 for ($num2 = 0 ; $num2 < count($n_app_vicini_vett) ; $num2++) {
 $app_vic_esist = esegui_query("select idappartamenti from $tableappartamenti where idappartamenti = '".aggslashdb($n_app_vicini_vett[$num2])."' ");
-if (numlin_query($app_vic_esist) != 1 or $n_app_vicini_vett[$num2] == $idappartamenti or !strcmp($n_app_vicini_vett[$num2],$n_nome_app)) {
+if (numlin_query($app_vic_esist) != 1 or $n_app_vicini_vett[$num2] == $idappartamenti or !strcmp((string) $n_app_vicini_vett[$num2],$n_nome_app)) {
 echo mex("L'appartamento",'unit.php')." $n_app_vicini_vett[$num2] ".mex("non esiste più",$pag).".<br>";
 $modificare = "NO";
 } # fine if (numlin_query($app_vic_esist) != 1 or...
@@ -459,13 +468,13 @@ $modificare = "NO";
 } # fine for $num1
 
 
-if ($modificare != "NO") {
+if (!isset($modificare) or $modificare != "NO") {
 
 if ($modificaappartamento != "Continua") {
 echo "<form accept-charset=\"utf-8\" method=\"post\" action=\"modifica_app.php\"><div>
 <input type=\"hidden\" name=\"anno\" value=\"$anno\">
 <input type=\"hidden\" name=\"id_sessione\" value=\"$id_sessione\">
-<input type=\"hidden\" name=\"form_tabella\" value=\"$form_tabella\">
+<input type=\"hidden\" name=\"form_tabella\" value=\"".htmlspecialchars($form_tabella)."\">
 <input type=\"hidden\" name=\"num_app_modifica\" value=\"$num_app_modifica\">";
 for ($num1 = 0 ;$num1 < $num_app_modifica ; $num1++) {
 $idappartamenti = ${"idappartamenti".$num1};
@@ -475,7 +484,7 @@ $n_numpiano = ${"n_numpiano".$num1};
 $n_maxoccupanti = ${"n_maxoccupanti".$num1};
 $n_priorita = ${"n_priorita".$num1};
 $n_app_vicini = (string) ${"n_app_vicini".$num1};
-$d_app_vicini = (string) ${"d_app_vicini".$num1};
+$d_app_vicini = ${"d_app_vicini".$num1};
 $n_commento = ${"n_commento".$num1};
 if ($form_tabella) {
 $comp_nome_app = (string) ${"idappartamenti".$num1};
@@ -561,9 +570,8 @@ if ($d_letto[$idappartamenti]) $fr1 = "[1]";
 else $fr1 = "";
 $modificato = "NO";
 
-if (strcmp($n_nome_app,$comp_nome_app)) {
+if (strcmp((string) $n_nome_app,$comp_nome_app)) {
 $modificato = "SI";
-echo "$n_nome_app - $idappartamenti QUI<br>";
 esegui_query("update $tableappartamenti set idappartamenti = '".aggslashdb($n_nome_app)."' where idappartamenti = '".aggslashdb($idappartamenti)."' ");
 for ($num2 = 0 ; $num2 < $num_anni_esistenti ; $num2++) {
 $anno_cambia = risul_query($anni_esistenti,$num2,'idanni');
@@ -645,16 +653,16 @@ $id_appartamenti = esegui_query("select idappartamenti from $tableappartamenti o
 $num_appartamenti = numlin_query($id_appartamenti);
 $fileaperto = fopen(C_DATI_PATH."/selectappartamenti.php","w+");
 flock($fileaperto,2);
-fwrite($fileaperto,"<?php \necho \"\n");
+fwrite($fileaperto,"<?php \necho '\n");
 for ( $num = 0; $num < $num_appartamenti; $num = $num + 1) {
 $numapp = risul_query($id_appartamenti,$num,'idappartamenti');
-fwrite($fileaperto,"<option value=\\\"$numapp\\\">$numapp</option>
+fwrite($fileaperto,"<option value=\"$numapp\">$numapp</option>
 ");
 } # fine for $num
-fwrite($fileaperto,"\"; \n?>");
+fwrite($fileaperto,"';\n?>");
 flock($fileaperto,3);
 fclose($fileaperto);
-} # fine if (strcmp($n_nome_app,$comp_nome_app))
+} # fine if (strcmp((string) $n_nome_app,$comp_nome_app))
 
 if ($n_app_vicini != $comp_app_vicini) {
 $modificato = "SI";
@@ -721,7 +729,7 @@ if ($modificato == "SI") echo mex($fr1."L'appartamento",'unit.php')." $idapparta
 
 } # fine else if ($modificaappartamento != "Continua")
 
-} # fine if ($modificare != "NO")
+} # fine if (!isset($modificare) or $modificare != "NO")
 unlock_tabelle($tabelle_lock);
 
 if ($form_tabella) $tornare_a = "visualizza_tabelle.php";
@@ -729,8 +737,8 @@ echo "<div style=\"text-align: center;\">
 <form accept-charset=\"utf-8\" method=\"post\" action=\"$tornare_a\"><div>
 <input type=\"hidden\" name=\"anno\" value=\"$anno\">
 <input type=\"hidden\" name=\"id_sessione\" value=\"$id_sessione\">
-<input type=\"hidden\" name=\"tipo_tabella\" value=\"appartamenti\">
-<input type=\"hidden\" name=\"idappartamenti\" value=\"$idappartamenti\">";
+<input type=\"hidden\" name=\"tipo_tabella\" value=\"appartamenti\">";
+if (!$form_tabella) echo "<input type=\"hidden\" name=\"idappartamenti\" value=\"$idappartamenti\">";
 echo "<button class=\"gobk\" type=\"submit\"><div>".mex("Torna indietro",$pag)."</div></button>
 <br></div></form><br></div>";
 } # fine if (!empty($modificaappartamento))
@@ -745,26 +753,26 @@ $altre_tab_lock = array($tableappartamenti);
 $tabelle_lock = lock_tabelle($tabelle_lock,$altre_tab_lock);
 $app_esist = esegui_query("select idappartamenti from $tableappartamenti where idappartamenti = '".aggslashdb($idappartamenti)."' ");
 if (numlin_query($app_esist)) {
-if (strcmp($n_descrizione_ita,"")) {
+if (strcmp((string) $n_descrizione_ita,"")) {
 if (@get_magic_quotes_gpc()) $n_descrizione_ita = stripslashes($n_descrizione_ita);
 $n_descrizione_ita = aggslashdb(htmlspecialchars($n_descrizione_ita));
 $descr_esistente = esegui_query("select testo from $tabledescrizioni where nome = '".aggslashdb($idappartamenti)."' and tipo = 'appdescr' and lingua = 'ita' and numero = '1' ");
 if (numlin_query($descr_esistente)) esegui_query("update $tabledescrizioni set testo = '$n_descrizione_ita' where nome = '".aggslashdb($idappartamenti)."' and tipo = 'appdescr' and lingua = 'ita' and numero = '1' ");
 else esegui_query("insert into $tabledescrizioni (nome,tipo,lingua,numero,testo) values ('".aggslashdb($idappartamenti)."','appdescr','ita','1','$n_descrizione_ita') ");
-} # fine if (strcmp($n_descrizione_ita,""))
+} # fine if (strcmp((string) $n_descrizione_ita,""))
 else esegui_query("delete from $tabledescrizioni where nome = '".aggslashdb($idappartamenti)."' and tipo = 'appdescr' and lingua = 'ita' and numero = '1' ");
 $lang_dir = opendir("./includes/lang/");
 include(C_DATI_PATH."/lingua.php");
 while ($ini_lingua = readdir($lang_dir)) {
 if ($ini_lingua != "." && $ini_lingua != ".." and strlen($ini_lingua) <= 3 and preg_replace("/[a-z]/","",$ini_lingua) == "") {
 $n_descrizione = ${"n_descrizione_".$ini_lingua};
-if (strcmp($n_descrizione,"")) {
+if (strcmp((string) $n_descrizione,"")) {
 if (@get_magic_quotes_gpc()) $n_descrizione = stripslashes($n_descrizione);
 $n_descrizione = aggslashdb(htmlspecialchars($n_descrizione));
 $descr_esistente = esegui_query("select testo from $tabledescrizioni where nome = '".aggslashdb($idappartamenti)."' and tipo = 'appdescr' and lingua = '$ini_lingua' and numero = '1' ");
 if (numlin_query($descr_esistente)) esegui_query("update $tabledescrizioni set testo = '$n_descrizione' where nome = '".aggslashdb($idappartamenti)."' and tipo = 'appdescr' and lingua = '$ini_lingua' and numero = '1' ");
 else esegui_query("insert into $tabledescrizioni (nome,tipo,lingua,numero,testo) values ('".aggslashdb($idappartamenti)."','appdescr','$ini_lingua','1','$n_descrizione') ");
-} # fine if (strcmp($n_descrizione,""))
+} # fine if (strcmp((string) $n_descrizione,""))
 else esegui_query("delete from $tabledescrizioni where nome = '".aggslashdb($idappartamenti)."' and tipo = 'appdescr' and lingua = '$ini_lingua' and numero = '1' ");
 } # fine if ($file != "." && $file != ".." and...
 } # fine while ($file = readdir($lang_dig))
@@ -785,26 +793,26 @@ $tabelle_lock = array($tabledescrizioni);
 $tabelle_lock = lock_tabelle($tabelle_lock);
 $foto_esistente = esegui_query("select testo from $tabledescrizioni where nome = '".aggslashdb($idappartamenti)."' and tipo = 'appfoto' and numero = '$numfoto' ");
 if (numlin_query($foto_esistente)) {
-if (strcmp($n_commento_ita,"")) {
+if (strcmp((string) $n_commento_ita,"")) {
 if (@get_magic_quotes_gpc()) $n_commento_ita = stripslashes($n_commento_ita);
 $n_commento_ita = aggslashdb(htmlspecialchars($n_commento_ita));
 $comm_esistente = esegui_query("select testo from $tabledescrizioni where nome = '".aggslashdb($idappartamenti)."' and tipo = 'appcommfoto' and lingua = 'ita' and numero = '$numfoto' ");
 if (numlin_query($comm_esistente)) esegui_query("update $tabledescrizioni set testo = '$n_commento_ita' where nome = '".aggslashdb($idappartamenti)."' and tipo = 'appcommfoto' and lingua = 'ita' and numero = '$numfoto' ");
 else esegui_query("insert into $tabledescrizioni (nome,tipo,lingua,numero,testo) values ('".aggslashdb($idappartamenti)."','appcommfoto','ita','$numfoto','$n_commento_ita') ");
-} # fine if (strcmp($n_commento_ita,""))
+} # fine if (strcmp((string) $n_commento_ita,""))
 else esegui_query("delete from $tabledescrizioni where nome = '".aggslashdb($idappartamenti)."' and tipo = 'appcommfoto' and lingua = 'ita' and numero = '$numfoto' ");
 $lang_dir = opendir("./includes/lang/");
 include(C_DATI_PATH."/lingua.php");
 while ($ini_lingua = readdir($lang_dir)) {
 if ($ini_lingua != "." && $ini_lingua != ".." and strlen($ini_lingua) <= 3 and preg_replace("/[a-z]/","",$ini_lingua) == "") {
 $n_commento = ${"n_commento_".$ini_lingua};
-if (strcmp($n_commento,"")) {
+if (strcmp((string) $n_commento,"")) {
 if (@get_magic_quotes_gpc()) $n_commento = stripslashes($n_commento);
 $n_commento = aggslashdb(htmlspecialchars($n_commento));
 $comm_esistente = esegui_query("select testo from $tabledescrizioni where nome = '".aggslashdb($idappartamenti)."' and tipo = 'appcommfoto' and lingua = '$ini_lingua' and numero = '$numfoto' ");
 if (numlin_query($comm_esistente)) esegui_query("update $tabledescrizioni set testo = '$n_commento' where nome = '".aggslashdb($idappartamenti)."' and tipo = 'appcommfoto' and lingua = '$ini_lingua' and numero = '$numfoto' ");
 else esegui_query("insert into $tabledescrizioni (nome,tipo,lingua,numero,testo) values ('".aggslashdb($idappartamenti)."','appcommfoto','$ini_lingua','$numfoto','$n_commento') ");
-} # fine if (strcmp($n_commento,""))
+} # fine if (strcmp((string) $n_commento,""))
 else esegui_query("delete from $tabledescrizioni where nome = '".aggslashdb($idappartamenti)."' and tipo = 'appcommfoto' and lingua = '$ini_lingua' and numero = '$numfoto' ");
 } # fine if ($file != "." && $file != ".." and...
 } # fine while ($file = readdir($lang_dig))

@@ -22,6 +22,30 @@
 
 
 
+if (function_exists('mb_convert_case')) {
+function par_maius ($str,$modo="ma1mi") {
+if ($modo == "maiu") $str = mb_convert_case($str,MB_CASE_UPPER,'UTF-8');
+if ($modo == "minu") $str = mb_convert_case($str,MB_CASE_LOWER,'UTF-8');
+if ($modo == "ma1mi") $str = mb_convert_case($str,MB_CASE_TITLE,'UTF-8');
+if ($modo == "ma1or") {
+$str = explode(" ",$str);
+for ($num1 = 0 ; $num1 < count($str) ; $num1++) $str[$num1] = mb_convert_case(mb_substr($str[$num1],0,1),MB_CASE_UPPER,'UTF-8').mb_substr($str[$num1],1);
+$str = implode(" ",$str);
+} # fine if ($modo == "ma1or")
+return $str;
+} # fine function par_maius
+} # fine if (function_exists('mb_convert_case'))
+else {
+function par_maius ($str,$modo="ma1mi") {
+if ($modo == "maiu") $str = strtoupper($str);
+if ($modo == "ma1mi" or $modo == "minu") $str = strtolower($str);
+if ($modo == "ma1mi" or $modo == "ma1or") $str = ucwords($str);
+return $str;
+} # fine function par_maius
+} # fine else if (function_exists('mb_convert_case'))
+
+
+
 
 function inserisci_dati_cliente (&$cognome,&$nome,$soprannome,$titolo_cli,$sesso,$mesenascita,$giornonascita,$annonascita,&$nazionenascita,&$cittanascita,&$regionenascita,$documento,$tipodoc,$mesescaddoc,$giornoscaddoc,$annoscaddoc,&$cittadoc,&$regionedoc,&$nazionedoc,&$nazionalita,&$lingua_cli,&$nazione,&$citta,&$regione,&$via,$nomevia,$numcivico,$cap,$telefono,$telefono2,$telefono3,$fax,$email,$email2,$email_cert,$cod_fiscale,$partita_iva,$max_num_ordine,$id_utente_ins,$attiva_prefisso_clienti,$prefisso_clienti,$idclienti="",$valida="",$campi_pers_vett="") {
 global $lingua_mex,$HOSTNAME,$id_utente,$PHPR_TAB_PRE;
@@ -31,6 +55,9 @@ $tablepersonalizza = $PHPR_TAB_PRE."personalizza";
 
 if (isset($campi_pers_vett) and is_array($campi_pers_vett) and !empty($campi_pers_vett['num'])) $num_campi_pers = $campi_pers_vett['num'];
 else $num_campi_pers = 0;
+$stile_nomi = esegui_query("select valpersonalizza from $tablepersonalizza where idpersonalizza = 'stile_nomi' and idutente = '$id_utente'");
+$stile_nomi = risul_query($stile_nomi,0,'valpersonalizza');
+
 
 if ($valida != "NO") {
 if (@get_magic_quotes_gpc()) {
@@ -65,34 +92,34 @@ $partita_iva = stripslashes($partita_iva);
 for ($num1 = 0 ; $num1 < $num_campi_pers ; $num1++) $campi_pers_vett['val'][$num1] = stripslashes($campi_pers_vett['val'][$num1]);
 } # fine if (@get_magic_quotes_gpc())
 $cognome = htmlspecialchars($cognome);
-$nome = htmlspecialchars($nome);
-$soprannome = htmlspecialchars($soprannome);
-$titolo_cli = htmlspecialchars($titolo_cli);
-$documento = htmlspecialchars($documento);
-$tipodoc = htmlspecialchars($tipodoc);
-$cittadoc = htmlspecialchars($cittadoc);
-$regionedoc = htmlspecialchars($regionedoc);
-$nazionedoc = htmlspecialchars($nazionedoc);
-$cittanascita = htmlspecialchars($cittanascita);
-$regionenascita = htmlspecialchars($regionenascita);
-$nazionenascita = htmlspecialchars($nazionenascita);
-$nazionalita = htmlspecialchars($nazionalita);
-$nazione = htmlspecialchars($nazione);
-$regione = htmlspecialchars($regione);
-$citta = htmlspecialchars($citta);
-$nomevia = htmlspecialchars($nomevia);
-$numcivico = htmlspecialchars($numcivico);
-$cap = htmlspecialchars($cap);
-$telefono = htmlspecialchars($telefono);
-$telefono2 = htmlspecialchars($telefono2);
-$telefono3 = htmlspecialchars($telefono3);
-$fax = htmlspecialchars($fax);
-$email = htmlspecialchars($email);
-$email2 = htmlspecialchars($email2);
-$email_cert = htmlspecialchars($email_cert);
-$cod_fiscale = htmlspecialchars($cod_fiscale);
-$partita_iva = htmlspecialchars($partita_iva);
-for ($num1 = 0 ; $num1 < $num_campi_pers ; $num1++) $campi_pers_vett['val'][$num1] = htmlspecialchars($campi_pers_vett['val'][$num1]);
+$nome = htmlspecialchars((string) $nome);
+$soprannome = htmlspecialchars((string) $soprannome);
+$titolo_cli = htmlspecialchars((string) $titolo_cli);
+$documento = htmlspecialchars((string) $documento);
+$tipodoc = htmlspecialchars((string) $tipodoc);
+$cittadoc = htmlspecialchars((string) $cittadoc);
+$regionedoc = htmlspecialchars((string) $regionedoc);
+$nazionedoc = htmlspecialchars((string) $nazionedoc);
+$cittanascita = htmlspecialchars((string) $cittanascita);
+$regionenascita = htmlspecialchars((string) $regionenascita);
+$nazionenascita = htmlspecialchars((string) $nazionenascita);
+$nazionalita = htmlspecialchars((string) $nazionalita);
+$nazione = htmlspecialchars((string) $nazione);
+$regione = htmlspecialchars((string) $regione);
+$citta = htmlspecialchars((string) $citta);
+$nomevia = htmlspecialchars((string) $nomevia);
+$numcivico = htmlspecialchars((string) $numcivico);
+$cap = htmlspecialchars((string) $cap);
+$telefono = htmlspecialchars((string) $telefono);
+$telefono2 = htmlspecialchars((string) $telefono2);
+$telefono3 = htmlspecialchars((string) $telefono3);
+$fax = htmlspecialchars((string) $fax);
+$email = htmlspecialchars((string) $email);
+$email2 = htmlspecialchars((string) $email2);
+$email_cert = htmlspecialchars((string) $email_cert);
+$cod_fiscale = htmlspecialchars((string) $cod_fiscale);
+$partita_iva = htmlspecialchars((string) $partita_iva);
+for ($num1 = 0 ; $num1 < $num_campi_pers ; $num1++) $campi_pers_vett['val'][$num1] = htmlspecialchars((string) $campi_pers_vett['val'][$num1]);
 } # fine if ($valida != "NO")
 
 if (!$idclienti) {
@@ -103,23 +130,23 @@ else {
 $idclienti = esegui_query("select max(idclienti) from $tableclienti");
 $idclienti = risul_query($idclienti,0,0) + 1;
 } # fine else if (numlin_query($idclienti) == 0)
-$cognome_maius = trim(ucwords($cognome));
+$cognome_maius = trim(par_maius($cognome,$stile_nomi));
 if ($attiva_prefisso_clienti == "p") $cognome_maius = $prefisso_clienti.$cognome_maius;
 if ($attiva_prefisso_clienti == "s") $cognome_maius = $cognome_maius.$prefisso_clienti;
-esegui_query("insert into $tableclienti (idclienti,cognome,idclienti_compagni,datainserimento,hostinserimento,utente_inserimento) values ('$idclienti','".aggslashdb(substr($cognome_maius,0,70))."',',','$datainserimento','$HOSTNAME','$id_utente_ins')");
+esegui_query("insert into $tableclienti (idclienti,cognome,idclienti_compagni,datainserimento,hostinserimento,utente_inserimento) values ('$idclienti','".aggslashdb(par_taglia($cognome_maius,0,70))."',',','$datainserimento','$HOSTNAME','$id_utente_ins')");
 } # fine if (!$idclienti)
 elseif ($cognome) {
-$cognome_maius = trim(ucwords($cognome));
+$cognome_maius = trim(par_maius($cognome,$stile_nomi));
 if ($attiva_prefisso_clienti == "p") $cognome_maius = $prefisso_clienti.$cognome_maius;
 if ($attiva_prefisso_clienti == "s") $cognome_maius = $cognome_maius.$prefisso_clienti;
-esegui_query("update $tableclienti set cognome = '".aggslashdb(substr($cognome_maius,0,70))."' where idclienti = '$idclienti' ");
+esegui_query("update $tableclienti set cognome = '".aggslashdb(par_taglia($cognome_maius,0,70))."' where idclienti = '$idclienti' ");
 } # fine elseif ($cognome)
 if ($nome) {
-$nome_maius = trim(ucwords($nome));
-esegui_query("update $tableclienti set nome = '".aggslashdb(substr($nome_maius,0,70))."' where idclienti = '$idclienti' ");
+$nome_maius = trim(par_maius($nome,$stile_nomi));
+esegui_query("update $tableclienti set nome = '".aggslashdb(par_taglia($nome_maius,0,70))."' where idclienti = '$idclienti' ");
 } # fine if ($nome)
 if ($soprannome) {
-esegui_query("update $tableclienti set soprannome = '".aggslashdb($soprannome)."' where idclienti = '$idclienti' ");
+esegui_query("update $tableclienti set soprannome = '".aggslashdb(par_taglia($soprannome,0,70))."' where idclienti = '$idclienti' ");
 } # fine if ($soprannome)
 if ($titolo_cli) {
 $titoli_cliente = esegui_query("select valpersonalizza from $tablepersonalizza where idpersonalizza = 'titoli_cliente' and idutente = '$id_utente'");
@@ -129,7 +156,7 @@ $titoli_cliente = explode(">",$titoli_cliente);
 for ($num1 = 0 ; $num1 < count($titoli_cliente) ; $num1++) {
 $tito = explode("<",$titoli_cliente[$num1]);
 if ($titolo_cli == $tito[0]) {
-esegui_query("update $tableclienti set titolo = '".aggslashdb($titolo_cli)."' where idclienti = '$idclienti' ");
+esegui_query("update $tableclienti set titolo = '".aggslashdb(par_taglia($titolo_cli,0,30))."' where idclienti = '$idclienti' ");
 if ($tito[1] and !$sesso) $sesso = $tito[1];
 break;
 } # fine if ($titolo_cli == $opt[0])
@@ -141,114 +168,117 @@ if ($sesso != "f") $sesso = "m";
 esegui_query("update $tableclienti set sesso = '$sesso' where idclienti = '$idclienti' ");
 } # fine if ($sesso)
 if ($mesenascita and $giornonascita and strlen($annonascita) == 4) {
-if ($annonascita > 1970) $datanascita = date("Y-m-d",mktime(0,0,0,$mesenascita,$giornonascita,$annonascita));
+if ($annonascita > 1970) $datanascita = date("Y-m-d",mktime(0,0,0,(int) $mesenascita,(int) $giornonascita,(int) $annonascita));
 else {
+$mesenascita = (int) $mesenascita;
+$giornonascita = (int) $giornonascita;
+$annonascita = (int) $annonascita;
+if ($mesenascita > 12) $mesenascita = 12;
+if ($giornonascita > 31) $giornonascita = 31;
+if ($giornonascita > 30 and ($mesenascita == 4 or $mesenascita == 6 or $mesenascita == 9 or $mesenascita == 11)) $giornonascita = 30;
+if ($giornonascita > 28 and $mesenascita == 2) {
+if ($annonascita == 1968 or $annonascita == 1964 or $annonascita == 1960 or $annonascita == 1956 or $annonascita == 1952 or $annonascita == 1948 or $annonascita == 1944 or $annonascita == 1940 or $annonascita == 1936 or $annonascita == 1932) $giornonascita = 29;
+else $giornonascita = 28;
+} # fine if ($giornonascita > 28 and $mesenascita == 2)
 if (strlen($mesenascita) < 2) $mesenascita = "0".$mesenascita;
 if (strlen($giornonascita) < 2) $giornonascita = "0".$giornonascita;
+while (strlen($annonascita) < 4) $annonascita = "1".$annonascita;
 $datanascita = $annonascita."-".$mesenascita."-".$giornonascita;
 } # fine else if ($annonascita > 1970)
 $datanascita = aggslashdb($datanascita);
 esegui_query("update $tableclienti set datanascita = '$datanascita' where idclienti = '$idclienti' ");
 } # fine if ($mesenascita and ...
 if ($nazionenascita) {
-$nazionenascita_maius = trim(ucwords($nazionenascita));
-$nazionenascita_maius = aggslashdb($nazionenascita_maius);
-esegui_query("update $tableclienti set nazionenascita = '$nazionenascita_maius' where idclienti = '$idclienti' ");
+$nazionenascita_maius = trim(par_maius($nazionenascita,$stile_nomi));
+esegui_query("update $tableclienti set nazionenascita = '".aggslashdb(par_taglia($nazionenascita_maius,0,70))."' where idclienti = '$idclienti' ");
 } # fine if ($nazionenascita)
 if ($cittanascita) {
-$cittanascita_maius = trim(ucwords($cittanascita));
-$cittanascita_maius = aggslashdb($cittanascita_maius);
-esegui_query("update $tableclienti set cittanascita = '$cittanascita_maius' where idclienti = '$idclienti' ");
+$cittanascita_maius = trim(par_maius($cittanascita,$stile_nomi));
+esegui_query("update $tableclienti set cittanascita = '".aggslashdb(par_taglia($cittanascita_maius,0,70))."' where idclienti = '$idclienti' ");
 } # fine if ($cittanascita)
 if ($regionenascita) {
-$regionenascita_maius = trim(ucwords($regionenascita));
-$regionenascita_maius = aggslashdb($regionenascita_maius);
-esegui_query("update $tableclienti set regionenascita = '$regionenascita_maius' where idclienti = '$idclienti' ");
+$regionenascita_maius = trim(par_maius($regionenascita,$stile_nomi));
+esegui_query("update $tableclienti set regionenascita = '".aggslashdb(par_taglia($regionenascita_maius,0,70))."' where idclienti = '$idclienti' ");
 } # fine if ($regionenascita)
 if ($documento) {
-if ($tipodoc) esegui_query("update $tableclienti set tipodoc = '".aggslashdb($tipodoc)."' where idclienti = '$idclienti' ");
-$documento = aggslashdb($documento);
-esegui_query("update $tableclienti set documento = '$documento' where idclienti = '$idclienti' ");
+if ($tipodoc) esegui_query("update $tableclienti set tipodoc = '".aggslashdb(par_taglia($tipodoc,0,70))."' where idclienti = '$idclienti' ");
+esegui_query("update $tableclienti set documento = '".aggslashdb(par_taglia($documento,0,70))."' where idclienti = '$idclienti' ");
 } # fine if ($documento)
 if ($mesescaddoc and $giornoscaddoc and $annoscaddoc) {
-$datascaddoc = date("Y-m-d",mktime(0,0,0,$mesescaddoc,$giornoscaddoc,$annoscaddoc));
+$datascaddoc = date("Y-m-d",mktime(0,0,0,(int) $mesescaddoc,(int) $giornoscaddoc,(int) $annoscaddoc));
 $datascaddoc = aggslashdb($datascaddoc);
 esegui_query("update $tableclienti set scadenzadoc = '$datascaddoc' where idclienti = '$idclienti' ");
 } # fine if ($mesescaddoc and ...
 if ($nazionedoc) {
-$nazionedoc_maius = trim(ucwords($nazionedoc));
-$nazionedoc_maius = aggslashdb($nazionedoc_maius);
-esegui_query("update $tableclienti set nazionedoc = '$nazionedoc_maius' where idclienti = '$idclienti' ");
+$nazionedoc_maius = trim(par_maius($nazionedoc,$stile_nomi));
+esegui_query("update $tableclienti set nazionedoc = '".aggslashdb(par_taglia($nazionedoc_maius,0,70))."' where idclienti = '$idclienti' ");
 } # fine if ($nazionedoc)
 if ($cittadoc) {
-$cittadoc_maius = trim(ucwords($cittadoc));
-$cittadoc_maius = aggslashdb($cittadoc_maius);
-esegui_query("update $tableclienti set cittadoc = '$cittadoc_maius' where idclienti = '$idclienti' ");
+$cittadoc_maius = trim(par_maius($cittadoc,$stile_nomi));
+esegui_query("update $tableclienti set cittadoc = '".aggslashdb(par_taglia($cittadoc_maius,0,70))."' where idclienti = '$idclienti' ");
 } # fine if ($cittadoc)
 if ($regionedoc) {
-$regionedoc_maius = trim(ucwords($regionedoc));
-$regionedoc_maius = aggslashdb($regionedoc_maius);
-esegui_query("update $tableclienti set regionedoc = '$regionedoc_maius' where idclienti = '$idclienti' ");
+$regionedoc_maius = trim(par_maius($regionedoc,$stile_nomi));
+esegui_query("update $tableclienti set regionedoc = '".aggslashdb(par_taglia($regionedoc_maius,0,70))."' where idclienti = '$idclienti' ");
 } # fine if ($regionedoc)
 if ($nazionalita) {
-$nazionalita_maius = trim(ucwords($nazionalita));
-$nazionalita_maius = aggslashdb($nazionalita_maius);
-esegui_query("update $tableclienti set nazionalita = '$nazionalita_maius' where idclienti = '$idclienti' ");
+$nazionalita_maius = trim(par_maius($nazionalita,$stile_nomi));
+esegui_query("update $tableclienti set nazionalita = '".aggslashdb(par_taglia($nazionalita_maius,0,70))."' where idclienti = '$idclienti' ");
 } # fine if ($nazionalita)
 if ($lingua_cli) {
 if (preg_replace("/[a-z]{2,3}/","",$lingua_cli) == "") {
 if ($lingua_cli == $lingua_mex or $lingua_cli == "ita" or @is_dir("./includes/lang/$lingua_cli")) {
-esegui_query("update $tableclienti set lingua = '".aggslashdb($lingua_cli)."' where idclienti = '$idclienti' ");
+esegui_query("update $tableclienti set lingua = '".aggslashdb(par_taglia($lingua_cli,0,14))."' where idclienti = '$idclienti' ");
 } # fine if ($lingua == $lingua_mex or $lingua_cli == "ita" or...
 else $lingua_cli = "";
 } # fine if (preg_replace("/[a-z]{2,3}/","",$lingua_cli) == "")
 else $lingua_cli = "";
 } # fine if ($lingua_cli)
 if ($nazione) {
-$nazione_maius = trim(ucwords($nazione));
-esegui_query("update $tableclienti set nazione = '".aggslashdb(substr($nazione_maius,0,70))."' where idclienti = '$idclienti' ");
+$nazione_maius = trim(par_maius($nazione,$stile_nomi));
+esegui_query("update $tableclienti set nazione = '".aggslashdb(par_taglia($nazione_maius,0,70))."' where idclienti = '$idclienti' ");
 } # fine if ($nazione)
 if ($citta) {
-$citta_maius = trim(ucwords($citta));
-esegui_query("update $tableclienti set citta = '".aggslashdb(substr($citta_maius,0,70))."' where idclienti = '$idclienti' ");
+$citta_maius = trim(par_maius($citta,$stile_nomi));
+esegui_query("update $tableclienti set citta = '".aggslashdb(par_taglia($citta_maius,0,70))."' where idclienti = '$idclienti' ");
 } # fine if ($citta)
 if ($regione) {
-$regione_maius = trim(ucwords($regione));
-esegui_query("update $tableclienti set regione = '".aggslashdb(substr($regione_maius,0,70))."' where idclienti = '$idclienti' ");
+$regione_maius = trim(par_maius($regione,$stile_nomi));
+esegui_query("update $tableclienti set regione = '".aggslashdb(par_taglia($regione_maius,0,70))."' where idclienti = '$idclienti' ");
 } # fine if ($regione)
 if ($nomevia) {
-if (strcmp($via,"")) {
+if (strcmp((string) $via,"")) {
 if ($lingua_mex != "ita") include("./includes/lang/$lingua_mex/ordine_frasi.php");
-if ($ordine_strada == 2) $via = $nomevia." ".$via;
+if (isset($ordine_strada) and $ordine_strada == 2) $via = $nomevia." ".$via;
 else $via = $via." ".$nomevia;
-} # fine if (strcmp($via,""))
+} # fine if (strcmp((string) $via,""))
 else $via = $nomevia;
-$via_maius = trim(ucwords($via));
-esegui_query("update $tableclienti set via = '".aggslashdb(substr($via_maius,0,70))."' where idclienti = '$idclienti' ");
+$via_maius = trim(par_maius($via,$stile_nomi));
+esegui_query("update $tableclienti set via = '".aggslashdb(par_taglia($via_maius,0,70))."' where idclienti = '$idclienti' ");
 } # fine if ($nomevia)
-if ($numcivico) esegui_query("update $tableclienti set numcivico = '".aggslashdb(substr($numcivico,0,30))."' where idclienti = '$idclienti' ");
-if ($cap) esegui_query("update $tableclienti set cap = '".aggslashdb(substr($cap,0,30))."' where idclienti = '$idclienti' ");
-if ($telefono) esegui_query("update $tableclienti set telefono = '".aggslashdb(substr($telefono,0,50))."' where idclienti = '$idclienti' ");
-if ($telefono2) esegui_query("update $tableclienti set telefono2 = '".aggslashdb(substr($telefono2,0,50))."' where idclienti = '$idclienti' ");
-if ($telefono3) esegui_query("update $tableclienti set telefono3 = '".aggslashdb(substr($telefono3,0,50))."' where idclienti = '$idclienti' ");
-if ($fax) esegui_query("update $tableclienti set fax = '".aggslashdb(substr($fax,0,50))."' where idclienti = '$idclienti' ");
+if ($numcivico) esegui_query("update $tableclienti set numcivico = '".aggslashdb(par_taglia($numcivico,0,30))."' where idclienti = '$idclienti' ");
+if ($cap) esegui_query("update $tableclienti set cap = '".aggslashdb(par_taglia($cap,0,30))."' where idclienti = '$idclienti' ");
+if ($telefono) esegui_query("update $tableclienti set telefono = '".aggslashdb(par_taglia($telefono,0,50))."' where idclienti = '$idclienti' ");
+if ($telefono2) esegui_query("update $tableclienti set telefono2 = '".aggslashdb(par_taglia($telefono2,0,50))."' where idclienti = '$idclienti' ");
+if ($telefono3) esegui_query("update $tableclienti set telefono3 = '".aggslashdb(par_taglia($telefono3,0,50))."' where idclienti = '$idclienti' ");
+if ($fax) esegui_query("update $tableclienti set fax = '".aggslashdb(par_taglia($fax,0,50))."' where idclienti = '$idclienti' ");
 $email = aggslashdb($email);
 if ($email) esegui_query("update $tableclienti set email = '$email' where idclienti = '$idclienti' ");
 $email2 = aggslashdb($email2);
 if ($email2) esegui_query("update $tableclienti set email2 = '$email2' where idclienti = '$idclienti' ");
 $email_cert = aggslashdb($email_cert);
 if ($email_cert) esegui_query("update $tableclienti set email3 = '$email_cert' where idclienti = '$idclienti' ");
-$cod_fiscale = aggslashdb($cod_fiscale);
+$cod_fiscale = aggslashdb(par_taglia($cod_fiscale,0,50));
 if ($cod_fiscale) esegui_query("update $tableclienti set cod_fiscale = '$cod_fiscale' where idclienti = '$idclienti' ");
-$partita_iva = aggslashdb($partita_iva);
+$partita_iva = aggslashdb(par_taglia($partita_iva,0,50));
 if ($partita_iva) esegui_query("update $tableclienti set partita_iva = '$partita_iva' where idclienti = '$idclienti' ");
 if ($max_num_ordine) esegui_query("update $tableclienti set max_num_ordine = '".aggslashdb($max_num_ordine)."' where idclienti = '$idclienti' ");
 
 for ($num1 = 0 ; $num1 < $num_campi_pers ; $num1++) {
-if (strcmp($campi_pers_vett['val'][$num1],"")) {
+if (strcmp((string) $campi_pers_vett['val'][$num1],"")) {
 $datainserimento = date("Y-m-d H:i:s",(time() + (C_DIFF_ORE * 3600)));
 esegui_query("insert into $tablerelclienti (idclienti,numero,tipo,testo1,testo2,testo3,datainserimento,hostinserimento,utente_inserimento) values ('$idclienti','1','campo_pers','".$campi_pers_vett[$num1]."','".$campi_pers_vett['tipo'][$num1]."','".aggslashdb($campi_pers_vett['val'][$num1])."','$datainserimento','$HOSTNAME','$id_utente_ins') ");
-} # fine if (strcmp($campi_pers_vett['val'][$num1],""))
+} # fine if (strcmp((string) $campi_pers_vett['val'][$num1],""))
 } # fine for $num1
 
 return $idclienti;
@@ -526,7 +556,7 @@ $liste_relutente[$id_sup_sel][$nomelista] .= "<option value=\"$opzione\">$opzion
 $liste_relutente[$id_sup_sel][$nomelista] .= "</select>";
 } # fine else if (!$num_lista_utente)
 } # fine if (empty($liste_relutente[$id_sup_sel][$nomelista]))
-$lista_return = fixset($liste_relutente[$id_sup_sel][$nomelista]);
+$lista_return = fixstr($liste_relutente[$id_sup_sel][$nomelista]);
 if ($sel) {
 if (substr($lista_return,0,7) == "<select") $lista_return = str_replace("<option value=\"$sel\">","<option value=\"$sel\" selected>",$lista_return);
 else $lista_return = str_replace(" name=\"\""," name=\"\" value=\"$sel\"",$lista_return);

@@ -2,7 +2,7 @@
 
 ##################################################################################
 #    HOTELDRUID
-#    Copyright (C) 2001-2021 by Marco Maria Francesco De Santis (marco@digitaldruid.net)
+#    Copyright (C) 2001-2023 by Marco Maria Francesco De Santis (marco@digitaldruid.net)
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published by
@@ -30,10 +30,32 @@ $var_pag[2] = 'modifica';
 $var_pag[3] = 'tipo_tabella';
 $n_var_pag = 4;
 $num2 = 0;
-if (isset($_POST['id_prenota'])) $num2 = (int) $_POST['id_prenota'];
-elseif (isset($_GET['id_prenota'])) $num2 = (int) $_GET['id_prenota'];
+if (isset($_POST['id_prenota'])) $num2 = $_POST['id_prenota'];
+elseif (isset($_GET['id_prenota'])) $num2 = $_GET['id_prenota'];
 if ($num2) {
+$num7 = explode(",",$num2);
+$num8 = count($num7);
+for ($num6 = 0 ; $num6 < $num8 ; $num6++) {
+$num2 = (int) $num7[$num6];
 $var_pag[$n_var_pag++] = "num_ospiti_inviati$num2";
+$var_pag[$n_var_pag++] = "principale$num2";
+$var_pag[$n_var_pag++] = "nazione$num2"."_1";
+$var_pag[$n_var_pag++] = "regione$num2"."_1";
+$var_pag[$n_var_pag++] = "citta$num2"."_1";
+$var_pag[$n_var_pag++] = "documento$num2"."_1";
+$var_pag[$n_var_pag++] = "tipodoc$num2"."_1";
+$var_pag[$n_var_pag++] = "giornoscaddoc$num2"."_1";
+$var_pag[$n_var_pag++] = "mesescaddoc$num2"."_1";
+$var_pag[$n_var_pag++] = "annoscaddoc$num2"."_1";
+$var_pag[$n_var_pag++] = "nazionedoc$num2"."_1";
+$var_pag[$n_var_pag++] = "regionedoc$num2"."_1";
+$var_pag[$n_var_pag++] = "cittadoc$num2"."_1";
+$var_pag[$n_var_pag++] = "id_osp_num$num2"."_0";
+$var_pag[$n_var_pag++] = "num_altri_ospiti_passa$num2";
+$num4 = 0;
+if (isset($_POST["id_osp_num$num2"."_0"])) $num4 = (int) $_POST["id_osp_num$num2"."_0"];
+elseif (isset($_GET["id_osp_num$num2"."_0"])) $num4 = (int) $_GET["id_osp_num$num2"."_0"];
+if ($num4) $var_pag[$n_var_pag++] = "cliente_ospite$num2"."_$num4";
 $num3 = 0;
 if (isset($_POST["num_ospiti_inviati$num2"])) $num3 = (int) $_POST["num_ospiti_inviati$num2"];
 elseif (isset($_GET["num_ospiti_inviati$num2"])) $num3 = (int) $_GET["num_ospiti_inviati$num2"];
@@ -59,6 +81,17 @@ $var_pag[$n_var_pag++] = "ospite$num2"."_$num4";
 $var_pag[$n_var_pag++] = "parentela_$num2"."_$num4";
 } # fine if ($num4)
 } # fine for $num1
+$num3 = 0;
+if (isset($_POST["num_altri_ospiti_passa$num2"])) $num3 = (int) $_POST["num_altri_ospiti_passa$num2"];
+elseif (isset($_GET["num_altri_ospiti_passa$num2"])) $num3 = (int) $_GET["num_altri_ospiti_passa$num2"];
+for ($num1 = 0 ; $num1 < $num3 ; $num1++) {
+$var_pag[$n_var_pag++] = "id_altro_osp_num$num2"."_$num1";
+$num4 = 0;
+if (isset($_POST["id_altro_osp_num$num2"."_$num1"])) $num4 = (int) $_POST["id_altro_osp_num$num2"."_$num1"];
+elseif (isset($_GET["id_altro_osp_num$num2"."_$num1"])) $num4 = (int) $_GET["id_altro_osp_num$num2"."_$num1"];
+if ($num4) $var_pag[$n_var_pag++] = "altro_ospite$num2"."_$num4";
+} # fine for $num1
+} # fine for $num6
 } # fine if ($num2)
 
 include("./costanti.php");
@@ -153,6 +186,7 @@ $inserimento_nuovi_clienti = "SI";
 $modifica_clienti = "SI";
 $vedi_clienti = "SI";
 $attiva_prefisso_clienti = "n";
+$prefisso_clienti = "";
 $priv_vedi_tab_prenotazioni = "s";
 $attiva_contratti_consentiti = "n";
 $priv_mod_prenotazioni = "s";
@@ -198,7 +232,7 @@ $adesso = date("YmdHis",(time() + (C_DIFF_ORE * 3600)));
 $data_ins = esegui_query("select datainserimento from $tableprenota where idprenota = '$id_prenota'");
 if (numlin_query($data_ins) == 1) $data_ins = risul_query($data_ins,0,'datainserimento');
 else $data_ins = "1971-01-01 00:00:00";
-$limite = date("YmdHis",mktime((substr($data_ins,11,2) + $priv_mod_prenota_ore),substr($data_ins,14,2),substr($data_ins,17,2),substr($data_ins,5,2),substr($data_ins,8,2),substr($data_ins,0,4)));
+$limite = date("YmdHis",mktime((substr($data_ins,11,2) + (int) $priv_mod_prenota_ore),substr($data_ins,14,2),substr($data_ins,17,2),substr($data_ins,5,2),substr($data_ins,8,2),substr($data_ins,0,4)));
 if ($adesso > $limite) $priv_mod_prenotazioni = "n";
 } # fine if ($priv_mod_prenota_ore != "000")
 } # fine for $num_idpr
@@ -238,7 +272,7 @@ unset($num_persone_tot_idpr);
 unset($app_letto_idpr);
 for ($num_idpr = 0 ; $num_idpr < $num_id_prenota ; $num_idpr++) {
 $id_prenota = $id_prenota_idpr[$num_idpr];
-unset($num_letti_agg);
+$num_letti_agg = array('max' => 0);
 $d_id_data_inizio = risul_query($dati_prenota[$id_prenota],0,'iddatainizio');
 $d_id_data_fine = risul_query($dati_prenota[$id_prenota],0,'iddatafine');
 $d_num_persone = risul_query($dati_prenota[$id_prenota],0,'num_persone');
@@ -266,7 +300,7 @@ $continua = 1;
 for ($num_idpr = 0 ; $num_idpr < $num_id_prenota ; $num_idpr++) {
 $id_prenota = $id_prenota_idpr[$num_idpr];
 $num_ospiti_inviati = ${"num_ospiti_inviati".$id_prenota};
-if (!strcmp($num_ospiti_inviati,"") or controlla_num_pos($num_ospiti_inviati) == "NO") $continua = 0;
+if (!strcmp((string) $num_ospiti_inviati,"") or controlla_num_pos($num_ospiti_inviati) == "NO") $continua = 0;
 } # fine for $num_idpr
 
 if ($continua) {
@@ -294,22 +328,22 @@ $lista_ospiti = array('lista' => null);
 $presente_id = array();
 $idclienti_compagni = "";
 $num_ospiti = 0;
-if (${"cliente_ospite".$id_prenota."_".$idclienti} == "SI") {
+if (isset(${"cliente_ospite".$id_prenota."_".$idclienti}) and ${"cliente_ospite".$id_prenota."_".$idclienti} == "SI") {
 $num_ospiti++;
 $lista_ospiti[$num_ospiti] = $idclienti;
 $lista_ospiti['lista'] .= $idclienti.",";
 $presente_id[$idclienti] = "SI";
 $idclienti_compagni .= substr($compagni_cliente,1);
 $principale = $idclienti;
-} # fine if (${"cliente_ospite".$id_prenota."_".$idclienti} == "SI")
-else if (${"id_osp_num".$id_prenota."_1"} == $idclienti) esegui_query("delete from $tablerclientiprenota where idprenota = '$id_prenota' and idclienti = '$idclienti' ");
+} # fine if (isset(${"cliente_ospite".$id_prenota."_".$idclienti}) and ${"cliente_ospite".$id_prenota."_".$idclienti} == "SI")
+elseif (isset(${"id_osp_num".$id_prenota."_1"}) and ${"id_osp_num".$id_prenota."_1"} == $idclienti) esegui_query("delete from $tablerclientiprenota where idprenota = '$id_prenota' and idclienti = '$idclienti' ");
 
 $ospiti = esegui_query("select idclienti,num_ordine,parentela from $tablerclientiprenota where idprenota = '$id_prenota' order by num_ordine ");
 $d_num_ospiti = numlin_query($ospiti);
 for ($num1 = 0 ; $num1 < $d_num_ospiti ; $num1++) $osp_presente[risul_query($ospiti,$num1,'idclienti')] = ($num1 + 1);
 
 if ($principale != $idclienti) {
-if ($osp_presente[$principale] and ${"ospite".$id_prenota."_".$principale} == "SI") {
+if (!empty($osp_presente[$principale]) and ${"ospite".$id_prenota."_".$principale} == "SI") {
 if ($app_letto_idpr[$num_idpr] and $num_ospiti > 0) $mess_letto = 1;
 else {
 $num_ospiti++;
@@ -317,20 +351,20 @@ $lista_ospiti[$num_ospiti] = $principale;
 $lista_ospiti['lista'] .= $principale.",";
 $presente_id[$principale] = "SI";
 } # fine else if ($app_letto_idpr[$num_idpr] and $num_ospiti > 0)
-} # fine if ($osp_presente[$principale] and ${"ospite".$id_prenota."_".$principale} == "SI")
+} # fine if (!empty($osp_presente[$principale]) and ${"ospite".$id_prenota."_".$principale} == "SI")
 else $principale = "";
 } # fine if ($principale != $idclienti)
 
 unset($n_parentela);
-unset($lista_parentela_cambiata);
+$lista_parentela_cambiata = "";
 for ($num1 = 1 ; $num1 <= $num_ospiti_inviati ; $num1++) {
 $id_clienti_osp = aggslashdb(fixset(${"id_osp_num".$id_prenota."_".$num1}));
 if ($id_clienti_osp and $id_clienti_osp != $principale) {
-if ($osp_presente[$id_clienti_osp]) {
+if (!empty($osp_presente[$id_clienti_osp])) {
 $dati_ospite = esegui_query("select idclienti_compagni from $tableclienti where idclienti = '$id_clienti_osp' ");
 $idclienti_compagni .= substr(risul_query($dati_ospite,0,'idclienti_compagni'),1);
 $canc_ospite = 0;
-if (${"ospite".$id_prenota."_".$id_clienti_osp} == "SI") {
+if (isset(${"ospite".$id_prenota."_".$id_clienti_osp}) and ${"ospite".$id_prenota."_".$id_clienti_osp} == "SI") {
 if ($app_letto_idpr[$num_idpr] and $num_ospiti > 0) {
 $mess_letto = 1;
 $canc_ospite = 1;
@@ -340,7 +374,7 @@ $num_ospiti++;
 $lista_ospiti[$num_ospiti] = $id_clienti_osp;
 $lista_ospiti['lista'] .= $id_clienti_osp.",";
 $presente_id[$id_clienti_osp] = "SI";
-$parentela = ${"parentela_".$id_prenota."_".$id_clienti_osp};
+$parentela = fixstr(${"parentela_".$id_prenota."_".$id_clienti_osp});
 if (@get_magic_quotes_gpc()) $parentela = stripslashes($parentela);
 $parentela = htmlspecialchars($parentela);
 $d_parentela = risul_query($ospiti,($osp_presente[$id_clienti_osp] - 1),'parentela');
@@ -349,48 +383,48 @@ esegui_query("update $tablerclientiprenota set parentela = '".aggslashdb($parent
 $lista_parentela_cambiata .= " and idclienti != '$id_clienti_osp'";
 } # fine if ($parentela != $d_parentela)
 } # fine else if ($app_letto_idpr[$num_idpr] and $num_ospiti > 0)
-} # fine if (${"ospite".$id_prenota."_".$id_clienti_osp} == "SI")
+} # fine if (isset(${"ospite".$id_prenota."_".$id_clienti_osp}) and ${"ospite".$id_prenota."_".$id_clienti_osp} == "SI")
 else $canc_ospite = 1;
 if ($canc_ospite) esegui_query("delete from $tablerclientiprenota where idprenota = '$id_prenota' and idclienti = '$id_clienti_osp' ");
-} # fine if ($osp_presente[$id_clienti_osp])
+} # fine if (!empty($osp_presente[$id_clienti_osp]))
 } # fine if ($id_clienti_osp and...
 if (!$id_clienti_osp and ${"cognome".$id_prenota."_".$num1} and $inserimento_nuovi_clienti == "SI") {
 if ($app_letto_idpr[$num_idpr] and $num_ospiti > 0) $mess_letto = 1;
 else {
-$cognome_aux = ${"cognome".$id_prenota."_".$num1};
-$nome_aux = ${"nome".$id_prenota."_".$num1};
-$titolo_cli_aux = ${"titolo_cli".$id_prenota."_".$num1};
-$sesso_aux = ${"sesso".$id_prenota."_".$num1};
-$mesenascita_aux = ${"mesenascita".$id_prenota."_".$num1};
-$giornonascita_aux = ${"giornonascita".$id_prenota."_".$num1};
-$annonascita_aux = ${"annonascita".$id_prenota."_".$num1};
-$nazionenascita_aux = ${"nazionenascita".$id_prenota."_".$num1};
-$cittanascita_aux = ${"cittanascita".$id_prenota."_".$num1};
-$regionenascita_aux = ${"regionenascita".$id_prenota."_".$num1};
-$documento_aux = ${"documento".$id_prenota."_".$num1};
-$tipodoc_aux = ${"tipodoc".$id_prenota."_".$num1};
-$mesescaddoc_aux = ${"mesescaddoc".$id_prenota."_".$num1};
-$giornoscaddoc_aux = ${"giornoscaddoc".$id_prenota."_".$num1};
-$annoscaddoc_aux = ${"annoscaddoc".$id_prenota."_".$num1};
-$cittadoc_aux = ${"cittadoc".$id_prenota."_".$num1};
-$regionedoc_aux = ${"regionedoc".$id_prenota."_".$num1};
-$nazionedoc_aux = ${"nazionedoc".$id_prenota."_".$num1};
-$nazionalita_aux = ${"nazionalita".$id_prenota."_".$num1};
-$lingua_cli_aux = ${"lingua_cli".$id_prenota."_".$num1};
-$nazione_aux = ${"nazione".$id_prenota."_".$num1};
-$citta_aux = ${"citta".$id_prenota."_".$num1};
-$regione_aux = ${"regione".$id_prenota."_".$num1};
-$via_aux = ${"via".$id_prenota."_".$num1};
-$nomevia_aux = ${"nomevia".$id_prenota."_".$num1};
-$numcivico_aux = ${"numcivico".$id_prenota."_".$num1};
-$cap_aux = ${"cap".$id_prenota."_".$num1};
-$telefono__aux = ${"telefono_".$id_prenota."_".$num1};
-$telefono2__aux = ${"telefono2_".$id_prenota."_".$num1};
-$telefono3__aux = ${"telefono3_".$id_prenota."_".$num1};
-$fax_aux = ${"fax".$id_prenota."_".$num1};
-$email_aux = ${"email".$id_prenota."_".$num1};
-$email2_aux = ${"email2".$id_prenota."_".$num1};
-$email_cert_aux = ${"email_cert".$id_prenota."_".$num1};
+$cognome_aux = fixset(${"cognome".$id_prenota."_".$num1});
+$nome_aux = fixset(${"nome".$id_prenota."_".$num1});
+$titolo_cli_aux = fixset(${"titolo_cli".$id_prenota."_".$num1});
+$sesso_aux = fixset(${"sesso".$id_prenota."_".$num1});
+$mesenascita_aux = fixset(${"mesenascita".$id_prenota."_".$num1});
+$giornonascita_aux = fixset(${"giornonascita".$id_prenota."_".$num1});
+$annonascita_aux = fixset(${"annonascita".$id_prenota."_".$num1});
+$nazionenascita_aux = fixset(${"nazionenascita".$id_prenota."_".$num1});
+$cittanascita_aux = fixset(${"cittanascita".$id_prenota."_".$num1});
+$regionenascita_aux = fixset(${"regionenascita".$id_prenota."_".$num1});
+$documento_aux = fixset(${"documento".$id_prenota."_".$num1});
+$tipodoc_aux = fixset(${"tipodoc".$id_prenota."_".$num1});
+$mesescaddoc_aux = fixset(${"mesescaddoc".$id_prenota."_".$num1});
+$giornoscaddoc_aux = fixset(${"giornoscaddoc".$id_prenota."_".$num1});
+$annoscaddoc_aux = fixset(${"annoscaddoc".$id_prenota."_".$num1});
+$cittadoc_aux = fixset(${"cittadoc".$id_prenota."_".$num1});
+$regionedoc_aux = fixset(${"regionedoc".$id_prenota."_".$num1});
+$nazionedoc_aux = fixset(${"nazionedoc".$id_prenota."_".$num1});
+$nazionalita_aux = fixset(${"nazionalita".$id_prenota."_".$num1});
+$lingua_cli_aux = fixset(${"lingua_cli".$id_prenota."_".$num1});
+$nazione_aux = fixset(${"nazione".$id_prenota."_".$num1});
+$citta_aux = fixset(${"citta".$id_prenota."_".$num1});
+$regione_aux = fixset(${"regione".$id_prenota."_".$num1});
+$via_aux = fixset(${"via".$id_prenota."_".$num1});
+$nomevia_aux = fixset(${"nomevia".$id_prenota."_".$num1});
+$numcivico_aux = fixset(${"numcivico".$id_prenota."_".$num1});
+$cap_aux = fixset(${"cap".$id_prenota."_".$num1});
+$telefono__aux = fixset(${"telefono_".$id_prenota."_".$num1});
+$telefono2__aux = fixset(${"telefono2_".$id_prenota."_".$num1});
+$telefono3__aux = fixset(${"telefono3_".$id_prenota."_".$num1});
+$fax_aux = fixset(${"fax".$id_prenota."_".$num1});
+$email_aux = fixset(${"email".$id_prenota."_".$num1});
+$email2_aux = fixset(${"email2".$id_prenota."_".$num1});
+$email_cert_aux = fixset(${"email_cert".$id_prenota."_".$num1});
 $id_clienti_ins = inserisci_dati_cliente($cognome_aux,$nome_aux,"",$titolo_cli_aux,$sesso_aux,$mesenascita_aux,$giornonascita_aux,$annonascita_aux,$nazionenascita_aux,$cittanascita_aux,$regionenascita_aux,$documento_aux,$tipodoc_aux,$mesescaddoc_aux,$giornoscaddoc_aux,$annoscaddoc_aux,$cittadoc_aux,$regionedoc_aux,$nazionedoc_aux,$nazionalita_aux,$lingua_cli_aux,$nazione_aux,$citta_aux,$regione_aux,$via_aux,$nomevia_aux,$numcivico_aux,$cap_aux,$telefono__aux,$telefono2__aux,$telefono3__aux,$fax_aux,$email_aux,$email2_aux,$email_cert_aux,"","",($num_ospiti_inviati + 1),$id_utente_ins,$attiva_prefisso_clienti,$prefisso_clienti);
 $num_ospiti++;
 $lista_ospiti[$num_ospiti] = $id_clienti_ins;
@@ -419,22 +453,22 @@ $id_clienti_osp = $lista_ospiti[$num1];
 if ($id_clienti_osp == $idclienti) $n_num_ordine = 1;
 else $n_num_ordine = $max_num_ordine;
 $max_num_ordine++;
-if (!$osp_presente[$id_clienti_osp]) {
+if (empty($osp_presente[$id_clienti_osp])) {
 $datainserimento = date("Y-m-d H:i:s",(time() + (C_DIFF_ORE * 3600)));
 if ($n_num_ordine > 2) {
 if (@get_magic_quotes_gpc()) $n_parentela[$num1] = stripslashes($n_parentela[$num1]);
-$parentela = htmlspecialchars($n_parentela[$num1]);
+$parentela = htmlspecialchars(fixstr($n_parentela[$num1]));
 } # fine if ($n_num_ordine > 2)
 else $parentela = "";
 esegui_query("insert into $tablerclientiprenota (idprenota,idclienti,num_ordine,parentela,datainserimento,hostinserimento,utente_inserimento) values ('$id_prenota','$id_clienti_osp','$n_num_ordine','$parentela','$datainserimento','$HOSTNAME','$id_utente_ins') ");
-} # fine if (!$osp_presente[$id_clienti_osp])
+} # fine if (emtpy($osp_presente[$id_clienti_osp]))
 else {
 $num_ordine = risul_query($ospiti,($osp_presente[$id_clienti_osp] - 1),'num_ordine');
 if ($num_ordine != $n_num_ordine) {
 esegui_query("update $tablerclientiprenota set num_ordine = '$n_num_ordine' where idprenota = '$id_prenota' and idclienti = '$id_clienti_osp' ");
 esegui_query("update $tablerclientiprenota set parentela = '' where (idprenota = '$id_prenota'$lista_parentela_cambiata) or (idprenota = '$id_prenota' and num_ordine < 3) ");
 } # fine if ($num_ordine != $n_num_ordine)
-} # fine else if (numlin_query($osp_presente) == 0)
+} # fine else if (emtpy($osp_presente[$id_clienti_osp]))
 $d_max_num_ordine = esegui_query("select idclienti_compagni,max_num_ordine from $tableclienti where idclienti = '$id_clienti_osp' ");
 $d_idclienti_compagni = risul_query($d_max_num_ordine,0,'idclienti_compagni');
 $d_max_num_ordine = risul_query($d_max_num_ordine,0,'max_num_ordine');
@@ -480,8 +514,8 @@ echo "<form accept-charset=\"utf-8\" method=\"post\" action=\"modifica_ospiti.ph
 <input type=\"hidden\" name=\"id_sessione\" value=\"$id_sessione\">
 <input type=\"hidden\" name=\"id_prenota\" value=\"$id_prenota_int\">
 <input type=\"hidden\" name=\"modifica\" value=\"SI\">
-<input type=\"hidden\" name=\"tipo_tabella\" value=\"".htmlspecialchars(fixset($tipo_tabella))."\">
-<input type=\"hidden\" name=\"origine\" value=\"".htmlspecialchars(fixset($origine))."\">";
+<input type=\"hidden\" name=\"tipo_tabella\" value=\"".htmlspecialchars(fixstr($tipo_tabella))."\">
+<input type=\"hidden\" name=\"origine\" value=\"".htmlspecialchars(fixstr($origine))."\">";
 
 if ($inserimento_nuovi_clienti == "SI") {
 mostra_funzjs_cpval();
@@ -505,17 +539,17 @@ if ($dnazionalita) $nazione_def = $dnazionalita;
 elseif ($dnazione) $nazione_def = $dnazione;
 elseif ($dnazionedoc) $nazione_def = $dnazionedoc;
 elseif ($dnazionenascita) $nazione_def = $dnazionenascita;
-$nazione_def = addslashes($nazione_def);
+$nazione_def = addslashes(fixstr($nazione_def));
 if ($dregionenascita) $regione_def = $dregionenascita;
 elseif ($dregione) $regione_def = $dregione;
 elseif ($dregionedoc) $regione_def = $dregionedoc;
 elseif ($dregionenascita) $regione_def = $dregionenascita;
-$regione_def = addslashes(fixset($regione_def));
+$regione_def = addslashes(fixstr($regione_def));
 if ($dcittanascita) $citta_def = $dcittanascita;
 elseif ($dcitta) $citta_def = $dcitta;
 elseif ($dcittadoc) $citta_def = $dcittadoc;
 elseif ($dcittanascita) $citta_def = $dcittanascita;
-$citta_def = addslashes(fixset($citta_def));
+$citta_def = addslashes(fixstr($citta_def));
 
 $ospiti = esegui_query("select * from $tablerclientiprenota where idprenota = '$id_prenota' order by num_ordine ");
 $num_ospiti = numlin_query($ospiti);
@@ -537,7 +571,8 @@ $mostra_osp = "NO";
 $cliente_ospite = "SI";
 $dati_ospite = $dati_cliente;
 } # fine if ($num_ord == 1 and..
-else echo "<br><label><input name=\"cliente_ospite".$id_prenota."_".$idclienti."\" value=\"SI\" type=\"checkbox\"> ".mex("Ospite della prenotazione",$pag)."</label><br>";
+else echo "<br><input type=\"hidden\" name=\"id_osp_num$id_prenota"."_0\" value=\"$idclienti\">
+<label><input name=\"cliente_ospite".$id_prenota."_".$idclienti."\" value=\"SI\" type=\"checkbox\"> ".mex("Ospite della prenotazione",$pag)."</label><br>";
 } # fine if ($num1 == 0)
 if ($mostra_osp == "SI") {
 $dati_ospite = esegui_query("select * from $tableclienti where idclienti = '$id_clienti_osp' ");
@@ -567,7 +602,7 @@ else {
 $checked = "";
 echo "<br>".addslashes(mex("Parentela",$pag)).": ".mostra_lista_relutenti("parentela_$id_prenota"."_$id_clienti_osp",$parentela_osp,$id_utente,"nome_parentela","idparentele","idparentela",$tableparentele,$tablerelutenti)."";
 } # fine else if ($num1 == 0)
-if ($cliente_ospite != "SI") echo "<br><input name=\"principale$id_prenota\" value=\"$id_clienti_osp\" type=\"radio\"$checked>".mex("Ospite principale",$pag)." ";
+if (!isset($cliente_ospite) or $cliente_ospite != "SI") echo "<br><input name=\"principale$id_prenota\" value=\"$id_clienti_osp\" type=\"radio\"$checked>".mex("Ospite principale",$pag)." ";
 } # fine if ($mostra_osp == "SI")
 echo "<br>
 <input type=\"hidden\" name=\"id_osp_num$id_prenota"."_".($num1 + 1)."\" value=\"$id_clienti_osp\">";
@@ -576,7 +611,8 @@ $idclienti_compagni .= substr(risul_query($dati_ospite,0,'idclienti_compagni'),1
 $mostra_osp = "SI";
 } # fine for $num1
 if ($num_ospiti == 0) {
-echo "<br><label><input name=\"cliente_ospite".$id_prenota."_".$idclienti."\" value=\"SI\" type=\"checkbox\"> ".mex("Ospite della prenotazione",$pag)."</label><br>";
+echo "<br><input type=\"hidden\" name=\"id_osp_num$id_prenota"."_0\" value=\"$idclienti\">
+<label><input name=\"cliente_ospite".$id_prenota."_".$idclienti."\" value=\"SI\" type=\"checkbox\"> ".mex("Ospite della prenotazione",$pag)."</label><br>";
 } # fine if ($num_ospiti == 0)
 
 if ($num_persone_tot > $num1) $num_fine = $num_persone_tot;
@@ -670,10 +706,10 @@ $idclienti_compagni = explode(",",$idclienti_compagni);
 $num_idclienti_compagni = count($idclienti_compagni);
 for ($num1 = 0 ; $num1 < $num_idclienti_compagni ; $num1++) {
 $id_clienti_osp = $idclienti_compagni[$num1];
-if ($presente_id[$id_clienti_osp] != "SI") {
+if (!isset($presente_id[$id_clienti_osp]) or $presente_id[$id_clienti_osp] != "SI") {
 $presente_id[$id_clienti_osp] = "SI";
 $dati_ospite = esegui_query("select cognome,nome,sesso,datanascita,utente_inserimento from $tableclienti where idclienti = '$id_clienti_osp' ");
-$dati_osp .= "<input name=\"altro_ospite$id_prenota"."_$id_clienti_osp\" value=\"SI\" type=\"checkbox\">\
+$dati_osp .= "<label><input name=\"altro_ospite$id_prenota"."_$id_clienti_osp\" value=\"SI\" type=\"checkbox\"><input type=\"hidden\" name=\"id_altro_osp_num$id_prenota"."_$num1\" value=\"$id_clienti_osp\">\
  <em>".addslashes(risul_query($dati_ospite,0,'cognome'))."</em> ";
 $ccnome = addslashes(risul_query($dati_ospite,0,'nome'));
 $ccsesso = risul_query($dati_ospite,0,'sesso');
@@ -682,11 +718,11 @@ $O = "o";
 if ($ccsesso == "f") $O = "a";
 if ($ccnome) $dati_osp .=  "$ccnome ";
 if ($ccdatanascita) $dati_osp .= mex("nat$O il",$pag)." ".formatta_data($ccdatanascita,$stile_data)." ";
-$dati_osp .= "<br>";
-} # fine if ($presente_id[$id_clienti_osp] != "SI")
+$dati_osp .= "</label><br>";
+} # fine if (!isset($presente_id[$id_clienti_osp]) or $presente_id[$id_clienti_osp] != "SI")
 } # fine for $num1
 if ($dati_osp) {
-echo "
+echo "<input type=\"hidden\" name=\"num_altri_ospiti_passa$id_prenota\" value=\"$num_idclienti_compagni\">
 <script type=\"text/javascript\">
 <!--
 function apri_osp$id_prenota () {

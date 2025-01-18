@@ -2,7 +2,7 @@
 
 ##################################################################################
 #    HOTELDRUID
-#    Copyright (C) 2001-2021 by Marco Maria Francesco De Santis (marco@digitaldruid.net)
+#    Copyright (C) 2001-2023 by Marco Maria Francesco De Santis (marco@digitaldruid.net)
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published by
@@ -40,7 +40,14 @@ $var_pag[11] = 'ini_periodo_passa';
 $var_pag[12] = 'fine_periodo_passa';
 $var_pag[13] = 'aggiungi';
 $var_pag[14] = 'sottrai';
-$n_var_pag = 15;
+$var_pag[15] = 'canc_incassa';
+$var_pag[16] = 'canc_costo';
+$var_pag[17] = 'moltiplica';
+$var_pag[18] = 'origine_vecchia';
+$var_pag[19] = 'torna_indietro';
+$var_pag[20] = 'indietro';
+$var_pag[21] = 'canc_idprenota';
+$n_var_pag = 22;
 $num2 = 0;
 if (isset($_POST['num_costi_passa'])) $num2 = (int) $_POST['num_costi_passa'];
 elseif (isset($_GET['num_costi_passa'])) $num2 = (int) $_GET['num_costi_passa'];
@@ -218,18 +225,20 @@ return $rowbgcolor;
 } # fine function rowbgcolor
 
 
+$tabelle_lock = null;
 if (!isset($inprenota)) $inprenota = null;
 if (!isset($id_prenota)) $id_prenota = null;
 if (!isset($id_costi)) $id_costi = null;
 if ($inprenota and $id_prenota) {
 $tabelle_lock = array($tableprenota,$tablecostiprenota,$tablerelinventario);
-$altre_tab_lock = array($tableperiodi,$tablecasse);
+$altre_tab_lock = array($tableperiodi,$tablecontratti,$tablepersonalizza,$tablecasse);
 $tabelle_lock = lock_tabelle($tabelle_lock,$altre_tab_lock);
 } # fine if ($inprenota and $id_prenota)
 
 
 $d_caparra = 0;
 $d_num_persone = 0;
+$num_letti_agg = array('max' => 0);
 
 
 if (!empty($canc_idprenota) or !empty($azzera)) $id_prenota = "";
@@ -251,7 +260,7 @@ if ($id_periodo_corrente >= $id_inizio_prenota) $id_prenota = "";
 if ($priv_mod_prenota_ore != "000") {
 $adesso = date("YmdHis",(time() + (C_DIFF_ORE * 3600)));
 $data_ins = risul_query($dati_prenota,0,'datainserimento');
-$limite = date("YmdHis",mktime((substr($data_ins,11,2) + $priv_mod_prenota_ore),substr($data_ins,14,2),substr($data_ins,17,2),substr($data_ins,5,2),substr($data_ins,8,2),substr($data_ins,0,4)));
+$limite = date("YmdHis",mktime((substr($data_ins,11,2) + (int) $priv_mod_prenota_ore),substr($data_ins,14,2),substr($data_ins,17,2),substr($data_ins,5,2),substr($data_ins,8,2),substr($data_ins,0,4)));
 if ($adesso > $limite) $id_prenota = "";
 } # fine if ($priv_mod_prenota_ore != "000")
 if ($attiva_checkin == "SI") {
@@ -282,7 +291,6 @@ $d_num_persone = risul_query($dati_prenota,0,'num_persone');
 if (!$d_num_persone) $d_num_persone = 0;
 $d_cat_persone = dati_cat_pers_p($dati_prenota,0,$dati_cat_pers,$d_num_persone);
 $d_tariffesettimanali = risul_query($dati_prenota,0,'tariffesettimanali');
-unset($num_letti_agg);
 $dati_cap = dati_costi_agg_prenota($tablecostiprenota,$id_prenota,$dati_cat_pers);
 $d_costo_agg_tot = (double) 0;
 for ($numca = 0 ; $numca < $dati_cap['num'] ; $numca++) {
@@ -317,7 +325,7 @@ $azione = 1;
 $incassa = 0;
 } # fine if (!empty($canc_incassa))
 
-if (!empty($agg_costo) and (strcmp($dati_ca['id'][$agg_costo],"") or substr($agg_costo,0,1) == "c") and !$azione) {
+if (!empty($agg_costo) and (strcmp((string) $dati_ca['id'][$agg_costo],"") or substr($agg_costo,0,1) == "c") and !$azione) {
 $azione = 1;
 if (substr($agg_costo,0,1) != "c") {
 if ($id_costi) $id_costi .= ",";
@@ -332,16 +340,16 @@ $id_costi .= $dati_ca[$num1]['id'];
 } # fine if ($dati_ca[$num1]['combina'] == "s" and...
 } # fine for $num1
 } # fine else if (substr($agg_costo,0,1) != "c")
-} # fine if (!empty($agg_costo) and (strcmp($dati_ca['id'][$agg_costo],"") or...
+} # fine if (!empty($agg_costo) and (strcmp((string) $dati_ca['id'][$agg_costo],"") or...
 
-if (isset($canc_costo) and strcmp($canc_costo,"") and !$azione) {
+if (isset($canc_costo) and strcmp((string) $canc_costo,"") and !$azione) {
 $azione = 1;
 $costi = explode(",",$id_costi);
 $num_costi = count($costi);
 $id_costi = "";
 for ($num1 = 0 ; $num1 < $num_costi ; $num1++) if ($num1 != $canc_costo) $id_costi .= $costi[$num1].",";
 $id_costi = substr($id_costi,0,-1);
-} # fine if (isset($canc_costo) and strcmp($canc_costo,"") and !$azione)
+} # fine if (isset($canc_costo) and strcmp((string) $canc_costo,"") and !$azione)
 
 if (((!empty($moltiplica) and controlla_num_pos($moltiplica) != "NO") or (!empty($aggiungi) and controlla_num_pos($aggiungi) != "NO") or (!empty($sottrai) and controlla_num_pos($sottrai) != "NO")) and !empty($id_costi) and !$azione) {
 $azione = 1;
@@ -349,17 +357,17 @@ $costi = explode(",",$id_costi);
 $ultimo_costo = $costi[(count($costi) - 1)];
 $id_costi = substr($id_costi,0,(-1 * (strlen($ultimo_costo) + 1)));
 $ultimo_costo = explode("x",$ultimo_costo);
-$molt_ultimo_costo = $ultimo_costo[1];
+$molt_ultimo_costo = fixset($ultimo_costo[1]);
 $ultimo_costo = $ultimo_costo[0];
 $num_uc = $dati_ca['id'][$ultimo_costo];
 if ($dati_ca[$num_uc]['moltiplica'] == "c") {
 if (!$molt_ultimo_costo) $molt_ultimo_costo = 1;
-if ($moltiplica) $moltiplica = $molt_ultimo_costo * $moltiplica;
-if ($aggiungi) $moltiplica = $molt_ultimo_costo + $aggiungi;
-if ($sottrai) {
+if (!empty($moltiplica)) $moltiplica = $molt_ultimo_costo * $moltiplica;
+if (!empty($aggiungi)) $moltiplica = $molt_ultimo_costo + $aggiungi;
+if (!empty($sottrai)) {
 $moltiplica = $molt_ultimo_costo - $sottrai;
 if ($moltiplica < 0) $moltiplica = 0;
-} # fine if ($sottrai)
+} # fine if (!empty($sottrai))
 if ($moltiplica) {
 if ($id_costi) $id_costi .= ",";
 $id_costi .= $ultimo_costo;
@@ -367,7 +375,7 @@ if ($moltiplica > 1) $id_costi .= "x$moltiplica";
 } # fine if ($moltiplica)
 } # fine if ($dati_ca[$num_uc]['moltiplica'] == "c")
 else {
-if ($aggiungi) $moltiplica = $aggiungi + 1;
+if (!empty($aggiungi)) $moltiplica = $aggiungi + 1;
 for ($num1 = 1 ; $num1 <= $moltiplica ; $num1++) $id_costi .= ",".$ultimo_costo;
 if (substr($id_costi,0,1) == ",") $id_costi = substr($id_costi,1);
 } # fine else if ($dati_ca[$num_uc]['moltiplica'] == "c")
@@ -378,8 +386,7 @@ if (substr($id_costi,0,1) == ",") $id_costi = substr($id_costi,1);
 $val_tot = 0;
 $errore_cassa = 0;
 $errore_prenota = 0;
-unset($errori_costi);
-$errori_costi[-1] = 0;
+$errori_costi = array(-1 => 0);
 $val_costo = array(-1 => 0);
 unset($settimane_costo);
 unset($n_moltiplica_costo);
@@ -406,7 +413,7 @@ $molt_costo = fixset($id_costo[1]);
 $id_costo = $id_costo[0];
 $numca = $dati_ca['id'][$id_costo];
 if ($dati_ca[$numca]['moltiplica'] != "c") $molt_costo = "";
-if (strcmp($numca,"")) {
+if (strcmp((string) $numca,"")) {
 if ($attiva_costi_agg_consentiti == "n" or $costi_agg_consentiti_vett[$id_costo] == "SI") {
 
 $molt_costo_orig = $molt_costo;
@@ -496,7 +503,7 @@ else {
 $idinizioperiodo = $id_periodo_corrente;
 $idfineperiodo = $id_periodo_corrente;
 $settimane_costo[$num_costo] = calcola_settimane_costo($tableperiodi,$dati_ca,$numca,$idinizioperiodo,$idfineperiodo,",$id_periodo_corrente,","1");
-calcola_moltiplica_costo($dati_ca,$numca,$moltiplica_costo[$num_costo],$idinizioperiodo,$idfineperiodo,$settimane_costo[$num_costo],$molt_costo,"1","","");
+calcola_moltiplica_costo($dati_ca,$numca,$moltiplica_costo[$num_costo],$idinizioperiodo,$idfineperiodo,$settimane_costo[$num_costo],$molt_costo,"1","",$num_letti_agg);
 if (trova_periodo_permesso_costo($dati_ca,$numca,$idinizioperiodo,$idfineperiodo,"1") == "NO") {
 if ($dati_ca[$numca]['combina'] == "s") continue;
 $errori_costi[$num_costo] .= ", ".mex("periodo non permesso",$pag);
@@ -556,7 +563,7 @@ if ($molt_costo_orig) $testo_costi .= " x$molt_costo_orig";
 
 $num_costo++;
 } # fine if ($attiva_costi_agg_consentiti == "n" or $costi_agg_consentiti_vett[$id_costo] == "SI")
-} # fine if (strcmp($numca,""))
+} # fine if (strcmp((string) $numca,""))
 } # fine for $num1
 
 
@@ -614,7 +621,7 @@ if ($dati_ca[$numca]['molt_max'] == "n") $num_max = $dati_ca[$numca]['molt_max_n
 if ($dati_ca[$numca]['molt_max'] != "n" and $d_num_persone) {
 $num_max = $d_num_persone;
 if ($num_max) $num_max_check = 1;
-if ($dati_ca[$numca]['modo_cp_molt']) {
+if (!empty($dati_ca[$numca]['modo_cp_molt'])) {
 $cat_persone_corr = $d_cat_persone;
 if (empty($cat_persone_corr)) {
 $cat_persone_corr = array(0 => array());
@@ -631,13 +638,13 @@ if ($dati_ca[$numca]['modo_cp_molt'] == "i") $num_max += $cat_persone_corr[$cat_
 else $num_max = $num_max - $cat_persone_corr[$cat_persone_corr['ord'][$cp]]['molt'];
 } # fine if ($dati_ca[$numca]['cp_molt'][$cp]['esist'] and $cat_persone_corr[$cat_persone_corr['ord'][$cp]]['molt'])
 } # fine for $num2
-} # fine if ($dati_ca[$numca]['modo_cp_molt'])
+} # fine if (!empty($dati_ca[$numca]['modo_cp_molt']))
 } # fine if ($dati_ca[$numca]['molt_max'] != "n" and $d_num_persone)
 if ($dati_ca[$numca]['molt_max'] == "t" and $num_letti_agg['max']) {
 $num_letti_agg_corr = $num_letti_agg['max'];
 if ($num_letti_agg_corr) $num_max_check = 1;
-if ($dati_ca[$numca]['modo_cp_molt'] == "i") $num_letti_agg_corr = 0;
-for ($num2 = 0 ; $num2 < $dati_ca[$numca]['cp_molt']['num'] ; $num2++) {
+if (isset($dati_ca[$numca]['modo_cp_molt']) and $dati_ca[$numca]['modo_cp_molt'] == "i") $num_letti_agg_corr = 0;
+for ($num2 = 0 ; $num2 < fixset($dati_ca[$numca]['cp_molt']['num']) ; $num2++) {
 $cp = $dati_ca[$numca]['cp_molt']['ord'][$num2];
 if ($dati_ca[$numca]['cp_molt'][$cp]['esist'] and $num_letti_agg['catp_tot_max'][$cp]) {
 if ($dati_ca[$numca]['modo_cp_molt'] == "i") $num_letti_agg_corr += $num_letti_agg['catp_tot_max'][$cp];
@@ -649,7 +656,7 @@ $num_max += $num_letti_agg_corr;
 if ($num_max or $num_max_check) {
 if ($dati_ca[$numca]['molt_max'] != "n" and $dati_ca[$numca]['molt_max_num']) $num_max = $num_max - $dati_ca[$numca]['molt_max_num'];
 if ($molt_costo > $num_max) {
-$errori_costi[$num_costo] .= ", ".mex("moltiplicato per più di",$pag)." $num_max";
+$errori_costi[$num1] .= ", ".mex("moltiplicato per più di",$pag)." $num_max";
 $errore_prenota = 1;
 if ($dati_ca[$numca]['molt_max'] == "n") $errore_cassa = 1;
 } # fine if ($molt_costo > $num_max)
@@ -743,11 +750,11 @@ if (empty($blocca_schermo)) {
 
 
 if ($id_costi and !$errore_cassa) {
-unset($tabelle_lock);
+$tabelle_lock2 = null;
 if (!empty($incassa) and $priv_ins_entrate == "s" and !$azione) {
-$tabelle_lock = array($tablecosti,$tablerelinventario);
+$tabelle_lock2 = array($tablecosti,$tablerelinventario);
 $altre_tab_lock = array($tablepersonalizza,$tableutenti,$tablecasse);
-$tabelle_lock = lock_tabelle($tabelle_lock,$altre_tab_lock);
+$tabelle_lock2 = lock_tabelle($tabelle_lock2,$altre_tab_lock);
 } # fine if (!empty($incassa) and $priv_ins_entrate == "s" and !$azione)
 $casse = esegui_query("select * from $tablecasse order by idcasse");
 $num_casse = numlin_query($casse);
@@ -768,9 +775,11 @@ if (isset($id_cassa_sel) and $id_cassa_sel == $id_cassa) $cassa_trovata = 1;
 } # fine for $num1
 if (!$num_casse_attive) {
 $errore_cassa = 1;
-if ($tabelle_lock) unlock_tabelle($tabelle_lock);
+if ($tabelle_lock2) unlock_tabelle($tabelle_lock2);
 } # fine if (!$num_casse_attive)
 if (!$cassa_trovata) $id_cassa_sel = "";
+if ($tabelle_lock2) $tabelle_lock = $tabelle_lock2;
+unset($tabelle_lock2);
 } # fine if ($id_costi and !$errore_cassa)
 
 
@@ -822,11 +831,11 @@ else {
 if ($num_casse_attive == 1) $id_cassa = $id_casse[1];
 else $id_cassa = $id_cassa_sel;
 $nome_cassa = $nomi_casse[$id_cassa];
-if (strcmp($metodo_pagamento_sel,"")) {
+if (strcmp((string) $metodo_pagamento_sel,"")) {
 if (@get_magic_quotes_gpc()) $metodo_pagamento_sel = stripslashes($metodo_pagamento_sel);
 $metodo_pagamento_sel = htmlspecialchars($metodo_pagamento_sel);
 if (str_replace(",$metodo_pagamento_sel,",",",",$metodi_pagamento,") == ",$metodi_pagamento,") $metodo_pagamento_sel = "";
-} # fine if (strcmp($metodo_pagamento_sel,""))
+} # fine if (strcmp((string) $metodo_pagamento_sel,""))
 $datainserimento = date("Y-m-d H:i:s",(time() + (C_DIFF_ORE * 3600)));
 $val_entrata = formatta_soldi($val_tot);
 $persona_costo = "";
@@ -837,8 +846,8 @@ $persona_costo = risul_query($nome_utente,0,'nome_utente');
 $provenienza_costo = "";
 $idcosti = esegui_query("select max(idcosti) from $tablecosti");
 $idcosti = risul_query($idcosti,0,0) + 1;
-esegui_query("insert into $tablecosti (idcosti,nome_costo,val_costo,tipo_costo,nome_cassa,persona_costo,provenienza_costo,metodo_pagamento,datainserimento,hostinserimento,utente_inserimento) values ('$idcosti','".aggslashdb($testo_costi)."','$val_entrata','e','".aggslashdb($nome_cassa)."','".aggslashdb($persona_costo)."','".aggslashdb($provenienza_costo)."','".aggslashdb($metodo_pagamento_sel)."','$datainserimento','$HOSTNAME','$id_utente') ");
-if ($altre_valute['num'] and isset($altre_valute['id'][$valuta_pagamento_sel]) and strcmp($altre_valute['id'][$valuta_pagamento_sel],"")) {
+esegui_query("insert into $tablecosti (idcosti,nome_costo,val_costo,tipo_costo,nome_cassa,persona_costo,provenienza_costo,metodo_pagamento,data_transazione,datainserimento,hostinserimento,utente_inserimento) values ('$idcosti','".aggslashdb($testo_costi)."','$val_entrata','e','".aggslashdb($nome_cassa)."','".aggslashdb($persona_costo)."','".aggslashdb($provenienza_costo)."','".aggslashdb($metodo_pagamento_sel)."','$datainserimento','$datainserimento','$HOSTNAME','$id_utente') ");
+if ($altre_valute['num'] and isset($altre_valute['id'][$valuta_pagamento_sel]) and strcmp((string) $altre_valute['id'][$valuta_pagamento_sel],"")) {
 $valuta_corr = $altre_valute['id'][$valuta_pagamento_sel];
 $val_entrata_valuta = (double) $val_entrata * (double) $altre_valute[$valuta_corr]['cambio'];
 $val_entrata_valuta = $val_entrata_valuta / (double) $altre_valute[$valuta_corr]['arrotond'];
@@ -904,7 +913,7 @@ if ($id_periodo_corrente >= $id_inizio_prenota) $modifica_pren = 0;
 if ($priv_mod_prenota_ore != "000") {
 $adesso = date("YmdHis",(time() + (C_DIFF_ORE * 3600)));
 $data_ins = risul_query($dati_prenota,$num1,'datainserimento');
-$limite = date("YmdHis",mktime((substr($data_ins,11,2) + $priv_mod_prenota_ore),substr($data_ins,14,2),substr($data_ins,17,2),substr($data_ins,5,2),substr($data_ins,8,2),substr($data_ins,0,4)));
+$limite = date("YmdHis",mktime((substr($data_ins,11,2) + (int) $priv_mod_prenota_ore),substr($data_ins,14,2),substr($data_ins,17,2),substr($data_ins,5,2),substr($data_ins,8,2),substr($data_ins,0,4)));
 if ($adesso > $limite) $modifica_pren = 0;
 } # fine if ($priv_mod_prenota_ore != "000")
 if ($modifica_pren) {
@@ -977,8 +986,8 @@ $moltiplica = $moltiplica_costo[$num1];
 $idcostiprenota++;
 $tipo_ca = $dati_ca[$numca]['tipo'].$dati_ca[$numca]['tipo_val'];
 $valore_ca = $dati_ca[$numca]['valore'];
-$valore_perc_ca = $dati_ca[$numca]['valore_perc'];
-$associasett_ca = $dati_ca[$numca]['associasett'];
+$valore_perc_ca = fixset($dati_ca[$numca]['valore_perc']);
+$associasett_ca = fixset($dati_ca[$numca]['associasett']);
 $letto_ca = $dati_ca[$numca]['letto'];
 if ($dati_ca[$numca]['var_percentuale'] != "s" and $dati_ca[$numca]['tipo_val'] != "f") {
 $tipo_ca = $dati_ca[$numca]['tipo']."f";
@@ -1029,7 +1038,7 @@ $valuta_paga = "";
 } # fine if ($inprenota and !$errore_prenota and !$azione)
 
 
-if ($inprenota and $id_prenota and isset($tabelle_lock)) unlock_tabelle($tabelle_lock);
+if ($inprenota and $id_prenota and $tabelle_lock) unlock_tabelle($tabelle_lock);
 
 
 
@@ -1090,7 +1099,7 @@ $testo_costi .= "</td><td$redclass>".$dati_ca[$numca]['nome']."$molt_costo</td>
 <td style=\"width: 40px; text-align: right;\">$val_costo_vedi</td></tr>";
 } # fine for $num1
 
-if (isset($n_categoria) and strcmp($n_categoria,"")) $categoria = $n_categoria;
+if (isset($n_categoria) and strcmp((string) $n_categoria,"")) $categoria = $n_categoria;
 if (!empty($no_categoria)) $categoria = "";
 echo "<form accept-charset=\"utf-8\" method=\"post\" action=\"punto_vendita.php#finetab\"><div>
 <input type=\"hidden\" name=\"anno\" value=\"$anno\">
@@ -1098,7 +1107,7 @@ echo "<form accept-charset=\"utf-8\" method=\"post\" action=\"punto_vendita.php#
 <input type=\"hidden\" name=\"num_costi_passa\" value=\"$num_costi\">
 <input type=\"hidden\" id=\"id_costi\" name=\"id_costi\" value=\"$id_costi\">
 <input type=\"hidden\" name=\"id_prenota\" value=\"$id_prenota\">
-<input type=\"hidden\" id=\"nomecat\" name=\"categoria\" value=\"".htmlspecialchars(fixset($categoria))."\">";
+<input type=\"hidden\" id=\"nomecat\" name=\"categoria\" value=\"".htmlspecialchars(fixstr($categoria))."\">";
 for ($numca2 = 0 ; $numca2 < $num_costi ; $numca2++) if (!empty(${"id_periodi_costo".$numca2})) echo "<input type=\"hidden\" name=\"id_periodi_costo$numca2\" value=\"".htmlspecialchars(${"id_periodi_costo".$numca2})."\">";
 echo "<div style=\"float: left; border: 1px solid black; width: 300px; height: 385px; margin: 0 2px 1px 1px;\">
 <div style=\" height: 276px; overflow: auto;\">
@@ -1144,7 +1153,8 @@ echo "<br><hr class=\"pos\">
 <input type=\"hidden\" name=\"anno\" value=\"$anno\">
 <input type=\"hidden\" name=\"id_sessione\" value=\"$id_sessione\">
 <input type=\"hidden\" name=\"origine\" value=\"punto_vendita.php\">";
-if ($incassa) {
+if (!empty($incassa)) {
+$note_paga = "";
 for ($num1 = 0 ; $num1 < $num_costi ; $num1++) {
 $numca = explode("x",$costi[$num1]);
 $molt_costo = fixset($numca[1]);
@@ -1157,18 +1167,23 @@ echo "<input type=\"hidden\" name=\"nome_costo_agg$num1"."_1\" value=\"".$dati_c
 <input type=\"hidden\" name=\"moltiplica_max_costo_agg$num1"."_1\" value=\"$molt_costo\">
 <input type=\"hidden\" name=\"data_inserimento_costo_agg$num1"."_1\" value=\"".substr($datainserimento,0,10)."\">
 <input type=\"hidden\" name=\"utente_inserimento_costo_agg$num1"."_1\" value=\"$id_utente\">";
+if ($note_paga) $note_paga .= ", ";
+$note_paga .= $dati_ca[$numca]['nome'];
+if ($molt_costo > 1) $note_paga .= " x$molt_costo";
 } # fine for $num1
 echo "<input type=\"hidden\" name=\"num_costi_aggiuntivi_1\" value=\"$num_costi\">
 <input type=\"hidden\" name=\"data_paga0_1\" value=\"".substr($datainserimento,0,10)."\">
+<input type=\"hidden\" name=\"data_operazione_paga0_1\" value=\"".substr($datainserimento,0,10)."\">
 <input type=\"hidden\" name=\"utente_paga0_1\" value=\"$id_utente\">
 <input type=\"hidden\" name=\"metodo_paga0_1\" value=\"$metodo_pagamento_sel\">
+<input type=\"hidden\" name=\"note_paga0_1\" value=\"$note_paga\">
 <input type=\"hidden\" name=\"saldo_paga0_1\" value=\"$val_tot\">
 <input type=\"hidden\" name=\"valuta_paga0_1\" value=\"$valuta_paga\">
 <input type=\"hidden\" name=\"tasso_cambio_paga0_1\" value=\"$tasso_cambio_paga\">
 <input type=\"hidden\" name=\"valore_valuta_paga0_1\" value=\"$val_valuta_paga\">
 <input type=\"hidden\" name=\"num_pagamenti_1\" value=\"1\">
 <input type=\"hidden\" name=\"num_ripeti\" value=\"1\">";
-} # fine if ($incassa)
+} # fine if (!empty($incassa))
 if ($inprenota) echo "<input type=\"hidden\" name=\"lista_prenota\" value=\",$id_prenota,\">";
 unset($nome_contratto);
 $nomi_contratti = esegui_query("select valpersonalizza from $tablepersonalizza where idpersonalizza = 'nomi_contratti' and idutente = '$id_utente'");
@@ -1276,7 +1291,7 @@ unset($costi_agg_raggr);
 $onclick_ins_js = array();
 unset($combina_mostrato);
 for ($num1 = 0 ; $num1 < $dati_ca['num'] ; $num1++) {
-if ($attiva_costi_agg_consentiti == "n" or $costi_agg_consentiti_vett[$dati_ca[$num1]['id']] == "SI") {
+if ($attiva_costi_agg_consentiti == "n" or (isset($costi_agg_consentiti_vett[$dati_ca[$num1]['id']]) and $costi_agg_consentiti_vett[$dati_ca[$num1]['id']] == "SI")) {
 $testo_costo = "";
 $nome_costo = $dati_ca[$num1]['nome'];
 $id_costo = $dati_ca[$num1]['id'];
@@ -1344,7 +1359,7 @@ echo "<hr class=\"pos\">";
 } # fine if (@is_array($costi_agg_raggr))
 
 echo "<div id=\"cattxt\">";
-if (strcmp($categoria,"") and $testo_categoria[$categoria]) echo $testo_categoria[$categoria];
+if (strcmp((string) $categoria,"") and $testo_categoria[$categoria]) echo $testo_categoria[$categoria];
 else echo $testo_no_categoria;
 echo "</div>";
 

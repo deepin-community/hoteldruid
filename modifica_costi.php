@@ -2,7 +2,7 @@
 
 ##################################################################################
 #    HOTELDRUID
-#    Copyright (C) 2001-2021 by Marco Maria Francesco De Santis (marco@digitaldruid.net)
+#    Copyright (C) 2001-2023 by Marco Maria Francesco De Santis (marco@digitaldruid.net)
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published by
@@ -26,7 +26,107 @@ $base_js = 1;
 
 $var_pag = array();
 $var_pag[0] = 'idntariffe';
-$n_var_pag = 1;
+$var_pag[1] = 'origine';
+$var_pag[2] = 'n_nome';
+$var_pag[3] = 'categoria_ca';
+$var_pag[4] = 'tipo_ca';
+$var_pag[5] = 'valore_f_ca';
+$var_pag[6] = 'valore_p_ca';
+$var_pag[7] = 'tipo_percentuale';
+$var_pag[8] = 'arrotonda_ca';
+$var_pag[9] = 'tipo_tasse';
+$var_pag[10] = 'tasseperc_ca';
+$var_pag[11] = 'ass_gio_ini_segno';
+$var_pag[12] = 'ass_gio_ini_num';
+$var_pag[13] = 'ass_pren_cont_num';
+$var_pag[14] = 'numsett_ca';
+$var_pag[15] = 'pos_menouna';
+$var_pag[16] = 'val1_prime_si';
+$var_pag[17] = 'val2_prime_si';
+$var_pag[18] = 'val1_prime_no';
+$var_pag[19] = 'val2_prime_no';
+$var_pag[20] = 'associasett';
+$var_pag[21] = 'moltiplica_ca';
+$var_pag[22] = 'agg_moltiplica_1';
+$var_pag[23] = 'agg_moltiplica_p';
+$var_pag[24] = 'agg_moltiplica_t';
+$var_pag[25] = 'tipo_moltmax';
+$var_pag[26] = 'moltmax';
+$var_pag[27] = 'meno_moltmax_p';
+$var_pag[28] = 'meno_moltmax_t';
+$var_pag[29] = 'beni_inv_elimina';
+$var_pag[30] = 'mantenere_comb';
+$var_pag[31] = 'mantenere_beniinv';
+$var_pag[32] = 'num_beni_inv_elimina_sel';
+$var_pag[33] = 'tipo_bie';
+$var_pag[34] = 'periodi_permessi';
+$var_pag[35] = 'pp_dal1';
+$var_pag[36] = 'pp_al1';
+$var_pag[37] = 'num_periodi_permessi_sel';
+$var_pag[38] = 'tipo_pp';
+$var_pag[39] = 'num_tariffe_passa';
+$var_pag[40] = 'mostra_ca';
+$var_pag[41] = 'mostra_numpers';
+$var_pag[42] = 'raggruppa_ca';
+$var_pag[43] = 'letto_ca';
+$var_pag[44] = 'perc_catpers';
+$var_pag[45] = 'escludi_da_tot';
+$var_pag[46] = 'limite_ca';
+$var_pag[47] = 'numlimite_ca';
+$var_pag[48] = 'mantenere_numsett';
+$var_pag[49] = 'mantenere_moltiplica';
+$var_pag[50] = 'mantenere_periodip';
+$var_pag[51] = 'modifica_costo';
+$var_pag[52] = 'num_appartamenti_passa';
+$var_pag[53] = 'lun_sel';
+$var_pag[54] = 'mar_sel';
+$var_pag[55] = 'mer_sel';
+$var_pag[56] = 'gio_sel';
+$var_pag[57] = 'ven_sel';
+$var_pag[58] = 'sab_sel';
+$var_pag[59] = 'dom_sel';
+$var_pag[60] = 'mantenere_tariffea';
+$var_pag[61] = 'mantenere_tariffei';
+$var_pag[62] = 'mantenere_appi';
+$var_pag[63] = 'modo_catpers_molt';
+$var_pag[64] = 'mantenere_percentuale';
+$var_pag[65] = 'mag_bie_sel';
+$var_pag[66] = 'assegna_da_giorno_ini';
+$var_pag[67] = 'assegna_prenota_contemp';
+$var_pag[68] = 'combina_ca';
+$n_var_pag = 69;
+$num2 = 0;
+if (isset($_POST['num_tariffe_passa'])) $num2 = (int) $_POST['num_tariffe_passa'];
+elseif (isset($_GET['num_tariffe_passa'])) $num2 = (int) $_GET['num_tariffe_passa'];
+for ($num1 = 1 ; $num1 <= $num2 ; $num1++) {
+$var_pag[$n_var_pag++] = "seltariffa$num1";
+$var_pag[$n_var_pag++] = "minmaxtariffa$num1";
+$var_pag[$n_var_pag++] = "valminmaxtariffa$num1";
+$var_pag[$n_var_pag++] = "valminmax2tariffa$num1";
+$var_pag[$n_var_pag++] = "tipo_associa_tariffa$num1";
+$var_pag[$n_var_pag++] = "incomp_tariffa$num1";
+} # fine for $num1
+$num2 = 0;
+if (isset($_POST['num_appartamenti_passa'])) $num2 = (int) $_POST['num_appartamenti_passa'];
+elseif (isset($_GET['num_appartamenti_passa'])) $num2 = (int) $_GET['num_appartamenti_passa'];
+for ($num1 = 0 ; $num1 < $num2 ; $num1++) {
+$var_pag[$n_var_pag++] = "idapp_incomp_$num1";
+$var_pag[$n_var_pag++] = "app_incomp_$num1";
+} # fine for $num1
+$num2 = 0;
+if (isset($_POST['num_periodi_permessi_sel'])) $num2 = (int) $_POST['num_periodi_permessi_sel'];
+elseif (isset($_GET['num_periodi_permessi_sel'])) $num2 = (int) $_GET['num_periodi_permessi_sel'];
+for ($num1 = 1 ; $num1 <= $num2 ; $num1++) {
+$var_pag[$n_var_pag++] = "pp_dal$num1";
+$var_pag[$n_var_pag++] = "pp_al$num1";
+} # fine for $num1
+$num2 = 0;
+if (isset($_POST['num_beni_inv_elimina_sel'])) $num2 = (int) $_POST['num_beni_inv_elimina_sel'];
+elseif (isset($_GET['num_beni_inv_elimina_sel'])) $num2 = (int) $_GET['num_beni_inv_elimina_sel'];
+for ($num1 = 1 ; $num1 <= $num2 ; $num1++) {
+$var_pag[$n_var_pag++] = "bene_inv_sel$num1";
+$var_pag[$n_var_pag++] = "molt_bene_inv_sel$num1";
+} # fine for $num1
 
 include("./costanti.php");
 include(C_DATI_PATH."/dati_connessione.php");
@@ -123,7 +223,7 @@ $utenti_gruppo = esegui_query("select idutente from $tablerelgruppi where idgrup
 $num_utenti_gruppo = numlin_query($utenti_gruppo);
 for ($num2 = 0 ; $num2 < $num_utenti_gruppo ; $num2++) {
 $idutente_gruppo = risul_query($utenti_gruppo,$num2,'idutente');
-if ($idutente_gruppo != $id_utente and !$utenti_gruppi[$idutente_gruppo]) {
+if ($idutente_gruppo != $id_utente and empty($utenti_gruppi[$idutente_gruppo])) {
 $utenti_gruppi[$idutente_gruppo] = 1;
 
 if ($priv_app_gruppi == "SI") {
@@ -152,7 +252,7 @@ $priv_mod_prenotazioni_gr[$idutente_gruppo] = "n";
 } # fine else if (numlin_query($priv_anno_ut_gr) == 1)
 } # fine if ($priv_app_gruppi == "SI")
 
-} # fine if ($idutente_gruppo != $id_utente)
+} # fine if ($idutente_gruppo != $id_utente and...
 } # fine for $num2
 } # fine for $num1
 } # fine if ($prendi_gruppi == "SI")
@@ -232,10 +332,12 @@ if ($num_costo != "") {
 
 
 
-if ($modifica_costo) {
+if (!empty($modifica_costo)) {
 $mostra_form_iniziale = "NO";
 $conflitti = "";
 $note_mantenere = "";
+$errore = "";
+$messaggio_errore = "";
 
 if (@get_magic_quotes_gpc()) $n_nome = (string) stripslashes($n_nome);
 if ($n_nome != "") $nomecostoagg = (string) htmlspecialchars($n_nome);
@@ -262,12 +364,12 @@ $valore_f_ca = formatta_soldi($valore_f_ca);
 $valore_p_ca = formatta_soldi($valore_p_ca);
 $arrotonda_ca = formatta_soldi($arrotonda_ca);
 $tasseperc_ca = formatta_soldi($tasseperc_ca);
-if (!strcmp($valore_f_ca,"") and !strcmp($valore_p_ca,"")) $errore = "SI";
-if (strcmp($valore_f_ca,"") and controlla_soldi($valore_f_ca) == "NO") $errore = "SI";
-if (strcmp($valore_p_ca,"") and (controlla_soldi($valore_p_ca) == "NO" or !$arrotonda_ca or controlla_soldi($arrotonda_ca,"SI") == "NO")) $errore = "SI";
+if (!strcmp((string) $valore_f_ca,"") and !strcmp((string) $valore_p_ca,"")) $errore = "SI";
+if (strcmp((string) $valore_f_ca,"") and controlla_soldi($valore_f_ca) == "NO") $errore = "SI";
+if (strcmp((string) $valore_p_ca,"") and (controlla_soldi($valore_p_ca) == "NO" or !$arrotonda_ca or controlla_soldi($arrotonda_ca,"SI") == "NO")) $errore = "SI";
 if ($valore_p_ca and $tipo_percentuale != "tariffa" and $tipo_percentuale != "tariffafissa" and $tipo_percentuale != "tariffapers" and $tipo_percentuale != "totale" and $tipo_percentuale != "caparra" and $tipo_percentuale != "resto") $errore = "SI";
 if ($valore_p_ca and $tipo_ca == "s" and substr($tipo_percentuale,0,7) != "tariffa") { $errore = "SI"; $conflitti .= "2-3;"; }
-if (($tasseperc_ca and controlla_soldi($tasseperc_ca) == "NO") or $tasseperc_ca > 100 or $tasseperc_ca < 0) $errore = "SI";
+if (($tasseperc_ca and controlla_soldi($tasseperc_ca) == "NO") or $tasseperc_ca > 100 or (double) $tasseperc_ca < 0) $errore = "SI";
 if ($tipo_tasse != "p" and $tipo_tasse != "t") $errore = "SI";
 
 $associa_tariffe_prec = 0;
@@ -279,21 +381,21 @@ $associa_tariffe = "n";
 for ($numtariffa = 1 ; $numtariffa <= $numero_tariffe ; $numtariffa++) {
 if ($attiva_tariffe_consentite == "n" or $tariffe_consentite_vett[$numtariffa] == "SI") {
 $tariffa = "tariffa".$numtariffa;
-if (${"sel".$tariffa} != "" and ${"sel".$tariffa} != "s") $errore = "SI";
+if (!empty(${"sel".$tariffa}) != "" and ${"sel".$tariffa} != "s") $errore = "SI";
 if (${"minmax".$tariffa} != "" and ${"minmax".$tariffa} != "min" and ${"minmax".$tariffa} != "max" and ${"minmax".$tariffa} != "eq" and ${"minmax".$tariffa} != "tra") $errore = "SI";
 if (${"valminmax".$tariffa} and (controlla_num_pos(${"valminmax".$tariffa}) == "NO" or ${"valminmax".$tariffa} == 0)) $errore = "SI";
-if (${"sel".$tariffa} and ${"minmax".$tariffa} and !${"valminmax".$tariffa}) $errore = "SI";
-if (${"valminmax2".$tariffa} and (controlla_num_pos(${"valminmax2".$tariffa}) == "NO" or ${"valminmax2".$tariffa} == 0)) $errore = "SI";
-if (${"sel".$tariffa} and ${"minmax".$tariffa} == "tra" and (!${"valminmax2".$tariffa} or ${"valminmax2".$tariffa} <= ${"valminmax".$tariffa})) $errore = "SI";
-if (${"sel".$tariffa} == "s" and ${"tipo_associa_".$tariffa} != "p" and ${"tipo_associa_".$tariffa} != "r" and ${"tipo_associa_".$tariffa} != "s") $errore = "SI";
-if (${"sel".$tariffa} == "s") $associa_tariffe = "s";
+if (!empty(${"sel".$tariffa}) and ${"minmax".$tariffa} and !${"valminmax".$tariffa}) $errore = "SI";
+if (!empty(${"valminmax2".$tariffa}) and (controlla_num_pos(${"valminmax2".$tariffa}) == "NO" or ${"valminmax2".$tariffa} == 0)) $errore = "SI";
+if (!empty(${"sel".$tariffa}) and ${"minmax".$tariffa} == "tra" and (!${"valminmax2".$tariffa} or ${"valminmax2".$tariffa} <= ${"valminmax".$tariffa})) $errore = "SI";
+if (isset(${"sel".$tariffa}) and ${"sel".$tariffa} == "s" and ${"tipo_associa_".$tariffa} != "p" and ${"tipo_associa_".$tariffa} != "r" and ${"tipo_associa_".$tariffa} != "s") $errore = "SI";
+if (isset(${"sel".$tariffa}) and ${"sel".$tariffa} == "s") $associa_tariffe = "s";
 } # fine if ($attiva_tariffe_consentite == "n" or...
-if ($dati_ca[$num_costo]["tipo_associa_tariffa".$numtariffa]) $associa_tariffe_prec = 1;
+if (!empty($dati_ca[$num_costo]["tipo_associa_tariffa".$numtariffa])) $associa_tariffe_prec = 1;
 } # fine for $numtariffa
-if ($assegna_da_giorno_ini != "s") $assegna_da_giorno_ini = "";
+if (!isset($assegna_da_giorno_ini) or $assegna_da_giorno_ini != "s") $assegna_da_giorno_ini = "";
 if ($assegna_da_giorno_ini == "s" and $ass_gio_ini_segno != "meno" and $ass_gio_ini_segno != "piu") $errore = "SI";
 if ($assegna_da_giorno_ini == "s" and (!$ass_gio_ini_num or controlla_num_pos($ass_gio_ini_num) == "NO")) $errore = "SI";
-if ($assegna_prenota_contemp != "s") $assegna_prenota_contemp = "";
+if (!isset($assegna_prenota_contemp) or $assegna_prenota_contemp != "s") $assegna_prenota_contemp = "";
 if ($assegna_prenota_contemp == "s" and (!$ass_pren_cont_num or controlla_num_pos($ass_pren_cont_num) == "NO")) $errore = "SI";
 
 if ($tipo_ca == "s") {
@@ -313,13 +415,13 @@ if ($numsett_ca == "n") {
 if (controlla_num_pos($val1_prime_no) == "NO" or $val1_prime_no ==  0) $errore = "SI";
 if (controlla_num_pos($val2_prime_no) == "NO" or $val2_prime_no ==  0) $errore = "SI";
 } # fine if ($numsett_ca == "n")
-if ($lun_sel != "" and $lun_sel != "s") $errore = "SI";
-if ($mar_sel != "" and $mar_sel != "s") $errore = "SI";
-if ($mer_sel != "" and $mer_sel != "s") $errore = "SI";
-if ($gio_sel != "" and $gio_sel != "s") $errore = "SI";
-if ($ven_sel != "" and $ven_sel != "s") $errore = "SI";
-if ($sab_sel != "" and $sab_sel != "s") $errore = "SI";
-if ($dom_sel != "" and $dom_sel != "s") $errore = "SI";
+if (fixset($lun_sel) != "" and $lun_sel != "s") $errore = "SI";
+if (fixset($mar_sel) != "" and $mar_sel != "s") $errore = "SI";
+if (fixset($mer_sel) != "" and $mer_sel != "s") $errore = "SI";
+if (fixset($gio_sel) != "" and $gio_sel != "s") $errore = "SI";
+if (fixset($ven_sel) != "" and $ven_sel != "s") $errore = "SI";
+if (fixset($sab_sel) != "" and $sab_sel != "s") $errore = "SI";
+if (fixset($dom_sel) != "" and $dom_sel != "s") $errore = "SI";
 } # fine if ($tipo_ca == "s")
 else $numsett_ca = "";
 
@@ -338,10 +440,10 @@ if ($tipo_moltmax == "p" and controlla_num_pos($meno_moltmax_p) == "NO") $errore
 if ($tipo_moltmax == "t" and controlla_num_pos($meno_moltmax_t) == "NO") $errore = "SI";
 } # fine if ($moltiplica_ca == "c")
 else $tipo_moltmax = "n";
-if (!strcmp($agg_moltiplica,"")) $agg_moltiplica = 0;
+if (!strcmp((string) $agg_moltiplica,"")) $agg_moltiplica = 0;
 if (controlla_num($agg_moltiplica) == "NO") $errore = "SI";
 $moltiplica_ca_cp = "";
-if (!$dati_cat_pers['num'] and $dati_ca[$num_costo]['cp_molt'][0]['esist']) $fine_for_cp = 1;
+if (!$dati_cat_pers['num'] and !empty($dati_ca[$num_costo]['cp_molt'][0]['esist'])) $fine_for_cp = 1;
 else $fine_for_cp = $dati_cat_pers['num'];
 for ($num1 = 0 ; $num1 < $fine_for_cp ; $num1++) {
 if (isset(${"catpers$num1"})) {
@@ -350,15 +452,15 @@ if ($num1 > 0) $moltiplica_ca_cp .= ">".$dati_cat_pers['lang'].">".$dati_cat_per
 $moltiplica_ca_cp .= "<";
 } # fine if (isset(${"catpers$num1"}))
 } # fine for $num1
-for ($num1 = 0 ; $num1 < $dati_ca[$num_costo]['cp_molt']['num'] ; $num1++) {
+for ($num1 = 0 ; $num1 < fixset($dati_ca[$num_costo]['cp_molt']['num']) ; $num1++) {
 if (!$dati_ca[$num_costo]['cp_molt'][$dati_ca[$num_costo]['cp_molt']['ord'][$num1]]['esist'] and isset(${"c_catpers$num1"})) $moltiplica_ca_cp .= $dati_ca[$num_costo]['cp_molt']['ord'][$num1].">".$dati_ca[$num_costo]['cp_molt'][$num1]['lang'].">".$dati_ca[$num_costo]['cp_molt'][$num1]['n_plur']."<";
 } # for $num1
 if ($moltiplica_ca != "p" and $moltiplica_ca != "t" and ($moltiplica_ca != "c" or ($tipo_moltmax != "p" and $tipo_moltmax != "t"))) $modo_catpers_molt = "";
-if ($modo_catpers_molt and $modo_catpers_molt != "i" and $modo_catpers_molt != "e") $errore = "SI";
-if ($modo_catpers_molt == "i" and !$moltiplica_ca_cp) { $errore = "SI"; $conflitti .= "11;"; }
+if (!empty($modo_catpers_molt) and $modo_catpers_molt != "i" and $modo_catpers_molt != "e") $errore = "SI";
+if (isset($modo_catpers_molt) and $modo_catpers_molt == "i" and !$moltiplica_ca_cp) { $errore = "SI"; $conflitti .= "11;"; }
 
 
-if (!$beni_inv_elimina) $beni_inv_elimina = "nessuno";
+if (empty($beni_inv_elimina)) $beni_inv_elimina = "nessuno";
 if ($beni_inv_elimina != "nessuno" and $beni_inv_elimina != "sel") $errore = "SI";
 if ($beni_inv_elimina != "nessuno" and ($priv_vedi_beni_inv == "n" or (($priv_vedi_inv_mag == "n" or $priv_mod_beni_in_mag == "n") and ($priv_vedi_inv_app == "n" or $priv_mod_beni_in_app == "n")))) $errore = "SI";
 if ($beni_inv_elimina == "sel") {
@@ -368,7 +470,7 @@ unset($bene_gia_sel);
 for ($num1 = 1 ; $num1 <= $num_beni_inv_elimina_sel ; $num1++) {
 $bene_esist = esegui_query("select * from $tablebeniinventario where idbeniinventario = '".aggslashdb(${"bene_inv_sel".$num1})."' ".str_replace("where","and",$condizione_beni_propri)." ");
 if (numlin_query($bene_esist) != 1) $errore = "SI";
-if ($bene_gia_sel[${"bene_inv_sel".$num1}]) $errore = "SI";
+if (!empty($bene_gia_sel[${"bene_inv_sel".$num1}])) $errore = "SI";
 else $bene_gia_sel[${"bene_inv_sel".$num1}] = 1;
 if (controlla_num_pos(${"molt_bene_inv_sel".$num1}) == "NO" or ${"molt_bene_inv_sel".$num1} == 0) $errore = "SI";
 } # fine for $num1
@@ -384,11 +486,11 @@ if ($moltiplica_ca == "t" or $tipo_moltmax == "t") { $errore = "SI"; $conflitti 
 } # fine if ($beni_inv_elimina == "sel")
 if ($beni_inv_elimina != "nessuno" and $tipo_bie != "a" and $tipo_bie != "m") $errore = "SI";
 if (($priv_vedi_inv_mag == "n" or $priv_mod_beni_in_mag == "n") and $tipo_bie == "m") $errore = "SI";
-if ($beni_inv_elimina != "nessuno" and $tipo_bie == "m" and !$mag_bie_sel) $errore = "SI";
-if ($mag_bie_sel) {
+if ($beni_inv_elimina != "nessuno" and $tipo_bie == "m" and empty($mag_bie_sel)) $errore = "SI";
+if (!empty($mag_bie_sel)) {
 $mag_esist = esegui_query("select * from $tablemagazzini where idmagazzini = '".aggslashdb($mag_bie_sel)."' ".str_replace("where","and",$condizione_mag_propri)." ");
 if (numlin_query($mag_esist) != 1) $errore = "SI";
-} # fine if ($mag_bie_sel)
+} # fine if (!empty($mag_bie_sel))
 
 if ($periodi_permessi != "tutti" and $periodi_permessi != "sel") $errore = "SI";
 if ($periodi_permessi == "sel") {
@@ -411,8 +513,9 @@ else $ultima_data = $nuova_ultima_data;
 if ($tipo_pp != "t" and $tipo_pp != "u" and $tipo_pp != "p") $errore = "SI";
 if ($tipo_ca != "s" and $tipo_pp == "p") $errore = "SI";
 
+$app_incompatibili = "";
 for ($num1 = 0 ; $num1 < $num_appartamenti ; $num1++) {
-if (${"app_incomp_".$num1} != "" and ${"app_incomp_".$num1} != "i") $errore = "SI";
+if (fix_set(${"app_incomp_".$num1}) != "" and ${"app_incomp_".$num1} != "i") $errore = "SI";
 if (${"app_incomp_".$num1} == "i") {
 $app_incompatibili = "SI";
 if ($priv_vedi_tab_appartamenti != "s" and $appartamenti_consentiti[${"idapp_incomp_".$num1}] == "NO") $errore = "SI";
@@ -429,17 +532,17 @@ $tariffe_incompatibili_prec = 0;
 for ($numtariffa = 1 ; $numtariffa <= $numero_tariffe ; $numtariffa++) {
 if ($attiva_tariffe_consentite == "n" or $tariffe_consentite_vett[$numtariffa] == "SI") {
 $tariffa = "tariffa".$numtariffa;
-if (${"incomp_".$tariffa} != "" and ${"incomp_".$tariffa} != "i") $errore = "SI";
-if ((${"sel".$tariffa} == "s" and $associa_tariffe != "n") and ${"incomp_".$tariffa} != "") {
+if (fix_set(${"incomp_".$tariffa}) != "" and ${"incomp_".$tariffa} != "i") $errore = "SI";
+if ((isset(${"sel".$tariffa}) and ${"sel".$tariffa} == "s" and $associa_tariffe != "n") and ${"incomp_".$tariffa} != "") {
 $errore = "SI";
 if (!strstr(";".$conflitti,";5-8;")) $conflitti .= "5-8;";
-} # fine if ((${"sel".$tariffa} == "s" and $associa_tariffe != "n") and ${"incomp_".$tariffa} != "")
+} # fine if ((isset(${"sel".$tariffa}) and ${"sel".$tariffa} == "s" and $associa_tariffe != "n") and ${"incomp_".$tariffa} != "")
 if (${"incomp_".$tariffa} == "i") $tariffe_incompatibili = "SI";
 } # fine if ($attiva_tariffe_consentite == "n" or...
-if ($dati_ca[$num_costo]["incomp_".$tariffa]) $tariffe_incompatibili_prec = 1;
+if (!empty($dati_ca[$num_costo]["incomp_".$tariffa])) $tariffe_incompatibili_prec = 1;
 } # fine for $numtariffa
 
-if ($combina_ca != "s" or $raggruppa_ca != "s") $combina_ca = "n";
+if (!isset($combina_ca) or $combina_ca != "s" or $raggruppa_ca != "s") $combina_ca = "n";
 if (($associa_tariffe != "n" or $assegna_da_giorno_ini or $assegna_prenota_contemp) and $mostra_ca != "n") { 
 $errore = "SI";
 $messaggio_errore .= "".mex("Non si può <b style=\"font-weight: normal; color: red;\">contemporaneamente</b> mostrare il costo nella pagina di inserimento delle prenotazioni ed assegnarlo automaticamente con una tariffa",$pag).".<br>";
@@ -477,26 +580,26 @@ if ($tipo_ca == "s" and $associasett != "s" and $periodi_permessi != "tutti" and
 if (controlla_num_pos($numlimite_ca) == "NO" or $numlimite_ca == 0) $errore = "SI";
 } # fine if ($limite_ca != "n")
 
-if ($mantenere_percentuale != "s" or !$valore_p_ca) $mantenere_percentuale = "n";
+if (!isset($mantenere_percentuale) or $mantenere_percentuale != "s" or !$valore_p_ca) $mantenere_percentuale = "n";
 if ($mantenere_percentuale == "n" and $valore_p_ca and $dati_ca[$num_costo]['tipo_val'] == "f") $note_mantenere .= "3;";
 if (($mantenere_percentuale == "n" and $valore_p_ca) and ($tipo_ca == "s" and $numsett_ca != "c")) $mantenere_numsett = "n";
-if ($mantenere_numsett != "s" or ($tipo_ca != "s" or $numsett_ca == "c")) $mantenere_numsett = "n";
+if (!isset($mantenere_numsett) or $mantenere_numsett != "s" or ($tipo_ca != "s" or $numsett_ca == "c")) $mantenere_numsett = "n";
 if ($mantenere_numsett == "n" and $tipo_ca == "s" and $numsett_ca != "c" and $dati_ca[$num_costo]['tipo'] != "s") $note_mantenere .= "2;";
 if ($mantenere_numsett == "n" and $tipo_ca == "s" and $numsett_ca != "c" and $dati_ca[$num_costo]['var_numsett'] == "c") $note_mantenere .= "9;";
 if (($mantenere_percentuale == "n" and $valore_p_ca) and ($moltiplica_ca != "c" and $moltiplica_ca != "1")) $mantenere_moltiplica = "n";
-if ($mantenere_moltiplica != "s" or ($moltiplica_ca == "c" and $tipo_moltmax == "n" and !$moltmax)) $mantenere_moltiplica = "n";
+if (!isset($mantenere_moltiplica) or $mantenere_moltiplica != "s" or ($moltiplica_ca == "c" and $tipo_moltmax == "n" and !$moltmax)) $mantenere_moltiplica = "n";
 if ($mantenere_moltiplica == "n" and ($moltiplica_ca != "c" or $tipo_moltmax != "n" or $moltmax) and $dati_ca[$num_costo]['moltiplica'] == "c" and $dati_ca[$num_costo]['molt_max'] == "x") $note_mantenere .= "11;";
-if ($mantenere_beniinv != "s" or $beni_inv_elimina == "nessuno") $mantenere_beniinv = "n";
+if (!isset($mantenere_beniinv) or $mantenere_beniinv != "s" or $beni_inv_elimina == "nessuno") $mantenere_beniinv = "n";
 if ($mantenere_beniinv == "n" and $beni_inv_elimina != "nessuno" and !$dati_ca[$num_costo]['beniinv_orig']) $note_mantenere .= "12;";
-if ($mantenere_periodip != "s" or $periodi_permessi == "tutti") $mantenere_periodip = "n";
+if (!isset($mantenere_periodip) or $mantenere_periodip != "s" or $periodi_permessi == "tutti") $mantenere_periodip = "n";
 if ($mantenere_periodip == "n" and $periodi_permessi != "tutti" and !$dati_ca[$num_costo]['periodipermessi_orig']) $note_mantenere .= "13;";
-if ($mantenere_appi != "s" or $app_incompatibili != "SI") $mantenere_appi = "n";
+if (!isset($mantenere_appi) or $mantenere_appi != "s" or $app_incompatibili != "SI") $mantenere_appi = "n";
 if ($mantenere_appi == "n" and $app_incompatibili == "SI" and !$dati_ca[$num_costo]['appincompatibili']) $note_mantenere .= "14;";
-if ($mantenere_tariffea != "s" or $associa_tariffe == "n") $mantenere_tariffea = "n";
+if (!isset($mantenere_tariffea) or $mantenere_tariffea != "s" or $associa_tariffe == "n") $mantenere_tariffea = "n";
 if ($mantenere_tariffea == "n" and $associa_tariffe != "n" and !$associa_tariffe_prec) $note_mantenere .= "5;";
-if ($mantenere_tariffei != "s" or $tariffe_incompatibili != "SI") $mantenere_tariffei = "n";
+if (!isset($mantenere_tariffei) or $mantenere_tariffei != "s" or $tariffe_incompatibili != "SI") $mantenere_tariffei = "n";
 if ($mantenere_tariffei == "n" and $tariffe_incompatibili == "SI" and !$tariffe_incompatibili_prec) $note_mantenere .= "8;";
-if ($mantenere_comb != "s" or $combina_ca != "s") $mantenere_comb = "n";
+if (!isset($mantenere_comb) or $mantenere_comb != "s" or $combina_ca != "s") $mantenere_comb = "n";
 if ($mantenere_comb == "n" and $combina_ca == "s" and $dati_ca[$num_costo]['combina'] != "s") $note_mantenere .= "16;";
 
 
@@ -533,18 +636,18 @@ esegui_query("update $tablenometariffe set tipo_ca = '$tipo_ca$tipo_valore_ca' w
 $modificato = "SI";
 } # fine if ($tipo_ca != $dati_ca[$num_costo]['tipo'] or $tipo_valore_ca != $dati_ca[$num_costo]['tipo_val'])
 $valore_ca = $valore_f_ca;
-if (!strcmp($valore_ca,"")) $valore_ca = 0;
+if (!strcmp((string) $valore_ca,"")) $valore_ca = 0;
 $valore_ca = formatta_soldi($valore_ca);
 if ($valore_ca != $dati_ca[$num_costo]['valore']) {
 esegui_query("update $tablenometariffe set valore_ca = '$valore_ca' where idntariffe = '$idntariffe'");
 $modificato = "SI";
 } # fine if ($valore_ca != $dati_ca[$num_costo]['valore'])
 $valore_perc_ca = formatta_soldi($valore_p_ca);
-if ($valore_perc_ca != $dati_ca[$num_costo]['valore_perc']) {
-if (!strcmp($valore_perc_ca,"")) esegui_query("update $tablenometariffe set valore_perc_ca = NULL where idntariffe = '$idntariffe'");
+if ($valore_perc_ca != fixset($dati_ca[$num_costo]['valore_perc'])) {
+if (!strcmp((string) $valore_perc_ca,"")) esegui_query("update $tablenometariffe set valore_perc_ca = NULL where idntariffe = '$idntariffe'");
 else esegui_query("update $tablenometariffe set valore_perc_ca = '$valore_perc_ca' where idntariffe = '$idntariffe'");
 $modificato = "SI";
-} # fine if ($valore_perc_ca != $dati_ca[$num_costo]['valore_perc'])
+} # fine if ($valore_perc_ca != fixset($dati_ca[$num_costo]['valore_perc']))
 if ($moltiplica_ca != "c" or ($tipo_moltmax == "n" and !$moltmax)) {
 $tipo_moltmax = "x";
 $moltmax = "";
@@ -554,7 +657,7 @@ if ($tipo_moltmax == "p") $moltmax = $meno_moltmax_p;
 if ($tipo_moltmax == "t") $moltmax = $meno_moltmax_t;
 } # fine if ($moltiplica_ca != "c" or ($tipo_moltmax == "n" and !$moltmax))
 $moltiplica_ca .= $tipo_moltmax.$agg_moltiplica.",".$moltmax;
-if ($modo_catpers_molt and $moltiplica_ca_cp) $moltiplica_ca .= "<$modo_catpers_molt<".substr($moltiplica_ca_cp,0,-1);
+if (!empty($modo_catpers_molt) and $moltiplica_ca_cp) $moltiplica_ca .= "<$modo_catpers_molt<".substr($moltiplica_ca_cp,0,-1);
 if ($moltiplica_ca != $dati_ca[$num_costo]['moltiplica'].$dati_ca[$num_costo]['molt_max'].$dati_ca[$num_costo]['molt_agg'].",".$dati_ca[$num_costo]['molt_max_num'].$dati_ca[$num_costo]['cp_molt_int']) {
 esegui_query("update $tablenometariffe set moltiplica_ca = '$moltiplica_ca' where idntariffe = '$idntariffe'");
 $modificato = "SI";
@@ -588,14 +691,14 @@ $modificato = "SI";
 } # fine if ($tipo_valore_ca != "f" and $arrotonda_ca != $dati_ca[$num_costo]['arrotonda'])
 if ($tipo_tasse == "t") $tasseperc_ca = -1;
 if ($tasseperc_ca != $dati_ca[$num_costo]['tasseperc']) {
-if (!strcmp($tasseperc_ca,"")) esegui_query("update $tablenometariffe set tasseperc_ca = NULL where idntariffe = '$idntariffe'");
+if (!strcmp((string) $tasseperc_ca,"")) esegui_query("update $tablenometariffe set tasseperc_ca = NULL where idntariffe = '$idntariffe'");
 else esegui_query("update $tablenometariffe set tasseperc_ca = '$tasseperc_ca' where idntariffe = '$idntariffe'");
 $modificato = "SI";
 } # fine if ($tasseperc_ca != $dati_ca[$num_costo]['tasseperc'])
 for ($numtariffa = 1 ; $numtariffa <= $numero_tariffe ; $numtariffa++) {
 if ($attiva_tariffe_consentite == "n" or $tariffe_consentite_vett[$numtariffa] == "SI") {
 $tariffa = "tariffa".$numtariffa;
-if (${"sel".$tariffa} == "s") {
+if (isset(${"sel".$tariffa}) and ${"sel".$tariffa} == "s") {
 $valtariffa = "s";
 if (${"minmax".$tariffa} != "") {
 if (${"minmax".$tariffa} == "min") $valtariffa = ">";
@@ -606,13 +709,13 @@ $valtariffa .= ${"valminmax".$tariffa};
 if (${"minmax".$tariffa} == "tra") $valtariffa .= "<".${"valminmax2".$tariffa};
 } # fine if (${"minmax".$tariffa} != "")
 $valtariffa = ${"tipo_associa_".$tariffa}.$valtariffa;
-} # fine if (${"sel".$tariffa} == "s")
+} # fine if (isset(${"sel".$tariffa}) and ${"sel".$tariffa} == "s")
 else {
 $valtariffa = "";
 if (${"incomp_".$tariffa} == "i") $valtariffa = "i";
-} # fine else if (${"sel".$tariffa} == "s")
-$valtariffa_prec = $dati_ca[$num_costo]["tipo_associa_".$tariffa].$dati_ca[$num_costo][$tariffa];
-if ($dati_ca[$num_costo]["incomp_".$tariffa]) $valtariffa_prec = "i";
+} # fine else if (isset(${"sel".$tariffa}) and ${"sel".$tariffa} == "s")
+$valtariffa_prec = fixset($dati_ca[$num_costo]["tipo_associa_".$tariffa]).$dati_ca[$num_costo][$tariffa];
+if (!empty($dati_ca[$num_costo]["incomp_".$tariffa])) $valtariffa_prec = "i";
 if ($valtariffa != $valtariffa_prec) {
 esegui_query("update $tablenometariffe set $tariffa = '$valtariffa' where idntariffe = '$idntariffe'");
 $modificato = "SI";
@@ -704,7 +807,7 @@ echo "<form accept-charset=\"utf-8\" method=\"post\" action=\"$pag\"><div>
 <input type=\"hidden\" name=\"anno\" value=\"$anno\">
 <input type=\"hidden\" name=\"idntariffe\" value=\"$idntariffe\">
 <input type=\"hidden\" name=\"id_sessione\" value=\"$id_sessione\">
-<input type=\"hidden\" name=\"origine\" value=\"".htmlspecialchars($origine)."\">
+<input type=\"hidden\" name=\"origine\" value=\"".htmlspecialchars(fixstr($origine))."\">
 <button class=\"cont\" type=\"submit\"><div>OK</div></button><br>
 </div></form>";
 
@@ -730,29 +833,39 @@ echo "<br><div style=\"text-align: center;\">
 <input type=\"hidden\" name=\"anno\" value=\"$anno\">
 <input type=\"hidden\" name=\"id_sessione\" value=\"$id_sessione\">
 <input type=\"hidden\" name=\"idntariffe\" value=\"$idntariffe\">
-<input type=\"hidden\" name=\"origine\" value=\"".htmlspecialchars($origine)."\">
+<input type=\"hidden\" name=\"origine\" value=\"".htmlspecialchars(fixstr($origine))."\">
 <button class=\"gobk\" type=\"submit\"><div>".mex("Torna indietro",$pag)."</div></button>
 <br></div></form></div>";
 } # fine else if ($errore != "SI")
 
-} # fine if ($modifica_costo)
+} # fine if (!empty($modifica_costo))
 unlock_tabelle($tabelle_lock);
 
-if ($modifica_costo and $errore != "SI" and $modificato == "SI") {
+if (!empty($modifica_costo) and $errore != "SI" and $modificato == "SI") {
 $lock = 1;
 $aggiorna_disp = 0;
 $aggiorna_tar = 1;
 if (@function_exists('pcntl_fork')) include("./includes/interconnect/aggiorna_ic_fork.php");
 else include("./includes/interconnect/aggiorna_ic.php");
-} # fine if ($modifica_costo and $errore != "SI" and $modificato == "SI")
+} # fine if (!empty($modifica_costo) and $errore != "SI" and $modificato == "SI")
 
 
 
 
-if ($mostra_form_iniziale != "NO") {
+if (!isset($mostra_form_iniziale) or $mostra_form_iniziale != "NO") {
 
 echo "<h3 id=\"h_exc\"><span>".mex("Modifica il costo aggiuntivo",$pag)." ".($idntariffe - 10).".</span></h3>";
 
+$checked_uni = "";
+$b_uni = "";
+$slash_b_uni = "";
+$checked_set = "";
+$b_set = "";
+$slash_b_set = "";
+$b_fiss = "";
+$slash_b_fiss = "";
+$b_perc = "";
+$slash_b_perc = "";
 $d_nome = $dati_ca[$num_costo]['nome'];
 if ($dati_ca[$num_costo]['mostra'] == "n") $selected_mostra_no = " selected";
 if ($dati_ca[$num_costo]['mostra'] == "s") $selected_mostra_si = " selected";
@@ -763,7 +876,7 @@ if ($d_prezzo_fisso) {
 $b_fiss = "<b>";
 $slash_b_fiss = "</b>";
 } # fine if ($d_prezzo_fisso)
-$d_prezzo_percentuale = $dati_ca[$num_costo]['valore_perc'];
+$d_prezzo_percentuale = fixset($dati_ca[$num_costo]['valore_perc']);
 if (!$d_prezzo_percentuale) $d_prezzo_percentuale = 0;
 if ($dati_ca[$num_costo]['tipo_val'] != "f") {
 $d_tipo_percentuale = $dati_ca[$num_costo]['tipo_val'];
@@ -771,8 +884,12 @@ $d_arrotond = $dati_ca[$num_costo]['arrotonda'];
 $b_perc = "<b>";
 $slash_b_perc = "</b>";
 } # fine if ($dati_ca[$num_costo]['tipo_val'] != "f")
+else {
+$d_tipo_percentuale = "";
+$d_arrotond = "";
+} # fine else if ($dati_ca[$num_costo]['tipo_val'] != "f")
 $d_tasseperc = $dati_ca[$num_costo]['tasseperc'];
-if ($d_prezzo_settimanale != "") {
+if (fixset($d_prezzo_settimanale) != "") {
 $d_tipo_costo = "settimanale";
 $d_prezzo_costo = $d_prezzo_settimanale;
 $checked_set = " checked";
@@ -798,14 +915,14 @@ if ($d_regolac == "s") $selected_chiedi_moltiplica_si = " selected";
 else $selected_chiedi_moltiplica_no = " selected";
 if ($d_regolad == "s") $selected_considera_letto_si = " selected";
 else $selected_considera_letto_no = " selected";
-} # fine if ($d_prezzo_settimanale != "")
+} # fine if (fixset($d_prezzo_settimanale) != "")
 else {
 $checked_tutte_sett = " checked";
-if ($d_regolab == "s") $selected_chiedi_moltiplica_si = " selected";
+if (isset($d_regolab) and $d_regolab == "s") $selected_chiedi_moltiplica_si = " selected";
 else $selected_chiedi_moltiplica_no = " selected";
-if ($d_regolac == "s") $selected_considera_letto_si = " selected";
+if (isset($d_regolac) and $d_regolac == "s") $selected_considera_letto_si = " selected";
 else $selected_considera_letto_no = " selected";
-} # fine else if ($d_prezzo_settimanale != "")
+} # fine else if (fixset($d_prezzo_settimanale) != "")
 /*
 $d_tariffe_abbinate = "";
 $d_tariffa_abbinata = "";
@@ -824,7 +941,9 @@ echo "<br>
 <input type=\"hidden\" name=\"anno\" value=\"$anno\">
 <input type=\"hidden\" name=\"id_sessione\" value=\"$id_sessione\">
 <input type=\"hidden\" name=\"idntariffe\" value=\"$idntariffe\">
-<input type=\"hidden\" name=\"origine\" value=\"".htmlspecialchars($origine)."\">
+<input type=\"hidden\" name=\"origine\" value=\"".htmlspecialchars(fixstr($origine))."\">
+<input type=\"hidden\" name=\"num_tariffe_passa\" value=\"$numero_tariffe\">
+<input type=\"hidden\" name=\"num_appartamenti_passa\" value=\"$num_appartamenti\">
 <table cellspacing=2 cellpadding=5>
 <tr><td><small>1. </small>".mex("Nome",$pag).": <b>".$dati_ca[$num_costo]['nome']."</b></td>
 <td>".mex("Cambia in",$pag)." <input type=\"text\" name=\"n_nome\" size=\"25\"></td></tr>
@@ -858,10 +977,10 @@ echo "<option value=\"caparra\"$selected>".mex("la caparra",$pag)."</option>";
 if ($d_tipo_percentuale == "r") $selected = " selected";
 else $selected = "";
 echo "<option value=\"resto\"$selected>".mex("totale meno caparra",$pag)."</option>";
-if (!strcmp($d_arrotond,"")) {
+if (!strcmp((string) $d_arrotond,"")) {
 $d_arrotond = esegui_query("select valpersonalizza from $tablepersonalizza where idpersonalizza = 'arrotond_predef' and idutente = '$id_utente'");
 $d_arrotond = risul_query($d_arrotond,0,'valpersonalizza');
-} # fine if (!strcmp($d_arrotond,""))
+} # fine if (!strcmp((string) $d_arrotond,""))
 echo "</select> ".mex("arrotondato a",$pag)."
  <input type=\"text\" name=\"arrotonda_ca\" value=\"$d_arrotond\" size=\"5\">$Euro</td></tr>";
 
@@ -893,8 +1012,10 @@ else elem_valminmax2.innerHTML = ' ".mex("e",$pag)." <input type=\"text\" name=\
 ";
 $default_tipo_associa = "p";
 $minmax_trovato = 0;
+$default_minmax = "";
+$valminmax2 = "";
 for ($numtariffa = 1 ; $numtariffa <= $numero_tariffe ; $numtariffa++) {
-if ($dati_ca[$num_costo]["tipo_associa_tariffa$numtariffa"]) $default_tipo_associa = $dati_ca[$num_costo]["tipo_associa_tariffa".$numtariffa];
+if (!empty($dati_ca[$num_costo]["tipo_associa_tariffa$numtariffa"])) $default_tipo_associa = $dati_ca[$num_costo]["tipo_associa_tariffa".$numtariffa];
 $minmax = substr($dati_ca[$num_costo]["tariffa$numtariffa"],0,1);
 if (!$default_minmax and $minmax and !$minmax_trovato) {
 $default_minmax = $minmax;
@@ -928,7 +1049,7 @@ $default_valminmax2 = "";
 } # fine for $numtariffa
 
 for ($numtariffa = 1 ; $numtariffa <= $numero_tariffe ; $numtariffa++) {
-if ($attiva_tariffe_consentite == "n" or $tariffe_consentite_vett[$numtariffa] == "SI") {
+if ($attiva_tariffe_consentite == "n" or (isset($tariffe_consentite_vett[$numtariffa]) and $tariffe_consentite_vett[$numtariffa] == "SI")) {
 $tariffa = "tariffa".$numtariffa;
 $nometariffa = risul_query($rigatariffe,0,$tariffa);
 if ($nometariffa == "") {
@@ -936,7 +1057,7 @@ $nometariffa = $tariffa;
 $nometariffa_vedi = mex("tariffa",$pag).$numtariffa;
 } # fine if ($nometariffa == "")
 else $nometariffa_vedi = mex("tariffa",$pag)."$numtariffa $nometariffa";
-if ($dati_ca[$num_costo]["tipo_associa_tariffa".$numtariffa]) { $checked = " checked"; $b = "<b>"; $b_slash = "</b>"; }
+if (!empty($dati_ca[$num_costo]["tipo_associa_tariffa".$numtariffa])) { $checked = " checked"; $b = "<b>"; $b_slash = "</b>"; }
 else { $checked = ""; $b = ""; $b_slash = ""; }
 echo "<table cellspacing=0 cellpadding=0><tr><td valign=\"middle\"><label>
 <input type=\"checkbox\" name=\"sel$tariffa\" value=\"s\"$checked>$b"."$nometariffa_vedi$b_slash</label></td>";
@@ -980,17 +1101,17 @@ agg_sel_giorni_associa_tariffa('$tariffa','$valminmax2');
 echo "-->
 </script>
 </td>";
-if ($dati_ca[$num_costo]["tipo_associa_tariffa".$numtariffa] == "p") { $checked = " checked"; $b2 = $b; $b_slash2 = $b_slash; }
+if (isset($dati_ca[$num_costo]["tipo_associa_tariffa".$numtariffa]) and $dati_ca[$num_costo]["tipo_associa_tariffa".$numtariffa] == "p") { $checked = " checked"; $b2 = $b; $b_slash2 = $b_slash; }
 else { $checked = ""; $b2 = ""; $b_slash2 = ""; }
-if (!$dati_ca[$num_costo]["tipo_associa_tariffa".$numtariffa] and $default_tipo_associa == "p") $checked = " checked";
+if (empty($dati_ca[$num_costo]["tipo_associa_tariffa".$numtariffa]) and $default_tipo_associa == "p") $checked = " checked";
 echo "<td>&nbsp;<label><input type=\"radio\" name=\"tipo_associa_tariffa$numtariffa\" value=\"p\"$checked> <small>$b2".mex("Se possibile",$pag)."$b_slash2</small></label></td>";
-if ($dati_ca[$num_costo]["tipo_associa_tariffa".$numtariffa] == "r") { $checked = " checked"; $b2 = $b; $b_slash2 = $b_slash; }
+if (isset($dati_ca[$num_costo]["tipo_associa_tariffa".$numtariffa]) and $dati_ca[$num_costo]["tipo_associa_tariffa".$numtariffa] == "r") { $checked = " checked"; $b2 = $b; $b_slash2 = $b_slash; }
 else { $checked = ""; $b2 = ""; $b_slash2 = ""; }
-if (!$dati_ca[$num_costo]["tipo_associa_tariffa".$numtariffa] and $default_tipo_associa == "r") $checked = " checked";
+if (empty($dati_ca[$num_costo]["tipo_associa_tariffa".$numtariffa]) and $default_tipo_associa == "r") $checked = " checked";
 echo "<td>&nbsp;<label><input type=\"radio\" name=\"tipo_associa_tariffa$numtariffa\" value=\"r\"$checked> <small>$b2".mex("Sempre in periodi permessi",$pag)."$b_slash2</small></label></td>";
-if ($dati_ca[$num_costo]["tipo_associa_tariffa".$numtariffa] == "s") { $checked = " checked"; $b2 = $b; $b_slash2 = $b_slash; }
+if (isset($dati_ca[$num_costo]["tipo_associa_tariffa".$numtariffa]) and $dati_ca[$num_costo]["tipo_associa_tariffa".$numtariffa] == "s") { $checked = " checked"; $b2 = $b; $b_slash2 = $b_slash; }
 else { $checked = ""; $b2 = ""; $b_slash2 = ""; }
-if (!$dati_ca[$num_costo]["tipo_associa_tariffa".$numtariffa] and $default_tipo_associa == "s") $checked = " checked";
+if (empty($dati_ca[$num_costo]["tipo_associa_tariffa".$numtariffa]) and $default_tipo_associa == "s") $checked = " checked";
 echo "<td>&nbsp;<label><input type=\"radio\" name=\"tipo_associa_tariffa$numtariffa\" value=\"s\"$checked> <small>$b2".mex("Sempre",$pag)."$b_slash2</small></label></td>";
 echo "</tr><tr><td style=\"height: 5px;\"></td></tr></table>";
 } # fine if ($attiva_tariffe_consentite == "n" or...
@@ -1021,7 +1142,7 @@ echo "7. <label><input type=\"checkbox\" id=\"ass_p_c\" name=\"assegna_prenota_c
 <tr><td valign=\"top\">
 <small>8. </small>".mex("Tariffe incompatibili",$pag).":</td><td>";
 for ($numtariffa = 1 ; $numtariffa <= $numero_tariffe ; $numtariffa++) {
-if ($attiva_tariffe_consentite == "n" or $tariffe_consentite_vett[$numtariffa] == "SI") {
+if ($attiva_tariffe_consentite == "n" or (isset($tariffe_consentite_vett[$numtariffa]) and $tariffe_consentite_vett[$numtariffa] == "SI")) {
 $tariffa = "tariffa".$numtariffa;
 $nometariffa = risul_query($rigatariffe,0,$tariffa);
 if ($nometariffa == "") {
@@ -1029,7 +1150,7 @@ $nometariffa = $tariffa;
 $nometariffa_vedi = mex("tariffa",$pag).$numtariffa;
 } # fine if ($nometariffa == "")
 else $nometariffa_vedi = mex("tariffa",$pag)."$numtariffa $nometariffa";
-if ($dati_ca[$num_costo]["incomp_tariffa".$numtariffa] == "i") { $checked = " checked"; $b = "<b>"; $b_slash = "</b>"; }
+if (fixset($dati_ca[$num_costo]["incomp_tariffa".$numtariffa]) == "i") { $checked = " checked"; $b = "<b>"; $b_slash = "</b>"; }
 else { $checked = ""; $b = ""; $b_slash = ""; }
 echo "<label><input type=\"checkbox\" name=\"incomp_$tariffa\" value=\"i\"$checked>$b"."$nometariffa_vedi$b_slash</label><br>";
 } # fine if ($attiva_tariffe_consentite == "n" or...
@@ -1049,10 +1170,10 @@ if ($numsett_ca == "m") { $checked = " checked"; $b = "<b>"; $b_slash = "</b>"; 
 else { $checked = ""; $b = ""; $b_slash = ""; }
 echo "<label><input type=\"radio\" id=\"ns_m\" name=\"numsett_ca\" value=\"m\"$checked> $b".mex("Tutt$lettera_e meno",$pag)."$b_slash";
 echo "</label> <select name=\"pos_menouna\" onchange=\"document.getElementById('ns_m').checked='1';\">";
-if ($dati_ca[$num_costo]['sett_meno_una'] == "p") $selected = " selected";
+if (fixset($dati_ca[$num_costo]['sett_meno_una']) == "p") $selected = " selected";
 else $selected = "";
 echo "<option value=\"p\"$selected>".mex("$parola_la prim$lettera_a",$pag)."</option>";
-if ($dati_ca[$num_costo]['sett_meno_una'] == "u") $selected = " selected";
+if (fixset($dati_ca[$num_costo]['sett_meno_una']) == "u") $selected = " selected";
 else $selected = "";
 echo "<option value=\"u\"$selected>".mex("l'ultim$lettera_a",$pag)."</option>";
 echo "</select></td></tr>";
@@ -1067,8 +1188,8 @@ if ($numsett_ca == "s") {
 $val1_prime_si = $dati_ca[$num_costo]['num_sett_prime'];
 $val2_prime_si = $dati_ca[$num_costo]['num_sett_seconde'];
 } # fine if ($numsett_ca == "s")
-if (!$val1_prime_si) $val1_prime_si = "1";
-if (!$val2_prime_si) $val2_prime_si = "1";
+if (empty($val1_prime_si)) $val1_prime_si = "1";
+if (empty($val2_prime_si)) $val2_prime_si = "1";
 echo "<input type=\"radio\" id=\"ns_s\" name=\"numsett_ca\" value=\"s\"$checked>
  <input type=\"text\" name=\"val1_prime_si\" value=\"$val1_prime_si\" size=\"3\" onfocus=\"document.getElementById('ns_s').checked='1';\">
  <label for=\"ns_s\">$b".mex("$parola_settimane sì",$pag)." ".mex("e",$pag)."$b_slash</label>
@@ -1081,8 +1202,8 @@ if ($numsett_ca == "n") {
 $val1_prime_no = $dati_ca[$num_costo]['num_sett_prime'];
 $val2_prime_no = $dati_ca[$num_costo]['num_sett_seconde'];
 } # fine if ($numsett_ca == "n")
-if (!$val1_prime_no) $val1_prime_no = "1";
-if (!$val2_prime_no) $val2_prime_no = "1";
+if (empty($val1_prime_no)) $val1_prime_no = "1";
+if (empty($val2_prime_no)) $val2_prime_no = "1";
 echo "<input type=\"radio\" id=\"ns_n\" name=\"numsett_ca\" value=\"n\"$checked>
  <input type=\"text\" name=\"val1_prime_no\" value=\"$val1_prime_no\" size=\"3\" onfocus=\"document.getElementById('ns_n').checked='1';\">
  <label for=\"ns_n\">$b".mex("$parola_settimane no",$pag)." ".mex("e",$pag)."$b_slash</label>
@@ -1094,7 +1215,7 @@ if ($numsett_ca == "g") { $checked = " checked"; $b = "<b>"; $b_slash = "</b>"; 
 else { $checked = ""; $b = ""; $b_slash = ""; }
 echo "<label><input type=\"radio\" id=\"ns_g\" name=\"numsett_ca\" value=\"g\"$checked>
 $b".mex("Giorni della settimana selezionati",$pag)."$b_slash:</label><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
-$gio = $dati_ca[$num_costo]['giornisett'];
+$gio = fixstr($dati_ca[$num_costo]['giornisett']);
 if (str_replace("1","",$gio) != $gio) { $checked = " checked"; $b = "<b>"; $b_slash = "</b>"; }
 else { $checked = ""; $b = ""; $b_slash = ""; }
 echo "<label><input type=\"checkbox\" name=\"lun_sel\" value=\"s\" onchange=\"asso_rdbx('lun_sel','ns_g');\"$checked>$b".mex("Lunedì",$pag)."$b_slash</label>&nbsp;&nbsp;&nbsp;";
@@ -1165,6 +1286,12 @@ $moltmax = 0;
 $meno_moltmax_p = 0;
 $meno_moltmax_t = 0;
 $checked_tipo_n = " checked";
+$checked_tipo_p = "";
+$b_p = "";
+$b_slash_p = "";
+$checked_tipo_t = "";
+$b_t = "";
+$b_slash_t = "";
 if ($moltiplica_ca == "c") {
 $checked = " checked";
 $b = "<b>";
@@ -1177,14 +1304,12 @@ $b_p = "<b>";
 $b_slash_p = "</b>";
 $meno_moltmax_p = $dati_ca[$num_costo]['molt_max_num'];
 } # fine if ($dati_ca[$num_costo]['molt_max'] == "p")
-else { $checked_tipo_p = ""; $b_p = ""; $b_slash_p = ""; }
 if ($dati_ca[$num_costo]['molt_max'] == "t") {
 $checked_tipo_t = " checked";
 $b_t = "<b>";
 $b_slash_t = "</b>";
 $meno_moltmax_t = $dati_ca[$num_costo]['molt_max_num'];
 } # fine if ($dati_ca[$num_costo]['molt_max'] == "t")
-else { $checked_tipo_t = ""; $b_t = ""; $b_slash_t = ""; }
 } # fine if ($moltiplica_ca == "c")
 else { $checked = ""; $b = ""; $b_slash = ""; }
 echo "<label><input type=\"radio\" id=\"mo_c\" name=\"moltiplica_ca\" value=\"c\"$checked> $b".mex("Chiedere",$pag)."$b_slash. ".mex("Numero massimo",$pag).":</label></td>
@@ -1201,8 +1326,8 @@ echo "<label><input type=\"radio\" id=\"mo_c\" name=\"moltiplica_ca\" value=\"c\
  $b_t".mex("Numero di persone totale",$pag)."$b_slash_t ".mex("meno",$pag)."</label>
  <input type=\"text\" name=\"meno_moltmax_t\" value=\"$meno_moltmax_t\" size=\"2\" onfocus=\"document.getElementById('mm_t').checked='1';\"></td></tr>
 </table>";
-if ($dati_cat_pers['num'] or $dati_ca[$num_costo]['cp_molt']['num']) {
-if ($dati_ca[$num_costo]['modo_cp_molt'] == "i") { $sel_e = ""; $sel_i = " selected"; }
+if ($dati_cat_pers['num'] or !empty($dati_ca[$num_costo]['cp_molt']['num'])) {
+if (isset($dati_ca[$num_costo]['modo_cp_molt']) and $dati_ca[$num_costo]['modo_cp_molt'] == "i") { $sel_e = ""; $sel_i = " selected"; }
 else { $sel_e = " selected"; $sel_i = ""; }
 echo "<div style=\"height: 6px;\"></div>
 ".mex("Se si moltiplica per il numero di persone",'creaprezzi.php')." <select name=\"modo_catpers_molt\">
@@ -1213,7 +1338,7 @@ if (!$dati_cat_pers['num'] and $dati_ca[$num_costo]['cp_molt'][0]['esist']) $fin
 else $fine_for_cp = $dati_cat_pers['num'];
 for ($num1 = 0 ; $num1 < $fine_for_cp ; $num1++) {
 if ($num1 > 0) echo ";";
-if ($dati_ca[$num_costo]['cp_molt'][$num1]['esist']) $checked = " checked";
+if (!empty($dati_ca[$num_costo]['cp_molt'][$num1]['esist'])) $checked = " checked";
 else $checked = "";
 if (!$dati_cat_pers['num']) $nome_catpers = strtolower(mex("Numero di persone",$pag));
 else $nome_catpers = $dati_cat_pers[$num1]['n_plur'];
@@ -1222,6 +1347,7 @@ if ($checked) echo "<b>$nome_catpers</b>";
 else echo $nome_catpers;
 echo "</em></label>";
 } # for $num1
+fix_set($dati_ca[$num_costo]['cp_molt']['num']);
 for ($num1 = 0 ; $num1 < $dati_ca[$num_costo]['cp_molt']['num'] ; $num1++) {
 if (!$dati_ca[$num_costo]['cp_molt'][$dati_ca[$num_costo]['cp_molt']['ord'][$num1]]['esist']) {
 echo " <label><input type=\"checkbox\" name=\"c_catpers$num1\" value=\"1\" checked><em>
@@ -1229,10 +1355,10 @@ echo " <label><input type=\"checkbox\" name=\"c_catpers$num1\" value=\"1\" check
 } # fine if (!$dati_ca[$num_costo]['cp_molt'][$dati_ca[$num_costo]['cp_molt']['ord'][$num1]]['esist'])
 } # for $num1
 echo ".<br><br>";
-} # fine if ($dati_cat_pers['num'] or $dati_ca[$num_costo]['cp_molt']['num'])
+} # fine if ($dati_cat_pers['num'] or !empty($dati_ca[$num_costo]['cp_molt']['num']))
 echo "</td></tr>";
 
-unset($opt_beni_inv);
+$opt_beni_inv = "";
 if ($priv_vedi_beni_inv != "n" and (($priv_vedi_inv_mag != "n" and $priv_mod_beni_in_mag != "n") or ($priv_vedi_inv_app != "n" and $priv_mod_beni_in_app != "n"))) {
 $beni_inv = esegui_query("select * from $tablebeniinventario $condizione_beni_propri order by idbeniinventario");
 $num_beni_inv = numlin_query($beni_inv);
@@ -1245,7 +1371,7 @@ if ($codice_bene) $opt_beni_inv .= " ($codice_bene)";
 $opt_beni_inv .= "</option>";
 } # fine for $num1
 } # fine if ($priv_vedi_beni_inv != "n" and...
-unset($opt_mag);
+$opt_mag = "";
 if ($priv_vedi_inv_mag != "n" and $priv_mod_beni_in_mag != "n") {
 $magazzini = esegui_query("select * from $tablemagazzini $condizione_mag_propri order by idmagazzini");
 $num_mag = numlin_query($magazzini);
@@ -1259,7 +1385,7 @@ if ($opt_beni_inv and (($priv_vedi_inv_app != "n" and $priv_mod_beni_in_app != "
 echo "<tr><td style=\"height: 1px;\"></td></tr><tr><td valign=\"top\">
 <small>12. </small>".mex("Beni dell'inventario da<br> eliminare quando si<br> inserisce il costo",$pag).":</td><td>
 <table id=\"tab_beni_inv\"><tr><td>";
-if ($dati_ca[$num_costo]['num_beniinv']) $beni_inv_elimina = "sel";
+if (!empty($dati_ca[$num_costo]['num_beniinv'])) $beni_inv_elimina = "sel";
 else $beni_inv_elimina = "nessuno";
 if ($beni_inv_elimina == "nessuno") { $checked = " checked"; $b = "<b>"; $b_slash = "</b>"; }
 else { $checked = ""; $b = ""; $b_slash = ""; }
@@ -1267,10 +1393,10 @@ echo "<label><input type=\"radio\" name=\"beni_inv_elimina\" value=\"nessuno\"$c
 <tr><td>";
 if ($beni_inv_elimina == "sel") { $checked = " checked"; $b = "<b>"; $b_slash = "</b>"; }
 else { $checked = ""; $b = ""; $b_slash = ""; }
-if (!$num_beni_inv_elimina_sel) $num_beni_inv_elimina_sel = $dati_ca[$num_costo]['num_beniinv'];
+if (empty($num_beni_inv_elimina_sel)) $num_beni_inv_elimina_sel = fixset($dati_ca[$num_costo]['num_beniinv']);
 if (!$num_beni_inv_elimina_sel) $num_beni_inv_elimina_sel = 1;
-if ($aggiungi_bene_inv_elimina) $num_beni_inv_elimina_sel++;
-if ($elimina_bene_inv_elimina) $num_beni_inv_elimina_sel--;
+if (!empty($aggiungi_bene_inv_elimina)) $num_beni_inv_elimina_sel++;
+if (!empty($elimina_bene_inv_elimina)) $num_beni_inv_elimina_sel--;
 echo "<label><input type=\"radio\" id=\"bi_s\" name=\"beni_inv_elimina\" value=\"sel\"$checked> $b".mex("Beni selezionati",$pag)."$b_slash:</label></td>
 <td onclick=\"document.getElementById('bi_s').checked='1'\">
 <script type=\"text/javascript\">
@@ -1335,9 +1461,9 @@ return false;
 </script>";
 for ($num1 = 1 ; $num1 <= $num_beni_inv_elimina_sel ; $num1++) {
 if ($num1 > 1) echo "<tr><td></td><td onclick=\"document.getElementById('bi_s').checked='1'\">";
-if (!${"molt_bene_inv_sel".$num1}) ${"molt_bene_inv_sel".$num1} = $dati_ca[$num_costo]['molt_beneinv'][($num1 - 1)];
+if (empty(${"molt_bene_inv_sel".$num1})) ${"molt_bene_inv_sel".$num1} = fixset($dati_ca[$num_costo]['molt_beneinv'][($num1 - 1)]);
 if (!${"molt_bene_inv_sel".$num1}) ${"molt_bene_inv_sel".$num1} = 1;
-if (!${"bene_inv_sel".$num1}) ${"bene_inv_sel".$num1} = $dati_ca[$num_costo]['id_beneinv'][($num1 - 1)];
+if (empty(${"bene_inv_sel".$num1})) ${"bene_inv_sel".$num1} = fixset($dati_ca[$num_costo]['id_beneinv'][($num1 - 1)]);
 echo "<select name=\"bene_inv_sel$num1\">
 <option value=\"\">----</option>".str_replace("\"".${"bene_inv_sel".$num1}."\">","\"".${"bene_inv_sel".$num1}."\" selected>",$opt_beni_inv)."
 </select> x <input type=\"text\" name=\"molt_bene_inv_sel$num1\" value=\"".${"molt_bene_inv_sel".$num1}."\" size=\"4\">";
@@ -1353,8 +1479,9 @@ echo "</td></tr>";
 echo "</table>
 <input type=\"hidden\" id=\"numcaselle_inv\" name=\"num_beni_inv_elimina_sel\" value=\"$num_beni_inv_elimina_sel\">
 <table>";
-if ($dati_ca[$num_costo]['tipo_beniinv'] == "app") $tipo_bie = "a";
-if ($dati_ca[$num_costo]['tipo_beniinv'] == "mag") $tipo_bie = "m";
+$tipo_bie = "";
+if (isset($dati_ca[$num_costo]['tipo_beniinv']) and $dati_ca[$num_costo]['tipo_beniinv'] == "app") $tipo_bie = "a";
+if (isset($dati_ca[$num_costo]['tipo_beniinv']) and $dati_ca[$num_costo]['tipo_beniinv'] == "mag") $tipo_bie = "m";
 if ($priv_vedi_inv_app != "n" and $priv_mod_beni_in_app != "n") {
 if ($tipo_bie == "a") { $checked = " checked"; $b = "<b>"; $b_slash = "</b>"; }
 else { $checked = ""; $b = ""; $b_slash = ""; }
@@ -1363,7 +1490,7 @@ echo "<tr><td style=\"width: 50px;\"></td><td><label>
 <input type=\"radio\" name=\"tipo_bie\" value=\"a\"$checked> $b".mex("elimina i beni dall'inventario dell'appartamento occupato dalla prenotazione",'unit.php')."$b_slash</label></td></tr>";
 } # fine if ($priv_vedi_inv_app != "n" and $priv_mod_beni_in_app != "n")
 if ($opt_mag) {
-$mag_bie_sel = $dati_ca[$num_costo]['mag_beniinv'];
+$mag_bie_sel = fixset($dati_ca[$num_costo]['mag_beniinv']);
 if ($tipo_bie == "m") { $checked = " checked"; $b = "<b>"; $b_slash = "</b>"; }
 else { $checked = ""; $b = ""; $b_slash = ""; }
 echo "<tr><td style=\"width: 50px;\"></td><td><label>
@@ -1397,25 +1524,25 @@ if ($periodi_permessi) { $checked = " checked"; $b = "<b>"; $b_slash = "</b>"; }
 else { $checked = ""; $b = ""; $b_slash = ""; }
 echo "<label><input type=\"radio\" id=\"pp_s\" name=\"periodi_permessi\" value=\"sel\"$checked> $b".mex("Solo nei periodi selezionati",$pag)."$b_slash:</label></td>
 <td onclick=\"document.getElementById('pp_s').checked='1'\">";
-if (!$num_periodi_permessi_sel) $num_periodi_permessi_sel = $num_periodi_permessi;
+if (empty($num_periodi_permessi_sel)) $num_periodi_permessi_sel = $num_periodi_permessi;
 if (!$num_periodi_permessi_sel) $num_periodi_permessi_sel = 1;
-if ($aggiungi_periodo_permesso) $num_periodi_permessi_sel++;
-if ($elimina_periodo_permesso) $num_periodi_permessi_sel--;
+if (!empty($aggiungi_periodo_permesso)) $num_periodi_permessi_sel++;
+if (!empty($elimina_periodo_permesso)) $num_periodi_permessi_sel--;
 for ($num1 = 1 ; $num1 <= $num_periodi_permessi_sel ; $num1++) {
 if ($num1 > 1) echo "<tr><td></td><td>";
-if (!${"pp_dal".$num1} and $num1 <= $num_periodi_permessi) {
+if (empty(${"pp_dal".$num1}) and $num1 <= $num_periodi_permessi) {
 ${"pp_dal".$num1} = esegui_query("select datainizio from $tableperiodi where idperiodi = '".$dati_ca[$num_costo]['sett_periodipermessi_ini'][($num1 - 1)]."'");
 if (numlin_query(${"pp_dal".$num1}) == 1) ${"pp_dal".$num1} = risul_query(${"pp_dal".$num1},0,'datainizio');
 } # fine if (!${"pp_dal".$num1} and...
 echo mex("dal",$pag)." ";
-$pp_dal = ${"pp_dal".$num1};
+$pp_dal = fixset(${"pp_dal".$num1});
 mostra_menu_date(C_DATI_PATH."/selectperiodi$anno.1.php","pp_dal$num1",$pp_dal,"","",$id_utente,$tema);
-if (!${"pp_al".$num1} and $num1 <= $num_periodi_permessi) {
+if (empty(${"pp_al".$num1}) and $num1 <= $num_periodi_permessi) {
 ${"pp_al".$num1} = esegui_query("select datafine from $tableperiodi where idperiodi = '".$dati_ca[$num_costo]['sett_periodipermessi_fine'][($num1 - 1)]."'");
 if (numlin_query(${"pp_al".$num1}) == 1) ${"pp_al".$num1} = risul_query(${"pp_al".$num1},0,'datafine');
 } # fine if (!${"pp_al".$num1} and...
 echo mex("al",$pag)." ";
-$pp_al = ${"pp_al".$num1};
+$pp_al = fixset(${"pp_al".$num1});
 mostra_menu_date(C_DATI_PATH."/selectperiodi$anno.1.php","pp_al$num1",$pp_al,"","",$id_utente,$tema);
 if ($num1 == $num_periodi_permessi_sel) {
 $id_minus = " id=\"minus_pp".($num1 + 1)."\"";
@@ -1659,7 +1786,7 @@ echo "</table></td></tr>
 
 </table>";
 
-if ($origine) $action = $origine;
+if (!empty($origine)) $action = $origine;
 else $action = "visualizza_tabelle.php#tab_costi_agg";
 echo "<br><div style=\"text-align: center;\">
 <button class=\"exco\" id=\"modi\" type=\"submit\" name=\"modifica_costo\" value=\"".mex("Modifica il costo",$pag)."\"><div>".mex("Modifica il costo",$pag)."</div></button>
@@ -1673,7 +1800,7 @@ echo "<br><div style=\"text-align: center;\">
 </div></form></div>
 <table><tr><td style=\"height: 20px;\"></td></tr></table>";
 
-} # fine if ($mostra_form_iniziale != "NO")
+} # fine if (!isset($mostra_form_iniziale) or $mostra_form_iniziale != "NO")
 
 
 } # fine if ($num_costo != "")

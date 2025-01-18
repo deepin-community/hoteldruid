@@ -2,7 +2,7 @@
 
 ##################################################################################
 #    HOTELDRUID
-#    Copyright (C) 2001-2021 by Marco Maria Francesco De Santis (marco@digitaldruid.net)
+#    Copyright (C) 2001-2023 by Marco Maria Francesco De Santis (marco@digitaldruid.net)
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published by
@@ -99,11 +99,314 @@ $var_pag[70] = 'mostra_quadro_disp';
 $var_pag[71] = 'cambia_mostra_quadro_disp';
 $var_pag[72] = 'nuovo_num_contratti';
 $var_pag[73] = 'cambia_num_contratti';
-$n_var_pag = 74;
+$var_pag[74] = 'nuova_aggiunta_tronca';
+$var_pag[75] = 'cambia_aggiunta_tronca';
+$var_pag[76] = 'percorso_cartella_modello';
+$var_pag[77] = 'cambia_percorso_cartella_modello';
+$var_pag[78] = 'sup_n_citta';
+$var_pag[79] = 'elimina_tutte_nazioni';
+$var_pag[80] = 'citta_da_eliminare';
+$var_pag[81] = 'elimina_tutte_citta';
+$var_pag[82] = 'elimina_tutte_documentiid';
+$var_pag[83] = 'elimina_tutte_parentele';
+$var_pag[84] = 'elimina_tutte_regioni';
+$var_pag[85] = 'nuovo_nome_strutt';
+$var_pag[86] = 'nuovo_tipo_strutt';
+$var_pag[87] = 'nuova_email';
+$var_pag[88] = 'nuovo_num_stelle_strutt';
+$var_pag[89] = 'nuovo_sito_web_strutt';
+$var_pag[90] = 'nuova_rag_sociale_strutt';
+$var_pag[91] = 'nuova_nazione_strutt';
+$var_pag[92] = 'nuovo_nome_contatto_strutt';
+$var_pag[93] = 'nuova_regione_strutt';
+$var_pag[94] = 'nuovo_indirizzo_strutt';
+$var_pag[95] = 'nuovo_comune_strutt';
+$var_pag[96] = 'nuovo_cap_strutt';
+$var_pag[97] = 'nuovo_telefono_strutt';
+$var_pag[98] = 'nuovo_fax_strutt';
+$var_pag[99] = 'nuovo_cod_fiscale_strutt';
+$var_pag[100] = 'nuova_partita_iva_strutt';
+$var_pag[101] = 'nuovo_logo_strutt';
+$var_pag[102] = 'cambiadatistrut';
+$var_pag[103] = 'vedi_log';
+$var_pag[104] = 'cancella_log';
+$var_pag[105] = 'n_num_righe_tab_messaggi';
+$var_pag[106] = 'cambia_righe_messaggi';
+$var_pag[107] = 'esportacatpers';
+$var_pag[108] = 'nuovo_campo_cliente';
+$var_pag[109] = 'tipo_campo';
+$var_pag[110] = 'aggiungi_campo_pers_cliente';
+$var_pag[111] = 'campo_da_eliminare';
+$var_pag[112] = 'elimina_campo_pers_cliente';
+$var_pag[113] = 'colonna_numero';
+$var_pag[114] = 'colonna_cognome';
+$var_pag[115] = 'colonna_inizio';
+$var_pag[116] = 'colonna_fine';
+$var_pag[117] = 'colonna_nometariffa';
+$var_pag[118] = 'colonna_appartamento';
+$var_pag[119] = 'colonna_persone';
+$var_pag[120] = 'colonna_commento';
+$var_pag[121] = 'colonna_utenteinserimento';
+$var_pag[122] = 'num_ca';
+$var_pag[123] = 'num_gr';
+$var_pag[124] = 'num_cpc_passa';
+$var_pag[125] = 'cambia_col_tutte_prenota';
+$var_pag[126] = 'colonna_ospite';
+$var_pag[127] = 'colonna_orarioentrata';
+$var_pag[128] = 'colonna_settimane';
+$var_pag[129] = 'colonna_tariffacompleta';
+$var_pag[130] = 'colonna_caparra';
+$var_pag[131] = 'colonna_commissioni';
+$var_pag[132] = 'colonna_restocomm';
+$var_pag[133] = 'colonna_pagato';
+$var_pag[134] = 'colonna_dapagare';
+$var_pag[135] = 'colonna_piano';
+$var_pag[136] = 'colonna_casa';
+$var_pag[137] = 'colonna_catpersone';
+$var_pag[138] = 'colonna_origine_prenota';
+$var_pag[139] = 'colonna_docsalvati';
+$var_pag[140] = 'colonna_datainserimento';
+$var_pag[141] = 'soprannome_col_gruppo';
+$var_pag[142] = 'separatore';
+$var_pag[143] = 'aggiungi_col_gruppo';
+$var_pag[144] = 'cambia_rig_tutte_prenota';
+$var_pag[145] = 'riga_totale';
+$var_pag[146] = 'riga_tasse';
+$var_pag[147] = 'riga_cassa';
+$var_pag[148] = 'riga_prenotacanc';
+$var_pag[149] = 'cambia_col_nec_prenota';
+$var_pag[150] = 'n_num_righe_tab_tutte_prenota';
+$var_pag[151] = 'cambia_righe_tutte_prenota';
+$var_pag[152] = 'n_selezione_tab_tutte_prenota';
+$var_pag[153] = 'cambia_selezione_tutte_prenota';
+$var_pag[154] = 'elimina_campo_pers_comm';
+$var_pag[155] = 'nuovo_campo_comm';
+$var_pag[156] = 'attiva_cookies';
+$var_pag[157] = 'disattiva_cookies';
+$var_pag[158] = 'nuovo_tema';
+$var_pag[159] = 'cambiatema';
+$var_pag[160] = 'aggiungidatemenu';
+$var_pag[161] = 'num_periodi_date';
+$var_pag[162] = 'cambiadatemenu';
+$var_pag[163] = 'giorno_vedi_ini_sett';
+$var_pag[164] = 'cambiainisett';
+$var_pag[165] = 'cambia_percorso_phpmailer';
+$var_pag[166] = 'percorso_phpmailer';
+$var_pag[167] = 'cambia_modo_invio_email';
+$var_pag[168] = 'modo_invio_email';
+$var_pag[169] = 'vecchia_parola';
+$var_pag[170] = 'nuova_parola';
+$var_pag[171] = 'aggiungi_parola_da_sostituire';
+$var_pag[172] = 'nome_unita';
+$var_pag[173] = 'cambia_nome_unita';
+$var_pag[174] = 'lingue_passa';
+$var_pag[175] = 'cambia_nome_unita_sing';
+$var_pag[176] = 'parola_da_elininare';
+$var_pag[177] = 'elimina_parola_da_sostituire';
+$var_pag[178] = 'server_smtp';
+$var_pag[179] = 'sicurezza_smtp';
+$var_pag[180] = 'tipo_porta_smtp';
+$var_pag[181] = 'porta_smtp';
+$var_pag[182] = 'username_smtp';
+$var_pag[183] = 'password_smtp';
+$var_pag[184] = 'cambia_dati_smtp';
+$var_pag[185] = 'cambiacatpers';
+$var_pag[186] = 'arrotond_cat_pers';
+$var_pag[187] = 'num_catpers_passa';
+$var_pag[188] = 'attiva_checkin';
+$var_pag[189] = 'disattiva_checkin';
+$var_pag[190] = 'cambiavaluta';
+$var_pag[191] = 'nuova_valuta';
+$var_pag[192] = 'esportavaluta';
+$var_pag[193] = 'cambiaarrotonda';
+$var_pag[194] = 'nuovo_arrotond';
+$var_pag[195] = 'cambiaarrtasse';
+$var_pag[196] = 'nuovo_arrotond_tasse';
+$var_pag[197] = 'aggvaluta2';
+$var_pag[198] = 'nuova_valuta2';
+$var_pag[199] = 'cambio_valuta2';
+$var_pag[200] = 'nuovo_arrotond2';
+$var_pag[201] = 'elimvaluta2';
+$var_pag[202] = 'valuta2';
+$var_pag[203] = 'n_stile_soldi';
+$var_pag[204] = 'cambia_formato_soldi';
+$var_pag[205] = 'n_stile_data';
+$var_pag[206] = 'cambia_formato_data';
+$var_pag[207] = 'ore_anticipa_periodo_corrente';
+$var_pag[208] = 'cambia_ore_anticipa_periodo_corrente';
+$var_pag[209] = 'metodo_da_eliminare';
+$var_pag[210] = 'elimina_pagamento';
+$var_pag[211] = 'nuovo_metodo_pagamento';
+$var_pag[212] = 'aggiungi_pagamento';
+$var_pag[213] = 'origine_da_eliminare';
+$var_pag[214] = 'elimina_origine';
+$var_pag[215] = 'nuova_origine_prenota';
+$var_pag[216] = 'aggiungi_origine';
+$var_pag[217] = 'aggiungi_campo_pers_comm';
+$var_pag[218] = 'n_nome_comb_app';
+$var_pag[219] = 'n_comb_app';
+$var_pag[220] = 'aggiungi_comb_app';
+$var_pag[221] = 'comb_app_da_eliminare';
+$var_pag[222] = 'elimina_comb_app';
+$var_pag[223] = 'elimina_titolo';
+$var_pag[224] = 'aggiungi_nazione';
+$var_pag[225] = 'elimina_nazione';
+$var_pag[226] = 'elimina_regione';
+$var_pag[227] = 'aggiungi_regione';
+$var_pag[228] = 'elimina_citta';
+$var_pag[229] = 'aggiungi_citta';
+$var_pag[230] = 'elimina_documentoid';
+$var_pag[231] = 'aggiungi_documentoid';
+$var_pag[232] = 'elimina_parentela';
+$var_pag[233] = 'aggiungi_parentela';
+$var_pag[234] = 'num_tab2_prenota';
+$var_pag[235] = 'cambia_num_tab2_prenota';
+$var_pag[236] = 'linee_ripeti_date';
+$var_pag[237] = 'cambia_linee_ripeti_date';
+$var_pag[238] = 'mostra_giorni_tab_mesi';
+$var_pag[239] = 'cambia_mostra_giorni_tab_mesi';
+$var_pag[240] = 'allinea_tab_mesi';
+$var_pag[241] = 'cambia_allinea_tab_mesi';
+$var_pag[242] = 'colore_sel_1';
+$var_pag[243] = 'colore_sel_2';
+$var_pag[244] = 'colore_sel_3';
+$var_pag[245] = 'colore_sel_4';
+$var_pag[246] = 'cambia_colori_tab_mesi';
+$var_pag[247] = 'nome_ccc';
+$var_pag[248] = 'telefono_ccc';
+$var_pag[249] = 'citta_ccc';
+$var_pag[250] = 'indirizzo_ccc';
+$var_pag[251] = 'codpostale_ccc';
+$var_pag[252] = 'piva_ccc';
+$var_pag[253] = 'cambia_campi_cerca_clienti';
+$var_pag[254] = 'cambia_email_tm';
+$var_pag[255] = 'server_email_tm';
+$var_pag[256] = 'proto_email_tm';
+$var_pag[257] = 'tipo_porta_email_tm';
+$var_pag[258] = 'porta_email_tm';
+$var_pag[259] = 'username_email_tm';
+$var_pag[260] = 'password_email_tm';
+$var_pag[261] = 'num_trova_email_tm';
+$var_pag[262] = 'n_num_righe_tab_casse';
+$var_pag[263] = 'cambia_righe_casse';
+$var_pag[264] = 'tot_giornalero_tab_casse';
+$var_pag[265] = 'tot_mensile_tab_casse';
+$var_pag[266] = 'tot_tab_casse';
+$var_pag[267] = 'cambia_tot_giornalero_tab_casse';
+$var_pag[268] = 'n_num_righe_tab_storia_soldi';
+$var_pag[269] = 'cambia_righe_storia_soldi';
+$var_pag[270] = 'n_ordine_inventario';
+$var_pag[271] = 'cambia_ordine_inventario';
+$var_pag[272] = 'num_tasti_pos';
+$var_pag[273] = 'cambia_tasti_pos';
+$var_pag[274] = 'n_num_righe_tab_doc_salvati';
+$var_pag[275] = 'cambia_righe_doc_salvati';
+$var_pag[276] = 'utente_importa_contratti';
+$var_pag[277] = 'importa_nomi_contratti';
+$var_pag[278] = 'disattiva_assegnazione_automatica';
+$var_pag[279] = 'attiva_assegnazione_automatica';
+$var_pag[280] = 'secondi_lim_liberasett';
+$var_pag[281] = 'cambia_secondi_lim_liberasett';
+$var_pag[282] = 'disattiva_auto_crea_anno';
+$var_pag[283] = 'attiva_auto_crea_anno';
+$var_pag[284] = 'disattiva_phpr_log';
+$var_pag[285] = 'id_utente_log';
+$var_pag[286] = 'attiva_phpr_log';
+$var_pag[287] = 'minuti_durata_insprenota';
+$var_pag[288] = 'cambia_minuti_durata_insprenota';
+$var_pag[289] = 'ore_diff_server';
+$var_pag[290] = 'cambia_ore_diff_server';
+$var_pag[291] = 'maschera_email';
+$var_pag[292] = 'cambia_maschera_email';
+$var_pag[293] = 'lista_tar';
+$var_pag[294] = 'num_tar_sposta';
+$var_pag[295] = 'tipo_tabella';
+$var_pag[296] = 'cambvaluta2';
+$var_pag[297] = 'eliminadatemenu';
+$var_pag[298] = 'MAX_FILE_SIZE';
+$var_pag[299] = 'aggiungitrova_email_tm';
+$var_pag[300] = 'cambia_formato_nomi';
+$var_pag[301] = 'n_formato_nomi';
+$n_var_pag = 302;
 $num2 = 0;
 if (isset($_POST['num_contratti_cambia'])) $num2 = (int) $_POST['num_contratti_cambia'];
 elseif (isset($_GET['num_contratti_cambia'])) $num2 = (int) $_GET['num_contratti_cambia'];
 for ($num1 = 1 ; $num1 <= $num2 ; $num1++) $var_pag[$n_var_pag++] = "nome_contratto$num1";
+$num2 = 0;
+if (isset($_POST['num_cpc_passa'])) $num2 = (int) $_POST['num_cpc_passa'];
+elseif (isset($_GET['num_cpc_passa'])) $num2 = (int) $_GET['num_cpc_passa'];
+for ($num1 = 0 ; $num1 < $num2 ; $num1++) {
+$var_pag[$n_var_pag++] = "nome_cpc_passa$num1";
+$num3 = "";
+if (isset($_POST["nome_cpc_passa$num1"])) $num3 = (string) $_POST["nome_cpc_passa$num1"];
+elseif (isset($_GET["nome_cpc_passa$num1"])) $num3 = (string) $_GET["nome_cpc_passa$num1"];
+if ($num3) $var_pag[$n_var_pag++] = "colonna_comm_pers_$num3";
+} # fine for $num1
+$num2 = 0;
+if (isset($_POST['num_ca'])) $num2 = (int) $_POST['num_ca'];
+elseif (isset($_GET['num_ca'])) $num2 = (int) $_GET['num_ca'];
+for ($num1 = 0 ; $num1 < $num2 ; $num1++) {
+$var_pag[$n_var_pag++] = "soprannome_ca$num1";
+$var_pag[$n_var_pag++] = "cu$num1";
+$var_pag[$n_var_pag++] = "cs$num1";
+$var_pag[$n_var_pag++] = "nec_ca$num1";
+} # fine for $num1
+$num2 = 0;
+if (isset($_POST['num_gr'])) $num2 = (int) $_POST['num_gr'];
+elseif (isset($_GET['num_gr'])) $num2 = (int) $_GET['num_gr'];
+for ($num1 = 0 ; $num1 < $num2 ; $num1++) {
+$var_pag[$n_var_pag++] = "gr$num1";
+$var_pag[$n_var_pag++] = "valore_gr$num1";
+} # fine for $num1
+$num2 = 0;
+if (isset($_POST['num_periodi_date'])) $num2 = (int) $_POST['num_periodi_date'];
+elseif (isset($_GET['num_periodi_date'])) $num2 = (int) $_GET['num_periodi_date'];
+for ($num1 = 0 ; $num1 < $num2 ; $num1++) {
+$var_pag[$n_var_pag++] = "inizioperiodo$num1";
+$var_pag[$n_var_pag++] = "fineperiodo$num1";
+$var_pag[$n_var_pag++] = "intervalloperiodo$num1";
+} # fine for $num1
+$num2 = 0;
+if (isset($_POST['lingue_passa'])) $num2 = $_POST['lingue_passa'];
+elseif (isset($_GET['lingue_passa'])) $num2 = $_GET['lingue_passa'];
+$num5 = 0;
+if (isset($_POST['num_catpers_passa'])) $num5 = (int) $_POST['num_catpers_passa'];
+elseif (isset($_GET['num_catpers_passa'])) $num5 = (int) $_GET['num_catpers_passa'];
+for ($num4 = 2 ; $num4 <= $num5 ; $num4++) {
+$var_pag[$n_var_pag++] = "osp_princ_$num4";
+$var_pag[$n_var_pag++] = "perc_cat_$num4";
+} # fine for $num4
+if ($num2) {
+$num2 = explode(",",$num2);
+$num3 = count($num2);
+for ($num1 = 0 ; $num1 < $num3 ; $num1++) {
+if (preg_match("/[a-z]{2,3}/",$num2[$num1])) {
+$var_pag[$n_var_pag++] = "trad_s_n_".$num2[$num1];
+$var_pag[$n_var_pag++] = "trad_p_n_".$num2[$num1];
+$var_pag[$n_var_pag++] = "trad_gender_".$num2[$num1];
+for ($num4 = 1 ; $num4 <= $num5 ; $num4++) {
+$var_pag[$n_var_pag++] = "nome_sing_".$num2[$num1]."_$num4";
+$var_pag[$n_var_pag++] = "nome_plur_".$num2[$num1]."_$num4";
+} # fine for $num4
+} # fine if (preg_match("/[a-z]{2,3}/",$num2[$num1]))
+} # fine for $num1
+} # fine if ($num2)
+$num2 = 0;
+if (isset($_POST['num_tasti_pos'])) $num2 = (int) $_POST['num_tasti_pos'];
+elseif (isset($_GET['num_tasti_pos'])) $num2 = (int) $_GET['num_tasti_pos'];
+for ($num1 = 0 ; $num1 < $num2 ; $num1++) {
+$var_pag[$n_var_pag++] = "tasto$num1";
+$var_pag[$n_var_pag++] = "oper$num1";
+$var_pag[$n_var_pag++] = "val$num1";
+} # fine for $num1
+if (isset($_REQUEST['num_trova_email_tm'])) $num2 = (int) $_REQUEST['num_trova_email_tm'];
+else $num2 = 0;
+for ($num1 = 0 ; $num1 < $num2 ; $num1++) {
+$var_pag[$n_var_pag++] = "therad_email_tm$num1";
+$var_pag[$n_var_pag++] = "mittente_email_tm$num1";
+$var_pag[$n_var_pag++] = "oggetto_email_tm$num1";
+} # fine for $num1
+
 
 include("./costanti.php");
 include(C_DATI_PATH."/dati_connessione.php");
@@ -114,6 +417,7 @@ include("./includes/funzioni.php");
 include("./includes/sett_gio.php");
 include("./includes/funzioni_costi_agg.php");
 include("./includes/funzioni_web.php");
+include("./includes/funzioni_email.php");
 $tablenometariffe = $PHPR_TAB_PRE."ntariffe".$anno;
 $tableperiodi = $PHPR_TAB_PRE."periodi".$anno;
 $tableanni = $PHPR_TAB_PRE."anni";
@@ -159,9 +463,11 @@ $priv_crea_interconnessioni = substr($priv_mod_pers,3,1);
 $priv_crea_pagineweb = substr($priv_mod_pers,8,1);
 $priv_mod_doc = substr($priv_mod_pers,2,1);
 $priv_mod_doc_api = substr($priv_mod_pers,4,1);
+$priv_mod_doc_html = substr($priv_mod_pers,9,1);
 $priv_gest_pass_cc = substr($priv_mod_pers,5,1);
 $priv_modpers_cat_pers = substr($priv_mod_pers,6,1);
 $priv_modpers_valute = substr($priv_mod_pers,7,1);
+$priv_mod_pass = substr($priv_mod_pers,10,1);
 if ($priv_modpers_cat_pers == "g" or $priv_modpers_valute == "g") $prendi_gruppi = "SI";
 } # fine else if (numlin_query($privilegi_annuali_utente) == 0)
 $utenti_gruppi = array($id_utente => 1);
@@ -179,18 +485,21 @@ for ($num2 = 0 ; $num2 < $num_utenti_gruppo ; $num2++) $utenti_gruppi[risul_quer
 else {
 $priv_mod_doc = "s";
 $priv_mod_doc_api = "s";
+$priv_mod_doc_html = "s";
 $priv_gest_pass_cc = "s";
 $priv_modpers_cat_pers = "t";
 $priv_modpers_valute = "t";
+$priv_mod_pass = "s";
 $modifica_pers = "SI";
 $priv_crea_backup = "s";
 $priv_crea_interconnessioni = "s";
 $priv_crea_pagineweb = "s";
 $anno_utente_attivato = "SI";
 } # fine else if ($id_utente != 1)
-$id_utente_mod = aggslashdb(htmlspecialchars(fixset($id_utente_mod)));
+$id_utente_mod = aggslashdb(htmlspecialchars(fixstr($id_utente_mod)));
 if ($id_utente != 1 or !$id_utente_mod) $id_utente_mod = $id_utente;
 if ($id_utente_mod != 1 and $id_utente_mod != "tutti" and substr($id_utente_mod,0,2) != "gr") {
+if (controlla_num_pos($id_utente_mod) != "SI") $id_utente_mod = $id_utente;
 $tableprivilegi = $PHPR_TAB_PRE."privilegi";
 $privilegi_annuali_utente_mod = esegui_query("select * from $tableprivilegi where idutente = '$id_utente_mod' and anno = '$anno'");
 if (numlin_query($privilegi_annuali_utente_mod) == 0) $attiva_contratti_consentiti = "n";
@@ -266,11 +575,14 @@ if (!empty($cambianumerotariffe)) {
 $nascondi_pers_utente_mod = 1;
 $numerotariffe = esegui_query("select nomecostoagg from $tablenometariffe where idntariffe = 1");
 $numerotariffe = risul_query($numerotariffe,0,'nomecostoagg');
+$aggiorna = "";
 if ($numerotariffe == $nuovo_numero_tariffe) $aggiorna = "NO";
-if (defined("C_MASSIMO_NUM_TARIFFE") and C_MASSIMO_NUM_TARIFFE != 0 and $nuovo_numero_tariffe > C_MASSIMO_NUM_TARIFFE) $aggiorna_numero_tariffe = "NO";
-if (controlla_num_pos($nuovo_numero_tariffe) == "NO" or $nuovo_numero_tariffe == 0 or $aggiorna_numero_tariffe == "NO") {
+if (defined("C_MASSIMO_NUM_TARIFFE") and C_MASSIMO_NUM_TARIFFE != 0 and $nuovo_numero_tariffe > C_MASSIMO_NUM_TARIFFE) $aggiorna_numero_tariffe = 0;
+else $aggiorna_numero_tariffe = 1;
+if (controlla_num_pos($nuovo_numero_tariffe) == "NO" or $nuovo_numero_tariffe == 0 or !$aggiorna_numero_tariffe) {
 $aggiorna = "NO";
 } # fine if (controlla_num_pos($nuovo_numero_tariffe) or ...
+if ($aggiorna != "NO") {
 $file_interconnessioni = C_DATI_PATH."/dati_interconnessioni.php";
 if (@is_file($file_interconnessioni)) {
 $linee_file_ic = implode("",file($file_interconnessioni));
@@ -281,6 +593,7 @@ echo mex("La tariffa",$pag)." $num1 ".mex("è ancora in uso nelle interconnessio
 } # fine if (str_replace("\"tariffa$num1\"","",$linee_file_ic) != $linee_file_ic)
 } # fine for $num1
 } # fine if (@is_file($file_interconnessioni))
+} # fine if ($aggiorna != "NO")
 if ($aggiorna == "NO") echo "<br>".mex("Il numero di tariffe è sbagliato",$pag).".<br>";
 if ($aggiorna != "NO") {
 $riga_ntariffe = esegui_query("select * from $tablenometariffe where idntariffe = 1");
@@ -328,43 +641,43 @@ $riga_tar = esegui_query("select * from $tablenometariffe where idntariffe = 1")
 $max_tar = risul_query($riga_tar,0,'nomecostoagg');
 if ($max_tar > 0) {
 $errore = "NO";
-if (!$lista_tar) {
+if (empty($lista_tar)) {
 for ($num1 = 1 ; $num1 <= $max_tar ; $num1++) $lista_tar[$num1] = $num1;
-} # fine if (!$lista_tar)
+} # fine if (empty($lista_tar))
 else {
 $lista_tar = unserialize($lista_tar);
-unset($tar_presente);
+$tar_presente = array();
 for ($num1 = 1 ; $num1 <= $max_tar ; $num1++) {
-if ($tar_presente[$lista_tar[$num1]] == "SI") $errore = "SI";
+if (isset($tar_presente[$lista_tar[$num1]]) and $tar_presente[$lista_tar[$num1]] == "SI") $errore = "SI";
 $tar_presente[$lista_tar[$num1]] = "SI";
 } # fine for $num1
-for ($num1 = 1 ; $num1 <= $max_tar ; $num1++) if ($tar_presente[$num1] != "SI") $errore = "SI";
-} # fine else if (!$lista_tar)
+for ($num1 = 1 ; $num1 <= $max_tar ; $num1++) if (!isset($tar_presente[$num1]) or $tar_presente[$num1] != "SI") $errore = "SI";
+} # fine else if (empty($lista_tar))
 if ($errore != "SI") {
 
 if (empty($applica_nuovi_num)) {
 $torna_invece_di_ok = "SI";
-if ($num_tar_sposta > 0 and $num_tar_sposta <= $max_tar) {
+if (!empty($num_tar_sposta) and $num_tar_sposta > 0 and $num_tar_sposta <= $max_tar) {
 if ($salta_a > 0 and $salta_a <= $max_tar) {
-if (($sposta_giu and ($salta_a > $num_tar_sposta)) or ($sposta_su and ($salta_a < $num_tar_sposta))) {
+if ((!empty($sposta_giu) and ($salta_a > $num_tar_sposta)) or (!empty($sposta_su) and ($salta_a < $num_tar_sposta))) {
 $tar_temp = $lista_tar[$num_tar_sposta];
-if ($sposta_giu and $num_tar_sposta != $max_tar) {
+if (!empty($sposta_giu) and $num_tar_sposta != $max_tar) {
 for ($num1 = $num_tar_sposta ; $num1 < $salta_a ; $num1++) {
 $tar_temp = $lista_tar[$num1];
 $lista_tar[$num1] = $lista_tar[($num1 + 1)];
 $lista_tar[($num1 + 1)] = $tar_temp;
 } # fine for $num1
-} # fine if ($sposta_giu and $num_tar_sposta != $max_tar)
-if ($sposta_su and $num_tar_sposta != 1) {
+} # fine if (!empty($sposta_giu) and $num_tar_sposta != $max_tar)
+if (!empty($sposta_su) and $num_tar_sposta != 1) {
 for ($num1 = $num_tar_sposta ; $num1 > $salta_a ; $num1--) {
 $tar_temp = $lista_tar[$num1];
 $lista_tar[$num1] = $lista_tar[($num1 - 1)];
 $lista_tar[($num1 - 1)] = $tar_temp;
 } # fine for $num1
-} # fine if ($sposta_su and $num_tar_sposta != 1)
-} # fine if (($sposta_giu and ($salta_a > $num_tar_sposta)) or...
+} # fine if (!empty($sposta_su) and $num_tar_sposta != 1)
+} # fine if ((!empty($sposta_giu) and ($salta_a > $num_tar_sposta)) or...
 } # fine if ($salta_a > 0 and $salta_a <= $max_tar)
-} # fine if ($num_tar_sposta > 0 and $num_tar_sposta <= $max_tar)
+} # fine if (!empty($num_tar_sposta) and $num_tar_sposta > 0 and $num_tar_sposta <= $max_tar)
 $lista_tar_ser = serialize($lista_tar);
 unset($nome_tariffa);
 for ($num1 = 1 ; $num1 <= $max_tar ; $num1++) $nome_tariffa[$num1] = risul_query($riga_tar,0,"tariffa$num1");
@@ -379,7 +692,7 @@ return $rowbgcolor;
 for ($num1 = 1 ; $num1 <= $max_tar ; $num1++) {
 echo "<tr style=\"background-color: ".rowbgcolor().";\"><td>".ucfirst(mex("tariffa",$pag))." <b>$num1</b>";
 if ($lista_tar[$num1] != $num1) echo " (".mex("ex",$pag)." ".$lista_tar[$num1].")";
-if (strcmp($nome_tariffa[$lista_tar[$num1]],"")) echo ": ".$nome_tariffa[$lista_tar[$num1]];
+if (strcmp((string) $nome_tariffa[$lista_tar[$num1]],"")) echo ": ".$nome_tariffa[$lista_tar[$num1]];
 echo "</td><td>";
 if ($num1 != $max_tar) {
 $opt_giu = "";
@@ -576,9 +889,9 @@ $risul = @esegui_query("alter table $tablenometariffe add column $nome_nuova_tar
 if (!$risul) $errore = "SI";
 } # fine if ($max_num_col_tariffa == $max_tar)
 if ($errore != "SI") {
-unset($tar_cambiata);
+$tar_cambiata = array();
 for ($num1 = 1 ; $num1 <= $max_tar ; $num1++) {
-if ($lista_tar[$num1] != $num1 and !$tar_cambiata[$num1]) {
+if ($lista_tar[$num1] != $num1 and empty($tar_cambiata[$num1])) {
 cambia_num_tar($lista_tar[$num1],($max_tar + 1),($max_tar + 1));
 $tar_cambiata[$num1] = "SI";
 $fatto = "NO";
@@ -591,7 +904,7 @@ if ($ultimo_num_tar == $num1) $fatto = "SI";
 } # fine while ($fatto != "SI")
 cambia_num_tar(($max_tar + 1),$num1,($max_tar + 1));
 esegui_query("update $tablenometariffe set tariffa".($max_tar + 1)." = NULL");
-} # fine if ($lista_tar[$num1] != $num1 and !$tar_cambiata[$num1])
+} # fine if ($lista_tar[$num1] != $num1 and empty($tar_cambiata[$num1]))
 } # fine for $num1
 unlock_tabelle($tabelle_lock);
 echo ucfirst(mex("l'ordine delle tariffe è stato cambiato",$pag)).".<br><br>";
@@ -605,7 +918,7 @@ for ($num1 = 1 ; $num1 <= $max_tar ; $num1++) {
 global ${"tariffa".$lista_tar[$num1]},${"nome_tariffa_imposto".$lista_tar[$num1]};
 $tar_vett[$num1] = ${"tariffa".$lista_tar[$num1]};
 $nome_tar_vett[$num1] = ${"nome_tariffa_imposto".$lista_tar[$num1]};
-if ($lista_tar[$num1] != $num1 and ($tar_vett[$num1] == "SI" or strcmp($nome_tar_vett[$num1],""))) $crea_modello = 1;
+if ($lista_tar[$num1] != $num1 and ($tar_vett[$num1] == "SI" or strcmp((string) $nome_tar_vett[$num1],""))) $crea_modello = 1;
 } # fine for $num1
 for ($num1 = 1 ; $num1 <= $max_tar ; $num1++) {
 global ${"tariffa".$num1},${"nome_tariffa_imposto".$num1};
@@ -615,13 +928,13 @@ ${"nome_tariffa_imposto".$num1} = $nome_tar_vett[$num1];
 } # fine function aggiorna_var_modello
 include('./includes/templates/aggiorna_modelli.php');
 
-if ($messaggi_file_tariffe) {
+if (!empty($messaggi_file_tariffe)) {
 $file_tariffe_cambiati = 0;
 for ($num1 = 1 ; $num1 <= $max_tar ; $num1++) {
 if ($tar_cambiata[$num1] == "SI" and strstr($messaggi_file_tariffe,"ical_rate$num1.php")) $file_tariffe_cambiati = 1;
 } # fine for $num1
 if ($file_tariffe_cambiati) echo "<br><span class=\"colwarn\">".mex("Attenzione",$pag)."</span>: ".mex("i link per l'esportazione dei calendari in formato ical sono cambiati, ricordarsi di aggiornarli sui calendari esterni",$pag).".<br><br>";
-} # fine if ($messaggi_file_tariffe)
+} # fine if (!empty($messaggi_file_tariffe))
 
 } # fine if ($errore != "SI")
 } # fine else if (empty($applica_nuovi_num))
@@ -765,12 +1078,7 @@ if ($val_decrypt != 'prova') {
 echo "<br>".ucfirst(mex("password errata",$pag)).".<br><br>";
 echo mex("La password non è stata modificata",$pag).".<br><br>";
 $pass_cc = "";
-$adesso = date("YmdHis",(time() + (C_DIFF_ORE * 3600)));
-list($usec, $sec) = explode(' ', microtime());
-mt_srand((float) $sec + ((float) $usec * 100000));
-$val_casuale = mt_rand(100000,999999);
-$versione_transazione = prendi_numero_versione($tableversioni);
-$id_transazione = $adesso.$val_casuale.$versione_transazione;
+$id_transazione = crea_id_sessione("",$tableversioni,8);
 $ultimo_accesso = date("Y-m-d H:i:s",(time() + (C_DIFF_ORE * 3600)));
 esegui_query("insert into $tabletransazioni (idtransazioni,idsessione,tipo_transazione,anno,dati_transazione2,ultimo_accesso) 
 values ('$id_transazione','$id_sessione','er_cc','$anno','$id_utente','$ultimo_accesso')");
@@ -967,26 +1275,26 @@ echo mex("Creazione automatica nuovo anno attivata",$pag).".<br>";
 
 if (!empty($disattiva_phpr_log) or !empty($attiva_phpr_log)) {
 $nascondi_pers_utente_mod = 1;
-if ($attiva_phpr_log) {
+if (!empty($attiva_phpr_log)) {
 $phpr_log = "SI";
-if ($id_utente_log) {
+if (!empty($id_utente_log)) {
 if (substr($id_utente_log,0,2) == "gr") {
 $id_gruppo_log = substr($id_utente_log,2);
-if (controlla_num_pos($id_gruppo_log)) {
+if (controlla_num_pos($id_gruppo_log) == "SI") {
 $gruppo_esistente = esegui_query("select * from $tablegruppi where idgruppi = '$id_gruppo_log' ");
 if (numlin_query($gruppo_esistente)) {
 $phpr_log .= "$id_gruppo_log";
 $utenti_gruppo_log = esegui_query("select idutente from $tablerelgruppi where idgruppo = '$id_gruppo_log' order by idutente");
 for ($num1 = 0 ; $num1 < numlin_query($utenti_gruppo_log) ; $num1++) $phpr_log .= ",".risul_query($utenti_gruppo_log,$num1,'idutente');
 } # fine if (numlin_query($gruppo_esistente))
-} # fine if (controlla_num_pos($id_gruppo_log))
+} # fine if (controlla_num_pos($id_gruppo_log) == "SI")
 } # fine if (substr($id_utente_log,0,2) == "gr")
-elseif (controlla_num_pos($id_utente_log)) {
+elseif (controlla_num_pos($id_utente_log) == "SI") {
 $utente_esistente = esegui_query("select * from $tableutenti where idutenti = '$id_utente_log' ");
 if (numlin_query($utente_esistente)) $phpr_log .= ",$id_utente_log";
-} # fine elseif (controlla_num_pos($id_utente_log))
-} # fine if ($id_utente_log)
-} # fine if ($attiva_phpr_log)
+} # fine elseif (controlla_num_pos($id_utente_log) == "SI")
+} # fine if (!empty($id_utente_log))
+} # fine if (!empty($attiva_phpr_log))
 else $phpr_log = "NO";
 $filelock = crea_lock_file(C_DATI_PATH."/dati_connessione.php");
 if ($file_dati_conn = @file(C_DATI_PATH."/dati_connessione.php")) {
@@ -995,11 +1303,11 @@ if (substr($file_dati_conn[$num1],0,9) == "\$PHPR_LOG") $file_dati_conn[$num1] =
 ";
 } # fine for $num1
 scrivi_file ($file_dati_conn,C_DATI_PATH."/dati_connessione.php");
-if ($attiva_phpr_log) echo mex("Log delle query di modifica degli utenti normali attivato",$pag).".<br>";
-if ($disattiva_phpr_log) {
+if (!empty($attiva_phpr_log)) echo mex("Log delle query di modifica degli utenti normali attivato",$pag).".<br>";
+if (!empty($disattiva_phpr_log)) {
 if (@is_file(C_DATI_PATH."/log_utenti.php")) unlink(C_DATI_PATH."/log_utenti.php");
 echo mex("Log delle query di modifica degli utenti normali disattivato",$pag).".<br>";
-} # fine ($disattiva_phpr_log)
+} # fine (!empty($disattiva_phpr_log))
 } # fine if ($file_dati_conn = @file(C_DATI_PATH."/dati_connessione.php"))
 distruggi_lock_file($filelock,C_DATI_PATH."/dati_connessione.php");
 } # fine if (!empty($disattiva_phpr_log) or !empty($attiva_phpr_log))
@@ -1007,7 +1315,7 @@ distruggi_lock_file($filelock,C_DATI_PATH."/dati_connessione.php");
 if (!empty($vedi_log)) {
 $nascondi_pers_utente_mod = 1;
 $file_log = C_DATI_PATH."/log_utenti.php";
-if ($cancella_log == "SI" and @is_file($file_log)) unlink($file_log);
+if (isset($cancella_log) and $cancella_log == "SI" and @is_file($file_log)) unlink($file_log);
 unset($nome_utente_id);
 $tutti_utenti = esegui_query("select * from $tableutenti order by idutenti");
 $fine_for_utenti = numlin_query($tutti_utenti);
@@ -1016,10 +1324,10 @@ $id_utente = risul_query($tutti_utenti,$num1,"idutenti");
 $nome_utente_id[$id_utente] = risul_query($tutti_utenti,$num1,"nome_utente");
 } # fine for $num1
 echo "<h4>".mex("Log delle query di modifica effettuate dagli utenti negli ultimi",$pag)." 30 ".mex("giorni",$pag).".</h4>
-<form accept-charset=\"utf-8\" method=\"post\" action=\"$action\"><div style=\"text-align: right;\">
+<form accept-charset=\"utf-8\" method=\"post\" action=\"./$pag\"><div style=\"text-align: right;\">
 <input type=\"hidden\" name=\"anno\" value=\"$anno\">
 <input type=\"hidden\" name=\"id_sessione\" value=\"$id_sessione\">
-<input type=\"hidden\" name=\"id_utente_mod\" value=\"".htmlspecialchars(fixset($id_utente_mod_orig))."\">
+<input type=\"hidden\" name=\"id_utente_mod\" value=\"".htmlspecialchars(fixstr($id_utente_mod_orig))."\">
 <input type=\"hidden\" name=\"aggiorna_qualcosa\" value=\"SI\">
 <input type=\"hidden\" name=\"vedi_log\" value=\"SI\">
 <input type=\"hidden\" name=\"cancella_log\" value=\"SI\">
@@ -1029,27 +1337,31 @@ echo "<h4>".mex("Log delle query di modifica effettuate dagli utenti negli ultim
 <tr><td>".mex("Utente",$pag)."</td>
 <td>".mex("Data",$pag)."</td>
 <td>".mex("Query",$pag)."</td></tr>";
+$ultimo_utente = "";
+$ultima_data = "";
 if (@is_file($file_log)) {
 $dati_file = file($file_log);
 $num_lin = count($dati_file);
 $rowcolor = "";
 for ($num1 = 1 ; $num1 < $num_lin ; $num1++) {
 $linea = explode(">",$dati_file[$num1]);
-if ($nome_utente_id[$linea[0]]) $nom_utente = $nome_utente_id[$linea[0]];
+if (isset($linea[2])) {
+if (!empty($nome_utente_id[$linea[0]])) $nom_utente = $nome_utente_id[$linea[0]];
 else $nom_utente = $linea[0];
 $small = "";
 $slash_small = "";
-if (strlen($linea[2]) > 200) { $small = "<small><small>"; $slash_small = "</small></small>"; }
-elseif (strlen($linea[2]) > 70) { $small = "<small>"; $slash_small = "</small>"; }
+if (!empty($linea[2]) and strlen($linea[2]) > 200) { $small = "<small><small>"; $slash_small = "</small></small>"; }
+elseif (!empty($linea[2]) and strlen($linea[2]) > 70) { $small = "<small>"; $slash_small = "</small>"; }
 if ($ultimo_utente != $nom_utente or $ultima_data != $linea[1]) {
 if ($rowcolor == "") $rowcolor = " class=\"t1row2\"";
 else $rowcolor = "";
 } # fine if ($ultimo_utente != $nom_utente or $ultima_data != $linea[1])
-echo "<tr$rowcolor><td>$nom_utente</td>
-<td><small>".formatta_data($linea[1],$stile_data)."</small></td>
-<td style=\"text-align: left;\">$small".$linea[2]."$slash_small</td></tr>";
+echo "<tr$rowcolor><td>".htmlspecialchars($nom_utente)."</td>
+<td><small>".htmlspecialchars(formatta_data($linea[1],$stile_data))."</small></td>
+<td style=\"text-align: left;\">$small".htmlspecialchars(fixstr($linea[2]))."$slash_small</td></tr>";
 $ultimo_utente = $nom_utente;
 $ultima_data = $linea[1];
+} # fine if (isset($linea[2]))
 } # fine for $num1
 } # fine if (@is_file($file_log))
 echo "</table>";
@@ -1058,10 +1370,31 @@ echo "</table>";
 if (!empty($cambia_minuti_durata_sessione)) {
 $nascondi_pers_utente_mod = 1;
 if ($minuti_durata_sessione != "" and controlla_num_pos($minuti_durata_sessione) == "SI" and $minuti_durata_sessione >= 5 and $minuti_durata_sessione <= 9999) {
-esegui_query("update $tablepersonalizza set valpersonalizza_num = '$minuti_durata_sessione' where idpersonalizza = 'minuti_durata_sessione' and idutente = '1'");
+esegui_query("update $tablepersonalizza set valpersonalizza_num = '$minuti_durata_sessione' where idpersonalizza = 'minuti_durata_sessione' and idutente = '1' ");
+scrivi_file("<?php
+define('C_VERSIONE_ATTUALE',".C_VERSIONE_ATTUALE.");
+define('C_DIFF_ORE',".C_DIFF_ORE.");
+define('C_MIN_SESSIONE',$minuti_durata_sessione);
+define('C_USA_COOKIES',".C_USA_COOKIES.");
+?>",C_DATI_PATH."/versione.php");
 echo mex("I minuti di durata di sessioni e transazioni sono stati cambiati",$pag).".<br>";
 } # fine if ($minuti_durata_sessione != "" and...
 } # fine if (!empty($cambia_minuti_durata_sessione))
+
+if (!empty($attiva_cookies) or !empty($disattiva_cookies)) {
+$nascondi_pers_utente_mod = 1;
+if (empty($disattiva_cookies)) $usa_cookies = "1";
+else $usa_cookies = "0";
+esegui_query("update $tablepersonalizza set valpersonalizza_num = '$usa_cookies' where idpersonalizza = 'usa_cookies' and idutente = '1' ");
+scrivi_file("<?php
+define('C_VERSIONE_ATTUALE',".C_VERSIONE_ATTUALE.");
+define('C_DIFF_ORE',".C_DIFF_ORE.");
+define('C_MIN_SESSIONE',".C_MIN_SESSIONE.");
+define('C_USA_COOKIES',$usa_cookies);
+?>",C_DATI_PATH."/versione.php");
+if ($usa_cookies) echo mex("Utilizzo dei cookies per la gestione delle sessioni attivato",$pag).".<br>";
+else echo mex("Utilizzo dei cookies per la gestione delle sessioni disattivato",$pag).".<br>";
+} # fine if (!empty($attiva_cookies) or !empty($disattiva_cookies))
 
 if (!empty($cambia_minuti_durata_insprenota)) {
 $nascondi_pers_utente_mod = 1;
@@ -1074,11 +1407,14 @@ echo mex("I minuti durante i quali occupare gli appartamenti mentre si inserisce
 
 if (!empty($cambia_ore_diff_server)) {
 $nascondi_pers_utente_mod = 1;
+$anchor = "sistema";
 settype($cambia_ore_diff_server,"string");
 if ($ore_diff_server != "" and controlla_num($ore_diff_server) == "SI" and $ore_diff_server >= -23 and $ore_diff_server <= 23) {
 scrivi_file("<?php
 define('C_VERSIONE_ATTUALE',".C_VERSIONE_ATTUALE.");
 define('C_DIFF_ORE',$ore_diff_server);
+define('C_MIN_SESSIONE',".C_MIN_SESSIONE.");
+define('C_USA_COOKIES',".C_USA_COOKIES.");
 ?>",C_DATI_PATH."/versione.php");
 echo mex("Le ore di differenza con l'orario del server sono state cambiate",$pag)." 
 (".mex("ora attuale",$pag)." ".formatta_data(date("Y-m-d H:i:s",(time() + ($ore_diff_server * 3600))),$stile_data).").<br>";
@@ -1087,6 +1423,7 @@ echo mex("Le ore di differenza con l'orario del server sono state cambiate",$pag
 
 if (!empty($cambia_percorso_cartella_modello)) {
 $nascondi_pers_utente_mod = 1;
+$anchor = "sistema";
 if (!defined("C_CARTELLA_CREA_MODELLI") or C_CARTELLA_CREA_MODELLI == "") $c_cartella_crea_mod = "";
 else {
 $c_cartella_crea_mod = C_CARTELLA_CREA_MODELLI;
@@ -1136,6 +1473,7 @@ else {
 fclose($fileaperto);
 $percorso_cartella_modello['test_file'][$num1] = 1;
 $percorso_cartella_modello_int .= $percorso_cartella_modello[$num1].",";
+
 if (@is_file($percorso_cartella_modello[$num1]."/hd_test_dir_exist.tmp")) unlink($percorso_cartella_modello[$num1]."/hd_test_dir_exist.tmp");
 } # fine else if (!$fileaperto)
 } # fine else if (@is_file($percorso_cartella_modello[$num1]."/hd_test_dir.tmp"))
@@ -1144,11 +1482,11 @@ $percorso_cartella_modello_int = substr($percorso_cartella_modello_int,0,-1);
 for ($num1 = 0 ; $num1 < count($percorso_cartella_modello_vett) ; $num1++) if ($percorso_cartella_modello['test_file'][$num1]) unlink($percorso_cartella_modello[$num1]."/hd_test_dir.tmp");
 $canc_cart = 0;
 for ($num1 = 0 ; $num1 < count($percorso_cart_esist) ; $num1++) {
-if ($percorso_cart_esist['test_file'][$num1] and @is_file($percorso_cart_esist[$num1]."/hd_test_dir_exist.tmp")) {
+if (!empty($percorso_cart_esist['test_file'][$num1]) and @is_file($percorso_cart_esist[$num1]."/hd_test_dir_exist.tmp")) {
 $percorso_cart_esist['canc'][$num1] = 1;
 unlink($percorso_cart_esist[$num1]."/hd_test_dir_exist.tmp");
 $canc_cart = 1;
-} # fine if ($percorso_cart_esist['test_file'][$num1] and @is_file($percorso_cart_esist[$num1]."/hd_test_dir_exist.tmp"))
+} # fine if (!empty($percorso_cart_esist['test_file'][$num1]) and @is_file($percorso_cart_esist[$num1]."/hd_test_dir_exist.tmp"))
 } # fine for $num1
 if ($percorso_cartella_modello_int) {
 $canc_mod = "";
@@ -1159,12 +1497,12 @@ $pag = "crea_modelli.php";
 include("./includes/templates/funzioni_modelli.php");
 $nome_file = "mdl_disponibilita.php";
 for ($num1 = 0 ; $num1 < count($percorso_cart_esist) ; $num1++) {
-if ($percorso_cart_esist['canc'][$num1]) {
+if (!empty($percorso_cart_esist['canc'][$num1])) {
 if (@is_file($percorso_cart_esist[$num1]."/$nome_file")) {
-if ($continua) unlink($percorso_cart_esist[$num1]."/$nome_file");
+if (!empty($continua)) unlink($percorso_cart_esist[$num1]."/$nome_file");
 else $canc_mod .= "<em>".$percorso_cart_esist[$num1]."/$nome_file</em><br>";
 } # fine if (@is_file($percorso_cart_esist[$num1]."/$nome_file"))
-} # fine if ($percorso_cart_esist['canc'][$num1])
+} # fine if (!empty($percorso_cart_esist['canc'][$num1]))
 } # fine for $num1
 $lang_dir = opendir("./includes/lang/");
 include(C_DATI_PATH."/lingua.php");
@@ -1172,12 +1510,12 @@ while ($ini_lingua = readdir($lang_dir)) {
 if ($ini_lingua != "." && $ini_lingua != "..") {
 $nome_file = mex2("mdl_disponibilita",$pag,$ini_lingua).".php";
 for ($num1 = 0 ; $num1 < count($percorso_cart_esist) ; $num1++) {
-if ($percorso_cart_esist['canc'][$num1]) {
+if (!empty($percorso_cart_esist['canc'][$num1])) {
 if (@is_file($percorso_cart_esist[$num1]."/$nome_file")) {
-if ($continua) unlink($percorso_cart_esist[$num1]."/$nome_file");
+if (!empty($continua)) unlink($percorso_cart_esist[$num1]."/$nome_file");
 else $canc_mod .= "<em>".$percorso_cart_esist[$num1]."/$nome_file</em><br>";
 } # fine if (@is_file($percorso_cart_esist[$num1]."/$nome_file"))
-} # fine if ($percorso_cart_esist['canc'][$num1])
+} # fine if (!empty($percorso_cart_esist['canc'][$num1]))
 } # fine for $num1
 } # fine if ($file != "." && $file != "..")
 } # fine while ($file = readdir($lang_dig))
@@ -1192,16 +1530,16 @@ ksort($modelli);
 reset($modelli);
 foreach ($modelli as $modello_ext => $val_i) {
 include("./includes/templates/$modello_ext/name.php");
-if ($template_name_show['tpl_type'] != "interconnection") {
+if (!isset($template_name_show['tpl_type']) or $template_name_show['tpl_type'] != "interconnection") {
 if (!empty($template_file_name['ita'])) $nome_file = $template_file_name['ita'];
 else $nome_file = "ita_".$template_file_name['en'];
 for ($num1 = 0 ; $num1 < count($percorso_cart_esist) ; $num1++) {
-if ($percorso_cart_esist['canc'][$num1]) {
+if (!empty($percorso_cart_esist['canc'][$num1])) {
 if (@is_file($percorso_cart_esist[$num1]."/$nome_file")) {
-if ($continua) unlink($percorso_cart_esist[$num1]."/$nome_file");
+if (!empty($continua)) unlink($percorso_cart_esist[$num1]."/$nome_file");
 else $canc_mod .= "<em>".$percorso_cart_esist[$num1]."/$nome_file</em><br>";
 } # fine if (@is_file($percorso_cart_esist[$num1]."/$nome_file"))
-} # fine if ($percorso_cart_esist['canc'][$num1])
+} # fine if (!empty($percorso_cart_esist['canc'][$num1]))
 } # fine for $num1
 $lang_dir = opendir("./includes/lang/");
 while ($ini_lingua = readdir($lang_dir)) {
@@ -1214,39 +1552,39 @@ $nome_file = $funz_trad($template_file_name["ita"],$pag,$ini_lingua);
 if ($nome_file == $template_file_name['en'] or $nome_file == $template_file_name['ita']) $nome_file = $ini_lingua."_".$template_file_name['en'];
 } # fine else if (!empty($template_file_name[$ini_lingua]))
 for ($num1 = 0 ; $num1 < count($percorso_cart_esist) ; $num1++) {
-if ($percorso_cart_esist['canc'][$num1]) {
+if (!empty($percorso_cart_esist['canc'][$num1])) {
 if (@is_file($percorso_cart_esist[$num1]."/$nome_file")) {
-if ($continua) unlink($percorso_cart_esist[$num1]."/$nome_file");
+if (!empty($continua)) unlink($percorso_cart_esist[$num1]."/$nome_file");
 else $canc_mod .= "<em>".$percorso_cart_esist[$num1]."/$nome_file</em><br>";
 } # fine if (@is_file($percorso_cart_esist[$num1]."/$nome_file"))
-} # fine if ($percorso_cart_esist['canc'][$num1])
+} # fine if (!empty($percorso_cart_esist['canc'][$num1]))
 } # fine for $num1
 } # fine if ($file != "." && $file != "..")
 } # fine while ($file = readdir($lang_dir))
 closedir($lang_dir);
-} # fine if ($template_name_show['tpl_type'] != "interconnection")
+} # fine if (!isset($template_name_show['tpl_type']) or $template_name_show['tpl_type'] != "interconnection")
 } # fine foreach ($modelli as $modello_ext => $val_i)
 $pag = $pag_orig;
 
 } # fine if ($canc_cart)
-if ($canc_mod and !$continua) {
+if ($canc_mod and empty($continua)) {
 $torna_invece_di_ok = "SI";
 echo "<form accept-charset=\"utf-8\" method=\"post\" action=\"./$pag\"><div>
 <input type=\"hidden\" name=\"anno\" value=\"$anno\">
 <input type=\"hidden\" name=\"id_sessione\" value=\"$id_sessione\">
 <input type=\"hidden\" name=\"aggiorna_qualcosa\" value=\"SI\">
 <input type=\"hidden\" name=\"cambia_percorso_cartella_modello\" value=\"1\">
-<input type=\"hidden\" name=\"percorso_cartella_modello\" value=\"".htmlspecialchars($percorso_cartella_modello_int)."\">
+<input type=\"hidden\" name=\"percorso_cartella_modello\" value=\"".htmlspecialchars(implode(",",$percorso_cartella_modello_vett))."\">
 <input type=\"hidden\" name=\"continua\" value=\"1\">
 <br><b class=\"colwarn\">".mex("Attenzione",$pag)."</b>: ".mex("le seguenti pagine web verranno cancellate",$pag).":<br><br>
 $canc_mod<br>
 <button class=\"canc\" type=\"submit\"><div>".ucfirst(mex("continua",$pag))."</div></button>
 </div></form><br><br><br>";
-} # fine if ($canc_mod and !$continua)
+} # fine if ($canc_mod and empty($continua))
 else {
 esegui_query("update $tablepersonalizza set valpersonalizza = '$percorso_cartella_modello_int' where idpersonalizza = 'percorso_cartella_modello' and idutente = '1'");
 echo "<br>".mex("Le cartelle dove vengono create le pagine per il sito web sono state cambiate",$pag).".<br><br>";
-} # fine else if ($canc_mod and !$continua)
+} # fine else if ($canc_mod and empty($continua))
 } # fine if ($percorso_cartella_modello_int)
 unlock_tabelle($tabelle_lock);
 unset($tabelle_lock);
@@ -1254,18 +1592,207 @@ unset($tabelle_lock);
 } # fine if ($percorso_cartella_modello)
 } # fine if (!empty($cambia_percorso_cartella_modello))
 
-if (!empty($cambia_maschera_email) and (!defined("C_MASCHERA_EMAIL") or C_MASCHERA_EMAIL == "")) {
+if (!empty($cambia_percorso_phpmailer) and (!defined('C_PERCORSO_PHPMAILER') or C_PERCORSO_PHPMAILER == "")) {
 $nascondi_pers_utente_mod = 1;
+$anchor = "sistema";
+$percorso_phpmailer_esist = esegui_query("select valpersonalizza from $tablepersonalizza where idpersonalizza = 'percorso_phpmailer' and idutente = '1'");
+if (!empty($percorso_phpmailer)) {
+if (substr($percorso_phpmailer,-12) == "autoload.php")  $percorso_phpmailer = substr($percorso_phpmailer,0,-12);
+if (substr($percorso_phpmailer,-1) != "/") $percorso_phpmailer .= "/";
+$percorso_phpmailer .= "autoload.php";
+if (!is_file($percorso_phpmailer)) echo mex("La cartella inserita <div style=\"display: inline; color: red;\">non esiste</div>",$pag)." (<b>".htmlspecialchars($percorso_phpmailer)."</b>).<br>";
+else {
+@include($percorso_phpmailer);
+if (!class_exists('PHPMailer\PHPMailer\PHPMailer')) echo mex("Il file inserito <span class=\"colred\">non carica phpmailer</span> correttamente",$pag).".<br>";
+else {
+if (numlin_query($percorso_phpmailer_esist)) esegui_query("update $tablepersonalizza set valpersonalizza = '".aggslashdb($percorso_phpmailer)."' where idpersonalizza = 'percorso_phpmailer' and idutente = '1' ");
+else esegui_query("insert into $tablepersonalizza (idpersonalizza,valpersonalizza,idutente) values ('percorso_phpmailer','".aggslashdb($percorso_phpmailer)."','1') ");
+echo "<br>".mex("Il percorso al file autoload.php di phpmailer è stato cambiato",$pag).".<br><br>";
+} # fine else if (!class_exists('PHPMailer',false))
+} # fine else if (!is_file($percorso_phpmailer))
+} # fine if (!empty($percorso_phpmailer))
+elseif (numlin_query($percorso_phpmailer_esist)) {
+esegui_query("delete from $tablepersonalizza where idpersonalizza = 'percorso_phpmailer' and idutente = '1' ");
+echo "<br>".mex("Il percorso al file autoload.php di phpmailer è stato cambiato",$pag).".<br><br>";
+} # fine elseif (numlin_query($percorso_phpmailer_esist))
+} # fine if (!empty($cambia_percorso_phpmailer) and...
+
+if (!empty($cambia_modo_invio_email) or !empty($cambia_dati_smtp)) {
+$nascondi_pers_utente_mod = 1;
+$anchor = "sistema";
+if (defined("C_PERCORSO_PHPMAILER") and C_PERCORSO_PHPMAILER != "") $percorso_phpmailer = C_PERCORSO_PHPMAILER;
+else {
+$percorso_phpmailer = esegui_query("select valpersonalizza from $tablepersonalizza where idpersonalizza = 'percorso_phpmailer' and idutente = '1'");
+if (numlin_query($percorso_phpmailer)) $percorso_phpmailer = risul_query($percorso_phpmailer,0,'valpersonalizza');
+else $percorso_phpmailer = "";
+} # fine else if (defined("C_PERCORSO_PHPMAILER") and C_PERCORSO_PHPMAILER != "")
+if ($percorso_phpmailer and is_file($percorso_phpmailer)) {
+if (!empty($cambia_modo_invio_email) and isset($modo_invio_email) and ($modo_invio_email == "locale" or $modo_invio_email == "remoto")) {
+esegui_query("update $tablepersonalizza set valpersonalizza = '".aggslashdb($modo_invio_email)."' where idpersonalizza = 'modo_invio_email' and idutente = '1' ");
+echo "<br>".mex("Il metodo per inviare le email è stato cambiato",$pag).".<br><br>";
+} # fine if (!empty($cambia_modo_invio_email and...
+if (!empty($cambia_dati_smtp)) {
+$aggiorna = 1;
+$modo_invio_email = esegui_query("select valpersonalizza from $tablepersonalizza where idpersonalizza = 'modo_invio_email' and idutente = '1'");
+$modo_invio_email = risul_query($modo_invio_email,0,'valpersonalizza');
+if ($modo_invio_email == 'remoto') {
+if (strlen(fixstr($server_smtp)) < 4) $aggiorna = 0;
+if (!isset($tipo_porta_smtp) or ($tipo_porta_smtp != "def" and $tipo_porta_smtp != "pers")) $aggiorna = 0;
+if ($tipo_porta_smtp == "def") $porta_smtp = "";
+if (fix_set($porta_smtp) and ($porta_smtp > 65535 or controlla_num_pos($porta_smtp) == "NO")) $aggiorna = 0;
+if (!strcmp(fixstr($sicurezza_smtp),"") or ($sicurezza_smtp != "no" and $sicurezza_smtp != "ssl_tls" and $sicurezza_smtp != "starttls")) $aggiorna = 0;
+if (!isset($username_smtp)) $username_smtp = "";
+if (!isset($password_smtp)) $password_smtp = "";
+if ($aggiorna) {
+include($percorso_phpmailer);
+if (!class_exists('PHPMailer\PHPMailer\PHPMailer')) $aggiorna = 0;
+else {
+if ($sicurezza_smtp == "ssl_tls") {
+$server1 = "ssl://$server_smtp";
+$porta1 = 465;
+} # fine if ($sicurezza_smtp == "ssl_tls")
+else {
+$server1 = $server_smtp;
+if ($sicurezza_smtp == "starttls") $porta1 = 587;
+else $porta1 = 25;
+} # fine else if ($sicurezza_smtp == "ssl_tls")
+if ($porta_smtp) $porta1 = $porta_smtp;
+
+$smtp = new PHPMailer\PHPMailer\SMTP();
+#$smtp->do_debug = SMTP::DEBUG_CONNECTION;
+$smtp->do_debug = PHPMailer\PHPMailer\SMTP::DEBUG_OFF;
+if (!$smtp->connect($server1,$porta1)) {
+echo mex("Connessione fallita",$pag).".<br>";
+$aggiorna = 0;
+} # fine if (!$smtp->connect($server1,$porta1))
+else {
+if (!$smtp->hello(gethostname())) {
+echo mex("EHLO fallito",$pag).": ".$smtp->getError()['error']."<br>";
+$aggiorna = 0;
+} # fine if (!$smtp->hello(gethostname()))
+else {
+#Get the list of ESMTP services the server offers
+$serv = $smtp->getServerExtList();
+#If server can do TLS encryption, use it
+if ((!is_array($serv) or !isset($serv['STARTTLS'])) and $sicurezza_smtp == "starttls") {
+echo mex("Connessione cifrata STARTTLS fallita",$pag).".<br>";
+$aggiorna = 0;
+} # fine if ((!is_array($serv) or !isset($serv['STARTTLS'])) and...
+if (is_array($serv) and isset($serv['STARTTLS']) and $sicurezza_smtp == "starttls") {
+if (!$smtp->startTLS()) {
+echo mex("Connessione cifrata STARTTLS fallita",$pag).": ".$smtp->getError()['error']."<br>";
+$aggiorna = 0;
+} # fine if (!$smtp->startTLS())
+else {
+#Repeat EHLO after STARTTLS
+if (!$smtp->hello(gethostname())) {
+echo mex("EHLO dopo STARTTLS fallito",$pag).": ".$smtp->getError()['error']."<br>";
+$aggiorna = 0;
+} # fine if (!$smtp->hello(gethostname()))
+#Get new capabilities list, which will usually now include AUTH if it didn't before
+$serv = $smtp->getServerExtList();
+} # fine if (!$smtp->startTLS())
+} # fine if (is_array($serv) and isset($serv['STARTTLS']) and...
+#If server supports authentication, do it (even if no encryption)
+if ((!is_array($serv) or !isset($serv['AUTH'])) and strcmp($username_smtp,"")) {
+echo mex("Autenticazione fallita",$pag).".<br>";
+$aggiorna = 0;
+} # fine if ((!is_array($serv) or !isset($serv['AUTH'])) and...
+if (is_array($serv) and isset($serv['AUTH']) and strcmp($username_smtp,"")) {
+if (!$smtp->authenticate($username_smtp,$password_smtp)) {
+echo mex("Autenticazione fallita",$pag).": ".$smtp->getError()['error']."<br>";
+$aggiorna = 0;
+} # fine if (!$smtp->authenticate($username_smtp,$password_smtp))
+#else echo 'Connected ok!<br>';
+} # fine if (is_array($serv) and isset($serv['AUTH']) and
+} # fine else if (!$smtp->hello(gethostname()))
+} # fine else if (!$smtp->connect($server1,$porta1))
+$smtp->quit();
+
+} # fine else if (!class_exists('PHPMailer\PHPMailer\PHPMailer'))
+} # fine if ($aggiorna)
+if (!$aggiorna) {
+echo "<br>".mex("I dati per il collegamento al server SMTP sono <span class=\"colred\">sbagliati o incompleti</span>",$pag).".<br><br>";
+if (trim(strtolower($server_smtp)) == "smtp.gmail.com") echo "<br>".mex("Per gli account su gmail potrebbe essere necessario abilitare l'opzione",'messaggi.php')." \"<a rel=\"noopener noreferrer\" target=\"_blank\" href=\"https://myaccount.google.com/apppasswords\">App Password</a>\".<br><br>";
+} # fine if (!$aggiorna)
+else {
+$n_server_smtp = "$server_smtp#@#$username_smtp#@#$sicurezza_smtp#@#$porta_smtp#@#$password_smtp";
+$server_smtp_esist = esegui_query("select valpersonalizza from $tablepersonalizza where idpersonalizza = 'server_smtp' and idutente = '1' ");
+if (numlin_query($server_smtp_esist)) esegui_query("update $tablepersonalizza set valpersonalizza = '".aggslashdb($n_server_smtp)."' where idpersonalizza = 'server_smtp' and idutente = '1'");
+else esegui_query("insert into $tablepersonalizza (idpersonalizza,idutente,valpersonalizza) values ('server_smtp','1','".aggslashdb($n_server_smtp)."')");
+echo mex("I dati per il collegamento al server SMTP sono stati aggiornati",$pag).".<br>";
+} # fine else if (!$aggiorna)
+} # fine if ($modo_invio_email == 'remoto')
+} # fine if (!empty($cambia_dati_smtp))
+} # fine if ($percorso_phpmailer and is_file($percorso_phpmailer))
+} # fine if (!empty($cambia_modo_invio_email) or !empty($cambia_dati_smtp))
+
+if (!empty($cambia_maschera_email) and (!defined('C_MASCHERA_EMAIL') or C_MASCHERA_EMAIL == "" or substr(C_MASCHERA_EMAIL,0,4) == "spf:")) {
+$nascondi_pers_utente_mod = 1;
+$anchor = "sistema";
 if ($maschera_email == "SI" or $maschera_email == "NO") {
+if ($maschera_email == "SI" and defined('C_MASCHERA_EMAIL') and substr(C_MASCHERA_EMAIL,0,4) == "spf:") {
+$spf_val = strtolower(trim(substr(C_MASCHERA_EMAIL,4)));
+echo "<br><span class=\"colinfo\">".mex("Attenzione",$pag)."</span>: ".mex("Il mascheramento delle email verrà attivato solo se nel DNS del dominio dell'email del mittente c'è un record TXT per SPF contenente",$pag)." \"<em>".htmlspecialchars($spf_val)."</em>\".<br><br>";
+$dati_strut = esegui_query("select * from $tablepersonalizza where idpersonalizza = 'dati_struttura' and idutente = '$id_utente'");
+$dati_strut = risul_query($dati_strut,0,'valpersonalizza');
+$dati_strut = explode("#@&",$dati_strut);
+if ($dati_strut[2]) {
+$dom_email = substr(strstr($dati_strut[2],"@"),1);
+$spf = controlla_spf($dom_email,true);
+if (substr($spf,0,2) == "SI") echo "<br>".mex("Attualmente SPF è configurato correttamente sul dominio della email della struttura",$pag)." (<em>$dom_email</em>).<br><br>";
+else {
+echo "<br>".mex("Attualmente <span class=\"colred\">SPF non è configurato correttamente</span> sul dominio della email della struttura",$pag)." (<em>".$dati_strut[2]."</em>).";
+$spf = trim(substr($spf,2));
+if (!$spf) echo " ".mex("Il dominio",$pag)." <b>$dom_email</b> ".mex("non ha nessun record per SPF",$pag).",
+ ".mex("nella gestione del suo DNS va aggiunto un record TXT contenente un testo come questo",$pag).":<br><br>
+<em>v=spf1 a mx ".htmlspecialchars($spf_val)." ~all</em><br>";
+else {
+echo " ".mex("Questo è il record SPF attuale del dominio",$pag)." <b>$dom_email</b>:<br><br>";
+if (strlen($spf) > 200) echo "<small>".htmlspecialchars($spf)."</small>";
+else echo "<em>".htmlspecialchars($spf)."</em>";
+echo "<br><br>".mex("questo record TXT va modificato nella gestione del DNS del dominio",$pag)." <b>$dom_email</b>";
+if (substr($spf,0,7) == "v=spf1 ") {
+$spf_pre = "v=spf1 ";
+$spf = substr($spf,7);
+if (substr($spf,0,2) == "a ") {
+$spf_pre .= "a ";
+$spf = substr($spf,2);
+} # fine if (substr($spf,0,2) == "a ")
+if (substr($spf,0,3) == "+a ") {
+$spf_pre .= "+a ";
+$spf = substr($spf,3);
+} # fine if (substr($spf,0,3) == "+a ")
+if (substr($spf,0,3) == "mx ") {
+$spf_pre .= "mx ";
+$spf = substr($spf,3);
+} # fine if (substr($spf,0,3) == "mx ")
+if (substr($spf,0,4) == "+mx ") {
+$spf_pre .= "+mx ";
+$spf = substr($spf,4);
+} # fine if (substr($spf,0,4) == "+mx ")
+$spf = $spf_pre.$spf_val." ".$spf;
+echo " ".mex("sostituendolo con un testo come questo",$pag).":<br><br>";
+if (strlen($spf) > 200) echo "<small>".htmlspecialchars($spf)."</small><br>";
+else echo "<em>".htmlspecialchars($spf)."</em><br><br>";
+echo "".mex("Dopo la modifica potrebbero volerci alcune ore affinchè l'aggiornamento sia attivo",$pag).".<br>";
+} # fine if (substr($spf,0,7) == "v=spf1 ")
+else echo ".<br>";
+} # fine else if (!$spf)
+echo "<br><br>";
+} # fine else if (substr($spf,0,2) == "SI")
+} # fine if ($dati_strut[2])
+} # fine if ($maschera_email == "SI" and defined('C_MASCHERA_EMAIL') and...
 esegui_query("update $tablepersonalizza set valpersonalizza = '$maschera_email' where idpersonalizza = 'maschera_email' and idutente = '1'");
-echo mex("Il mascheramento della provenienza delle email è stato cambiato",$pag).".<br>";
+echo "<br>".mex("Il mascheramento della provenienza delle email è stato cambiato",$pag).".<br><br>";
 } # fine if ($maschera_email == "SI" or $maschera_email == "NO")
 } # fine if (!empty($cambia_maschera_email) and...
 
 if (!empty($cambia_nome_unita) or !empty($cambia_nome_unita_sing)) {
 $nascondi_pers_utente_mod = 1;
-if (($cambia_nome_unita and ($nome_unita == "cam" or $nome_unita == "app" or $nome_unita == "pers")) or ($cambia_nome_unita_sing and ($nome_unita == "bed" or $nome_unita == "pers"))) {
-if ($cambia_nome_unita_sing) $file_unit = C_DATI_PATH."/unit_single.php";
+$anchor = "unita";
+if ((!empty($cambia_nome_unita) and ($nome_unita == "cam" or $nome_unita == "app" or $nome_unita == "pers")) or (!empty($cambia_nome_unita_sing) and ($nome_unita == "bed" or $nome_unita == "pers"))) {
+if (!empty($cambia_nome_unita_sing)) $file_unit = C_DATI_PATH."/unit_single.php";
 else $file_unit = C_DATI_PATH."/unit.php";
 $filelock = crea_lock_file($file_unit);
 if ($nome_unita == "cam") {
@@ -1302,6 +1829,7 @@ if ($nome_unita == "pers") {
 $trad_var['room'] = "#cam#";
 $trad_var['apartment'] = "#app#";
 $trad_var['bed'] = "#bed#";
+$trad_var['special_characters'] = "";
 include($file_unit);
 if ($unit['s_n'] == "#cam#") $da_cam = 1;
 else $da_cam = 0;
@@ -1333,10 +1861,10 @@ $trad_s_n_ita = $trad_var['bed'];
 $trad_p_n_ita = $trad_var['beds'];
 $trad_gender_ita = $trad_var['bed_gender'];
 } # fine if ($da_bed)
-if ($trad_s_n_ita == "#cam#" or $trad_s_n_ita == "#app#" or $trad_s_n_ita == "#bed#") $trad_s_n_ita == "#xxx#";
-$trad_lingue .= "\$unit['lang']['ita']['s_n'] = '".str_replace("'","&#039;",str_replace("\\","",htmlspecialchars($trad_s_n_ita)))."';
-\$unit['lang']['ita']['p_n'] = '".str_replace("'","&#039;",str_replace("\\","",htmlspecialchars($trad_p_n_ita)))."';
-\$unit['lang']['ita']['gender'] = '".str_replace("'","&#039;",str_replace("\\","",htmlspecialchars($trad_gender_ita)))."';
+if (isset($trad_s_n_ita) and ($trad_s_n_ita == "#cam#" or $trad_s_n_ita == "#app#" or $trad_s_n_ita == "#bed#")) $trad_s_n_ita == "#xxx#";
+$trad_lingue .= "\$unit['lang']['ita']['s_n'] = '".str_replace("'","&#039;",str_replace("\\","",htmlspecialchars(fixstr($trad_s_n_ita))))."';
+\$unit['lang']['ita']['p_n'] = '".str_replace("'","&#039;",str_replace("\\","",htmlspecialchars(fixstr($trad_p_n_ita))))."';
+\$unit['lang']['ita']['gender'] = '".str_replace("'","&#039;",str_replace("\\","",htmlspecialchars(fixstr($trad_gender_ita))))."';
 ";
 $lang_dir = opendir("./includes/lang/");
 while ($ini_lingua = readdir($lang_dir)) {
@@ -1364,10 +1892,10 @@ ${"trad_s_n_".$ini_lingua} = $trad_var['bed'];
 ${"trad_p_n_".$ini_lingua} = $trad_var['beds'];
 ${"trad_gender_".$ini_lingua} = $trad_var['bed_gender'];
 } # fine if ($da_bed)
-if (${"trad_s_n_".$ini_lingua} == "#cam#" or ${"trad_s_n_".$ini_lingua} == "#app#" or ${"trad_s_n_".$ini_lingua} == "#bed#") ${"trad_s_n_".$ini_lingua} == "#xxx#";
-$trad_lingue .= "\$unit['lang']['$ini_lingua']['s_n'] = '".str_replace("'","&#039;",str_replace("\\","",htmlspecialchars(${"trad_s_n_".$ini_lingua})))."';
-\$unit['lang']['$ini_lingua']['p_n'] = '".str_replace("'","&#039;",str_replace("\\","",htmlspecialchars(${"trad_p_n_".$ini_lingua})))."';
-\$unit['lang']['$ini_lingua']['gender'] = '".str_replace("'","&#039;",str_replace("\\","",htmlspecialchars(${"trad_gender_".$ini_lingua})))."';
+if (isset(${"trad_s_n_".$ini_lingua}) and (${"trad_s_n_".$ini_lingua} == "#cam#" or ${"trad_s_n_".$ini_lingua} == "#app#" or ${"trad_s_n_".$ini_lingua} == "#bed#")) ${"trad_s_n_".$ini_lingua} == "#xxx#";
+$trad_lingue .= "\$unit['lang']['$ini_lingua']['s_n'] = '".str_replace("'","&#039;",str_replace("\\","",htmlspecialchars(fixstr(${"trad_s_n_".$ini_lingua}))))."';
+\$unit['lang']['$ini_lingua']['p_n'] = '".str_replace("'","&#039;",str_replace("\\","",htmlspecialchars(fixstr(${"trad_p_n_".$ini_lingua}))))."';
+\$unit['lang']['$ini_lingua']['gender'] = '".str_replace("'","&#039;",str_replace("\\","",htmlspecialchars(fixstr(${"trad_gender_".$ini_lingua}))))."';
 ";
 } # fine if ($file != "." and $file != ".." and strlen($ini_lingua) < 4)
 } # fine while ($file = readdir($lang_dig))
@@ -1384,11 +1912,12 @@ for (\$num1 = 0 ; \$num1 < count(\$car_spec) ; \$num1++) if (substr(\$unit['p_n'
 } # fine if ($nome_unita == "pers")
 distruggi_lock_file($filelock,$file_unit);
 echo mex("Il nome delle unità da affittare è stato cambiato",$pag).".<br>";
-} # fine if (($cambia_nome_unita and ($nome_unita == "cam" or $nome_unita == "app" or $nome_unita == "pers")) or...
+} # fine if ((!empty($cambia_nome_unita) and ($nome_unita == "cam" or $nome_unita == "app" or $nome_unita == "pers")) or...
 } # fine if (!empty($cambia_nome_unita) or !empty($cambia_nome_unita_sing))
 
 if (!empty($aggiungi_parola_da_sostituire)) {
 $nascondi_pers_utente_mod = 1;
+$anchor = "parole";
 if ($parole_sost == 0) {
 $filelock = crea_lock_file(C_DATI_PATH."/tema.php");
 $file_tema = implode("",@file(C_DATI_PATH."/tema.php"));
@@ -1415,6 +1944,8 @@ distruggi_lock_file($filelock,C_DATI_PATH."/parole_sost.php");
 echo mex("La parola da sostituire è stata aggiunta",$pag).".<br>";
 } # fine if (!empty($aggiungi_parola_da_sostituire))
 if (!empty($elimina_parola_da_sostituire)) {
+$nascondi_pers_utente_mod = 1;
+$anchor = "parole";
 if (@get_magic_quotes_gpc()) $parola_da_elininare = stripslashes($parola_da_elininare);
 $parola_da_elininare = explode("\\",$parola_da_elininare);
 $filelock = crea_lock_file(C_DATI_PATH."/parole_sost.php");
@@ -1450,7 +1981,7 @@ $anchor = "contratti";
 echo "<form accept-charset=\"utf-8\" method=\"post\" action=\"$pag\"><div>
 <input type=\"hidden\" name=\"anno\" value=\"$anno\">
 <input type=\"hidden\" name=\"id_sessione\" value=\"$id_sessione\">
-<input type=\"hidden\" name=\"id_utente_mod\" value=\"".htmlspecialchars(fixset($id_utente_mod_orig))."\">
+<input type=\"hidden\" name=\"id_utente_mod\" value=\"".htmlspecialchars(fixstr($id_utente_mod_orig))."\">
 <input type=\"hidden\" name=\"aggiorna_qualcosa\" value=\"SI\">
 <input type=\"hidden\" name=\"elimina_contratto\" value=\"SI\">
 <input type=\"hidden\" name=\"applica_nuovi_num\" value=\"SI\">
@@ -1465,7 +1996,7 @@ for ($num1 = 0 ; $num1 < $num_nomi_contratti ; $num1++) {
 $dati_nome_contratto = explode("#?&",$nomi_contratti[$num1]);
 if ($dati_nome_contratto[0] == $num_contr_elimina) echo " (".$dati_nome_contratto[1].")";
 } # fine for $num1
-echo "? <input class=\"sbutton\" type=\"submit\" value=\"".mex("SI",$pag)."\">
+echo "? <button class=\"cont\" type=\"submit\"><div>".mex("SI",$pag)."</div></button>
 </div></form><br><br>";
 } # fine if (empty($continua))
 else $elimina_contratto_cont = 1;
@@ -1548,7 +2079,7 @@ return $rowbgcolor;
 for ($num1 = 1 ; $num1 <= $max_contr ; $num1++) {
 echo "<tr style=\"background-color: ".rowbgcolor().";\"><td>".mex("Documento",$pag)." <b>$num1</b>";
 if ($lista_contr[$num1] != $num1) echo " (".mex("ex",$pag)." ".$lista_contr[$num1].")";
-if (isset($nome_contratto[$lista_contr[$num1]]) and strcmp($nome_contratto[$lista_contr[$num1]],"")) echo ": ".$nome_contratto[$lista_contr[$num1]];
+if (isset($nome_contratto[$lista_contr[$num1]]) and strcmp((string) $nome_contratto[$lista_contr[$num1]],"")) echo ": ".$nome_contratto[$lista_contr[$num1]];
 echo "</td><td>";
 if ($num1 != $max_contr) {
 $opt_giu = "";
@@ -1556,7 +2087,7 @@ for ($num2 = ($num1 + 1) ; $num2 <= $max_contr ; $num2++) $opt_giu .= "<option v
 echo "<form accept-charset=\"utf-8\" method=\"post\" action=\"$pag#condizioni\"><div>
 <input type=\"hidden\" name=\"anno\" value=\"$anno\">
 <input type=\"hidden\" name=\"id_sessione\" value=\"$id_sessione\">
-<input type=\"hidden\" name=\"id_utente_mod\" value=\"".htmlspecialchars(fixset($id_utente_mod_orig))."\">
+<input type=\"hidden\" name=\"id_utente_mod\" value=\"".htmlspecialchars(fixstr($id_utente_mod_orig))."\">
 <input type=\"hidden\" name=\"aggiorna_qualcosa\" value=\"SI\">
 <input type=\"hidden\" name=\"cambia_ord_contratti\" value=\"SI\">
 <input type=\"hidden\" name=\"lista_contr\" value=\"$lista_contr_ser\">
@@ -1574,7 +2105,7 @@ for ($num2 = ($num1 - 1) ; $num2 > 0 ; $num2--) $opt_su .= "<option value=\"$num
 echo "<form accept-charset=\"utf-8\" method=\"post\" action=\"$pag#condizioni\"><div>
 <input type=\"hidden\" name=\"anno\" value=\"$anno\">
 <input type=\"hidden\" name=\"id_sessione\" value=\"$id_sessione\">
-<input type=\"hidden\" name=\"id_utente_mod\" value=\"".htmlspecialchars(fixset($id_utente_mod_orig))."\">
+<input type=\"hidden\" name=\"id_utente_mod\" value=\"".htmlspecialchars(fixstr($id_utente_mod_orig))."\">
 <input type=\"hidden\" name=\"aggiorna_qualcosa\" value=\"SI\">
 <input type=\"hidden\" name=\"cambia_ord_contratti\" value=\"SI\">
 <input type=\"hidden\" name=\"lista_contr\" value=\"$lista_contr_ser\">
@@ -1591,7 +2122,7 @@ echo "</table>
 <form accept-charset=\"utf-8\" method=\"post\" action=\"./personalizza.php\"><div>
 <input type=\"hidden\" name=\"anno\" value=\"$anno\">
 <input type=\"hidden\" name=\"id_sessione\" value=\"$id_sessione\">
-<input type=\"hidden\" name=\"id_utente_mod\" value=\"".htmlspecialchars(fixset($id_utente_mod_orig))."\">
+<input type=\"hidden\" name=\"id_utente_mod\" value=\"".htmlspecialchars(fixstr($id_utente_mod_orig))."\">
 <input type=\"hidden\" name=\"aggiorna_qualcosa\" value=\"SI\">
 <input type=\"hidden\" name=\"cambia_ord_contratti\" value=\"SI\">
 <input type=\"hidden\" name=\"lista_contr\" value=\"$lista_contr_ser\">
@@ -1605,7 +2136,7 @@ global $LIKE;
 esegui_query("update $tablecontratti set numero = '$nuovo_num' where tipo $LIKE 'contr%' and numero = '$vecchio_num'");
 esegui_query("update $tablecontratti set numero = '$nuovo_num' where (tipo = 'oggetto' or tipo = 'allegato' or tipo = 'bcc' or tipo = 'opzeml') and numero = '$vecchio_num'");
 esegui_query("update $tablecontratti set numero = '$nuovo_num' where (tipo = 'headhtm' or tipo = 'foothtm') and numero = '$vecchio_num'");
-esegui_query("update $tablecontratti set numero = '$nuovo_num' where tipo = 'est_txt' and numero = '$vecchio_num'");
+esegui_query("update $tablecontratti set numero = '$nuovo_num' where tipo = 'datdownl' and numero = '$vecchio_num'");
 esegui_query("update $tablecontratti set numero = '$nuovo_num' where tipo = 'dir' and numero = '$vecchio_num'");
 esegui_query("update $tablecontratti set numero = '$nuovo_num' where tipo $LIKE 'mln_%' and numero = '$vecchio_num'");
 esegui_query("update $tablecontratti set tipo = 'var$nuovo_num' where tipo = 'var$vecchio_num' ");
@@ -1682,11 +2213,11 @@ $num_periodi_date = "";
 $anno_modello = "";
 $num_campi_doc_cond = 0;
 $num_doc_email_conferma = "";
-recupera_var_modello_disponibilita($nome_file,$percorso_cartella_modello,$pag,$fr_frase,$num_frasi,$var_mod,$num_var_mod,$tipo_periodi,"SI",$anno_modello,$PHPR_TAB_PRE);
-if ($anno_modello_presente == $anno and ($num_campi_doc_cond or strcmp($num_doc_email_conferma,""))) {
+recupera_var_modello_disponibilita($nome_file,$percorso_cartella_modello,$pag,$fr_frase,$frase,$num_frasi,$var_mod,$num_var_mod,$tipo_periodi,"SI",$anno_modello,$lingua_modello,$PHPR_TAB_PRE);
+if ($anno_modello_presente == $anno and ($num_campi_doc_cond or strcmp((string) $num_doc_email_conferma,""))) {
 $anno_modello = $anno_modello_presente;
 for ($num1 = 1 ; $num1 <= $num_campi_doc_cond ; $num1++) ${"num_doc_cond".$num1} = $lista_n_contr[${"num_doc_cond".$num1}];
-if (strcmp($num_doc_email_conferma,"")) $num_doc_email_conferma = $lista_n_contr[$num_doc_email_conferma];
+if (strcmp((string) $num_doc_email_conferma,"")) $num_doc_email_conferma = $lista_n_contr[$num_doc_email_conferma];
 crea_modello_disponibilita($percorso_cartella_modello,$anno_modello,$PHPR_TAB_PRE,$pag,$lingua_modello,"SI",$fr_frase,$frase,$num_frasi,$tipo_periodi);
 } # fine if ($anno_modello_presente == $anno and...
 } # fine if (@is_file("$percorso_cartella_modello/mdl_disponibilita.php"))
@@ -1704,11 +2235,11 @@ $num_periodi_date = "";
 $anno_modello = "";
 $num_campi_doc_cond = 0;
 $num_doc_email_conferma = "";
-recupera_var_modello_disponibilita($nome_file,$percorso_cartella_modello,$pag,$fr_frase,$num_frasi,$var_mod,$num_var_mod,$tipo_periodi,"SI",$anno_modello,$PHPR_TAB_PRE);
-if ($anno_modello_presente == $anno and ($num_campi_doc_cond or strcmp($num_doc_email_conferma,""))) {
+recupera_var_modello_disponibilita($nome_file,$percorso_cartella_modello,$pag,$fr_frase,$frase,$num_frasi,$var_mod,$num_var_mod,$tipo_periodi,"SI",$anno_modello,$lingua_modello,$PHPR_TAB_PRE);
+if ($anno_modello_presente == $anno and ($num_campi_doc_cond or strcmp((string) $num_doc_email_conferma,""))) {
 $anno_modello = $anno_modello_presente;
 for ($num1 = 1 ; $num1 <= $num_campi_doc_cond ; $num1++) ${"num_doc_cond".$num1} = $lista_n_contr[${"num_doc_cond".$num1}];
-if (strcmp($num_doc_email_conferma,"")) $num_doc_email_conferma = $lista_n_contr[$num_doc_email_conferma];
+if (strcmp((string) $num_doc_email_conferma,"")) $num_doc_email_conferma = $lista_n_contr[$num_doc_email_conferma];
 crea_modello_disponibilita($percorso_cartella_modello,$anno_modello,$PHPR_TAB_PRE,$pag,$lingua_modello,"SI",$fr_frase,$frase,$num_frasi,$tipo_periodi);
 } # fine if ($anno_modello_presente == $anno and...
 } # fine if (@is_file("$percorso_cartella_modello/$nome_file"))
@@ -1735,11 +2266,11 @@ $num_periodi_date = "";
 $anno_modello = "";
 $num_campi_doc_cond = 0;
 $num_doc_email_conferma = "";
-$funz_recupera_var_modello($nome_file,$percorso_cartella_modello,$pag,$fr_frase,$num_frasi,$var_mod,$num_var_mod,$tipo_periodi,"SI",$anno_modello,$PHPR_TAB_PRE);
-if ($anno_modello_presente == $anno and ($num_campi_doc_cond or strcmp($num_doc_email_conferma,""))) {
+$funz_recupera_var_modello($nome_file,$percorso_cartella_modello,$pag,$fr_frase,$frase,$num_frasi,$var_mod,$num_var_mod,$tipo_periodi,"SI",$anno_modello,$lingua_modello,$PHPR_TAB_PRE);
+if ($anno_modello_presente == $anno and ($num_campi_doc_cond or strcmp((string) $num_doc_email_conferma,""))) {
 $anno_modello = $anno_modello_presente;
 for ($num1 = 1 ; $num1 <= $num_campi_doc_cond ; $num1++) ${"num_doc_cond".$num1} = $lista_n_contr[${"num_doc_cond".$num1}];
-if (strcmp($num_doc_email_conferma,"")) $num_doc_email_conferma = $lista_n_contr[$num_doc_email_conferma];
+if (strcmp((string) $num_doc_email_conferma,"")) $num_doc_email_conferma = $lista_n_contr[$num_doc_email_conferma];
 $funz_crea_modello($percorso_cartella_modello,$anno_modello,$PHPR_TAB_PRE,$pag,$lingua_modello,"SI",$fr_frase,$frase,$num_frasi,$tipo_periodi);
 } # fine if ($anno_modello_presente == $anno and...
 } # fine if (@is_file("$percorso_cartella_modello/$nome_file"))
@@ -1757,11 +2288,11 @@ $num_periodi_date = "";
 $anno_modello = "";
 $num_campi_doc_cond = 0;
 $num_doc_email_conferma = "";
-$funz_recupera_var_modello($nome_file,$percorso_cartella_modello,$pag,$fr_frase,$num_frasi,$var_mod,$num_var_mod,$tipo_periodi,"SI",$anno_modello,$PHPR_TAB_PRE);
-if ($anno_modello_presente == $anno and ($num_campi_doc_cond or strcmp($num_doc_email_conferma,""))) {
+$funz_recupera_var_modello($nome_file,$percorso_cartella_modello,$pag,$fr_frase,$frase,$num_frasi,$var_mod,$num_var_mod,$tipo_periodi,"SI",$anno_modello,$lingua_modello,$PHPR_TAB_PRE);
+if ($anno_modello_presente == $anno and ($num_campi_doc_cond or strcmp((string) $num_doc_email_conferma,""))) {
 $anno_modello = $anno_modello_presente;
 for ($num1 = 1 ; $num1 <= $num_campi_doc_cond ; $num1++) ${"num_doc_cond".$num1} = $lista_n_contr[${"num_doc_cond".$num1}];
-if (strcmp($num_doc_email_conferma,"")) $num_doc_email_conferma = $lista_n_contr[$num_doc_email_conferma];
+if (strcmp((string) $num_doc_email_conferma,"")) $num_doc_email_conferma = $lista_n_contr[$num_doc_email_conferma];
 $funz_crea_modello($percorso_cartella_modello,$anno_modello,$PHPR_TAB_PRE,$pag,$lingua_modello,"SI",$fr_frase,$frase,$num_frasi,$tipo_periodi);
 } # fine if ($anno_modello_presente == $anno and...
 } # fine if (@is_file("$percorso_cartella_modello/$nome_file"))
@@ -1796,22 +2327,33 @@ if (controlla_num_pos($nuovo_num_contratti) == "SI" and $nuovo_num_contratti >= 
 esegui_query("delete from $tablecontratti where tipo $LIKE 'contr%' and numero > '$nuovo_num_contratti'");
 esegui_query("delete from $tablecontratti where (tipo = 'oggetto' or tipo = 'bcc') and numero > '$nuovo_num_contratti'");
 esegui_query("delete from $tablecontratti where (tipo = 'headhtm' or tipo = 'foothtm') and numero > '$nuovo_num_contratti'");
-esegui_query("delete from $tablecontratti where tipo = 'est_txt' and numero > '$nuovo_num_contratti'");
+esegui_query("delete from $tablecontratti where tipo = 'datdownl' and numero > '$nuovo_num_contratti'");
 esegui_query("delete from $tablecontratti where tipo = 'dir' and numero > '$nuovo_num_contratti'");
 esegui_query("delete from $tablecontratti where tipo $LIKE 'mln_%' and numero > '$nuovo_num_contratti'");
 esegui_query("delete from $tablecontratti where tipo = 'opzeml' and numero > '$nuovo_num_contratti'");
 for ($num1 = ($nuovo_num_contratti + 1) ; $num1 <= $max_contr ; $num1++) {
-$num_all = esegui_query("select * from $tablecontratti where numero = '$num1' and tipo = 'allegato'");
-if (numlin_query($num_all)) {
-$num_all = risul_query($num_all,0,'testo');
+$allegati_esist = esegui_query("select * from $tablecontratti where numero = '$num1' and tipo = 'allegato'");
+if (numlin_query($allegati_esist)) {
+$allegati_esist = risul_query($allegati_esist,0,'testo');
 esegui_query("delete from $tablecontratti where numero = '$num1' and tipo = 'allegato'");
-if ($num_all) {
-$altri_all = esegui_query("select * from $tablecontratti where testo = '$num_all' and tipo = 'allegato'");
-if (!numlin_query($altri_all)) {
-esegui_query("delete from $tablecontratti where numero = '$num_all' and tipo = 'file_all' ");
-} # fine if (!numlin_query($altri_all))
-} # fine if ($num_all)
-} # fine if (numlin_query($num_all))
+if ($allegati_esist) {
+$allegati_esist = explode(",",$allegati_esist);
+$num_allegati = (count($allegati_esist) - 1);
+for ($num2 = 1 ; $num2 < $num_allegati ; $num2++) {
+if (strstr($allegati_esist[$num2],":")) {
+$all_vett = explode(">",$allegati_esist[$num2]);
+$num_ln = count($all_vett);
+} # fine if (strstr($allegati_esist[$num2],":"))
+else $num_ln = 1;
+for ($num3 = 0 ; $num3 < $num_ln ; $num3++) {
+if ($num3 > 0 or strstr($allegati_esist[$num2],":")) $num_all = substr(strstr($all_vett[$num3],":"),1);
+else $num_all = $allegati_esist[$num2];
+$altri_all = esegui_query("select numero from $tablecontratti where (testo $LIKE '%,$num_all,%' or testo $LIKE '%:$num_all,%' or testo $LIKE '%:$num_all>%') and tipo = 'allegato' ");
+if (!numlin_query($altri_all)) esegui_query("delete from $tablecontratti where numero = '$num_all' and tipo = 'file_all' ");
+} # fine for $num3
+} # fine for $num2
+} # fine if ($allegati_esist)
+} # fine if (numlin_query($allegati_esist))
 $contr_imp_vc = esegui_query("select numero from $tablecontratti where testo = '$num1' and tipo = 'impor_vc' ");
 $num_contr_imp_vc = numlin_query($contr_imp_vc);
 for ($num2 = 0 ; $num2 < $num_contr_imp_vc ; $num2++) {
@@ -1927,7 +2469,7 @@ $num_cat_pers_default = "";
 
 if (!empty($aggvaluta2) or !empty($cambvaluta2)) {
 function formatta_cambio ($num) {
-if (strcmp($num,"")) {
+if (strcmp((string) $num,"")) {
 $num = str_replace(",",".",$num);
 if (strstr($num,".")) {
 $parti = explode(".",$num);
@@ -1952,7 +2494,7 @@ else {
 if (strlen($num) > 14) $num = "";
 else $num = (int) $num;
 } # fine else if (strstr($num,"."))
-} # fine if (strcmp($num,""))
+} # fine if (strcmp((string) $num,""))
 return $num;
 } # fine function formatta_cambio
 } # fine if (!empty($aggvaluta2) or !empty($cambvaluta2))
@@ -1985,7 +2527,7 @@ if (!empty($cambialingua)) {
 $anchor = "utenti_pers";
 unset($lingua);
 include(C_DATI_PATH."/lingua.php");
-$vecchia_lingua = $lingua[$id_utente_mod];
+$vecchia_lingua = fixset($lingua[$id_utente_mod]);
 $lingua = $n_lingua;
 if (($lingua != "ita" and !is_dir("./includes/lang/$lingua")) or strlen($lingua) > 3 or str_replace("/","",$lingua) != $lingua) $lingua = "en";
 if ($lingua != "ita" and !is_dir("./includes/lang/$lingua")) $lingua = "ita";
@@ -1994,12 +2536,19 @@ $filelock = crea_lock_file(C_DATI_PATH."/lingua.php");
 $file_lingua = @file(C_DATI_PATH."/lingua.php");
 $linee = array();
 $num_lin = 0;
+$utente_trovato = 0;
 for ($num1 = 0 ; $num1 < count($file_lingua) ; $num1++) {
 if (str_replace("[$id_utente_mod]","",$file_lingua[$num1]) != $file_lingua[$num1]) {
 $linee[$num_lin] = "\$lingua[$id_utente_mod] = \"$lingua\";
 ";
+$utente_trovato = 1;
 } # fine if (str_replace("[$id_utente_mod]","",$file_lingua[$num1]) != $file_lingua[$num1])
 else $linee[$num_lin] = $file_lingua[$num1];
+if (!$utente_trovato and trim($file_lingua[$num1]) == "?>") {
+$linee[$num_lin] = "\$lingua[$id_utente_mod] = \"$lingua\";
+";
+$linee[($num_lin + 1)] = "?>";
+} # fine if (!$utente_trovato and...
 $num_lin++;
 } # fine for $num1
 scrivi_file($linee,C_DATI_PATH."/lingua.php");
@@ -2044,7 +2593,7 @@ $nome_file = mex2("mdl_disponibilita",$pag,$lingua_modello).".php";
 $num_periodi_date = "";
 $anno_modello = "";
 $lingua_mex = $vecchia_lingua;
-recupera_var_modello_disponibilita($nome_file,$percorso_cartella_modello,$pag,$fr_frase,$num_frasi,$var_mod,$num_var_mod,$tipo_periodi,"SI",$anno_modello,$PHPR_TAB_PRE);
+recupera_var_modello_disponibilita($nome_file,$percorso_cartella_modello,$pag,$fr_frase,$frase,$num_frasi,$var_mod,$num_var_mod,$tipo_periodi,"SI",$anno_modello,$lingua_modello,$PHPR_TAB_PRE);
 $lingua_mex = $nuova_lingua;
 $anno_modello = $anno_modello_presente;
 reset($metodi_pagamento_da_chiedere);
@@ -2064,7 +2613,7 @@ $lingua_modello = $ini_lingua;
 $num_periodi_date = "";
 $anno_modello = "";
 $lingua_mex = $vecchia_lingua;
-recupera_var_modello_disponibilita($nome_file,$percorso_cartella_modello,$pag,$fr_frase,$num_frasi,$var_mod,$num_var_mod,$tipo_periodi,"SI",$anno_modello,$PHPR_TAB_PRE);
+recupera_var_modello_disponibilita($nome_file,$percorso_cartella_modello,$pag,$fr_frase,$frase,$num_frasi,$var_mod,$num_var_mod,$tipo_periodi,"SI",$anno_modello,$lingua_modello,$PHPR_TAB_PRE);
 $lingua_mex = $nuova_lingua;
 $anno_modello = $anno_modello_presente;
 reset($metodi_pagamento_da_chiedere);
@@ -2092,7 +2641,7 @@ $lingua_modello = "ita";
 $num_periodi_date = "";
 $anno_modello = "";
 $lingua_mex = $vecchia_lingua;
-$funz_recupera_var_modello($nome_file,$percorso_cartella_modello,$pag,$fr_frase,$num_frasi,$var_mod,$num_var_mod,$tipo_periodi,"SI",$anno_modello,$PHPR_TAB_PRE);
+$funz_recupera_var_modello($nome_file,$percorso_cartella_modello,$pag,$fr_frase,$frase,$num_frasi,$var_mod,$num_var_mod,$tipo_periodi,"SI",$anno_modello,$lingua_modello,$PHPR_TAB_PRE);
 $lingua_mex = $nuova_lingua;
 $anno_modello = $anno_modello_presente;
 $funz_crea_modello($percorso_cartella_modello,$anno_modello,$PHPR_TAB_PRE,$pag,$lingua_modello,"SI",$fr_frase,$frase,$num_frasi,$tipo_periodi);
@@ -2110,7 +2659,7 @@ $lingua_modello = $ini_lingua;
 $num_periodi_date = "";
 $anno_modello = "";
 $lingua_mex = $vecchia_lingua;
-$funz_recupera_var_modello($nome_file,$percorso_cartella_modello,$pag,$fr_frase,$num_frasi,$var_mod,$num_var_mod,$tipo_periodi,"SI",$anno_modello,$PHPR_TAB_PRE);
+$funz_recupera_var_modello($nome_file,$percorso_cartella_modello,$pag,$fr_frase,$frase,$num_frasi,$var_mod,$num_var_mod,$tipo_periodi,"SI",$anno_modello,$lingua_modello,$PHPR_TAB_PRE);
 $lingua_mex = $nuova_lingua;
 $anno_modello = $anno_modello_presente;
 $funz_crea_modello($percorso_cartella_modello,$anno_modello,$PHPR_TAB_PRE,$pag,$lingua_modello,"SI",$fr_frase,$frase,$num_frasi,$tipo_periodi);
@@ -2135,12 +2684,19 @@ $filelock = crea_lock_file(C_DATI_PATH."/tema.php");
 $file_tema = @file(C_DATI_PATH."/tema.php");
 $linee = array();
 $num_lin = 0;
+$utente_trovato = 0;
 for ($num1 = 0 ; $num1 < count($file_tema) ; $num1++) {
 if (str_replace("[$id_utente_mod]","",$file_tema[$num1]) != $file_tema[$num1]) {
 $linee[$num_lin] = "\$tema[$id_utente_mod] = \"$nuovo_tema\";
 ";
-} # fine if (str_replace("[$id_utente_mod]","",$file_lingua[$num1]) != $file_lingua[$num1])
+$utente_trovato = 1;
+} # fine if (str_replace("[$id_utente_mod]","",$file_tema[$num1]) != $file_tema[$num1])
 else $linee[$num_lin] = $file_tema[$num1];
+if (!$utente_trovato and trim($file_tema[$num1]) == "?>") {
+$linee[$num_lin] = "\$tema[$id_utente_mod] = \"$nuovo_tema\";
+";
+$linee[($num_lin + 1)] = "?>";
+} # fine if (!$utente_trovato and...
 $num_lin++;
 } # fine for $num1
 scrivi_file($linee,C_DATI_PATH."/tema.php");
@@ -2167,7 +2723,7 @@ $n_num_stelle_strutt = $nuovo_num_stelle_strutt;
 $n_logo_strutt = $nuovo_logo_strutt;
 $n_regione_strutt = $nuova_regione_strutt;
 $n_email = aggslashdb($nuova_email);
-if (!strcmp($n_email,"") or preg_match('/^[_\.0-9a-z-]+@([0-9a-z][0-9a-z-]+\.)+[a-z]{2,4}$/i',$n_email)) {
+if (!strcmp((string) $n_email,"") or preg_match('/^[_\.0-9a-z-]+@([0-9a-z][0-9a-z-]+\.)+[a-z]{2,4}$/i',$n_email)) {
 if (@get_magic_quotes_gpc()) {
 $n_nome_strutt = stripslashes($n_nome_strutt);
 $n_tipo_strutt = stripslashes($n_tipo_strutt);
@@ -2207,9 +2763,33 @@ $n_num_stelle_strutt = aggslashdb(str_replace("#@&","@",htmlspecialchars($n_num_
 $n_logo_strutt = aggslashdb(str_replace("#@&","@",htmlspecialchars($n_logo_strutt)));
 $n_regione_strutt = aggslashdb(str_replace("#@&","@",htmlspecialchars($n_regione_strutt)));
 $nuovi_dati_strut = $n_nome_strutt."#@&".$n_tipo_strutt."#@&".$n_email."#@&".$n_rag_sociale_strutt."#@&".$n_sito_web_strutt."#@&".$n_nome_contatto_strutt."#@&".$n_nazione_strutt."#@&".$n_comune_strutt."#@&".$n_indirizzo_strutt."#@&".$n_cap_strutt."#@&".$n_telefono_strutt."#@&".$n_fax_strutt."#@&".$n_cod_fiscale_strutt."#@&".$n_partita_iva_strutt."#@&".$n_num_stelle_strutt."#@&".$n_logo_strutt."#@&".$n_regione_strutt;
+$mess_info = "";
+if ($id_utente_mod == 1 and $n_email) {
+$providers_email = ",gmail.com,yahoo.com,hotmail.com,aol.com,hotmail.co.uk,hotmail.fr,msn.com,yahoo.fr,wanadoo.fr,alice.it,yahoo.it,rediffmail.com,orange.fr,comcast.net,yahoo.co.uk,yahoo.com.br,yahoo.co.in,live.com,free.fr,gmx.de,gmx.net,gmx.com,web.de,yandex.ru,ymail.com,libero.it,outlook.com,uol.com.br,bol.com.br,mail.ru,cox.net,hotmail.it,sbcglobal.net,sfr.fr,live.fr,verizon.net,live.co.uk,googlemail.com,yahoo.es,tiscali.co.uk,tiscali.it,tiscali.com,";
+$provider_email = strtolower(substr(strstr($n_email,"@"),1));
+if (str_replace(",".$provider_email.",","",$providers_email) != $providers_email) {
+if (defined("C_PERCORSO_PHPMAILER") and C_PERCORSO_PHPMAILER != "") $percorso_phpmailer = C_PERCORSO_PHPMAILER;
+else {
+$percorso_phpmailer = esegui_query("select valpersonalizza from $tablepersonalizza where idpersonalizza = 'percorso_phpmailer' and idutente = '1'");
+if (numlin_query($percorso_phpmailer)) $percorso_phpmailer = risul_query($percorso_phpmailer,0,'valpersonalizza');
+else $percorso_phpmailer = "";
+} # fine else if (defined("C_PERCORSO_PHPMAILER") and C_PERCORSO_PHPMAILER != "")
+if ($percorso_phpmailer and is_file($percorso_phpmailer)) {
+$dati_strut = esegui_query("select * from $tablepersonalizza where idpersonalizza = 'dati_struttura' and idutente = '$id_utente_mod'");
+$dati_strut = (string) risul_query($dati_strut,0,'valpersonalizza');
+$dati_strut = explode("#@&",$dati_strut);
+if (strtolower($n_email) != strtolower($dati_strut[2])) {
+$mess_info .= "<br>".mex("Per il proprio indirizzo email si sta usando un provider pubblico",$pag)." (<em><b>$provider_email</b></em>), ".mex("si consiglia quindi di",$pag)." <a style=\"display: inline-block; margin-bottom: 2px;\" href=\"./$pag?id_sessione=$id_sessione&amp;anno=$anno#eml_conf\">".mex("configurare il loro server remoto smtp",$pag)."</a> ".mex("per inviare email",$pag);
+if (!defined('C_NASCONDI_MARCA') or C_NASCONDI_MARCA != "SI") $mess_info .= " ".mex("da hoteldruid",$pag);
+$mess_info .= " ".mex("senza che vengano considerate come spam",$pag).".<br><nr>";
+} # fine if (strtolower($n_email) != strtolower($dati_strut[2]))
+} # fine if ($percorso_phpmailer and is_file($percorso_phpmailer))
+} # fine if (str_replace(",".$provider_email.",","",$providers_email) != $providers_email)
+} # fine if ($id_utente_mod == 1 and $n_email)
 esegui_query("update $tablepersonalizza set valpersonalizza = '$nuovi_dati_strut' where idpersonalizza = 'dati_struttura' and idutente = '$id_utente_mod'");
 echo "<br>".mex("I dati della struttura sono stati cambiati",$pag).".<br>";
-} # fine if (!strcmp($n_email,"") or preg_match('/^[_\.0-9a-z-]+@([0-9a-z][0-9a-z-]+\.)+[a-z]{2,4}$/i',$nuova_email))
+if ($mess_info) echo "<br>$mess_info<br>";
+} # fine if (!strcmp((string) $n_email,"") or preg_match('/^[_\.0-9a-z-]+@([0-9a-z][0-9a-z-]+\.)+[a-z]{2,4}$/i',$nuova_email))
 } # fine if (!empty($cambiadatistrut) and (!defined('C_RESTRIZIONI_DEMO_ADMIN') or C_RESTRIZIONI_DEMO_ADMIN != "SI"))
 
 if ($priv_modpers_valute != "n") {
@@ -2292,7 +2872,7 @@ unlock_tabelle($tabelle_lock);
 if (!empty($aggvaluta2)) {
 $anchor = "utenti_pers";
 $c_valuta2 = formatta_cambio($cambio_valuta2);
-if ($c_valuta2 and strcmp($nuova_valuta2,"")) {
+if ($c_valuta2 and strcmp((string) $nuova_valuta2,"")) {
 $tabelle_lock = array($tablepersonalizza);
 $tabelle_lock = lock_tabelle($tabelle_lock);
 $n_valuta = $nuova_valuta2;
@@ -2311,7 +2891,7 @@ echo mex("La nuova valuta secondaria è stata aggiunta",$pag).".<br>";
 } # fine if (!$valuta_esist)
 } # fine if ($Euro != $n_valuta)
 unlock_tabelle($tabelle_lock);
-} # fine if ($c_valuta2 and strcmp($nuova_valuta2,""))
+} # fine if ($c_valuta2 and strcmp((string) $nuova_valuta2,""))
 } # fine if (!empty($aggvaluta2))
 $aggvaluta2 = $aggvaluta2_orig;
 $nuova_valuta2 = $nuova_valuta2_orig;
@@ -2346,6 +2926,13 @@ if ($n_stile_data != "europa" and $n_stile_data != "usa") $n_stile_data = "europ
 esegui_query("update $tablepersonalizza set valpersonalizza='$n_stile_data' where idpersonalizza = 'stile_data' and idutente = '$id_utente_mod'");
 echo mex("Il formato di visualizzazione delle date è stato cambiato",$pag).".<br>";
 } # fine if (!empty($cambia_formato_data))
+
+if (!empty($cambia_formato_nomi)) {
+$anchor = "utenti_pers";
+if ($n_formato_nomi != "orig" and $n_formato_nomi != "ma1mi" and $n_formato_nomi != "ma1or" and $n_formato_nomi != "maiu" and $n_formato_nomi != "minu") $n_formato_nomi = "ma1mi";
+esegui_query("update $tablepersonalizza set valpersonalizza='$n_formato_nomi' where idpersonalizza = 'stile_nomi' and idutente = '$id_utente_mod'");
+echo mex("Il formato di inserimento dei nomi e cognimi è stato cambiato",$pag).".<br>";
+} # fine if (!empty($cambia_formato_nomi))
 
 if ($priv_modpers_cat_pers != "n") {
 
@@ -2399,7 +2986,7 @@ $nome_presente[$nomi_corr[1]] = 1;
 $n_nome_s = htmlspecialchars(mex2("bambino",$pag,$l_ling[$num2]))." ";
 $n_nome_p = htmlspecialchars(mex2("bambini",$pag,$l_ling[$num2]))." ";
 $num_corr = $num1;
-while ($nome_presente[$n_nome_s.$num_corr] or $nome_presente[$n_nome_p.$num_corr]) $num_corr++;
+while (!empty($nome_presente[$n_nome_s.$num_corr]) or !empty($nome_presente[$n_nome_p.$num_corr])) $num_corr++;
 esegui_query("update $tablepersonalizza set valpersonalizza = '".aggslashdb($nomi_cat_pers."<".$n_nome_s.$num_corr.">".$n_nome_p.$num_corr)."' where idpersonalizza = 'nomi_cat_pers_".aggslashdb($l_ling[$num2])."' and idutente = '$id_utente_mod' ");
 } # fine else if ($num1 == 1)
 } # fine for $num2
@@ -2457,9 +3044,9 @@ $arrotond_cat_pers = formatta_soldi($arrotond_cat_pers);
 if (!$arrotond_cat_pers or controlla_soldi($arrotond_cat_pers) != "SI") $errore = 1;
 for ($num1 = 1 ; $num1 <= $num_categorie_persone ; $num1++) {
 if ($num1 > 1) {
-if (${"osp_princ_$num1"}) $osp_princ = "s";
+if (!empty(${"osp_princ_$num1"})) $osp_princ = "s";
 else $osp_princ = "n";
-if (${"perc_cat_$num1"} < 0 or !strcmp(${"perc_cat_$num1"},"") or preg_replace("/[0-9]/","",${"perc_cat_$num1"}) != "") $errore = 1;
+if (${"perc_cat_$num1"} < 0 or !strcmp((string) ${"perc_cat_$num1"},"") or preg_replace("/[0-9]/","",${"perc_cat_$num1"}) != "") $errore = 1;
 $n_perc_cat_persone .= $osp_princ."%".${"perc_cat_$num1"};
 if ($num1 == 2) $n_perc_cat_persone .= "r".$arrotond_cat_pers;
 $n_perc_cat_persone .= ";";
@@ -2469,8 +3056,9 @@ if (@get_magic_quotes_gpc()) {
 ${"nome_sing_".$l_ling[$num2]."_$num1"} = stripslashes(${"nome_sing_".$l_ling[$num2]."_$num1"});
 ${"nome_plur_".$l_ling[$num2]."_$num1"} = stripslashes(${"nome_plur_".$l_ling[$num2]."_$num1"});
 } # fine if (@get_magic_quotes_gpc())
-if (!strcmp(${"nome_sing_".$l_ling[$num2]."_$num1"},"") or !strcmp(${"nome_plur_".$l_ling[$num2]."_$num1"},"")) $errore = 1;
-$n_nomi_cat_pers[$num2] .= htmlspecialchars(${"nome_sing_".$l_ling[$num2]."_$num1"}).">".htmlspecialchars(${"nome_plur_".$l_ling[$num2]."_$num1"})."<";
+if (!strcmp((string) ${"nome_sing_".$l_ling[$num2]."_$num1"},"") or !strcmp((string) ${"nome_plur_".$l_ling[$num2]."_$num1"},"")) $errore = 1;
+if (!isset($n_nomi_cat_pers[$num2])) $n_nomi_cat_pers[$num2] = "";
+$n_nomi_cat_pers[$num2] .= htmlspecialchars(fixstr(${"nome_sing_".$l_ling[$num2]."_$num1"})).">".htmlspecialchars(fixstr(${"nome_plur_".$l_ling[$num2]."_$num1"}))."<";
 } # fine for $num2
 if ($errore) {
 echo "<br>".mex("I dati inseriti non sono corretti",$pag).".<br>";
@@ -2555,8 +3143,8 @@ $anchor = "liste_pers";
 $metodi_pagamento_int = esegui_query("select valpersonalizza from $tablepersonalizza where idpersonalizza = 'metodi_pagamento' and idutente = '$id_utente_mod'");
 $metodi_pagamento_int = risul_query($metodi_pagamento_int,0,'valpersonalizza');
 $metodi_pagamento_int = aggslashdb($metodi_pagamento_int);
-unset($n_metodi_pagamento);
-if ($elimina_pagamento) {
+$n_metodi_pagamento = "";
+if (!empty($elimina_pagamento)) {
 $metodo_da_eliminare_orig = $metodo_da_eliminare;
 $metodi_pagamento = explode(",",$metodi_pagamento_int);
 if (@get_magic_quotes_gpc())$metodo_da_eliminare  = stripslashes($metodo_da_eliminare);
@@ -2568,8 +3156,8 @@ else echo mex("Metodo di pagamento eliminato",$pag).".<br>";
 } # fine for $num1
 $n_metodi_pagamento = substr($n_metodi_pagamento,1);
 $metodo_da_eliminare = $metodo_da_eliminare_orig;
-} # fine if ($elimina_pagamento)
-if ($aggiungi_pagamento) {
+} # fine if (!empty($elimina_pagamento))
+if (!empty($aggiungi_pagamento)) {
 $nuovo_metodo_pagamento_orig = $nuovo_metodo_pagamento;
 $nuovo_metodo_pagamento = str_replace(",","",$nuovo_metodo_pagamento);
 if (@get_magic_quotes_gpc()) $nuovo_metodo_pagamento = stripslashes($nuovo_metodo_pagamento);
@@ -2581,7 +3169,7 @@ else $n_metodi_pagamento = $nuovo_metodo_pagamento;
 echo mex("Nuovo metodo di pagamento aggiunto",$pag).".<br>";
 } # fine if (str_replace(" ","",$nuovo_metodo_pagamento) != "")
 $nuovo_metodo_pagamento = $nuovo_metodo_pagamento_orig;
-} # fine if ($aggiungi_pagamento)
+} # fine if (!empty($aggiungi_pagamento))
 if ($n_metodi_pagamento != $metodi_pagamento_int) esegui_query("update $tablepersonalizza set valpersonalizza = '$n_metodi_pagamento' where idpersonalizza = 'metodi_pagamento' and idutente = '$id_utente_mod'");
 } # fine if (!empty($elimina_pagamento) or !empty($aggiungi_pagamento))
 
@@ -2590,8 +3178,8 @@ $anchor = "liste_pers";
 $origini_prenota_int = esegui_query("select valpersonalizza from $tablepersonalizza where idpersonalizza = 'origini_prenota' and idutente = '$id_utente_mod'");
 $origini_prenota_int = risul_query($origini_prenota_int,0,'valpersonalizza');
 $origini_prenota_int = aggslashdb($origini_prenota_int);
-unset($n_origini_prenota);
-if ($elimina_origine) {
+$n_origini_prenota = "";
+if (!empty($elimina_origine)) {
 $origine_da_eliminare_orig = $origine_da_eliminare;
 $origini_prenota = explode(",",$origini_prenota_int);
 if (@get_magic_quotes_gpc()) $origine_da_eliminare = stripslashes($origine_da_eliminare);
@@ -2603,8 +3191,8 @@ else echo mex("Origine delle prenotazioni eliminata",$pag).".<br>";
 } # fine for $num1
 $n_origini_prenota = substr($n_origini_prenota,1);
 $origine_da_eliminare = $origine_da_eliminare_orig;
-} # fine if ($elimina_origine)
-if ($aggiungi_origine) {
+} # fine if (!empty($elimina_origine))
+if (!empty($aggiungi_origine)) {
 $nuova_origine_prenota_orig = $nuova_origine_prenota;
 $nuova_origine_prenota = str_replace(",","",$nuova_origine_prenota);
 if (@get_magic_quotes_gpc()) $nuova_origine_prenota = stripslashes($nuova_origine_prenota);
@@ -2616,20 +3204,20 @@ else $n_origini_prenota = $nuova_origine_prenota;
 echo mex("Nuova origine delle prenotazioni aggiunta",$pag).".<br>";
 } # fine if (str_replace(" ","",$nuova_origine_prenota) != "")
 $nuova_origine_prenota = $nuova_origine_prenota_orig;
-} # fine if ($aggiungi_origine)
+} # fine if (!empty($aggiungi_origine))
 if ($n_origini_prenota != $origini_prenota_int) esegui_query("update $tablepersonalizza set valpersonalizza = '$n_origini_prenota' where idpersonalizza = 'origini_prenota' and idutente = '$id_utente_mod'");
 } # fine if (!empty($elimina_origine) or !empty($aggiungi_origine))
 
 if (!empty($elimina_campo_pers_comm) or !empty($aggiungi_campo_pers_comm)) {
 $anchor = "liste_pers";
-$campo_da_el = $campo_da_eliminare;
+$campo_da_el = fixstr($campo_da_eliminare);
 $n_campo_comm = $nuovo_campo_comm;
 $campi_comm_q = esegui_query("select valpersonalizza from $tablepersonalizza where idpersonalizza = 'campi_pers_comm' and idutente = '$id_utente_mod'");
 if (numlin_query($campi_comm_q) == 1) $campi_comm_int = risul_query($campi_comm_q,0,'valpersonalizza');
 else $campi_comm_int = "";
 $campi_comm_int = aggslashdb($campi_comm_int);
-unset($n_campi_comm);
-if ($elimina_campo_pers_comm) {
+$n_campi_comm = "";
+if (!empty($elimina_campo_pers_comm)) {
 $campi_comm = explode(">",$campi_comm_int);
 if (@get_magic_quotes_gpc()) $campo_da_el = stripslashes($campo_da_el);
 $campo_da_el = aggslashdb(htmlspecialchars($campo_da_el));
@@ -2638,15 +3226,15 @@ if ($campi_comm[$num1] != $campo_da_el) $n_campi_comm .= ">".$campi_comm[$num1];
 else echo mex("Commento personalizzato della prenotazione eliminato",$pag).".<br>";
 } # fine for $num1
 $n_campi_comm = substr($n_campi_comm,1);
-} # fine if ($elimina_campo_pers_comm)
-if ($aggiungi_campo_pers_comm) {
+} # fine if (!empty($elimina_campo_pers_comm))
+if (!empty($aggiungi_campo_pers_comm)) {
 $n_campi_comm = $campi_comm_int;
 if (@get_magic_quotes_gpc()) $n_campo_comm = stripslashes($n_campo_comm);
 $n_campo_comm = htmlspecialchars($n_campo_comm);
 $n_campo_comm = aggslashdb($n_campo_comm);
 $continua = 1;
 $n_campo_comm = str_replace("#%?","",$n_campo_comm);
-if (!strcmp($n_campo_comm,"")) $continua = 0;
+if (!strcmp((string) $n_campo_comm,"")) $continua = 0;
 if (preg_replace("/[A-Za-z]/","",substr($n_campo_comm,0,1)) != "") $continua = 0;
 if (preg_replace("/[A-Za-z0-9_]/","",$n_campo_comm) != "") $continua = 0;
 if ($n_campo_comm == "checkin" or $n_campo_comm == "checkout" or $n_campo_comm == "hd_del_res") $continua = 0;
@@ -2661,7 +3249,7 @@ echo mex("Nuovo commento personalizzato della prenotazione aggiunto",$pag).".<br
 } # fine if (str_replace(">$n_campo_comm>","",">$campi_comm_int>") == ">$campi_comm_int>")
 } # fine if ($continua)
 else echo mex("Il campo personalizzato contiene caratteri non consentiti",$pag).".<br>";
-} # fine if ($aggiungi_campo_pers_comm)
+} # fine if (!empty($aggiungi_campo_pers_comm))
 if ($n_campi_comm != $campi_comm_int) {
 if (!$n_campi_comm) esegui_query("delete from $tablepersonalizza where idpersonalizza = 'campi_pers_comm' and idutente = '$id_utente_mod'");
 else {
@@ -2680,7 +3268,7 @@ $comb_app_q = esegui_query("select valpersonalizza from $tablepersonalizza where
 if (numlin_query($comb_app_q) == 1) $comb_app_int = risul_query($comb_app_q,0,'valpersonalizza');
 else $comb_app_int = "";
 $n_comb_app_int = $comb_app_int;
-if ($elimina_comb_app) {
+if (!empty($elimina_comb_app)) {
 $n_nome_comb_app = "";
 if (@get_magic_quotes_gpc()) $comb_app_da_eliminare = stripslashes($comb_app_da_eliminare);
 $comb_app_da_eliminare = htmlspecialchars($comb_app_da_eliminare);
@@ -2696,7 +3284,7 @@ echo mex("Combinazione di appartamenti eliminata",'unit.php').".<br>";
 } # fine if ($nome_comb_app == $comb_app_da_eliminare)
 } # fine for $num1
 } # fine if ($comb_app_int)
-} # fine if ($elimina_comb_app)
+} # fine if (!empty($elimina_comb_app))
 $n_nome_comb_app_orig = $n_nome_comb_app;
 if (@get_magic_quotes_gpc()) $n_nome_comb_app = stripslashes($n_nome_comb_app);
 $n_nome_comb_app = str_replace("<>","",str_replace(",","",htmlspecialchars($n_nome_comb_app)));
@@ -2734,8 +3322,8 @@ $titoli_cliente_q = esegui_query("select valpersonalizza from $tablepersonalizza
 if (numlin_query($titoli_cliente_q) == 1) $titoli_cliente_int = risul_query($titoli_cliente_q,0,'valpersonalizza');
 else $titoli_cliente_int = "";
 $titoli_cliente_int = aggslashdb($titoli_cliente_int);
-unset($n_titoli_cliente);
-if ($elimina_titolo) {
+$n_titoli_cliente = "";
+if (!empty($elimina_titolo)) {
 $titoli_cliente = explode(">",$titoli_cliente_int);
 if (@get_magic_quotes_gpc()) $titolo_da_el = stripslashes($titolo_da_el);
 $titolo_da_el = aggslashdb(htmlspecialchars($titolo_da_el));
@@ -2745,8 +3333,8 @@ if ($tito[0] != $titolo_da_el) $n_titoli_cliente .= ">".$titoli_cliente[$num1];
 else echo mex("Titolo dei clienti eliminato",$pag).".<br>";
 } # fine for $num1
 $n_titoli_cliente = substr($n_titoli_cliente,1);
-} # fine if ($elimina_titolo)
-if ($aggiungi_titolo) {
+} # fine if (!empty($elimina_titolo))
+if (!empty($aggiungi_titolo)) {
 $n_titoli_cliente = $titoli_cliente_int;
 if (@get_magic_quotes_gpc()) $n_titolo_cliente = stripslashes($n_titolo_cliente);
 $n_titolo_cliente = htmlspecialchars($n_titolo_cliente);
@@ -2757,7 +3345,7 @@ if ($titoli_cliente_int) $n_titoli_cliente = "$titoli_cliente_int>$n_titolo_clie
 else $n_titoli_cliente = "$n_titolo_cliente<$sesso_titolo";
 echo mex("Nuovo titolo dei clienti aggiunto",$pag).".<br>";
 } # fine if (str_replace(" ","",$nuova_titolo_prenota) != "")
-} # fine if ($aggiungi_titolo)
+} # fine if (!empty($aggiungi_titolo))
 if ($n_titoli_cliente != $titoli_cliente_int) {
 if (!$n_titoli_cliente) esegui_query("delete from $tablepersonalizza where idpersonalizza = 'titoli_cliente' and idutente = '$id_utente_mod'");
 else {
@@ -2769,14 +3357,14 @@ else esegui_query("insert into $tablepersonalizza (idpersonalizza,valpersonalizz
 
 if (!empty($elimina_campo_pers_cliente) or !empty($aggiungi_campo_pers_cliente)) {
 $anchor = "dati_clienti";
-$campo_da_el = $campo_da_eliminare;
-$n_campo_cliente = $nuovo_campo_cliente;
+$campo_da_el = fixstr($campo_da_eliminare);
+$n_campo_cliente = fixstr($nuovo_campo_cliente);
 $campi_clienti_q = esegui_query("select valpersonalizza from $tablepersonalizza where idpersonalizza = 'campi_pers_cliente' and idutente = '$id_utente_mod'");
 if (numlin_query($campi_clienti_q) == 1) $campi_cliente_int = risul_query($campi_clienti_q,0,'valpersonalizza');
 else $campi_cliente_int = "";
 $campi_cliente_int = aggslashdb($campi_cliente_int);
-unset($n_campi_cliente);
-if ($elimina_campo_pers_cliente) {
+$n_campi_cliente = "";
+if (!empty($elimina_campo_pers_cliente)) {
 $campi_cliente = explode(">",$campi_cliente_int);
 if (@get_magic_quotes_gpc()) $campo_da_el = stripslashes($campo_da_el);
 $campo_da_el = aggslashdb(htmlspecialchars($campo_da_el));
@@ -2786,8 +3374,8 @@ if ($camp[0] != $campo_da_el) $n_campi_cliente .= ">".$campi_cliente[$num1];
 else echo mex("Campo personalizzato dei clienti eliminato",$pag).".<br>";
 } # fine for $num1
 $n_campi_cliente = substr($n_campi_cliente,1);
-} # fine if ($elimina_campo_pers_cliente)
-if ($aggiungi_campo_pers_cliente) {
+} # fine if (!empty($elimina_campo_pers_cliente))
+if (!empty($aggiungi_campo_pers_cliente)) {
 $n_campi_cliente = $campi_cliente_int;
 if (@get_magic_quotes_gpc()) $n_campo_cliente = stripslashes($n_campo_cliente);
 $n_campo_cliente = htmlspecialchars($n_campo_cliente);
@@ -2809,7 +3397,7 @@ echo mex("Nuovo campo personalizzato dei clienti aggiunto",$pag).".<br>";
 } # fine if (str_replace(">$n_campo_cliente<","",">$campi_cliente_int") == ">$campi_cliente_int")
 } # fine if ($continua)
 else echo mex("Il campo personalizzato contiene caratteri non consentiti",$pag).".<br>";
-} # fine if ($aggiungi_campo_pers_cliente)
+} # fine if (!empty($aggiungi_campo_pers_cliente))
 if ($n_campi_cliente != $campi_cliente_int) {
 if (!$n_campi_cliente) esegui_query("delete from $tablepersonalizza where idpersonalizza = 'campi_pers_cliente' and idutente = '$id_utente_mod'");
 else {
@@ -2840,7 +3428,7 @@ $anchor = "pers_rel";
 aggiorna_relutenti($$aggiungi_rel,$$rel_predefinite,$$elimina_tutte_rel,$$importa_rel,$id_utente,$id_utente_mod,$$nuova_rel,$$sup_n_rel,$$cod_n_rel,$$cod2_n_rel,$$cod3_n_rel,$$utente_importa_rel,$pag,$rel_sing,$rel_plur,$tablerel,$tablerelutenti,$rel_sup_sing,$rel_sup_plur,$tablerel_sup,$rel_inf_sing,$rel_inf_plur,$tablerel_inf);
 if ($$elimina_rel) {
 if (@get_magic_quotes_gpc()) $$rel_da_eliminare = stripslashes($$rel_da_eliminare);
-$$rel_da_eliminare = aggslashdb(htmlspecialchars($$rel_da_eliminare));
+$$rel_da_eliminare = aggslashdb($$rel_da_eliminare);
 if (str_replace(" ","",$$rel_da_eliminare)) {
 if ($tablerel_inf) $tabelle_lock = array($tablerel,$tablerel_inf,$tablerelutenti);
 else $tabelle_lock = array($tablerel,$tablerelutenti);
@@ -2884,6 +3472,23 @@ $anchor = "conf_anno";
 $errore = "NO";
 $idfineperiodo_prec = -10;
 if (!$num_periodi_date or controlla_num_pos($num_periodi_date) == "NO") $num_periodi_date = 1;
+$vett_ini = array();
+$vett_fine = array();
+$vett_int = array();
+for ($num1 = 0 ; $num1 < $num_periodi_date ; $num1++) {
+$vett_ini[$num1] = ${"inizioperiodo".$num1};
+$vett_fine[$num1] = ${"fineperiodo".$num1};
+$vett_int[$num1] = ${"intervalloperiodo".$num1};
+} # fine for $num1
+$num1 = 0;
+asort($vett_ini);
+reset ($vett_ini);
+foreach ($vett_ini as $ord => $val) {
+${"inizioperiodo".$num1} = $vett_ini[$ord];
+${"fineperiodo".$num1} = $vett_fine[$ord];
+${"intervalloperiodo".$num1} = $vett_int[$ord];
+$num1++;
+} # fine foreach ($vett_ini as $ord => $val)
 for ($num1 = 0 ; $num1 < $num_periodi_date ; $num1++) {
 ${"inizioperiodo_orig".$num1} = ${"inizioperiodo".$num1};
 ${"fineperiodo_orig".$num1} = ${"fineperiodo".$num1};
@@ -3001,44 +3606,44 @@ ${"fineperiodo".$num1} = ${"fineperiodo_orig".$num1};
 
 if (!empty($cambia_col_tutte_prenota)) {
 $anchor = "tab_pren";
-unset($col_tab_tutte_prenota);
-if ($colonna_numero == "SI") $col_tab_tutte_prenota .= "nu#@&";
-if ($colonna_cognome == "SI") $col_tab_tutte_prenota .= "cg#@&";
-if ($colonna_ospite == "SI") $col_tab_tutte_prenota .= "os#@&";
-if ($colonna_inizio == "SI") $col_tab_tutte_prenota .= "in#@&";
-if ($colonna_fine == "SI") $col_tab_tutte_prenota .= "fi#@&";
-if ($colonna_orarioentrata == "SI") $col_tab_tutte_prenota .= "oe#@&";
-if ($colonna_settimane == "SI") $col_tab_tutte_prenota .= "ns#@&";
-if ($colonna_tariffacompleta == "SI") $col_tab_tutte_prenota .= "tc#@&";
-if ($colonna_caparra == "SI") $col_tab_tutte_prenota .= "ca#@&";
-if ($colonna_commissioni == "SI") $col_tab_tutte_prenota .= "cm#@&";
-if ($colonna_restocomm == "SI") $col_tab_tutte_prenota .= "rc#@&";
-if ($colonna_pagato == "SI") $col_tab_tutte_prenota .= "pa#@&";
-if ($colonna_dapagare == "SI") $col_tab_tutte_prenota .= "dp#@&";
-if ($colonna_nometariffa == "SI") $col_tab_tutte_prenota .= "nt#@&";
-if ($colonna_appartamento == "SI") $col_tab_tutte_prenota .= "ap#@&";
-if ($colonna_piano == "SI") $col_tab_tutte_prenota .= "pi#@&";
-if ($colonna_casa == "SI") $col_tab_tutte_prenota .= "ka#@&";
-if ($colonna_persone == "SI" or $colonna_catpersone == "SI") $col_tab_tutte_prenota .= "pe#@&";
-if ($colonna_catpersone == "SI") $col_tab_tutte_prenota .= "tp#@&";
-if ($colonna_commento == "SI") $col_tab_tutte_prenota .= "co#@&";
-if ($colonna_origine_prenota == "SI") $col_tab_tutte_prenota .= "or#@&";
-if ($colonna_docsalvati == "SI") $col_tab_tutte_prenota .= "ds#@&";
-if ($colonna_datainserimento == "SI") $col_tab_tutte_prenota .= "di#@&";
-if ($colonna_utenteinserimento == "SI") $col_tab_tutte_prenota .= "ui#@&";
+$col_tab_tutte_prenota = "";
+if (isset($colonna_numero) and $colonna_numero == "SI") $col_tab_tutte_prenota .= "nu#@&";
+if (isset($colonna_cognome) and $colonna_cognome == "SI") $col_tab_tutte_prenota .= "cg#@&";
+if (isset($colonna_ospite) and $colonna_ospite == "SI") $col_tab_tutte_prenota .= "os#@&";
+if (isset($colonna_inizio) and $colonna_inizio == "SI") $col_tab_tutte_prenota .= "in#@&";
+if (isset($colonna_fine) and $colonna_fine == "SI") $col_tab_tutte_prenota .= "fi#@&";
+if (isset($colonna_orarioentrata) and $colonna_orarioentrata == "SI") $col_tab_tutte_prenota .= "oe#@&";
+if (isset($colonna_settimane) and $colonna_settimane == "SI") $col_tab_tutte_prenota .= "ns#@&";
+if (isset($colonna_tariffacompleta) and $colonna_tariffacompleta == "SI") $col_tab_tutte_prenota .= "tc#@&";
+if (isset($colonna_caparra) and $colonna_caparra == "SI") $col_tab_tutte_prenota .= "ca#@&";
+if (isset($colonna_commissioni) and $colonna_commissioni == "SI") $col_tab_tutte_prenota .= "cm#@&";
+if (isset($colonna_restocomm) and $colonna_restocomm == "SI") $col_tab_tutte_prenota .= "rc#@&";
+if (isset($colonna_pagato) and $colonna_pagato == "SI") $col_tab_tutte_prenota .= "pa#@&";
+if (isset($colonna_dapagare) and $colonna_dapagare == "SI") $col_tab_tutte_prenota .= "dp#@&";
+if (isset($colonna_nometariffa) and $colonna_nometariffa == "SI") $col_tab_tutte_prenota .= "nt#@&";
+if (isset($colonna_appartamento) and $colonna_appartamento == "SI") $col_tab_tutte_prenota .= "ap#@&";
+if (isset($colonna_piano) and $colonna_piano == "SI") $col_tab_tutte_prenota .= "pi#@&";
+if (isset($colonna_casa) and $colonna_casa == "SI") $col_tab_tutte_prenota .= "ka#@&";
+if (isset($colonna_persone) and $colonna_persone == "SI" or $colonna_catpersone == "SI") $col_tab_tutte_prenota .= "pe#@&";
+if (isset($colonna_catpersone) and $colonna_catpersone == "SI") $col_tab_tutte_prenota .= "tp#@&";
+if (isset($colonna_commento) and $colonna_commento == "SI") $col_tab_tutte_prenota .= "co#@&";
+if (isset($colonna_origine_prenota) and $colonna_origine_prenota == "SI") $col_tab_tutte_prenota .= "or#@&";
+if (isset($colonna_docsalvati) and $colonna_docsalvati == "SI") $col_tab_tutte_prenota .= "ds#@&";
+if (isset($colonna_datainserimento) and $colonna_datainserimento == "SI") $col_tab_tutte_prenota .= "di#@&";
+if (isset($colonna_utenteinserimento) and $colonna_utenteinserimento == "SI") $col_tab_tutte_prenota .= "ui#@&";
 $campi_pers_comm = esegui_query("select valpersonalizza from $tablepersonalizza where idpersonalizza = 'campi_pers_comm' and idutente = '$id_utente_mod'");
 if (numlin_query($campi_pers_comm) == 1) $campi_pers_comm = risul_query($campi_pers_comm,0,'valpersonalizza');
 else $campi_pers_comm = "";
 if ($campi_pers_comm) {
 $campi_pers_comm = explode(">",$campi_pers_comm);
 for ($num1 = 0 ; $num1 < count($campi_pers_comm) ; $num1++) {
-if (${"colonna_comm_pers_".$campi_pers_comm[$num1]} == "SI") $col_tab_tutte_prenota .= "cp#?&".$campi_pers_comm[$num1]."#@&";
+if (isset(${"colonna_comm_pers_".$campi_pers_comm[$num1]}) and ${"colonna_comm_pers_".$campi_pers_comm[$num1]} == "SI") $col_tab_tutte_prenota .= "cp#?&".$campi_pers_comm[$num1]."#@&";
 } # fine for $num1
 } # fine if ($campi_pers_comm)
 for ($num1 = 0 ; $num1 < $num_ca ; $num1++) {
 $tipo_ca = "";
-if (${"cu".$num1}) $tipo_ca = "cu";
-if (${"cs".$num1}) $tipo_ca = "cs";
+if (!empty(${"cu".$num1})) $tipo_ca = "cu";
+if (!empty(${"cs".$num1})) $tipo_ca = "cs";
 if ($tipo_ca) {
 $nome_ca = ${$tipo_ca.$num1};
 if (@get_magic_quotes_gpc()) $nome_ca = stripslashes($nome_ca);
@@ -3049,19 +3654,19 @@ if (@get_magic_quotes_gpc()) $soprannome_ca = stripslashes($soprannome_ca);
 $soprannome_ca = htmlspecialchars($soprannome_ca);
 $soprannome_ca = aggslashdb($soprannome_ca);
 if ($soprannome_ca) $col_tab_tutte_prenota .= "#?&".$soprannome_ca;
-elseif (${"nec_ca".$num1} == "SI") $col_tab_tutte_prenota .= "#?&";
-if (${"nec_ca".$num1} == "SI") $col_tab_tutte_prenota .= "#?&nec";
+elseif (isset(${"nec_ca".$num1}) and ${"nec_ca".$num1} == "SI") $col_tab_tutte_prenota .= "#?&";
+if (isset(${"nec_ca".$num1}) and ${"nec_ca".$num1} == "SI") $col_tab_tutte_prenota .= "#?&nec";
 $col_tab_tutte_prenota .= "#@&";
 } # fine if ($tipo_ca)
 } # fine for $num1
 for ($num1 = 0 ; $num1 < $num_gr ; $num1++) {
 $gr = "gr".$num1;
-if ($$gr) {
+if (!empty($$gr)) {
 $valore_gr = "valore_gr".$num1;
 if (@get_magic_quotes_gpc()) $$valore_gr = stripslashes($$valore_gr);
 $$valore_gr = aggslashdb($$valore_gr);
 $col_tab_tutte_prenota .= $$valore_gr."#@&";
-} # fine if ($$gr)
+} # fine if (!entpy($$gr))
 } # fine for $num1
 if ($col_tab_tutte_prenota) $col_tab_tutte_prenota = substr($col_tab_tutte_prenota,0,-3);
 esegui_query("update $tablepersonalizza set valpersonalizza = '$col_tab_tutte_prenota' where idpersonalizza = 'col_tab_tutte_prenota' and idutente = '$id_utente_mod'");
@@ -3070,41 +3675,42 @@ echo mex("Le colonne sono state cambiate",$pag).".<br>";
 
 if (!empty($aggiungi_col_gruppo)) {
 $anchor = "tab_pren";
-unset($col_gruppo);
-if ($colonna_settimane == "SI") $col_gruppo = "ns#?&";
-if ($colonna_caparra == "SI") $col_gruppo .= "ca#?&";
-if ($colonna_commissioni == "SI") $col_gruppo .= "cm#?&";
-if ($colonna_restocomm == "SI") $col_gruppo .= "rc#?&";
-if ($colonna_pagato == "SI") $col_gruppo .= "pa#?&";
-if ($colonna_dapagare == "SI") $col_gruppo .= "dp#?&";
-if ($colonna_nometariffa == "SI") $col_gruppo .= "nt#?&";
-if ($colonna_appartamento == "SI") $col_gruppo .= "ap#?&";
-if ($colonna_piano == "SI") $col_gruppo .= "pi#?&";
-if ($colonna_casa == "SI") $col_gruppo .= "ka#?&";
-if ($colonna_persone == "SI") $col_gruppo .= "pe#?&";
-if ($colonna_catpersone == "SI") $col_gruppo .= "tp#?&";
-if ($colonna_commento == "SI") $col_gruppo .= "co#?&";
-if ($colonna_origine_prenota == "SI") $col_gruppo .= "or#?&";
-if ($colonna_docsalvati == "SI") $col_gruppo .= "ds#?&";
-if ($colonna_datainserimento == "SI") $col_gruppo .= "di#?&";
-if ($colonna_utenteinserimento == "SI") $col_gruppo .= "ui#?&";
+$inserire = null;
+$col_gruppo = "";
+if (isset($colonna_settimane) and $colonna_settimane == "SI") $col_gruppo = "ns#?&";
+if (isset($colonna_caparra) and $colonna_caparra == "SI") $col_gruppo .= "ca#?&";
+if (isset($colonna_commissioni) and $colonna_commissioni == "SI") $col_gruppo .= "cm#?&";
+if (isset($colonna_restocomm) and $colonna_restocomm == "SI") $col_gruppo .= "rc#?&";
+if (isset($colonna_pagato) and $colonna_pagato == "SI") $col_gruppo .= "pa#?&";
+if (isset($colonna_dapagare) and $colonna_dapagare == "SI") $col_gruppo .= "dp#?&";
+if (isset($colonna_nometariffa) and $colonna_nometariffa == "SI") $col_gruppo .= "nt#?&";
+if (isset($colonna_appartamento) and $colonna_appartamento == "SI") $col_gruppo .= "ap#?&";
+if (isset($colonna_piano) and $colonna_piano == "SI") $col_gruppo .= "pi#?&";
+if (isset($colonna_casa) and $colonna_casa == "SI") $col_gruppo .= "ka#?&";
+if (isset($colonna_persone) and $colonna_persone == "SI") $col_gruppo .= "pe#?&";
+if (isset($colonna_catpersone) and $colonna_catpersone == "SI") $col_gruppo .= "tp#?&";
+if (isset($colonna_commento) and $colonna_commento == "SI") $col_gruppo .= "co#?&";
+if (isset($colonna_origine_prenota) and $colonna_origine_prenota == "SI") $col_gruppo .= "or#?&";
+if (isset($colonna_docsalvati) and $colonna_docsalvati == "SI") $col_gruppo .= "ds#?&";
+if (isset($colonna_datainserimento) and $colonna_datainserimento == "SI") $col_gruppo .= "di#?&";
+if (isset($colonna_utenteinserimento) and $colonna_utenteinserimento == "SI") $col_gruppo .= "ui#?&";
 $campi_pers_comm = esegui_query("select valpersonalizza from $tablepersonalizza where idpersonalizza = 'campi_pers_comm' and idutente = '$id_utente_mod'");
 if (numlin_query($campi_pers_comm) == 1) $campi_pers_comm = risul_query($campi_pers_comm,0,'valpersonalizza');
 else $campi_pers_comm = "";
 if ($campi_pers_comm) {
 $campi_pers_comm = explode(">",$campi_pers_comm);
 for ($num1 = 0 ; $num1 < count($campi_pers_comm) ; $num1++) {
-if (${"colonna_comm_pers_".$campi_pers_comm[$num1]} == "SI") $col_gruppo .= "cp#%&".$campi_pers_comm[$num1]."#?&";
+if (isset(${"colonna_comm_pers_".$campi_pers_comm[$num1]}) and ${"colonna_comm_pers_".$campi_pers_comm[$num1]} == "SI") $col_gruppo .= "cp#%&".$campi_pers_comm[$num1]."#?&";
 } # fine for $num1
 } # fine if ($campi_pers_comm)
 for ($num1 = 0 ; $num1 < $num_ca ; $num1++) {
 $cu = "cu".$num1;
 if (@get_magic_quotes_gpc()) $$cu = stripslashes($$cu);
-$$cu = aggslashdb($$cu);
+$$cu = aggslashdb(fixstr($$cu));
 if ($$cu) $col_gruppo .= "cu#%&".$$cu."#?&";
 $cs = "cs".$num1;
 if (@get_magic_quotes_gpc()) $$cs = stripslashes($$cs);
-$$cs = aggslashdb($$cs);
+$$cs = aggslashdb(fixstr($$cs));
 if ($$cs) $col_gruppo .= "cs#%&".$$cs."#?&";
 } # fine for $num1
 if ($col_gruppo) $col_gruppo = substr($col_gruppo,0,-3);
@@ -3124,7 +3730,7 @@ $tabelle_lock = array($tablepersonalizza);
 $tabelle_lock = lock_tabelle($tabelle_lock);
 $col_tab_tutte_prenota = esegui_query("select * from $tablepersonalizza where idpersonalizza = 'col_tab_tutte_prenota' and idutente = '$id_utente_mod'");
 $col_tab_tutte_prenota = risul_query($col_tab_tutte_prenota,0,'valpersonalizza');
-if ($col_tab_tutte_prenota) $col_tab_tutte_prenota .= "#@&";
+if ($col_tab_tutte_prenota) $col_tab_tutte_prenota = aggslashdb($col_tab_tutte_prenota)."#@&";
 if (@get_magic_quotes_gpc()) $soprannome_col_gruppo = stripslashes($soprannome_col_gruppo);
 $soprannome_col_gruppo = htmlspecialchars($soprannome_col_gruppo);
 $soprannome_col_gruppo = aggslashdb($soprannome_col_gruppo);
@@ -3141,23 +3747,23 @@ $col_tab_tutte_prenota = esegui_query("select * from $tablepersonalizza where id
 $col_tab_tutte_prenota = risul_query($col_tab_tutte_prenota,0,'valpersonalizza');
 $colonne_selezionate = explode("#@&",$col_tab_tutte_prenota);
 $num_colonne_selezionate = count($colonne_selezionate);
-unset($nuove_col_tab_tutte_prenota);
+$nuove_col_tab_tutte_prenota = "";
 for ($num1 = 0 ; $num1 < $num_colonne_selezionate ; $num1++) {
 $colonna_selezionata = explode("#?&",$colonne_selezionate[$num1]);
 $col_nec = "NO";
 if ($colonna_selezionata[0] == "cu" or $colonna_selezionata[0] == "cs") {
 $tipo_ca = $colonna_selezionata[0];
 $nome_ca = $colonna_selezionata[1];
-for ($num2 = 0 ; $num2 < $num_ca ; $num2++) if (${$tipo_ca.$num2} == $nome_ca) $col_nec = "SI";
-if ($colonna_selezionata[3] == "nec" and $col_nec == "NO") $colonne_selezionate[$num1] = substr($colonne_selezionate[$num1],0,-6);
-if ($colonna_selezionata[3] != "nec" and $col_nec == "SI") {
+for ($num2 = 0 ; $num2 < $num_ca ; $num2++) if (isset(${$tipo_ca.$num2}) and ${$tipo_ca.$num2} == $nome_ca) $col_nec = "SI";
+if (isset($colonna_selezionata[3]) and $colonna_selezionata[3] == "nec" and $col_nec == "NO") $colonne_selezionate[$num1] = substr($colonne_selezionate[$num1],0,-6);
+if ((!isset($colonna_selezionata[3]) or $colonna_selezionata[3] != "nec") and $col_nec == "SI") {
 if ((strlen($colonne_selezionate[$num1]) - strlen(str_replace("#?&","",$colonne_selezionate[$num1]))) == 3) $colonne_selezionate[$num1] .= "#?&";
 $colonne_selezionate[$num1] .= "#?&nec";
-} # fine if ($colonna_selezionata[3] != "nec" and $col_nec == "SI")
+} # fine if ((!isset($colonna_selezionata[3]) or $colonna_selezionata[3] != "nec") and $col_nec == "SI")
 } # fine if ($tipo_ca == "cu" or $tipo_ca == "cs")
 if ($colonna_selezionata[0] == "gr") {
 $nome_col_gruppo = $colonna_selezionata[1];
-for ($num2 = 0 ; $num2 < $num_gr ; $num2++) if (${"gr".$num2} == $nome_col_gruppo) $col_nec = "SI";
+for ($num2 = 0 ; $num2 < $num_gr ; $num2++) if (isset(${"gr".$num2}) and ${"gr".$num2} == $nome_col_gruppo) $col_nec = "SI";
 if ($colonna_selezionata[(count($colonna_selezionata) -1)] == "nec" and $col_nec == "NO") $colonne_selezionate[$num1] = substr($colonne_selezionate[$num1],0,-6);
 if ($colonna_selezionata[(count($colonna_selezionata) -1)] != "nec" and $col_nec == "SI") $colonne_selezionate[$num1] .= "#?&nec";
 } # fine if ($colonna_selezionata[0] == "gr")
@@ -3170,11 +3776,11 @@ echo mex("Le colonne necessarie sono state cambiate",$pag).".<br>";
 
 if (!empty($cambia_rig_tutte_prenota)) {
 $anchor = "tab_pren";
-unset($rig_tab_tutte_prenota);
-if ($riga_totale == "SI") $rig_tab_tutte_prenota .= "to#@&";
-if ($riga_tasse == "SI") $rig_tab_tutte_prenota .= "ta#@&";
-if ($riga_cassa == "SI") $rig_tab_tutte_prenota .= "ca#@&";
-if ($riga_prenotacanc == "SI") $rig_tab_tutte_prenota .= "pc#@&";
+$rig_tab_tutte_prenota = "";
+if (isset($riga_totale) and $riga_totale == "SI") $rig_tab_tutte_prenota .= "to#@&";
+if (isset($riga_tasse) and $riga_tasse == "SI") $rig_tab_tutte_prenota .= "ta#@&";
+if (isset($riga_cassa) and $riga_cassa == "SI") $rig_tab_tutte_prenota .= "ca#@&";
+if (isset($riga_prenotacanc) and $riga_prenotacanc == "SI") $rig_tab_tutte_prenota .= "pc#@&";
 if ($rig_tab_tutte_prenota) $rig_tab_tutte_prenota = substr($rig_tab_tutte_prenota,0,-3);
 esegui_query("update $tablepersonalizza set valpersonalizza = '$rig_tab_tutte_prenota' where idpersonalizza = 'rig_tab_tutte_prenota' and idutente = '$id_utente_mod'");
 echo mex("Le righe aggiuntive sono state cambiate",$pag).".<br>";
@@ -3241,26 +3847,26 @@ esegui_query("delete from $tablepersonalizza where idpersonalizza = 'allinea_tab
 echo mex("L'allineamento dei giorni con la disponibilità nella tabella dei mesi è stato cambiato",$pag).".<br>";
 } # fine if ($allinea_tab_mesi == "NO")
 else {
-if (!$continua) {
+if (empty($continua)) {
 echo "<form accept-charset=\"utf-8\" method=\"post\" action=\"./personalizza.php\"><div>
 <input type=\"hidden\" name=\"anno\" value=\"$anno\">
 <input type=\"hidden\" name=\"id_sessione\" value=\"$id_sessione\">
-<input type=\"hidden\" name=\"id_utente_mod\" value=\"".htmlspecialchars(fixset($id_utente_mod_orig))."\">
+<input type=\"hidden\" name=\"id_utente_mod\" value=\"".htmlspecialchars(fixstr($id_utente_mod_orig))."\">
 <input type=\"hidden\" name=\"aggiorna_qualcosa\" value=\"SI\">
 <input type=\"hidden\" name=\"cambia_allinea_tab_mesi\" value=\"SI\">
 <input type=\"hidden\" name=\"allinea_tab_mesi\" value=\"SI\">
 <input type=\"hidden\" name=\"continua\" value=\"SI\">
 ".mex("Allineare la disponibilità con le date di arrivo potrebbe generare confusione ed errori sulle date di partenza, si è sicuri di voler continuare?",$pag)."<br>
-<input class=\"sbutton\" type=\"submit\" value=\"".mex("SI",$pag)."\">
+<button class=\"cont\" type=\"submit\"><div>".mex("SI",$pag)."</div></button>
 </div></form><br><br><br>";
 $torna_invece_di_ok = "SI";
 # Esco dal ciclo degli utenti
 break;
-} # fine if (!$continua)
+} # fine if (empty($continua))
 else {
 if (!$allinea_tab_mesi_v) esegui_query("insert into $tablepersonalizza (idpersonalizza,idutente,valpersonalizza) values ('allinea_tab_mesi','$id_utente_mod','SI') ");
 echo mex("L'allineamento dei giorni con la disponibilità nella tabella dei mesi è stato cambiato",$pag).".<br>";
-} # fine else if (!$continua)
+} # fine else if (empty($continua))
 } # fine else if ($allinea_tab_mesi == "NO")
 unlock_tabelle($tabelle_lock);
 } # fine if (!empty($cambia_allinea_tab_mesi))
@@ -3326,10 +3932,10 @@ $aggiorna = "SI";
 $cancella_cache = 0;
 $tabelle_lock = array($tablepersonalizza,$tablecache);
 $tabelle_lock = lock_tabelle($tabelle_lock);
-if (!strcmp($server_email_tm,"")) {
+if (!strcmp((string) $server_email_tm,"")) {
 esegui_query("delete from $tablepersonalizza where idpersonalizza = 'server_email_tab_messaggi' and idutente = '$id_utente_mod' ");
 $cancella_cache = 1;
-} # fine if (!strcmp($server_email_tm,""))
+} # fine if (!strcmp((string) $server_email_tm,""))
 else {
 if (strlen($server_email_tm) < 4) $aggiorna = "NO";
 if ($proto_email_tm != "pop3" and $proto_email_tm != "imap" and $proto_email_tm != "pop3/ssl" and $proto_email_tm != "imap/ssl") $aggiorna = "NO";
@@ -3337,8 +3943,8 @@ $proto_email_tm .= "/novalidate-cert";
 if ($tipo_porta_email_tm != "def" and $tipo_porta_email_tm != "pers") $aggiorna = "NO";
 if ($tipo_porta_email_tm == "def") $porta_email_tm = "";
 if ($porta_email_tm and ($porta_email_tm > 65535 or controlla_num_pos($porta_email_tm) == "NO")) $aggiorna = "NO";
-if (!strcmp($username_email_tm,"")) $aggiorna = "NO";
-if (!strcmp($password_email_tm,"")) $aggiorna = "NO";
+if (!strcmp((string) $username_email_tm,"")) $aggiorna = "NO";
+if (!strcmp((string) $password_email_tm,"")) $aggiorna = "NO";
 if (!$num_trova_email_tm or controlla_num_pos($num_trova_email_tm) == "NO") {
 $aggiorna = "NO";
 $num_trova_email_tm = 1;
@@ -3367,7 +3973,7 @@ esegui_query("update $tablepersonalizza set valpersonalizza = '".aggslashdb($n_s
 } # fine if (numlin_query($server_email_tab_messaggi))
 else esegui_query("insert into $tablepersonalizza (idpersonalizza,idutente,valpersonalizza) values ('server_email_tab_messaggi','$id_utente_mod','".aggslashdb($n_server_email_tm)."')");
 } # fine else if ($aggiorna == "NO")
-} # fine else if (!strcmp($server_email_tm,""))
+} # fine else if (!strcmp((string) $server_email_tm,""))
 if ($cancella_cache) esegui_query("delete from $tablecache where numero = '$id_utente_mod' and tipo = 'messv_em' ");
 unlock_tabelle($tabelle_lock);
 if ($aggiorna == "SI") echo mex("Lo scaricamento delle email di richiesta disponibiltà dal server di posta è stato cambiato",$pag).".<br>";
@@ -3448,14 +4054,14 @@ $anchor = "pos_inv";
 $tasti_pos = "";
 if (controlla_num_pos($num_tasti_pos) == "NO") $num_tasti_pos = 0;
 for ($num1 = 0 ; $num1 < $num_tasti_pos ; $num1++) {
-if (${"tasto".$num1} == "s") $tasti_pos .= "s;";
-elseif (${"tasto".$num1}) {
+if (isset(${"tasto".$num1}) and ${"tasto".$num1} == "s") $tasti_pos .= "s;";
+elseif (!empty(${"tasto".$num1})) {
 if (${"oper".$num1} == "+" or ${"oper".$num1} == "-" or ${"oper".$num1} == "x") {
 if (${"val".$num1} and controlla_num_pos(${"val".$num1}) != "NO") {
 $tasti_pos .= ${"oper".$num1}.${"val".$num1}.";";
 } # fine (${"val".$num1} and controlla_num_pos(${"val".$num1}) != "NO")
 } # fine if (${"oper".$num1} == "+" or ${"oper".$num1} == "-" or ${"oper".$num1} == "x")
-} # fine elseif (${"tasto".$num1})
+} # fine elseif (!empty(${"tasto".$num1}))
 } # fine for $num1
 $tasti_pos = substr($tasti_pos,0,-1);
 esegui_query("update $tablepersonalizza set valpersonalizza = '$tasti_pos' where idpersonalizza = 'tasti_pos' and idutente = '$id_utente_mod'");
@@ -3543,7 +4149,7 @@ $subclass = "cont";
 echo "<form accept-charset=\"utf-8\" method=\"post\" action=\"$action\"><div>
 <input type=\"hidden\" name=\"anno\" value=\"$anno\">
 <input type=\"hidden\" name=\"id_sessione\" value=\"$id_sessione\">";
-if (empty($origine) or $origine == $pag) echo "<input type=\"hidden\" name=\"id_utente_mod\" value=\"".htmlspecialchars(fixset($id_utente_mod_orig))."\">";
+if (empty($origine) or $origine == $pag) echo "<input type=\"hidden\" name=\"id_utente_mod\" value=\"".htmlspecialchars(fixstr($id_utente_mod_orig))."\">";
 echo "<button class=\"$subclass\" type=\"submit\"><div>$OK</div></button><br>
 </div></form><br><br>";
 
@@ -3551,17 +4157,17 @@ if ($aggiorna_tariffe_interconn == "SI") {
 $file_interconnessioni = C_DATI_PATH."/dati_interconnessioni.php";
 if (@is_file($file_interconnessioni)) {
 include($file_interconnessioni);
-if (@is_array($ic_present)) {
+if (isset($ic_present) and is_array($ic_present)) {
 $ut_trovato = "NO";
 $interconn_dir = opendir("./includes/interconnect/");
 while ($mod_ext = readdir($interconn_dir)) {
 if ($mod_ext != "." and $mod_ext != ".." and @is_dir("./includes/interconnect/$mod_ext")) {
 include("./includes/interconnect/$mod_ext/name.php");
-if ($ic_present[$interconnection_name] == "SI") {
+if (isset($ic_present[$interconnection_name]) and $ic_present[$interconnection_name] == "SI") {
 for ($num1 = 0 ; $num1 < $fine_for_utenti ; $num1++) {
 if (${"ic_closed_on_arr_dep_user_".$interconnection_name} == $id_utente_mod_vett[$num1]) $ut_trovato = "SI";
 } # fine for $num1
-} # fine if ($ic_present[$interconnection_name] == "SI")
+} # fine if (isset($ic_present[$interconnection_name]) and $ic_present[$interconnection_name] == "SI")
 } # fine if ($modello_ext != "." and $modello_ext != ".." and...
 } # fine while ($mod_ext = readdir($interconn_dir))
 closedir($interconn_dir);
@@ -3573,7 +4179,7 @@ $closed_on_arr_dep = "SI";
 if (@function_exists('pcntl_fork')) include("./includes/interconnect/aggiorna_ic_fork.php");
 else include("./includes/interconnect/aggiorna_ic.php");
 } # fine if ($ut_trovato == "SI")
-} # fine if (@is_array($ic_present))
+} # fine if (isset($ic_present) and is_array($ic_present))
 } # fine if (@is_file($file_interconnessioni))
 } # fine if ($aggiorna_tariffe_interconn == "SI")
 
@@ -3593,15 +4199,15 @@ if ($id_utente == 1) echo " ".C_PHPR_VERSIONE_TXT;
 } # fine else if (defined('C_NASCONDI_MARCA') and C_NASCONDI_MARCA == "SI")
 echo "</span></h4><hr style=\"width: 65%\">";
 
-if ($id_utente == 1 or ($priv_crea_backup == "s" and $installazione_subordinata != "SI") or $priv_crea_pagineweb == "s" or ($priv_crea_interconnessioni == "s" and (!defined('C_CREA_SUBORDINAZIONI') or C_CREA_SUBORDINAZIONI != "NO"))) {
+if ($id_utente == 1 or ($priv_mod_pass != "n" and $installazione_subordinata != "SI") or ($priv_crea_backup == "s" and $installazione_subordinata != "SI") or $priv_crea_pagineweb == "s" or ($priv_crea_interconnessioni == "s" and (!defined('C_CREA_SUBORDINAZIONI') or C_CREA_SUBORDINAZIONI != "NO"))) {
 echo "<table class=\"nomob\" style=\"margin-left: auto; margin-right: auto;\" width=\"70%\"><tr>";
-if ($id_utente == 1 and $installazione_subordinata != "SI") {
+if ($priv_mod_pass != "n" and $installazione_subordinata != "SI") {
 echo "<td align=\"center\"><form accept-charset=\"utf-8\" method=\"post\" action=\"./gestione_utenti.php\"><div>
 <input type=\"hidden\" name=\"anno\" value=\"$anno\">
 <input type=\"hidden\" name=\"id_sessione\" value=\"$id_sessione\">
 <button class=\"usrs\" type=\"submit\"><div>".mex("Gestione utenti",$pag)."</div></button>
 </div></form></td>";
-} # fine if ($id_utente == 1 and $installazione_subordinata != "SI")
+} # fine if ($priv_mod_pass != "n" and $installazione_subordinata != "SI")
 if ($priv_crea_pagineweb == "s") {
 echo "<td align=\"center\"><form accept-charset=\"utf-8\" method=\"post\" action=\"./crea_modelli.php\"><div>
 <input type=\"hidden\" name=\"anno\" value=\"$anno\">
@@ -3624,12 +4230,13 @@ echo "<td align=\"center\"><form accept-charset=\"utf-8\" method=\"post\" action
 </div></form></td>";
 } # fine if ($priv_crea_backup == "s" and $installazione_subordinata != "SI")
 echo "</tr></table><hr style=\"width: 95%\">";
-} # fine if ($id_utente == 1 or ($priv_crea_backup == "s" and...
+} # fine if ($id_utente == 1 or ($priv_mod_pass != "n" and $installazione_subordinata != "SI") or ($priv_crea_backup == "s" and...
 
 
 $stile_soldi = stile_soldi();
 $option_select_utenti = "";
 $option_select_utenti_importa_contratti = "";
+unset($dati_strut);
 
 if ($id_utente == 1) {
 
@@ -3715,7 +4322,8 @@ else $altri_utenti_gr = 0;
 } # fine else if ($id_utente == 1)
 
 
-if ($priv_gest_pass_cc == "s" and ('openssl_pkey_new')) {
+if ($priv_gest_pass_cc == "s") {
+echo "<a name=\"pass_cc\"></a>";
 
 if (defined('C_URL_MOD_EXT_CARTE_CREDITO') and C_URL_MOD_EXT_CARTE_CREDITO != "") {
 if (!$id_sessione) echo ucfirst(mex("password per la visualizzazione dei dati delle carte di credito",$pag))." ".mex("disattivata",$pag).".<br>";
@@ -3777,22 +4385,26 @@ esegui_query("delete from $tablepersonalizza where idpersonalizza = 'cert_cc' or
 unlock_tabelle($tabelle_lock);
 } # fine if (strstr($ext_html,"creadb.php"))
 
+if (defined('C_OPZIONI_NASCONDI_MARCA') and substr(C_OPZIONI_NASCONDI_MARCA,0,1) == "s") {
+$ext_html = str_replace("action=\"./personalizza.php\"","action=\"./personalizza.php\" target=\"_blank\"",$ext_html);
+$ext_html = str_replace("action=\"visualizza_tabelle.php\"","action=\"visualizza_tabelle.php\" target=\"_blank\"",$ext_html);
+} # fine if (defined('C_OPZIONI_NASCONDI_MARCA') and substr(C_OPZIONI_NASCONDI_MARCA,0,1) == "s")
 $ext_html = str_replace("action=\"./personalizza.php\"","action=\"".C_URL_MOD_EXT_CARTE_CREDITO."personalizza.php\"",$ext_html);
 $ext_html = str_replace("action=\"visualizza_tabelle.php\"","action=\"".C_URL_MOD_EXT_CARTE_CREDITO."visualizza_tabelle.php\"",$ext_html);
 $ext_html = str_replace("name=\"id_sessione\" value=\"\">","name=\"id_sessione\" value=\"$id_sessione\">",$ext_html);
 $ext_html = str_replace("name=\"id_utente_mod\" value=\"\">","name=\"id_utente_mod\" value=\"$id_utente_mod\">",$ext_html);
-if (@$_SERVER['SERVER_NAME'] and $_SERVER['PHP_SELF']) {
-if ($_SERVER['SERVER_PORT'] == "443" or ($_SERVER['HTTPS'] and $_SERVER['HTTPS'] != "off")) $orig_hd = "https://";
+if (!empty($_SERVER['SERVER_NAME']) and !empty($_SERVER['PHP_SELF'])) {
+if ((isset($_SERVER['SERVER_PORT']) and $_SERVER['SERVER_PORT'] == "443") or (!empty($_SERVER['HTTPS']) and $_SERVER['HTTPS'] != "off")) $orig_hd = "https://";
 else $orig_hd = "http://";
 $orig_hd .= $_SERVER['SERVER_NAME'].$_SERVER['PHP_SELF'];
 $ext_html = str_replace("name=\"orig_hd\" value=\"\">","name=\"orig_hd\" value=\"$orig_hd\">",$ext_html);
-} # fine if (@$_SERVER['SERVER_NAME'] and $_SERVER['PHP_SELF'])
+} # fine if (!empty($_SERVER['SERVER_NAME']) and !empty($_SERVER['PHP_SELF']))
 echo $ext_html;
 } # fine if ($ext_html)
 } # fine else if (!$id_sessione)
 } # fine if (defined('C_URL_MOD_EXT_CARTE_CREDITO') and C_URL_MOD_EXT_CARTE_CREDITO != "")
 
-else {
+elseif (function_exists('openssl_pkey_new')) {
 echo "<form accept-charset=\"utf-8\" method=\"post\" action=\"$pag\"><div>
 <input type=\"hidden\" name=\"anno\" value=\"$anno\">
 <input type=\"hidden\" name=\"id_sessione\" value=\"$id_sessione\">
@@ -3833,10 +4445,10 @@ echo "</div></form><div style=\"height: 5px;\"></div>
 <button class=\"cncm\" type=\"submit\"><div>".mex("Cancella le carte di credito di prenotazioni passate",'visualizza_tabelle.php')."</div></button>
 </div></form>";
 } # fine else if (!numlin_query($cert_cc))
-} # fine else if (defined('C_URL_MOD_EXT_CARTE_CREDITO') and C_URL_MOD_EXT_CARTE_CREDITO != "")
+} # fine elseif (function_exists('openssl_pkey_new'))
 echo "<hr style=\"width: 95%\">";
 
-} # fine if ($priv_gest_pass_cc == "s" and function_exists('openssl_pkey_new'))
+} # fine if ($priv_gest_pass_cc == "s")
 
 
 if ($id_utente == 1) {
@@ -3869,9 +4481,10 @@ echo "</div></form>
 </td></tr></table>";
 } # fine if (!defined("C_SEC_LIMITE_LIBERA_APP") or C_SEC_LIMITE_LIBERA_APP != "")
 } # fine else if ($tutti_fissi == "SI")
-echo "</div></form><hr style=\"width: 95%\">
+echo "</div></form><hr style=\"width: 95%\">";
 
-<form accept-charset=\"utf-8\" method=\"post\" action=\"./personalizza.php\"><div>
+if (defined('C_CREA_ANNO_MANUALMENTE') and C_CREA_ANNO_MANUALMENTE == "SI") {
+echo "<form accept-charset=\"utf-8\" method=\"post\" action=\"./personalizza.php\"><div>
 <input type=\"hidden\" name=\"anno\" value=\"$anno\">
 <input type=\"hidden\" name=\"id_sessione\" value=\"$id_sessione\">
 <input type=\"hidden\" name=\"id_utente_mod\" value=\"$id_utente_mod\">
@@ -3887,6 +4500,7 @@ echo mex("Creazione automatica del nuovo anno attivata (importando i dati dall'a
 <input class=\"sbutton\" type=\"submit\" name=\"disattiva_auto_crea_anno\" value=\"".mex("Disattiva",$pag)."\">";
 } # fine else if ($auto_crea_anno != "SI")
 echo "</div></form><hr style=\"width: 95%\">";
+} # fine if (defined('C_CREA_ANNO_MANUALMENTE') and C_CREA_ANNO_MANUALMENTE == "SI")
 
 echo "<form accept-charset=\"utf-8\" method=\"post\" action=\"./personalizza.php\"><div>
 <input type=\"hidden\" name=\"anno\" value=\"$anno\">
@@ -3928,12 +4542,24 @@ echo "</div></form><hr style=\"width: 95%\">
 <input type=\"hidden\" name=\"id_sessione\" value=\"$id_sessione\">
 <input type=\"hidden\" name=\"id_utente_mod\" value=\"$id_utente_mod\">
 <input type=\"hidden\" name=\"aggiorna_qualcosa\" value=\"SI\">";
-$minuti_durata_sessione = esegui_query("select valpersonalizza_num from $tablepersonalizza where idpersonalizza = 'minuti_durata_sessione' and idutente = '1'");
-$minuti_durata_sessione = risul_query($minuti_durata_sessione,0,'valpersonalizza_num');
 echo mex("Minuti dopo i quali considerare scadute sessioni e transazioni non aggiornate",$pag).":
- <input type=\"text\" name=\"minuti_durata_sessione\" value=\"$minuti_durata_sessione\" size=\"4\" maxlength=\"4\">
+ <input type=\"text\" name=\"minuti_durata_sessione\" value=\"".C_MIN_SESSIONE."\" size=\"4\" maxlength=\"4\">
 <button class=\"edtm\" type=\"submit\" name=\"cambia_minuti_durata_sessione\" value=\"1\"><div>".mex("cambia",$pag)."</div></button>
 </div></form></td></tr><tr><td style=\"height: 5px;\"></td></tr><tr><td>
+<form accept-charset=\"utf-8\" method=\"post\" action=\"./personalizza.php\"><div>
+<input type=\"hidden\" name=\"anno\" value=\"$anno\">
+<input type=\"hidden\" name=\"id_sessione\" value=\"$id_sessione\">
+<input type=\"hidden\" name=\"id_utente_mod\" value=\"$id_utente_mod\">
+<input type=\"hidden\" name=\"aggiorna_qualcosa\" value=\"SI\">";
+if (!C_USA_COOKIES) {
+echo mex("Utilizzo dei cookies per la gestione delle sessioni disattivato",$pag)."
+<input class=\"sbutton\" type=\"submit\" name=\"attiva_cookies\" value=\"".mex("Attiva",$pag)."\">";
+} # fine if (!C_USA_COOKIES)
+else {
+echo mex("Utilizzo dei cookies per la gestione delle sessioni attivato",$pag)."
+<input class=\"sbutton\" type=\"submit\" name=\"disattiva_cookies\" value=\"".mex("Disattiva",$pag)."\">";
+} # fine else if (!C_USA_COOKIES)
+echo "</div></form></td></tr><tr><td style=\"height: 5px;\"></td></tr><tr><td>
 <form accept-charset=\"utf-8\" method=\"post\" action=\"./personalizza.php\"><div>
 <input type=\"hidden\" name=\"anno\" value=\"$anno\">
 <input type=\"hidden\" name=\"id_sessione\" value=\"$id_sessione\">
@@ -3947,6 +4573,7 @@ echo mex("Minuti durante i quali mantenere gli appartamenti occupati mentre si s
 </div></form></td></tr></table>
 <hr style=\"width: 95%\">
 
+<a name=\"sistema\"></a>
 <table cellspacing=0 cellpadding=0 border=0><tr><td>
 <form accept-charset=\"utf-8\" method=\"post\" action=\"./personalizza.php\"><div>
 <input type=\"hidden\" name=\"anno\" value=\"$anno\">
@@ -3982,7 +4609,7 @@ echo "<form accept-charset=\"utf-8\" method=\"post\" action=\"./personalizza.php
 <input type=\"hidden\" name=\"id_utente_mod\" value=\"$id_utente_mod\">
 <input type=\"hidden\" name=\"aggiorna_qualcosa\" value=\"SI\">";
 echo mex("Cartelle in cui creare le pagine per il sito web",$pag).":
- <input type=\"text\" name=\"percorso_cartella_modello\" value=\"$percorso_cartella_modello\" size=\"20\">
+ <input type=\"text\" name=\"percorso_cartella_modello\" value=\"$percorso_cartella_modello\" size=\"22\">
 <button class=\"edtm\" type=\"submit\" name=\"cambia_percorso_cartella_modello\" value=\"1\"><div>".mex("cambia",$pag)."</div></button>
  <small>(".mex("percorsi separati da virgole relativi",$pag)." ";
 if ($c_cartella_crea_mod) echo mex("a",$pag)." <b>$c_cartella_crea_mod/</b>";
@@ -3990,7 +4617,115 @@ else echo mex("alla cartella di HotelDruid, se non iniziano con /",$pag);
 echo ")</small>
 </div></form></td></tr><tr><td style=\"height: 5px;\"></td></tr><tr><td>";
 
-if (!defined("C_MASCHERA_EMAIL") or C_MASCHERA_EMAIL == "") {
+$sel_loc = "";
+$sel_rem = "";
+if (defined("C_PERCORSO_PHPMAILER") and C_PERCORSO_PHPMAILER != "") $percorso_phpmailer = C_PERCORSO_PHPMAILER;
+else {
+$percorso_phpmailer = esegui_query("select valpersonalizza from $tablepersonalizza where idpersonalizza = 'percorso_phpmailer' and idutente = '1'");
+if (numlin_query($percorso_phpmailer)) $percorso_phpmailer = risul_query($percorso_phpmailer,0,'valpersonalizza');
+else $percorso_phpmailer = "";
+echo "<form accept-charset=\"utf-8\" method=\"post\" action=\"./personalizza.php\"><div>
+<input type=\"hidden\" name=\"anno\" value=\"$anno\">
+<input type=\"hidden\" name=\"id_sessione\" value=\"$id_sessione\">
+<input type=\"hidden\" name=\"id_utente_mod\" value=\"$id_utente_mod\">
+<input type=\"hidden\" name=\"aggiorna_qualcosa\" value=\"SI\">";
+echo mex("Percorso al file autoload.php di phpmailer",$pag).":
+ <input type=\"text\" name=\"percorso_phpmailer\" value=\"$percorso_phpmailer\" size=\"30\">
+ <button class=\"edtm\" type=\"submit\" name=\"cambia_percorso_phpmailer\" value=\"1\"><div>".mex("cambia",$pag)."</div></button>
+ <small>(".mex("per inviare email attraverso un server remoto",$pag).")</small>
+</div></form></td></tr><tr><td style=\"height: 5px;\"></td></tr><tr><td>";
+} # fine else if (defined("C_PERCORSO_PHPMAILER") and C_PERCORSO_PHPMAILER != "")
+if ($percorso_phpmailer and is_file($percorso_phpmailer)) {
+echo "<a name=\"eml_conf\"></a>
+<form accept-charset=\"utf-8\" method=\"post\" action=\"./personalizza.php\"><div>
+<input type=\"hidden\" name=\"anno\" value=\"$anno\">
+<input type=\"hidden\" name=\"id_sessione\" value=\"$id_sessione\">
+<input type=\"hidden\" name=\"id_utente_mod\" value=\"$id_utente_mod\">
+<input type=\"hidden\" name=\"aggiorna_qualcosa\" value=\"SI\">";
+$modo_invio_email = esegui_query("select valpersonalizza from $tablepersonalizza where idpersonalizza = 'modo_invio_email' and idutente = '1'");
+$modo_invio_email = risul_query($modo_invio_email,0,'valpersonalizza');
+if ($modo_invio_email == "locale") $sel_loc = " selected";
+if ($modo_invio_email == "remoto") $sel_rem = " selected";
+echo mex("Per inviare le email usare",$pag).": 
+<select name=\"modo_invio_email\">
+<option value=\"locale\"$sel_loc>".mex("il server locale",$pag)."</option>
+<option value=\"remoto\"$sel_rem>".mex("un server remoto",$pag)."</option>
+</select>
+<button class=\"edtm\" type=\"submit\" name=\"cambia_modo_invio_email\" value=\"1\"><div>".mex("cambia",$pag)."</div></button>
+</div></form></td></tr><tr><td style=\"height: 5px;\"></td></tr><tr><td>";
+if ($sel_rem) {
+$pass_info = "";
+$server_smtp = esegui_query("select valpersonalizza from $tablepersonalizza where idpersonalizza = 'server_smtp' and idutente = '1' ");
+if (numlin_query($server_smtp)) {
+$server_smtp = explode("#@#",(string) risul_query($server_smtp,0,'valpersonalizza'));
+$username_smtp = $server_smtp[1];
+$sicurezza_smtp = $server_smtp[2];
+$porta_smtp = $server_smtp[3];
+$password_smtp = $server_smtp[4];
+$server_smtp = $server_smtp[0];
+} # fine if (numlin_query($server_smtp_esist))
+else {
+$server_smtp = "";
+$username_smtp = "";
+$sicurezza_smtp = "";
+$porta_smtp = "";
+$password_smtp = "";
+} # fine else if (numlin_query($server_smtp_esist))
+if ($server_smtp == "") {
+$dati_strut = esegui_query("select * from $tablepersonalizza where idpersonalizza = 'dati_struttura' and idutente = '1'");
+$dati_strut = risul_query($dati_strut,0,'valpersonalizza');
+$dati_strut = explode("#@&",$dati_strut);
+$email_corr = strtolower($dati_strut[2]);
+if ($email_corr) $dom_email = substr(strstr($email_corr,"@"),1);
+else $dom_email = "";
+if ($dom_email == "gmail.com") {
+$server_smtp = "smtp.gmail.com";
+if ($username_smtp == "") $username_smtp = $email_corr;
+if ($password_smtp == "") $pass_info .= "".mex("Per gli account su gmail potrebbe essere necessario abilitare l'opzione",'messaggi.php')." \"<a rel=\"noopener noreferrer\" target=\"_blank\" href=\"https://myaccount.google.com/apppasswords\">App Password</a>\".<br>";
+} # fine if  ($dom_email == "gmail.com")
+} # fine if ($server_smtp == "")
+$sel_no = "";
+$sel_strt = "";
+$sel_sslt = "";
+$check_tp_smtp_def = "";
+$check_tp_smtp_pers = "";
+if (empty($sicurezza_smtp) or ($sicurezza_smtp != "no" and $sicurezza_smtp != "starttls")) $sicurezza_smtp = "ssl_tls";
+if (!empty($porta_smtp)) $tipo_porta_smtp = "pers";
+if (empty($tipo_porta_smtp) or $tipo_porta_smtp != "pers") $tipo_porta_smtp = "def";
+if ($sicurezza_smtp == "no") $sel_no = " selected";
+if ($sicurezza_smtp == "starttls") $sel_strt = " selected";
+if ($sicurezza_smtp == "ssl_tls") $sel_sslt = " selected";
+if ($tipo_porta_smtp == "def") $check_tp_smtp_def = " checked";
+if ($tipo_porta_smtp == "pers") $check_tp_smtp_pers = " checked";
+echo "</td></tr></table><table cellspacing=0 cellpadding=0 border=0><tr><td style=\"width: 40px;\"></td><td>
+<table cellspacing=0 cellpadding=0 border=0><tr><td style=\"text-align: right;\">
+<form accept-charset=\"utf-8\" method=\"post\" action=\"./personalizza.php\"><div>
+<input type=\"hidden\" name=\"anno\" value=\"$anno\">
+<input type=\"hidden\" name=\"id_sessione\" value=\"$id_sessione\">
+<input type=\"hidden\" name=\"id_utente_mod\" value=\"$id_utente_mod\">
+<input type=\"hidden\" name=\"aggiorna_qualcosa\" value=\"SI\">
+".mex("Server di posta SMTP",$pag).":</td><td>
+<input type=\"text\" name=\"server_smtp\" size=\"25\" value=\"$server_smtp\"></td></tr>
+<tr><td style=\"text-align: right;\">".mex("Sicurezza connessione",$pag).":</td><td>
+<select name=\"sicurezza_smtp\"><option value=\"no\"$sel_no>".mex("nessuna",$pag)."</option>
+<option value=\"starttls\"$sel_strt>STARTTLS</option>
+<option value=\"ssl_tls\"$sel_sslt>SSL/TLS</option></select></td></tr>
+<tr><td style=\"text-align: right;\">".mex("Porta",$pag).":</td><td>
+<label><input type=\"radio\" name=\"tipo_porta_smtp\" value=\"def\"$check_tp_smtp_def>".mex("default",$pag)."</label><br>
+<label><input id=\"tp_smtp_p\" type=\"radio\" name=\"tipo_porta_smtp\" value=\"pers\"$check_tp_smtp_pers>".mex("persoalizzata",$pag).":</label>
+<input type=\"text\" name=\"porta_smtp\" size=\"6\" value=\"$porta_smtp\" onfocus=\"document.getElementById('tp_smtp_p').checked='1'\"></td></tr>
+<tr><td style=\"text-align: right;\">".mex("Nome utente",$pag).":</td><td>
+<input type=\"text\" name=\"username_smtp\" size=\"25\" value=\"$username_smtp\"></td></tr>";
+if ($pass_info) echo "<tr><td colspan=\"2\" style=\"text-align: right;\">$pass_info</td></tr>";
+echo "<tr><td style=\"text-align: right;\">".mex("Password",$pag).":</td><td>
+<input type=\"text\" name=\"password_smtp\" size=\"25\" value=\"$password_smtp\" style=\"text-security: circle; -webkit-text-security: disc; -moz-text-security: circle;\">
+<button class=\"edtm\" type=\"submit\" name=\"cambia_dati_smtp\" value=\"1\"><div>".mex("cambia",$pag)."</div></button>
+</div></form></td></tr><tr><td style=\"height: 5px;\"></td></tr></table></td></tr></table>
+<table cellspacing=0 cellpadding=0 border=0><tr><td>";
+} # fine if ($sel_rem)
+} # fine if ($percorso_phpmailer and is_file($percorso_phpmailer))
+
+if ((!defined('C_MASCHERA_EMAIL') or C_MASCHERA_EMAIL == "" or substr(C_MASCHERA_EMAIL,0,4) == "spf:") and !$sel_rem) {
 echo "<form accept-charset=\"utf-8\" method=\"post\" action=\"./personalizza.php\"><div>
 <input type=\"hidden\" name=\"anno\" value=\"$anno\">
 <input type=\"hidden\" name=\"id_sessione\" value=\"$id_sessione\">
@@ -4002,17 +4737,35 @@ $sel_SI = "";
 $sel_NO = "";
 if ($maschera_email == "SI") $sel_SI = " selected";
 else $sel_NO = " selected";
+$frase_spf = "";
+$test_spf = "";
+if (defined('C_MASCHERA_EMAIL') and substr(C_MASCHERA_EMAIL,0,4) == "spf:") {
+$frase_spf = " (".mex("controllando SPF",$pag).")";
+if ($maschera_email == "SI") {
+$dati_strut = esegui_query("select * from $tablepersonalizza where idpersonalizza = 'dati_struttura' and idutente = '$id_utente'");
+$dati_strut = risul_query($dati_strut,0,'valpersonalizza');
+$dati_strut = explode("#@&",$dati_strut);
+if ($dati_strut[2]) {
+$dom_email = substr(strstr($dati_strut[2],"@"),1);
+$spf = controlla_spf($dom_email);
+if ($spf == "SI") $test_spf = mex("Attualmente SPF è configurato correttamente sul dominio della email della struttura",$pag)." (<em>$dom_email</em>).<br><br>";
+else $test_spf = mex("Attualmente <span class=\"colred\">SPF non è configurato correttamente</span> sul dominio della email della struttura",$pag)." (<b>".$dom_email."</b>).";
+} # fine if ($dati_strut[2])
+$test_spf = "<br><small>$test_spf</small>";
+} # fine if ($maschera_email == "SI")
+} # fine if (defined('C_MASCHERA_EMAIL') and...
 echo mex("Mascherare la provenienza delle email sull'envelope",$pag)."? 
 <select name=\"maschera_email\">
-<option value=\"SI\"$sel_SI>".mex("SI",$pag)."</option>
+<option value=\"SI\"$sel_SI>".mex("SI",$pag)."$frase_spf</option>
 <option value=\"NO\"$sel_NO>".mex("NO",$pag)."</option>
 </select>
 <button class=\"edtm\" type=\"submit\" name=\"cambia_maschera_email\" value=\"1\"><div>".mex("cambia",$pag)."</div></button>
-</div></form>";
-} # fine if (!defined("C_MASCHERA_EMAIL") or C_MASCHERA_EMAIL == "")
+$test_spf</div></form>";
+} # fine if ((!defined("C_MASCHERA_EMAIL") or C_MASCHERA_EMAIL == "" or...
 echo "</td></tr></table>
 <hr style=\"width: 95%\">";
 
+echo "<a name=\"unita\"></a>";
 $trad_var = array();
 $messaggio = "";
 include('./includes/unit.php');
@@ -4045,6 +4798,7 @@ $sel_m = "";
 $sel_f = "";
 if ($unit['lang']['ita']['gender'] == "f") $sel_f = " selected";
 else $sel_m = " selected";
+$lingue_passa = "ita";
 $trad_lingue = "Italiano:
  ".mex("singolare",$pag)." <input type=\"text\" name=\"trad_s_n_ita\" size=\"12\" value=\"".$unit['lang']['ita']['s_n']."\">;
  ".mex("plurale",$pag)." <input type=\"text\" name=\"trad_p_n_ita\" size=\"12\" value=\"".$unit['lang']['ita']['p_n']."\">;
@@ -4060,22 +4814,24 @@ $nome_lingua = file("./includes/lang/$ini_lingua/l_n");
 $nome_lingua = togli_acapo($nome_lingua[0]);
 $sel_m = "";
 $sel_f = "";
-if ($unit['lang'][$ini_lingua]['gender'] == "f") $sel_f = " selected";
+if (isset($unit['lang'][$ini_lingua]['gender']) and $unit['lang'][$ini_lingua]['gender'] == "f") $sel_f = " selected";
 else $sel_m = " selected";
 $linea_lingua = ucfirst($nome_lingua).":
- ".mex("singolare",$pag)." <input type=\"text\" name=\"trad_s_n_$ini_lingua\" size=\"12\" value=\"".$unit['lang'][$ini_lingua]['s_n']."\">;
- ".mex("plurale",$pag)." <input type=\"text\" name=\"trad_p_n_$ini_lingua\" size=\"12\" value=\"".$unit['lang'][$ini_lingua]['p_n']."\">;
+ ".mex("singolare",$pag)." <input type=\"text\" name=\"trad_s_n_$ini_lingua\" size=\"12\" value=\"".htmlspecialchars(fixstr($unit['lang'][$ini_lingua]['s_n']))."\">;
+ ".mex("plurale",$pag)." <input type=\"text\" name=\"trad_p_n_$ini_lingua\" size=\"12\" value=\"".htmlspecialchars(fixstr($unit['lang'][$ini_lingua]['p_n']))."\">;
  ".mex("genere",$pag)." <select name=\"trad_gender_$ini_lingua\">
 <option value=\"m\"$sel_m>".mex("m",$pag)."</option>
 <option value=\"f\"$sel_f>".mex("f",$pag)."</option>
 </select>.<br>";
 if ($ini_lingua == $lingua[$id_utente]) $trad_lingue = $linea_lingua.$trad_lingue;
 else $trad_lingue .= $linea_lingua;
+$lingue_passa .= ",$ini_lingua";
 } # fine if ($file != "." and $file != "..")
 } # fine while ($file = readdir($lang_dig))
 closedir($lang_dir);
 echo "<div style=\"line-height: 1.5em;\">$trad_lingue</div><div style=\"text-align: right; padding: 5px 0 0 0;\">
-<button class=\"edtm\" type=\"submit\" name=\"cambia_nome_unita\" value=\"1\"><div>".mex("Cambia",$pag)."</div></button></div>";
+<button class=\"edtm\" type=\"submit\" name=\"cambia_nome_unita\" value=\"1\"><div>".mex("Cambia",$pag)."</div></button></div>
+<input type=\"hidden\" name=\"lingue_passa\" value=\"$lingue_passa\">";
 } # fine if ($sel_pers)
 else echo "<button class=\"edtm\" type=\"submit\" name=\"cambia_nome_unita\" value=\"1\"><div>".mex("Cambia",$pag)."</div></button>";
 echo "</div></form></td></tr>";
@@ -4104,6 +4860,7 @@ $sel_m = "";
 $sel_f = "";
 if ($unit['lang']['ita']['gender'] == "f") $sel_f = " selected";
 else $sel_m = " selected";
+$lingue_passa = "ita";
 $trad_lingue = "Italiano:
  ".mex("singolare",$pag)." <input type=\"text\" name=\"trad_s_n_ita\" size=\"12\" value=\"".$unit['lang']['ita']['s_n']."\">;
  ".mex("plurale",$pag)." <input type=\"text\" name=\"trad_p_n_ita\" size=\"12\" value=\"".$unit['lang']['ita']['p_n']."\">;
@@ -4130,15 +4887,18 @@ $linea_lingua = ucfirst($nome_lingua).":
 </select>.<br>";
 if ($ini_lingua == $lingua[$id_utente]) $trad_lingue = $linea_lingua.$trad_lingue;
 else $trad_lingue .= $linea_lingua;
+$lingue_passa .= ",$ini_lingua";
 } # fine if ($file != "." and $file != "..")
 } # fine while ($file = readdir($lang_dig))
 closedir($lang_dir);
 echo "<div style=\"line-height: 1.5em;\">$trad_lingue</div><div style=\"text-align: right; padding: 5px 0 0 0;\">
-<button class=\"edtm\" type=\"submit\" name=\"cambia_nome_unita_sing\" value=\"1\"><div>".mex("Cambia",$pag)."</div></button></div>";
+<button class=\"edtm\" type=\"submit\" name=\"cambia_nome_unita_sing\" value=\"1\"><div>".mex("Cambia",$pag)."</div></button></div>
+<input type=\"hidden\" name=\"lingue_passa\" value=\"$lingue_passa\">";
 } # fine if ($sel_pers)
 else echo "<button class=\"edtm\" type=\"submit\" name=\"cambia_nome_unita_sing\" value=\"1\"><div>".mex("Cambia",$pag)."</div></button>";
 echo "</div></form></td></tr></table><hr style=\"width: 95%\">";
 
+echo "<a name=\"parole\"></a>";
 if ($parole_sost == 1) {
 echo "<form accept-charset=\"utf-8\" method=\"post\" action=\"./personalizza.php\"><div>
 <input type=\"hidden\" name=\"anno\" value=\"$anno\">
@@ -4273,9 +5033,151 @@ echo "<option value=\"$ini_tema\"$selected>$nome_tema</option>";
 closedir($temi_dir);
 echo "</select>
 <button class=\"edtm\" type=\"submit\" name=\"cambiatema\" value=\"1\"><div>".mex("cambia",$pag)."</div></button><br>
-</div></form><hr style=\"width: 95%\">";
+</div></form><hr style=\"width: 95%\">
+
+<form accept-charset=\"utf-8\" method=\"post\" action=\"./personalizza.php\"><div>
+<input type=\"hidden\" name=\"anno\" value=\"$anno\">
+<input type=\"hidden\" name=\"id_sessione\" value=\"$id_sessione\">
+<input type=\"hidden\" name=\"id_utente_mod\" value=\"$id_utente_mod\">
+<input type=\"hidden\" name=\"aggiorna_qualcosa\" value=\"SI\">";
+$attiva_checkin = esegui_query("select valpersonalizza from $tablepersonalizza where idpersonalizza = 'attiva_checkin' and idutente = '$id_utente_sel'");
+$attiva_checkin = risul_query($attiva_checkin,0,'valpersonalizza');
+if ($attiva_checkin == "SI") {
+echo mex("Registrazione degli orari di entrata ed uscita attivata",$pag)."
+<input class=\"sbutton\" type=\"submit\" name=\"disattiva_checkin\" value=\"".mex("Disattiva",$pag)."\">";
+} # fine if ($attiva_checkin == "SI")
+else {
+echo mex("Registrazione degli orari di entrata ed uscita disattivata",$pag)."
+<input class=\"sbutton\" type=\"submit\" name=\"attiva_checkin\" value=\"".mex("Attiva",$pag)."\">";
+} # fine else if ($attiva_checkin == "SI")
+echo "</div></form><hr style=\"width: 95%\">";
+
+$perc_cat_persone = esegui_query("select * from $tablepersonalizza where idpersonalizza = 'num_categorie_persone' and idutente = '$id_utente_sel'");
+$num_categorie_persone = risul_query($perc_cat_persone,0,'valpersonalizza_num');
+if ($priv_modpers_cat_pers != "n" or $num_categorie_persone > 1) {
+echo "<form accept-charset=\"utf-8\" method=\"post\" action=\"./personalizza.php\"><div>
+<input type=\"hidden\" name=\"anno\" value=\"$anno\">
+<input type=\"hidden\" name=\"id_sessione\" value=\"$id_sessione\">
+<input type=\"hidden\" name=\"id_utente_mod\" value=\"$id_utente_mod\">
+<input type=\"hidden\" name=\"aggiorna_qualcosa\" value=\"SI\">
+<input type=\"hidden\" name=\"cambianumcatpers\" value=\"1\">
+".mex("Numero di tipologie di persone",$pag).":";
+if ($priv_modpers_cat_pers == "n") {
+$readonly = " onclick=\"return false;\" readonly";
+echo " $num_categorie_persone";
+} # fine if ($priv_modpers_cat_pers == "n")
+else {
+$readonly = "";
+echo " <input type=\"text\" name=\"nuovo_num_cat_presone\" size=\"2\" value=\"$num_categorie_persone\">
+<button class=\"edtm\" type=\"submit\"><div>".mex("Cambia",$pag)."</div></button>";
+if (($priv_modpers_cat_pers == "t" or ($priv_modpers_cat_pers == "g" and $altri_utenti_gr)) and $option_select_utenti and $id_utente_mod != "tutti") echo "<span style=\"width: 30px; display: inline-block;\">&nbsp;&nbsp;</span><button class=\"xchm\" type=\"submit\" name=\"esportacatpers\" value=\"1\"><div>".mex("Cambia per tutti gli utenti",$pag)."</div></button>";
+} # fine else if ($priv_modpers_cat_pers == "n")
+echo "</div></form>";
+} # fine if ($priv_modpers_cat_pers != "n" or $num_categorie_persone > 1)
+
+if ($num_categorie_persone > 1) {
+$perc_cat_persone = explode(";",risul_query($perc_cat_persone,0,'valpersonalizza'));
+$n_ling = 0;
+$l_ling = array();
+$nl_ling = array();
+if ($lingua_mex != 'ita') {
+$l_ling[$n_ling] = $lingua_mex;
+$nl_ling[$n_ling] = togli_acapo(implode("",file("./includes/lang/$lingua_mex/l_n")));
+$n_ling++;
+} # fine if ($lingua_mex != 'ita')
+$l_ling[$n_ling] = 'ita';
+$nl_ling[$n_ling] = 'italiano';
+$lingue_passa = "ita";
+$lang_dir = opendir("./includes/lang/");
+while ($ini_lingua = readdir($lang_dir)) {
+if ($ini_lingua != "." and $ini_lingua != ".." and strlen($ini_lingua) < 4 and is_file("./includes/lang/$ini_lingua/l_n")) {
+$lingue_passa .= ",$ini_lingua";
+if ($ini_lingua != $lingua_mex) {
+$n_ling++;
+$l_ling[$n_ling] = $ini_lingua;
+$nl_ling[$n_ling] = togli_acapo(implode("",file("./includes/lang/$ini_lingua/l_n")));
+} # fine if ($ini_lingua != $lingua_mex)
+} # fine if ($file != "." and $file != ".." and strlen($ini_lingua) < 4 and...
+} # fine while ($file = readdir($lang_dig))
+closedir($lang_dir);
+echo "<div style=\"height: 8px;\"></div>
+<form accept-charset=\"utf-8\" method=\"post\" action=\"./personalizza.php\"><div>
+<input type=\"hidden\" name=\"anno\" value=\"$anno\">
+<input type=\"hidden\" name=\"id_sessione\" value=\"$id_sessione\">
+<input type=\"hidden\" name=\"id_utente_mod\" value=\"$id_utente_mod\">
+<input type=\"hidden\" name=\"aggiorna_qualcosa\" value=\"SI\">
+<input type=\"hidden\" name=\"cambiacatpers\" value=\"1\">
+<input type=\"hidden\" name=\"lingue_passa\" value=\"$lingue_passa\">
+<input type=\"hidden\" name=\"num_catpers_passa\" value=\"$num_categorie_persone\">
+<div class=\"tab_cont\">
+<table class=\"t2\" style=\"text-align: center;\" border=1 cellspacing=0 cellpadding=1>
+<tr><td>&nbsp;</td><td><small><small>".mex("Può essere ospite principale",$pag)."</small></small></td>
+<td colspan=\"2\"><small><small>".mex("Prezzo in percentuale del prezzo per persona",$pag)."</small></small></td>";
+for ($num1 = 0 ; $num1 <= $n_ling ; $num1++) echo "<td><small>".ucfirst($nl_ling[$num1])."</small></td>";
+echo "</tr>";
+$nomi_cat_pers = array();
+$Sing = ucfirst(substr(mex("singolare",$pag),0,1));
+$Plur = ucfirst(substr(mex("plurale",$pag),0,1));
+for ($num1 = 1 ; $num1 <= $num_categorie_persone ; $num1++) {
+echo "<tr><td>".mex("Tipologia",$pag)."&nbsp;$num1</td>";
+if ($num1 == 1) {
+echo "<td><input type=\"checkbox\" style=\"width: 14px; height: 12px;\" onclick=\"return false;\" readonly checked></td><td colspan=\"2\">100%</td>";
+for ($num2 = 0 ; $num2 <= $n_ling ; $num2++) {
+$nomi_cat_pers[$num2] = esegui_query("select * from $tablepersonalizza where idpersonalizza = 'nomi_cat_pers_".aggslashdb($l_ling[$num2])."' and idutente = '$id_utente_sel' ");
+if (numlin_query($nomi_cat_pers[$num2])) $nomi_cat_pers[$num2] = explode("<",risul_query($nomi_cat_pers[$num2],0,'valpersonalizza'));
+else $nomi_cat_pers[$num2] = array();
+} # fine for $num2
+} # fine if ($num1 == 1)
+else {
+if (substr($perc_cat_persone[($num1 - 2)],0,1) == "n") $checked = "";
+else $checked = " checked";
+$perc_corr = explode("r",substr($perc_cat_persone[($num1 - 2)],2));
+echo "<td><input type=\"checkbox\" name=\"osp_princ_$num1\" value=\"1\" style=\"width: 14px; height: 12px;\"$readonly$checked></td><td>";
+if ($priv_modpers_cat_pers == "n") echo "<small>".$perc_corr[0]."</small>";
+else echo "<input type=\"text\" name=\"perc_cat_$num1\" size=\"3\" value=\"".$perc_corr[0]."\">";
+echo "<small>%</small></td>";
+if ($num1 == 2) {
+echo "<td rowspan=\"".($num_categorie_persone - 1)."\"><small>".mex("arrotondato a",$pag)." </small>";
+if ($priv_modpers_cat_pers == "n") echo "<small>".virgola_in_num($perc_corr[1],$stile_soldi)."</small>";
+else echo "<input type=\"text\" name=\"arrotond_cat_pers\" size=\"3\" value=\"".virgola_in_num($perc_corr[1],$stile_soldi)."\">";
+echo "</td>";
+} # fine if ($num1 == 2)
+} # fine else if ($num1 == 1)
+for ($num2 = 0 ; $num2 <= $n_ling ; $num2++) {
+$nomi_corr = explode(">",fixstr($nomi_cat_pers[$num2][($num1 - 1)]));
+if ($priv_modpers_cat_pers == "n") {
+echo "<td><small>$Sing.&nbsp;\"<em>".str_replace(" ","&nbsp;",$nomi_corr[0])."</em>\"<br>
+$Plur.&nbsp;\"<em>".str_replace(" ","&nbsp;",fixset($nomi_corr[1]))."</em>\"<small></td>";
+} # fine if ($priv_modpers_cat_pers == "n")
+else {
+echo "<td>$Sing.<input type=\"text\" name=\"nome_sing_".$l_ling[$num2]."_$num1\" size=\"9\" value=\"".$nomi_corr[0]."\"><br>
+$Plur.<input type=\"text\" name=\"nome_plur_".$l_ling[$num2]."_$num1\" size=\"9\" value=\"".fixset($nomi_corr[1])."\"></td>";
+} # fine else if ($priv_modpers_cat_pers == "n")
+} # fine for $num2
+echo "</tr>";
+} # fine for $num1
+echo "</table></div><div style=\"height: 2px;\"></div>";
+if ($priv_modpers_cat_pers != "n") {
+echo "<button class=\"edtm\" type=\"submit\"><div>".mex("Modifica le tipologie di persone",$pag)."</div></button>";
+if (($priv_modpers_cat_pers == "t" or ($priv_modpers_cat_pers == "g" and $altri_utenti_gr)) and $option_select_utenti and $id_utente_mod != "tutti") echo "<span style=\"width: 40px; display: inline-block;\">&nbsp;&nbsp;</span><button class=\"xchm\" type=\"submit\" name=\"esportacatpers\" value=\"1\"><div>".mex("Modifica le tipologie di persone per tutti gli utenti",$pag)."</div></button>";
+} # fine if ($priv_modpers_cat_pers != "n")
+echo "<div style=\"height: 4px;\"></div></div></form>";
+} # fine if ($num_categorie_persone > 1)
+if ($priv_modpers_cat_pers != "n" or $num_categorie_persone > 1) echo "<hr style=\"width: 95%\">";
 
 echo "<form accept-charset=\"utf-8\" method=\"post\" action=\"./personalizza.php\"><div>
+<input type=\"hidden\" name=\"anno\" value=\"$anno\">
+<input type=\"hidden\" name=\"id_sessione\" value=\"$id_sessione\">
+<input type=\"hidden\" name=\"id_utente_mod\" value=\"$id_utente_mod\">
+<input type=\"hidden\" name=\"aggiorna_qualcosa\" value=\"SI\">";
+$ore_anticipa_periodo_corrente = esegui_query("select valpersonalizza_num from $tablepersonalizza where idpersonalizza = 'ore_anticipa_periodo_corrente' and idutente = '$id_utente_sel'");
+$ore_anticipa_periodo_corrente = risul_query($ore_anticipa_periodo_corrente,0,'valpersonalizza_num');
+echo mex("Numero di ore di cui anticipare il momento in cui si considera iniziata una prenotazione",$pag).":
+ <input type=\"text\" name=\"ore_anticipa_periodo_corrente\" value=\"$ore_anticipa_periodo_corrente\" size=\"3\" maxlength=\"3\">
+<button class=\"edtm\" type=\"submit\" name=\"cambia_ore_anticipa_periodo_corrente\" value=\"1\"><div>".mex("cambia",$pag)."</div></button>
+</div></form><hr style=\"width: 95%\">
+
+<form accept-charset=\"utf-8\" method=\"post\" action=\"./personalizza.php\"><div>
 <input type=\"hidden\" name=\"anno\" value=\"$anno\">
 <input type=\"hidden\" name=\"id_sessione\" value=\"$id_sessione\">
 <input type=\"hidden\" name=\"id_utente_mod\" value=\"$id_utente_mod\">
@@ -4357,7 +5259,7 @@ echo "<form accept-charset=\"utf-8\" method=\"post\" action=\"./personalizza.php
 <input type=\"hidden\" name=\"id_utente_mod\" value=\"$id_utente_mod\">
 <input type=\"hidden\" name=\"aggiorna_qualcosa\" value=\"SI\">
 <input type=\"hidden\" name=\"elimvaluta2\" value=\"1\">
-<input type=\"hidden\" name=\"valuta2\" value=\"".htmlspecialchars($altre_valute[$num1]['nome'])."\">";
+<input type=\"hidden\" name=\"valuta2\" value=\"".htmlspecialchars(fixstr($altre_valute[$num1]['nome']))."\">";
 $Euro_utente = nome_valuta($id_utente_sel);
 echo mex("Elimina la valuta",$pag)." <select name=\"valuta2\">$lista_valute</select>
 <button class=\"cncm\" type=\"submit\"><div>".mex("Elimina",$pag)."</div></button>";
@@ -4421,141 +5323,34 @@ echo "<td align=\"center\">
 </td><td align=\"center\">&nbsp;&nbsp;
 <button class=\"edtm\" type=\"submit\" name=\"cambia_formato_data\" value=\"1\"><div>".mex("cambia formato",$pag)."</div></button>
 </td></tr></table>
-</div></form><hr style=\"width: 95%\">";
-
-$perc_cat_persone = esegui_query("select * from $tablepersonalizza where idpersonalizza = 'num_categorie_persone' and idutente = '$id_utente_sel'");
-$num_categorie_persone = risul_query($perc_cat_persone,0,'valpersonalizza_num');
-if ($priv_modpers_cat_pers != "n" or $num_categorie_persone > 1) {
-echo "<form accept-charset=\"utf-8\" method=\"post\" action=\"./personalizza.php\"><div>
-<input type=\"hidden\" name=\"anno\" value=\"$anno\">
-<input type=\"hidden\" name=\"id_sessione\" value=\"$id_sessione\">
-<input type=\"hidden\" name=\"id_utente_mod\" value=\"$id_utente_mod\">
-<input type=\"hidden\" name=\"aggiorna_qualcosa\" value=\"SI\">
-<input type=\"hidden\" name=\"cambianumcatpers\" value=\"1\">
-".mex("Numero di tipologie di persone",$pag).":";
-if ($priv_modpers_cat_pers == "n") {
-$readonly = " onclick=\"return false;\" readonly";
-echo " $num_categorie_persone";
-} # fine if ($priv_modpers_cat_pers == "n")
-else {
-$readonly = "";
-echo " <input type=\"text\" name=\"nuovo_num_cat_presone\" size=\"2\" value=\"$num_categorie_persone\">
-<button class=\"edtm\" type=\"submit\"><div>".mex("Cambia",$pag)."</div></button>";
-if (($priv_modpers_cat_pers == "t" or ($priv_modpers_cat_pers == "g" and $altri_utenti_gr)) and $option_select_utenti and $id_utente_mod != "tutti") echo "<span style=\"width: 30px; display: inline-block;\">&nbsp;&nbsp;</span><button class=\"xchm\" type=\"submit\" name=\"esportacatpers\" value=\"1\"><div>".mex("Cambia per tutti gli utenti",$pag)."</div></button>";
-} # fine else if ($priv_modpers_cat_pers == "n")
-echo "</div></form>";
-} # fine if ($priv_modpers_cat_pers != "n" or $num_categorie_persone > 1)
-
-if ($num_categorie_persone > 1) {
-$perc_cat_persone = explode(";",risul_query($perc_cat_persone,0,'valpersonalizza'));
-$n_ling = 0;
-$l_ling = array();
-$nl_ling = array();
-if ($lingua_mex != 'ita') {
-$l_ling[$n_ling] = $lingua_mex;
-$nl_ling[$n_ling] = togli_acapo(implode("",file("./includes/lang/$lingua_mex/l_n")));
-$n_ling++;
-} # fine if ($lingua_mex != 'ita')
-$l_ling[$n_ling] = 'ita';
-$nl_ling[$n_ling] = 'italiano';
-$lang_dir = opendir("./includes/lang/");
-while ($ini_lingua = readdir($lang_dir)) {
-if ($ini_lingua != "." and $ini_lingua != ".." and strlen($ini_lingua) < 4 and $ini_lingua != $lingua_mex and is_file("./includes/lang/$ini_lingua/l_n")) {
-$n_ling++;
-$l_ling[$n_ling] = $ini_lingua;
-$nl_ling[$n_ling] = togli_acapo(implode("",file("./includes/lang/$ini_lingua/l_n")));
-} # fine if ($file != "." and $file != ".." and strlen($ini_lingua) < 4 and...
-} # fine while ($file = readdir($lang_dig))
-closedir($lang_dir);
-echo "<div style=\"height: 8px;\"></div>
-<form accept-charset=\"utf-8\" method=\"post\" action=\"./personalizza.php\"><div>
-<input type=\"hidden\" name=\"anno\" value=\"$anno\">
-<input type=\"hidden\" name=\"id_sessione\" value=\"$id_sessione\">
-<input type=\"hidden\" name=\"id_utente_mod\" value=\"$id_utente_mod\">
-<input type=\"hidden\" name=\"aggiorna_qualcosa\" value=\"SI\">
-<input type=\"hidden\" name=\"cambiacatpers\" value=\"1\">
-<div class=\"tab_cont\">
-<table class=\"t2\" style=\"text-align: center;\" border=1 cellspacing=0 cellpadding=1>
-<tr><td>&nbsp;</td><td><small><small>".mex("Può essere ospite principale",$pag)."</small></small></td>
-<td colspan=\"2\"><small><small>".mex("Prezzo in percentuale del prezzo per persona",$pag)."</small></small></td>";
-for ($num1 = 0 ; $num1 <= $n_ling ; $num1++) echo "<td><small>".ucfirst($nl_ling[$num1])."</small></td>";
-echo "</tr>";
-$nomi_cat_pers = array();
-$Sing = ucfirst(substr(mex("singolare",$pag),0,1));
-$Plur = ucfirst(substr(mex("plurale",$pag),0,1));
-for ($num1 = 1 ; $num1 <= $num_categorie_persone ; $num1++) {
-echo "<tr><td>".mex("Tipologia",$pag)."&nbsp;$num1</td>";
-if ($num1 == 1) {
-echo "<td><input type=\"checkbox\" style=\"width: 14px; height: 12px;\" onclick=\"return false;\" readonly checked></td><td colspan=\"2\">100%</td>";
-for ($num2 = 0 ; $num2 <= $n_ling ; $num2++) {
-$nomi_cat_pers[$num2] = esegui_query("select * from $tablepersonalizza where idpersonalizza = 'nomi_cat_pers_".aggslashdb($l_ling[$num2])."' and idutente = '$id_utente_sel' ");
-$nomi_cat_pers[$num2] = explode("<",risul_query($nomi_cat_pers[$num2],0,'valpersonalizza'));
-} # fine for $num2
-} # fine if ($num1 == 1)
-else {
-if (substr($perc_cat_persone[($num1 - 2)],0,1) == "n") $checked = "";
-else $checked = " checked";
-$perc_corr = explode("r",substr($perc_cat_persone[($num1 - 2)],2));
-echo "<td><input type=\"checkbox\" name=\"osp_princ_$num1\" value=\"1\" style=\"width: 14px; height: 12px;\"$readonly$checked></td><td>";
-if ($priv_modpers_cat_pers == "n") echo "<small>".$perc_corr[0]."</small>";
-else echo "<input type=\"text\" name=\"perc_cat_$num1\" size=\"3\" value=\"".$perc_corr[0]."\">";
-echo "<small>%</small></td>";
-if ($num1 == 2) {
-echo "<td rowspan=\"".($num_categorie_persone - 1)."\"><small>".mex("arrotondato a",$pag)." </small>";
-if ($priv_modpers_cat_pers == "n") echo "<small>".virgola_in_num($perc_corr[1],$stile_soldi)."</small>";
-else echo "<input type=\"text\" name=\"arrotond_cat_pers\" size=\"3\" value=\"".virgola_in_num($perc_corr[1],$stile_soldi)."\">";
-echo "</td>";
-} # fine if ($num1 == 2)
-} # fine else if ($num1 == 1)
-for ($num2 = 0 ; $num2 <= $n_ling ; $num2++) {
-$nomi_corr = explode(">",$nomi_cat_pers[$num2][($num1 - 1)]);
-if ($priv_modpers_cat_pers == "n") {
-echo "<td><small>$Sing.&nbsp;\"<em>".str_replace(" ","&nbsp;",$nomi_corr[0])."</em>\"<br>
-$Plur.&nbsp;\"<em>".str_replace(" ","&nbsp;",$nomi_corr[1])."</em>\"<small></td>";
-} # fine if ($priv_modpers_cat_pers == "n")
-else {
-echo "<td>$Sing.<input type=\"text\" name=\"nome_sing_".$l_ling[$num2]."_$num1\" size=\"9\" value=\"".$nomi_corr[0]."\"><br>
-$Plur.<input type=\"text\" name=\"nome_plur_".$l_ling[$num2]."_$num1\" size=\"9\" value=\"".$nomi_corr[1]."\"></td>";
-} # fine else if ($priv_modpers_cat_pers == "n")
-} # fine for $num2
-echo "</tr>";
-} # fine for $num1
-echo "</table></div><div style=\"height: 2px;\"></div>";
-if ($priv_modpers_cat_pers != "n") {
-echo "<button class=\"edtm\" type=\"submit\"><div>".mex("Modifica le tipologie di persone",$pag)."</div></button>";
-if (($priv_modpers_cat_pers == "t" or ($priv_modpers_cat_pers == "g" and $altri_utenti_gr)) and $option_select_utenti and $id_utente_mod != "tutti") echo "<span style=\"width: 40px; display: inline-block;\">&nbsp;&nbsp;</span><button class=\"xchm\" type=\"submit\" name=\"esportacatpers\" value=\"1\"><div>".mex("Modifica le tipologie di persone per tutti gli utenti",$pag)."</div></button>";
-} # fine if ($priv_modpers_cat_pers != "n")
-echo "<div style=\"height: 4px;\"></div></div></form>";
-} # fine if ($num_categorie_persone > 1)
-if ($priv_modpers_cat_pers != "n" or $num_categorie_persone > 1) echo "<hr style=\"width: 95%\">";
-
-echo "<form accept-charset=\"utf-8\" method=\"post\" action=\"./personalizza.php\"><div>
-<input type=\"hidden\" name=\"anno\" value=\"$anno\">
-<input type=\"hidden\" name=\"id_sessione\" value=\"$id_sessione\">
-<input type=\"hidden\" name=\"id_utente_mod\" value=\"$id_utente_mod\">
-<input type=\"hidden\" name=\"aggiorna_qualcosa\" value=\"SI\">";
-$attiva_checkin = esegui_query("select valpersonalizza from $tablepersonalizza where idpersonalizza = 'attiva_checkin' and idutente = '$id_utente_sel'");
-$attiva_checkin = risul_query($attiva_checkin,0,'valpersonalizza');
-if ($attiva_checkin == "SI") {
-echo mex("Registrazione degli orari di entrata ed uscita attivata",$pag)."
-<input class=\"sbutton\" type=\"submit\" name=\"disattiva_checkin\" value=\"".mex("Disattiva",$pag)."\">";
-} # fine if ($attiva_checkin == "SI")
-else {
-echo mex("Registrazione degli orari di entrata ed uscita disattivata",$pag)."
-<input class=\"sbutton\" type=\"submit\" name=\"attiva_checkin\" value=\"".mex("Attiva",$pag)."\">";
-} # fine else if ($attiva_checkin == "SI")
-echo "</div></form><hr style=\"width: 95%\">
+</div></form><hr style=\"width: 95%\">
 
 <form accept-charset=\"utf-8\" method=\"post\" action=\"./personalizza.php\"><div>
 <input type=\"hidden\" name=\"anno\" value=\"$anno\">
 <input type=\"hidden\" name=\"id_sessione\" value=\"$id_sessione\">
 <input type=\"hidden\" name=\"id_utente_mod\" value=\"$id_utente_mod\">
 <input type=\"hidden\" name=\"aggiorna_qualcosa\" value=\"SI\">";
-$ore_anticipa_periodo_corrente = esegui_query("select valpersonalizza_num from $tablepersonalizza where idpersonalizza = 'ore_anticipa_periodo_corrente' and idutente = '$id_utente_sel'");
-$ore_anticipa_periodo_corrente = risul_query($ore_anticipa_periodo_corrente,0,'valpersonalizza_num');
-echo mex("Numero di ore di cui anticipare il momento in cui si considera iniziata una prenotazione",$pag).":
- <input type=\"text\" name=\"ore_anticipa_periodo_corrente\" value=\"$ore_anticipa_periodo_corrente\" size=\"3\" maxlength=\"3\">
-<button class=\"edtm\" type=\"submit\" name=\"cambia_ore_anticipa_periodo_corrente\" value=\"1\"><div>".mex("cambia",$pag)."</div></button>
+$stile_nomi = esegui_query("select * from $tablepersonalizza where idpersonalizza = 'stile_nomi' and idutente = '$id_utente_sel'");
+$stile_nomi = risul_query($stile_nomi,0,'valpersonalizza');
+$sel_O = "";
+$sel_M1M = "";
+$sel_M1O = "";
+$sel_MA = "";
+$sel_MI = "";
+if ($stile_nomi == "orig") $sel_O = " selected";
+if ($stile_nomi == "ma1mi") $sel_M1M = " selected";
+if ($stile_nomi == "ma1or") $sel_M1O = " selected";
+if ($stile_nomi == "maiu") $sel_MA = " selected";
+if ($stile_nomi == "minu") $sel_MI = " selected";
+echo mex("Formato di nomi e cognomi",$pag).":
+ <select name=\"n_formato_nomi\">
+<option value=\"orig\"$sel_O>".mex("non modificare il formato inserito",$pag)."</option>
+<option value=\"ma1mi\"$sel_M1M>".mex("prima lettera maiuscola, altre lettere minuscole",$pag)."</option>
+<option value=\"ma1or\"$sel_M1O>".mex("prima lettera maiuscola, non modificare altre lettere",$pag)."</option>
+<option value=\"maiu\"$sel_MA>".mex("tutte lettere maiuscole",$pag)."</option>
+<option value=\"minu\"$sel_MI>".mex("tutte lettere minuscole",$pag)."</option>
+</select>
+<button class=\"edtm\" type=\"submit\" name=\"cambia_formato_nomi\" value=\"1\"><div>".mex("cambia formato",$pag)."</div></button>
 </div></form><hr style=\"width: 95%\">
 
 <a$spostamento_ancora name=\"liste_pers\"></a>
@@ -4729,7 +5524,7 @@ if (!empty($rel_sup_sing)) {
 $rel_sup_utente = esegui_query("select distinct $tablerel_sup.nome_$rel_sup_sing from $tablerelutenti inner join $tablerel_sup on $tablerelutenti.id$rel_sup_sing = $tablerel_sup.id$rel_sup_plur where $tablerelutenti.idutente = '$id_utente_sel' order by $tablerel_sup.nome_$rel_sup_sing");
 $num_rel_sup_utente = numlin_query($rel_sup_utente);
 for ($num1 = 0 ; $num1 < $num_rel_sup_utente ; $num1++) {
-$rel_sup = htmlspecialchars(risul_query($rel_sup_utente,$num1,"nome_$rel_sup_sing",$tablerel_sup));
+$rel_sup = htmlspecialchars((string) risul_query($rel_sup_utente,$num1,"nome_$rel_sup_sing",$tablerel_sup));
 $opt_rel_sup .= "<option value=\"$rel_sup\">$rel_sup</option>";
 } # fine for $num1
 $rel_sup_esist = esegui_query("select id$rel_sing from $tablerelutenti where id$rel_sing is not NULL and idsup is not NULL and idutente = '$id_utente_sel' limit 1");
@@ -4749,9 +5544,9 @@ if ($num_rel_utente) {
 echo "<select name=\"$rel_sing"."_da_eliminare\" id=\"$rel_sing"."_da_eliminare\">";
 for ($num1 = 0 ; $num1 < $num_rel_utente ; $num1++) {
 $rel = htmlspecialchars(risul_query($rel_utente,$num1,"nome_$rel_sing",$tablerel));
-$codice = htmlspecialchars(risul_query($rel_utente,$num1,"codice_$rel_sing",$tablerel));
-$codice2 = htmlspecialchars(risul_query($rel_utente,$num1,"codice2_$rel_sing",$tablerel));
-$codice3 = htmlspecialchars(risul_query($rel_utente,$num1,"codice3_$rel_sing",$tablerel));
+$codice = htmlspecialchars((string) risul_query($rel_utente,$num1,"codice_$rel_sing",$tablerel));
+$codice2 = htmlspecialchars((string) risul_query($rel_utente,$num1,"codice2_$rel_sing",$tablerel));
+$codice3 = htmlspecialchars((string) risul_query($rel_utente,$num1,"codice3_$rel_sing",$tablerel));
 echo "<option value=\"$rel\">$rel";
 if (strcmp($codice,"")) echo " ($codice)";
 if (strcmp($codice2,"")) echo " (".mex("2°",$pag)." $codice2)";
@@ -4775,9 +5570,9 @@ echo mex(ucfirst($nome_plur),$pag).":
  <select name=\"$rel_sing"."_da_eliminare\">";
 for ($num1 = 0 ; $num1 < $num_rel_utente ; $num1++) {
 $rel = htmlspecialchars(risul_query($rel_utente,$num1,"nome_$rel_sing",$tablerel));
-$codice = htmlspecialchars(risul_query($rel_utente,$num1,"codice_$rel_sing",$tablerel));
-$codice2 = htmlspecialchars(risul_query($rel_utente,$num1,"codice2_$rel_sing",$tablerel));
-$codice3 = htmlspecialchars(risul_query($rel_utente,$num1,"codice3_$rel_sing",$tablerel));
+$codice = htmlspecialchars((string) risul_query($rel_utente,$num1,"codice_$rel_sing",$tablerel));
+$codice2 = htmlspecialchars((string) risul_query($rel_utente,$num1,"codice2_$rel_sing",$tablerel));
+$codice3 = htmlspecialchars((string) risul_query($rel_utente,$num1,"codice3_$rel_sing",$tablerel));
 echo "<option value=\"$rel\">$rel";
 if (strcmp($codice,"")) echo " ($codice)";
 if (strcmp($codice2,"")) echo " (".mex("2°",$pag)." $codice2)";
@@ -4840,9 +5635,11 @@ echo "<a$spostamento_ancora name=\"dati_strut\"></a><div style=\"text-align: cen
 <table class=\"nomob\"><tr><td>";
 if (defined('C_RESTRIZIONI_DEMO_ADMIN') and C_RESTRIZIONI_DEMO_ADMIN == "SI") $readonly = " readonly=\"readonly\"";
 else $readonly = "";
+if (!isset($dati_strut)) {
 $dati_strut = esegui_query("select * from $tablepersonalizza where idpersonalizza = 'dati_struttura' and idutente = '$id_utente_sel'");
-$dati_strut = risul_query($dati_strut,0,'valpersonalizza');
+$dati_strut = (string) risul_query($dati_strut,0,'valpersonalizza');
 $dati_strut = explode("#@&",$dati_strut);
+} # fine if (!isset($dati_strut))
 echo mex("Nome",$pag).":
  <input type=\"text\"$readonly name=\"nuovo_nome_strutt\" size=\"32\" value=\"".$dati_strut[0]."\">
 </td><td style=\"width: 50px;\"></td><td>
@@ -4853,7 +5650,7 @@ echo mex("Nome",$pag).":
  <input type=\"text\"$readonly name=\"nuova_email\" size=\"32\" value=\"".$dati_strut[2]."\">
 </td><td style=\"width: 50px;\"></td><td>
 ".mex("Numero stelle",$pag).":
- <input type=\"text\"$readonly name=\"nuovo_num_stelle_strutt\" size=\"32\" value=\"".$dati_strut[14]."\">
+ <input type=\"text\"$readonly name=\"nuovo_num_stelle_strutt\" size=\"32\" value=\"".fixset($dati_strut[14])."\">
 </td></tr><tr><td>
 ".mex("Sito web",$pag).":
  <input type=\"text\"$readonly name=\"nuovo_sito_web_strutt\" size=\"32\" value=\"".$dati_strut[4]."\">
@@ -4896,10 +5693,10 @@ echo mex("Comune",$pag).":
  <input type=\"text\"$readonly name=\"nuovo_fax_strutt\" size=\"32\" value=\"".$dati_strut[11]."\">
 </td></tr><tr><td>
 ".mex("Codice fiscale",$pag).":
- <input type=\"text\"$readonly name=\"nuovo_cod_fiscale_strutt\" size=\"32\" value=\"".$dati_strut[12]."\">
+ <input type=\"text\"$readonly name=\"nuovo_cod_fiscale_strutt\" size=\"32\" value=\"".fixset($dati_strut[12])."\">
 </td><td style=\"width: 50px;\"></td><td>
 ".mex("Partita iva",$pag).":
- <input type=\"text\"$readonly name=\"nuova_partita_iva_strutt\" size=\"32\" value=\"".$dati_strut[13]."\">
+ <input type=\"text\"$readonly name=\"nuova_partita_iva_strutt\" size=\"32\" value=\"".fixset($dati_strut[13])."\">
 </td></tr><tr><td colspan=\"3\">
 ".mex("URL del logo",$pag).":
  <input id=\"n_logostr\" type=\"text\"$readonly name=\"nuovo_logo_strutt\" size=\"32\" value=\"".fixset($dati_strut[15])."\">".upload_hd_img_form('n_logostr',$tablepersonalizza)."
@@ -4958,17 +5755,17 @@ $numero_data = 0;
 for ($num1 = 0 ; $num1 < $num_periodi_date ; $num1++) {
 $numero_data++;
 if (!empty(${"inizioperiodo".$num1})) $date_selected = ${"inizioperiodo".$num1};
-else $date_selected = substr($lista_date[$numero_data],0,10);
+else $date_selected = substr(fixstr($lista_date[$numero_data]),0,10);
 echo "".mex("dal",$pag)."&nbsp;";
 if (!@is_dir("./themes/".$tema[$id_utente_sel]."/php")) $tema[$id_utente_sel] = "base";
 mostra_menu_date(C_DATI_PATH."/selectperiodi$anno.$id_utente_sel.php","inizioperiodo$num1",$date_selected,"","",$id_utente_sel,$tema);
-$numero_data = $numero_data + $numero_date_menu[$num1] - 1;
+$numero_data = $numero_data + fixset($numero_date_menu[$num1]) - 1;
 if (!empty(${"fineperiodo".$num1})) $date_selected = ${"fineperiodo".$num1};
 else $date_selected = substr($lista_date[$numero_data],0,10);
 echo "&nbsp;".mex("al",$pag)."&nbsp;";
 mostra_menu_date(C_DATI_PATH."/selectperiodi$anno.$id_utente_sel.php","fineperiodo$num1",$date_selected,"","",$id_utente_sel,$tema);
 if ($tipo_periodi == "s") $val_intervalloperiodo = ($incrementi_date[$num1] / 7);
-else $val_intervalloperiodo = $incrementi_date[$num1];
+else $val_intervalloperiodo = fixset($incrementi_date[$num1]);
 if (!empty(${"intervalloperiodo".$num1})) $val_intervalloperiodo = ${"intervalloperiodo".$num1};
 if (!$val_intervalloperiodo) $val_intervalloperiodo = 1;
 echo ",&nbsp;".str_replace(" ","&nbsp;",mex("$parola_settimane di intervallo",$pag)).":&nbsp;
@@ -4997,6 +5794,7 @@ echo "<form accept-charset=\"utf-8\" method=\"post\" action=\"visualizza_tabelle
 <input type=\"hidden\" name=\"tipo_tabella\" value=\"periodi\">
 ".mex("Aggiungi periodi","visualizza_tabelle.php")." ".mex("fino al mese","visualizza_tabelle.php")."
  <select name=\"mese_fine\">";
+$sel_mostrato = 0;
 for ($num1 = $mese_fine_periodi ; $num1 <= 48 ; $num1++) {
 $anno_ag = $anno;
 if ($num1 > 12) { $anno_ag = $anno + 1; }
@@ -5004,30 +5802,40 @@ if ($num1 > 24) $anno_ag = $anno + 2;
 if ($num1 > 36) $anno_ag = $anno + 3;
 if ($num1 > 48) $anno_ag = $anno + 4;
 $mese_ag = $num1 - (($anno_ag - $anno) * 12);
-echo "<option value=\"$num1\">$mese_ag - $anno_ag</option>";
+if ($mese_ag == 12 and !$sel_mostrato) {
+$sel = " selected";
+$sel_mostrato = 1;
+} # fine if ($mese_ag == 12 and !$sel_mostrato)
+else $sel = "";
+echo "<option value=\"$num1\"$sel>$mese_ag - $anno_ag</option>";
 } # fine for $num1
 echo "</select>
 <button class=\"plum\" type=\"submit\" name=\"aggiungi\" value=\"1\"><div>".mex("aggiungi",$pag)."</div></button><br>";
 echo "<small>(<label><input type=\"checkbox\" name=\"importa_prezzi\" value=\"SI\" style=\"width: 14px; height: 12px;\" checked>".mex("prova ad importare i prezzi","visualizza_tabelle.php")."</label>";
 if ($tipo_periodi == "g") {
-echo ":<label><input type=\"radio\" name=\"tipo_importa\" value=\"giorn\" style=\"width: 14px; height: 12px;\" checked>".mex("giornalmente","visualizza_tabelle.php")."</label>
-<label><input type=\"radio\" name=\"tipo_importa\" value=\"sett\" style=\"width: 14px; height: 12px;\">".mex("settimanalmente","visualizza_tabelle.php")."</label>";
+$chk_gio = "";
+$chk_set = "";
+include(C_DATI_PATH."/selperiodimenu$anno.$id_utente.php");
+for ($num1 = 0 ; $num1 <  count($d_increment) ; $num1++) if ($d_increment[$num1] == 7) $chk_set = " checked";
+if (!$chk_set) $chk_gio = " checked";
+echo ":<label><input type=\"radio\" name=\"tipo_importa\" value=\"giorn\" style=\"width: 14px; height: 12px;\"$chk_gio>".mex("giornalmente","visualizza_tabelle.php")."</label>
+<label><input type=\"radio\" name=\"tipo_importa\" value=\"sett\" style=\"width: 14px; height: 12px;\"$chk_set>".mex("settimanalmente","visualizza_tabelle.php")."</label>";
 } # fine if ($tipo_periodi == "g")
 echo ")</small></div></form>";
 } # fine if ($mese_fine_periodi < 49)
 $anno_attuale = date("Y",(time() + (C_DIFF_ORE * 3600)));
-if (defined('C_CANCELLA_ANNO_ATTUALE') and C_CANCELLA_ANNO_ATTUALE == "NO" and $anno != $anno_attuale) {
+if ((!defined('C_CANCELLA_ANNO_ATTUALE') or C_CANCELLA_ANNO_ATTUALE != "SI") and $anno != $anno_attuale) {
 $anno_attuale_esistente = esegui_query("select * from $tableanni where idanni = $anno_attuale");
 if (numlin_query($anno_attuale_esistente) == 0) $anno_attuale = $anno;
-} # fine if (defined('C_CANCELLA_ANNO_ATTUALE') and C_CANCELLA_ANNO_ATTUALE == "NO" and $anno != $anno_attuale)
-if (!defined('C_CANCELLA_ANNO_ATTUALE') or C_CANCELLA_ANNO_ATTUALE != "NO" or $anno != $anno_attuale) {
+} # fine if ((!defined('C_CANCELLA_ANNO_ATTUALE') or C_CANCELLA_ANNO_ATTUALE != "SI") and $anno != $anno_attuale)
+if ((defined('C_CANCELLA_ANNO_ATTUALE') and C_CANCELLA_ANNO_ATTUALE == "SI") or $anno != $anno_attuale) {
 echo "<br><form accept-charset=\"utf-8\" method=\"post\" action=\"./visualizza_tabelle.php\"><div>
 <input type=\"hidden\" name=\"anno\" value=\"$anno\"><input type=\"hidden\" name=\"id_sessione\" value=\"$id_sessione\">
 <input type=\"hidden\" name=\"tipo_tabella\" value=\"periodi\">
 ".mex("Cancella","visualizza_tabelle.php")." ".mex("l'anno","visualizza_tabelle.php")." <b>$anno</b> ".mex("dal database","visualizza_tabelle.php")."
 <button class=\"cnrm\" type=\"submit\" name=\"cancella_anno\" value=\"1\"><div>".mex("elimina",$pag)."</div></button>
 </div></form>";
-} # fine if (defined('C_CANCELLA_ANNO_ATTUALE') or C_CANCELLA_ANNO_ATTUALE != "NO" or $anno != $anno_attuale)
+} # fine if ((defined('C_CANCELLA_ANNO_ATTUALE') and C_CANCELLA_ANNO_ATTUALE == "SI") or $anno != $anno_attuale)
 } # fine if ($id_utente_mod == 1 and $installazione_subordinata != "SI")
 
 echo "<hr style=\"width: 95%\">";
@@ -5128,11 +5936,14 @@ echo "
 
 # le checkbox dei commenti personalizzati
 if ($campi_pers_comm) {
-for ($num1 = 0 ; $num1 < count($campi_pers_comm) ; $num1++) {
+$num_campi_pers_comm = count($campi_pers_comm);
+for ($num1 = 0 ; $num1 < $num_campi_pers_comm ; $num1++) {
 echo "; <label><input type=\"checkbox\" name=\"colonna_comm_pers_".$campi_pers_comm[$num1]."\" value=\"SI\"".$comm_pers_check[$campi_pers_comm[$num1]].">
- ".mex("commento",$pag)." \"".$campi_pers_comm[$num1]."\"</label>";
+ ".mex("commento",$pag)." \"".$campi_pers_comm[$num1]."\"</label>
+<input type=\"hidden\" name=\"nome_cpc_passa$num1\" value=\"".$campi_pers_comm[$num1]."\">";
 } # fine for $num1
 } # fine if ($campi_pers_comm)
+else $num_campi_pers_comm = 0;
 
 # le checkbox dei costi aggiuntivi già selezionati
 $num_ca = 0;
@@ -5142,13 +5953,13 @@ $colonna_selezionata = explode("#?&",$colonne_selezionate[$num1]);
 $tipo_ca = $colonna_selezionata[0];
 if ($tipo_ca == "cu" or $tipo_ca == "cs") {
 $nome_ca = $colonna_selezionata[1];
-$soprannome_ca = $colonna_selezionata[2];
+$soprannome_ca = fixset($colonna_selezionata[2]);
 echo "; <label><input type=\"checkbox\" name=\"$tipo_ca$num_ca\" value=\"$nome_ca\" checked> ";
 if ($tipo_ca == "cu") echo mex("costo aggiuntivo unico",$pag);
 if ($tipo_ca == "cs") echo mex("costo aggiuntivo $parola_settimanale",$pag);
 echo " \"<b>$nome_ca</b>\"</label> (".mex("abbreviazione",$pag).":
  <input type=\"text\" name=\"soprannome_ca$num_ca\" value=\"$soprannome_ca\" size=\"6\">)";
-if ($colonna_selezionata[3] == "nec") echo "<input type=\"hidden\" name=\"nec_ca$num_ca\" value=\"SI\">";
+if (isset($colonna_selezionata[3]) and $colonna_selezionata[3] == "nec") echo "<input type=\"hidden\" name=\"nec_ca$num_ca\" value=\"SI\">";
 $ca_presente[$tipo_ca][$nome_ca] = 1;
 $num_ca++;
 } # fine if ($tipo_ca == "cu" or $tipo_ca == "cs")
@@ -5185,6 +5996,7 @@ $num_gr++;
 echo ".<br>
 <input type=\"hidden\" name=\"num_ca\" value=\"$num_ca\">
 <input type=\"hidden\" name=\"num_gr\" value=\"$num_gr\">
+<input type=\"hidden\" name=\"num_cpc_passa\" value=\"$num_campi_pers_comm\">
 <table><tr><td style=\"height: 2px;\"></td></tr></table>
 <button class=\"edtm\" type=\"submit\" name=\"cambia_col_tutte_prenota\" value=\"1\"><div>".ucfirst(mex("cambia le colonne",$pag))."</div></button><br>
 </div></form><table><tr><td style=\"height: 14px;\"></td></tr></table>
@@ -5214,9 +6026,10 @@ echo ".<br>
  <label><input type=\"checkbox\" name=\"colonna_datainserimento\" value=\"SI\"> ".mex("data di inserimento",$pag)."</label>;
  <label><input type=\"checkbox\" name=\"colonna_utenteinserimento\" value=\"SI\"> ".mex("utente",$pag)."</label>";
 if ($campi_pers_comm) {
-for ($num1 = 0 ; $num1 < count($campi_pers_comm) ; $num1++) {
+for ($num1 = 0 ; $num1 < $num_campi_pers_comm ; $num1++) {
 echo "; <label><input type=\"checkbox\" name=\"colonna_comm_pers_".$campi_pers_comm[$num1]."\" value=\"SI\">
- ".mex("commento",$pag)." \"".$campi_pers_comm[$num1]."\"</label>";
+ ".mex("commento",$pag)." \"".$campi_pers_comm[$num1]."\"</label>
+<input type=\"hidden\" name=\"nome_cpc_passa$num1\" value=\"".$campi_pers_comm[$num1]."\">";
 } # fine for $num1
 } # fine if ($campi_pers_comm)
 for ($numca = 0 ; $numca < $dati_ca['num'] ; $numca++) {
@@ -5232,6 +6045,7 @@ echo "; ".mex("separatore",$pag).":
  <label><input type=\"radio\" name=\"separatore\" value=\"trattino\"> ".mex("trattino",$pag)."</label>
  <label><input type=\"radio\" name=\"separatore\" value=\"acapo\"> ".mex("a capo",$pag)."</label><br>
 <input type=\"hidden\" name=\"num_ca\" value=\"$num_ca\">
+<input type=\"hidden\" name=\"num_cpc_passa\" value=\"$num_campi_pers_comm\">
 <table><tr><td style=\"height: 2px;\"></td></tr></table>
 <button class=\"plum\" type=\"submit\" name=\"aggiungi_col_gruppo\" value=\"1\"><div>".mex("Aggiungi colonna gruppo",$pag)."</div></button>
 </div></form><table><tr><td style=\"height: 14px;\"></td></tr></table>";
@@ -5244,7 +6058,7 @@ $colonna_selezionata = explode("#?&",$colonne_selezionate[$num1]);
 $tipo_ca = $colonna_selezionata[0];
 if ($tipo_ca == "cu" or $tipo_ca == "cs") {
 $nome_ca = $colonna_selezionata[1];
-if ($colonna_selezionata[3] == "nec") $checked = " checked";
+if (isset($colonna_selezionata[3]) and $colonna_selezionata[3] == "nec") $checked = " checked";
 else $checked = "";
 $col_nec_vedi .= "; <label><input type=\"checkbox\" name=\"$tipo_ca$num_ca\" value=\"$nome_ca\"$checked> ";
 if ($tipo_ca == "cu") $col_nec_vedi .= mex("costo aggiuntivo unico",$pag);
@@ -5291,6 +6105,10 @@ echo "<form accept-charset=\"utf-8\" method=\"post\" action=\"./personalizza.php
 ".mex("Scegli le righe aggiuntive da mostrare",$pag).":";
 $rig_tab_tutte_prenota = esegui_query("select * from $tablepersonalizza where idpersonalizza = 'rig_tab_tutte_prenota' and idutente = '$id_utente_sel'");
 $rig_tab_tutte_prenota = risul_query($rig_tab_tutte_prenota,0,'valpersonalizza');
+$totale_check = "";
+$tasse_check = "";
+$cassa_check = "";
+$prenotacanc_check = "";
 $righe_selezionate = explode("#@&",$rig_tab_tutte_prenota);
 $num_righe_selezionate = count($righe_selezionate);
 for ($num1 = 0 ; $num1 < $num_righe_selezionate ; $num1++) {
@@ -5584,14 +6402,14 @@ $sel_imap = " selected";
 $sel_pop3_ssl = "";
 $sel_imap_ssl = "";
 } # fine elseif (substr($proto_email_tm,0,4) == "imap")
-if ($porta_email_tm and $tipo_porta_email_tm != "def") {
+if ($porta_email_tm and (!isset($tipo_porta_email_tm) or $tipo_porta_email_tm != "def")) {
 $check_tp_etm_def = "";
 $check_tp_etm_pers = " checked";
-} # fine if ($porta_email_tm and $tipo_porta_email_tm != "def")
+} # fine if ($porta_email_tm and (!isset($tipo_porta_email_tm) or...
 else {
 $check_tp_etm_def = " checked";
 $check_tp_etm_pers = "";
-} # fine else if ($porta_email_tm and $tipo_porta_email_tm != "def")
+} # fine else if ($porta_email_tm and (!isset($tipo_porta_email_tm) or...
 echo "<table cellspacing=\"0\"><tr><td style=\"text-align: right;\">
 ".mex("Scarica le email di richiesta disponibiltà dal server di posta",$pag).":</td><td>
 <input type=\"text\" name=\"server_email_tm\" size=\"25\" value=\"$server_email_tm\">
@@ -5608,23 +6426,23 @@ echo "<table cellspacing=\"0\"><tr><td style=\"text-align: right;\">
 <tr><td style=\"text-align: right;\">".mex("Nome utente",$pag).":</td><td>
 <input type=\"text\" name=\"username_email_tm\" size=\"25\" value=\"$username_email_tm\"></td></tr>
 <tr><td style=\"text-align: right;\">".mex("Password",$pag).":</td><td>
-<input type=\"text\" name=\"password_email_tm\" size=\"25\" value=\"$password_email_tm\">";
+<input type=\"text\" name=\"password_email_tm\" size=\"25\" value=\"$password_email_tm\" style=\"text-security: circle; -webkit-text-security: disc; -moz-text-security: circle;\">";
 #echo " <small>(".mex("lasciare vuota per chiedere ogni volta",$pag).")</small></td></tr>";
 echo "<tr><td valign=\"top\" style=\"text-align: right;\">".mex("Identificazione messaggi di richiesta",$pag).":</td><td>";
 if (!$num_trova_email_tm or controlla_num_pos($num_trova_email_tm) == "NO") $num_trova_email_tm = 1;
 for ($num1 = 0 ; $num1 < $num_trova_email_tm ; $num1++) {
-if (${"therad_email_tm$num1"} == "tutti") {
+if (isset(${"therad_email_tm$num1"}) and ${"therad_email_tm$num1"} == "tutti") {
 $sel_ini = "";
 $sel_tutti = " selected";
-} # fine if (${"therad_email_tm$num1"} == "tutti")
+} # fine if (isset(${"therad_email_tm$num1"}) and ${"therad_email_tm$num1"} == "tutti")
 else {
 $sel_ini = " selected";
 $sel_tutti = "";
-} # fine else if (${"therad_email_tm$num1"} == "tutti")
+} # fine else if (isset(${"therad_email_tm$num1"}) and ${"therad_email_tm$num1"} == "tutti")
 echo "<select name=\"therad_email_tm$num1\"><option value=\"ini\"$sel_ini>".mex("Messaggio iniziale",$pag)."</option>
 <option value=\"tutti\"$sel_tutti>".mex("Qualsiasi messaggio",$pag)."</option></select>
-".mex("da",$pag)." <input type=\"text\" name=\"mittente_email_tm$num1\" value=\"".${"mittente_email_tm$num1"}."\" size=\"20\">
-".mex("con oggetto contenete",$pag)." <input type=\"text\" name=\"oggetto_email_tm$num1\" value=\"".${"oggetto_email_tm$num1"}."\" size=\"18\"><br>";
+".mex("da",$pag)." <input type=\"text\" name=\"mittente_email_tm$num1\" value=\"".htmlspecialchars(fixstr(${"mittente_email_tm$num1"}))."\" size=\"20\">
+".mex("con oggetto contenete",$pag)." <input type=\"text\" name=\"oggetto_email_tm$num1\" value=\"".htmlspecialchars(fixstr(${"oggetto_email_tm$num1"}))."\" size=\"18\"><br>";
 } # fine for $num1
 echo "<input type=\"hidden\" name=\"num_trova_email_tm\" value=\"$num_trova_email_tm\"></td><td valign=\"bottom\">";
 if ($num_trova_email_tm > 1) echo "<button class=\"lesmnotxt\" type=\"submit\" name=\"eliminatrova_email_tm\" value=\"-\"><div>".mex("-",$pag)."</div></button>&nbsp;";
@@ -5775,13 +6593,13 @@ echo "<a$spostamento_ancora name=\"contratti\"></a><div id=\"h_doc2\" style=\"te
 $max_contr = esegui_query("select max(numero) from $tablecontratti where tipo $LIKE 'contr%'");
 $max_contr = risul_query($max_contr,0,0);
 $nomi_contratti = esegui_query("select valpersonalizza from $tablepersonalizza where idpersonalizza = 'nomi_contratti' and idutente = '$id_utente_sel'");
-$nomi_contratti = risul_query($nomi_contratti,0,'valpersonalizza');
+$nomi_contratti = (string) risul_query($nomi_contratti,0,'valpersonalizza');
 $nomi_contratti = explode("#@&",$nomi_contratti);
 $num_nomi_contratti = count($nomi_contratti);
 $nome_contratto = array();
 for ($num1 = 0 ; $num1 < $num_nomi_contratti ; $num1++) {
 $dati_nome_contratto = explode("#?&",$nomi_contratti[$num1]);
-$nome_contratto[$dati_nome_contratto[0]] = $dati_nome_contratto[1];
+$nome_contratto[$dati_nome_contratto[0]] = fixset($dati_nome_contratto[1]);
 } # fine for $num1
 
 if ($id_utente == 1 and $installazione_subordinata != "SI") {
@@ -5817,7 +6635,7 @@ echo "<form accept-charset=\"utf-8\" method=\"post\" action=\"./personalizza.php
 for ($num_contratto = 1 ; $num_contratto <= $max_contr ; $num_contratto++) {
 if ($attiva_contratti_consentiti == "n" or (isset($contratti_consentiti_vett[$num_contratto]) and $contratti_consentiti_vett[$num_contratto] == "SI")) {
 echo "<option value=\"$num_contratto\">$num_contratto";
-if (isset($nome_contratto[$num_contratto]) and strcmp($nome_contratto[$num_contratto],"")) echo " (".$nome_contratto[$num_contratto].")";
+if (isset($nome_contratto[$num_contratto]) and strcmp((string) $nome_contratto[$num_contratto],"")) echo " (".$nome_contratto[$num_contratto].")";
 echo "</option>";
 } # fine if ($attiva_contratti_consentiti == "n" or...
 } # fine for $num_contratto
@@ -5844,9 +6662,13 @@ echo "<td align=\"center\"><small>";
 if ($priv_mod_doc == "s") {
 $mod_doc_corr = 1;
 if ($priv_mod_doc_api != "s") {
-$api_esistente = esegui_query("select * from $tablecontratti where numero = '$num_contratto' and tipo = 'api'");
+$api_esistente = esegui_query("select tipo from $tablecontratti where numero = '$num_contratto' and tipo = 'api'");
 if (numlin_query($api_esistente)) $mod_doc_corr = 0;
 } # fine if ($priv_mod_doc_api != "s")
+if ($mod_doc_corr and $priv_mod_doc_html != "s") {
+$contrhtm = esegui_query("select tipo from $tablecontratti where numero = '$num_contratto' and tipo = 'contrhtm'");
+if (numlin_query($contrhtm)) $mod_doc_corr = 0;
+} # fine if ($mod_doc_corr and $priv_mod_doc_html != "s")
 } # fine if ($priv_mod_doc == "s")
 else $mod_doc_corr = 0;
 if ($mod_doc_corr) {

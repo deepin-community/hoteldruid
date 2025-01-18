@@ -2,7 +2,7 @@
 
 ##################################################################################
 #    HOTELDRUID
-#    Copyright (C) 2001-2021 by Marco Maria Francesco De Santis (marco@digitaldruid.net)
+#    Copyright (C) 2001-2023 by Marco Maria Francesco De Santis (marco@digitaldruid.net)
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published by
@@ -32,10 +32,19 @@ $var_pag[4] = 'seconda_pass';
 $var_pag[5] = 'tipo_pass';
 $var_pag[6] = 'modifica_utenti';
 $var_pag[7] = 'num_utenti_tab';
-$var_pag[8] = 'prima_pass1';
-$var_pag[9] = 'seconda_pass1';
-$var_pag[10] = 'tipo_pass1';
-$n_var_pag = 11;
+$var_pag[8] = 'nome';
+$var_pag[9] = 'aggiungi_utente';
+$var_pag[10] = 'importa_priv';
+$var_pag[11] = 'tipo_importa';
+$var_pag[12] = 'id_utente_importa';
+$var_pag[13] = 'id_utente_esporta';
+$var_pag[14] = 'modifica_gruppi';
+$var_pag[15] = 'id_utente_mod';
+$var_pag[16] = 'nuovo_gruppo';
+$var_pag[17] = 'lista_idg_passa';
+$var_pag[18] = 'cancella';
+$var_pag[19] = 'id_utente_canc';
+$n_var_pag = 20;
 $num2 = 0;
 if (isset($_POST['num_utenti_tab'])) $num2 = (int) $_POST['num_utenti_tab'];
 elseif (isset($_GET['num_utenti_tab'])) $num2 = (int) $_GET['num_utenti_tab'];
@@ -45,8 +54,18 @@ $num3= 0;
 if (isset($_POST["id_utente_tab$num1"])) $num3 = (int) $_POST["id_utente_tab$num1"];
 elseif (isset($_GET["id_utente_tab$num1"])) $num3 = (int) $_GET["id_utente_tab$num1"];
 $var_pag[$n_var_pag++] = "nome$num3";
+$var_pag[$n_var_pag++] = "prima_pass$num3";
+$var_pag[$n_var_pag++] = "seconda_pass$num3";
 $var_pag[$n_var_pag++] = "tipo_pass$num3";
 } # fine for $num1
+$num2 = 0;
+if (isset($_POST['lista_idg_passa'])) $num2 = $_POST['lista_idg_passa'];
+elseif (isset($_GET['lista_idg_passa'])) $num2 = $_GET['lista_idg_passa'];
+if ($num2) {
+$num2 = explode(",",$num2);
+$num3 = count($num2);
+for ($num1 = 1 ; $num1 < $num3 ; $num1++) $var_pag[$n_var_pag++] = "gruppo".(int) $num2[$num1];
+} # fine if ($num2)
 
 include("./costanti.php");
 include(C_DATI_PATH."/dati_connessione.php");
@@ -69,7 +88,28 @@ $tableanni = $PHPR_TAB_PRE."anni";
 $tableclienti = $PHPR_TAB_PRE."clienti";
 
 $id_utente = controlla_login($numconnessione,$PHPR_TAB_PRE,$id_sessione,$nome_utente_phpr,$password_phpr,$anno);
-if ($id_utente and $id_utente == 1) {
+if ($id_utente) {
+
+
+if ($id_utente != 1) {
+$privilegi_annuali_utente = esegui_query("select * from $tableprivilegi where idutente = '$id_utente' and anno = '$anno'");
+if (numlin_query($privilegi_annuali_utente) == 0) $anno_utente_attivato = "NO";
+else {
+$anno_utente_attivato = "SI";
+$privilegi_globali_utente = esegui_query("select * from $tableprivilegi where idutente = '$id_utente' and anno = '1'");
+$priv_mod_pers = risul_query($privilegi_globali_utente,0,'priv_mod_pers');
+$priv_mod_pass = substr($priv_mod_pers,10,1);
+} # fine else if (numlin_query($privilegi_annuali_utente) == 0)
+} # fine if ($id_utente != 1)
+else {
+$anno_utente_attivato = "SI";
+$priv_mod_pass = "s";
+} # fine else if ($id_utente != 1)
+
+
+if ($anno_utente_attivato == "SI" and $priv_mod_pass != "n") {
+$mostra_tabella_iniziale = "";
+$mess_agg = "";
 
 
 $titolo = "HotelDruid: ".mex("Gestione Utenti",$pag);
@@ -77,7 +117,7 @@ if ($tema[$id_utente] and $tema[$id_utente] != "base" and @is_dir("./themes/".$t
 else include("./includes/head.php");
 
 
-if (!empty($modifica_utenti)) {
+if (!empty($modifica_utenti) and $id_utente == 1) {
 $mostra_tabella_iniziale = "NO";
 $tabelle_lock = array($tableutenti,$tablesessioni);
 $tabelle_lock = lock_tabelle($tabelle_lock);
@@ -100,7 +140,7 @@ if (@get_magic_quotes_gpc()) {
 ${"nome".$id} = stripslashes(${"nome".$id});
 ${"prima_pass".$id} = stripslashes(${"prima_pass".$id});
 } # fine if (@get_magic_quotes_gpc())
-${"nome".$id} = elimina_caratteri_slash (${"nome".$id});
+${"nome".$id} = trim(elimina_caratteri_slash(${"nome".$id}));
 ${"tipo_pass".$id} = aggslashdb(${"tipo_pass".$id});
 ${"prima_pass".$id} = aggslashdb(fixset(${"prima_pass".$id}));
 $nome = risul_query($lista_utenti,$num1,'nome_utente');
@@ -111,8 +151,7 @@ if ($nome != ${"nome".$id} and str_replace("&","",${"nome".$id}) == ${"nome".$id
 $cambiato = "SI";
 $cambia_nome = 1;
 echo mex("Il <b>nome</b> dell'utente",$pag)." <b>$id</b> ".mex("verrà cambiato da",$pag)." <i>$nome</i> ".mex("a",$pag)." <i>".${"nome".$id}."</i>.<br>";
-echo "<input type=\"hidden\" name=\"nome$id\" value=\"".${"nome".$id}."\">
-<input type=\"hidden\" name=\"id_utente_tab$num1\" value=\"$id\">";
+echo "<input type=\"hidden\" name=\"nome$id\" value=\"".${"nome".$id}."\">";
 } # fine if ($nome != ${"nome".$id} and...
 $n_tipo_pass = ${"tipo_pass".$id};
 if ($n_tipo_pass != "5" and $n_tipo_pass != "t") $n_tipo_pass = "n";
@@ -144,7 +183,8 @@ echo "".mex("Inserisci una nuova password",$pag).": <input type=\"password\" nam
 } # fine if ($n_tipo_pass != "n")
 echo "<input type=\"hidden\" name=\"tipo_pass$id\" value=\"$n_tipo_pass\">";
 } # fine if ($tipo_pass != ${"tipo_pass".$id})
-if ($cambiato == "SI") echo "<hr style=\"width: 45%; margin-left: 0; text-align: left;\">";
+if ($cambiato == "SI") echo "<input type=\"hidden\" name=\"id_utente_tab$num1\" value=\"$id\">
+<hr style=\"width: 45%; margin-left: 0; text-align: left;\">";
 } # fine for $num1
 echo "<button class=\"musr\" type=\"submit\"><div>".mex("Continua",$pag)."</div></button>
 </div></form><br>
@@ -158,7 +198,7 @@ echo "<button class=\"musr\" type=\"submit\"><div>".mex("Continua",$pag)."</div>
 else {
 for ($num1 = 0 ; $num1 < $num_lista_utenti ; $num1++) {
 $id = risul_query($lista_utenti,$num1,'idutenti');
-${"nome".$id} = elimina_caratteri_slash (fixset(${"nome".$id}));
+${"nome".$id} = trim(elimina_caratteri_slash(${"nome".$id}));
 ${"tipo_pass".$id} = aggslashdb(fixset(${"tipo_pass".$id}));
 ${"prima_pass".$id} = aggslashdb(fixset(${"prima_pass".$id}));
 $nome = risul_query($lista_utenti,$num1,'nome_utente');
@@ -201,7 +241,7 @@ if ($n_tipo_pass != "n") {
 $n_pass = ${"prima_pass".$id};
 $salt = "";
 if ($n_tipo_pass == "5") {
-srand((double) microtime() * 1000000);
+srand((int) ((double) microtime() * 1000000.0));
 $valori = "=?#@%abcdefghijkmnpqrstuvwxzABCDEFGHJKLMNPQRSTUVWXZ1234567890";
 $salt = substr($valori,rand(0,4),1);
 for ($num2 = 0 ; $num2 < 19 ; $num2++) $salt .= substr($valori,rand(0,60),1);
@@ -224,13 +264,14 @@ if ($id == 1 and @is_file(C_DATI_PATH."/abilita_login")) unlink(C_DATI_PATH."/ab
 } # fine else if (!isset($continua) or $continua != "SI")
 
 unlock_tabelle($tabelle_lock);
-} # fine if (!empty($modifica_utenti))
+} # fine if (!empty($modifica_utenti) and $id_utente == 1)
 
 
-if (!empty($aggiungi_utente)) {
+if (!empty($aggiungi_utente) and $id_utente == 1) {
 if (htmlspecialchars($nome) != $nome) $nome = "";
 if ($nome) {
-$nome = elimina_caratteri_slash($nome);
+$nome = trim(elimina_caratteri_slash($nome));
+$continua = "";
 $tabelle_lock = array($tablepersonalizza,$tableutenti,$tableprivilegi,$tablerelutenti);
 $altre_tab_lock = array($tablenazioni,$tableregioni);
 $tabelle_lock = lock_tabelle($tabelle_lock,$altre_tab_lock);
@@ -263,7 +304,7 @@ $nomi_contr = risul_query($nomi_contr,0,'valpersonalizza');
 $cat_pers = esegui_query("select * from $tablepersonalizza where idpersonalizza = 'num_categorie_persone' and idutente = '1' ");
 $num_cat_pers = risul_query($cat_pers,0,'valpersonalizza_num');
 esegui_query("insert into $tableutenti (idutenti,nome_utente,tipo_pass,datainserimento,hostinserimento) values ('$nuovo_id','$nome','n','$datainserimento','$HOSTNAME')");
-esegui_query("insert into $tableprivilegi (idutente,anno,casse_consentite,priv_mod_pers,priv_ins_clienti,prefisso_clienti,priv_messaggi,priv_inventario) values ('$nuovo_id','1','n,','nnnnnnnnn','nnnss','n,','nn','nnnnnnnnn')");
+esegui_query("insert into $tableprivilegi (idutente,anno,casse_consentite,priv_mod_pers,priv_ins_clienti,prefisso_clienti,priv_messaggi,priv_inventario) values ('$nuovo_id','1','n,','nnnnnnnnnnn','nnnss','n,','nn','nnnnnnnnn')");
 esegui_query("insert into $tablepersonalizza (idpersonalizza,idutente,valpersonalizza) values ('col_tab_tutte_prenota','$nuovo_id','nu#@&cg#@&in#@&fi#@&tc#@&ca#@&pa#@&ap#@&pe#@&co')");
 esegui_query("insert into $tablepersonalizza (idpersonalizza,idutente,valpersonalizza) values ('rig_tab_tutte_prenota','$nuovo_id','to#@&ta#@&ca#@&pc')");
 esegui_query("insert into $tablepersonalizza (idpersonalizza,idutente,valpersonalizza) values ('dati_struttura','$nuovo_id','#@&#@&#@&#@&#@&#@&#@&#@&#@&#@&#@&#@&')");
@@ -287,12 +328,13 @@ esegui_query("insert into $tablepersonalizza (idpersonalizza,idutente,valpersona
 esegui_query("insert into $tablepersonalizza (idpersonalizza,idutente,valpersonalizza_num) values ('num_righe_tab_doc_salvati','$nuovo_id','100')");
 esegui_query("insert into $tablepersonalizza (idpersonalizza,idutente,valpersonalizza_num) values ('num_righe_tab_storia_soldi','$nuovo_id','200')");
 esegui_query("insert into $tablepersonalizza (idpersonalizza,idutente,valpersonalizza) values ('stile_data','$nuovo_id','europa')");
+esegui_query("insert into $tablepersonalizza (idpersonalizza,idutente,valpersonalizza) values ('stile_nomi','$nuovo_id','ma1or')");
 if ($num_cat_pers > 1) {
 $perc_cat_pers = risul_query($cat_pers,0,'valpersonalizza');
 esegui_query("insert into $tablepersonalizza (idpersonalizza,idutente,valpersonalizza,valpersonalizza_num) values ('num_categorie_persone','$nuovo_id','".aggslashdb($perc_cat_pers)."','$num_cat_pers')");
 $nomi_cat_pers = esegui_query("select * from $tablepersonalizza where idpersonalizza $LIKE 'nomi_cat_pers_%' and idutente = '1' ");
 $num_nomi_cat_pers = numlin_query($nomi_cat_pers);
-for ($num1 = 0 ; $num1 <= $num_nomi_cat_pers ; $num1++) {
+for ($num1 = 0 ; $num1 < $num_nomi_cat_pers ; $num1++) {
 $l_cat_pers = risul_query($nomi_cat_pers,$num1,'idpersonalizza');
 $n_cat_pers = risul_query($nomi_cat_pers,$num1,'valpersonalizza');
 esegui_query("insert into $tablepersonalizza (idpersonalizza,idutente,valpersonalizza) values ('".aggslashdb($l_cat_pers)."','$nuovo_id','".aggslashdb($n_cat_pers)."')");
@@ -350,15 +392,15 @@ aggiorna_relutenti("","","","SI",$id_utente,$nuovo_id,"","","","","",1,"","paren
 } # fine else if ($continua == "NO")
 
 } # fine if ($nome)
-} # fine if (!empty($aggiungi_utente))
+} # fine if (!empty($aggiungi_utente) and $id_utente == 1)
 
 
-if (!empty($modifica_pass)) {
+if (!empty($modifica_pass) and ($id_utente == 1 or ($priv_mod_pass == "p" and fixset($id_utente_pass) == $id_utente))) {
 $tabelle_lock = array($tableutenti);
 $altre_tab_lock = "";
 $tabelle_lock = lock_tabelle($tabelle_lock,$altre_tab_lock);
 $dati_utente = esegui_query("select * from $tableutenti where idutenti = '".aggslashdb($id_utente_pass)."' ");
-if (numlin_query($dati_utente) != 1) $continua = "NO";
+if (numlin_query($dati_utente) != 1 or controlla_num_pos($id_utente_pass) != "SI") $continua = "NO";
 else $nome_utente = risul_query($dati_utente,0,'nome_utente');
 if ($id_utente_pass == 1 and defined('C_RESTRIZIONI_DEMO_ADMIN') and C_RESTRIZIONI_DEMO_ADMIN == "SI") $continua = "NO";
 if (isset($continua) and $continua == "SI" and ($prima_pass != $seconda_pass or $prima_pass == "" or $prima_pass != str_replace("&","",$prima_pass))) {
@@ -397,16 +439,19 @@ $salt = substr($valori,rand(0,4),1);
 for ($num1 = 0 ; $num1 < 19 ; $num1++) $salt .= substr($valori,rand(0,60),1);
 for ($num1 = 0 ; $num1 < 15 ; $num1++) $prima_pass = md5($prima_pass.substr($salt,0,(20 - $num1)));
 } # fine if ($tipo_pass == "5")
+$mess_agg .= "<b>".mex("Password aggiornata",$pag)."</b>!<br><br>";
 esegui_query("update $tableutenti set password = '$prima_pass', salt = '$salt' where idutenti = '$id_utente_pass'");
 } # fine if ($tipo_pass != "n")
 } # fine if (isset($continua) and $continua == "SI")
 unlock_tabelle($tabelle_lock);
-} # fine if (!empty($modifica_pass))
+} # fine if (!empty($modifica_pass) and ($id_utente == 1 or ($priv_mod_pass == "p" and fixset($id_utente_pass) == $id_utente)))
 
 
-if (!empty($modifica_gruppi)) {
+if (!empty($modifica_gruppi) and $id_utente == 1) {
+$continua = fixset($continua);
+$nuovo_gruppo = fixstr($nuovo_gruppo);
 if (htmlspecialchars($nuovo_gruppo) != $nuovo_gruppo) $nuovo_gruppo = "";
-$nuovo_gruppo = elimina_caratteri_slash($nuovo_gruppo);
+$nuovo_gruppo = trim(elimina_caratteri_slash($nuovo_gruppo));
 $tabelle_lock = array("$tableutenti","$tablegruppi","$tablerelgruppi");
 $altre_tab_lock = "";
 $tabelle_lock = lock_tabelle($tabelle_lock,$altre_tab_lock);
@@ -451,13 +496,16 @@ echo "<form accept-charset=\"utf-8\" method=\"post\" action=\"gestione_utenti.ph
 <input type=\"hidden\" name=\"id_utente_mod\" value=\"$id_utente_mod\">
 <input type=\"hidden\" name=\"continua\" value=\"SI\">
 ".mex("Gruppi dell'utente",$pag)." <b>$nome_utente</b>:<br><br>";
+$lista_idg_passa = "";
 for ($num1 = 0 ; $num1 < $num_lista_gruppi ; $num1++) {
 $id_gruppo = risul_query($lista_gruppi,$num1,'idgruppi');
+$lista_idg_passa .= ",$id_gruppo";
 if ($gruppi_utente[$id_gruppo] == "SI") { $checked = " checked"; $tag_b = "<b>"; $slash_b = "</b>"; }
 else { $checked = ""; $tag_b = ""; $slash_b = ""; }
 echo "<label><input type=\"checkbox\" name=\"gruppo$id_gruppo\" value=\"SI\"$checked> $tag_b".$nome_gruppo[$id_gruppo]."$slash_b</label><br>";
 } # fine for $num1
 echo "".mex("Nuovo gruppo",$pag)." <input type=\"text\" name=\"nuovo_gruppo\" size=\"12\"><br><br>
+<input type=\"hidden\" name=\"lista_idg_passa\" value=\"$lista_idg_passa\">
 <button class=\"edit\" type=\"submit\"><div>".mex("Modifica",$pag)."</div></button>
 </div></form><br><hr style=\"width: 45%; margin-left: 0; text-align: left;\"><br>";
 } # fine if (!$continua)
@@ -513,7 +561,7 @@ echo "<form accept-charset=\"utf-8\" method=\"post\" action=\"gestione_utenti.ph
 <button class=\"gobk\" type=\"submit\"><div>".mex("Torna indietro",$pag)."</div></button>
 </div></form>";
 } # fine if ($mostra_tabella_iniziale == "NO")
-} # fine if (!empty($modifica_gruppi))
+} # fine if (!empty($modifica_gruppi) and $id_utente == 1)
 
 
 if (!empty($cancella) or !empty($importa_priv)) {
@@ -529,8 +577,9 @@ if (numlin_query($rel_esist) == 0) esegui_query("delete from $tablerel where $id
 } # fine if (!empty($cancella) or !empty($importa_priv))
 
 
-if (!empty($cancella)) {
-if ($id_utente_canc == 1) $id_utente_canc = 0;
+if (!empty($cancella) and $id_utente == 1) {
+$continua = fixset($continua);
+if ($id_utente_canc == 1 or controlla_num_pos($id_utente_canc) != "SI") $id_utente_canc = 0;
 $id_utente_canc = aggslashdb($id_utente_canc);
 $dati_collegati = "NO";
 $clienti_esist = esegui_query("select idclienti from $tableclienti where utente_inserimento = '$id_utente_canc' ");
@@ -619,10 +668,10 @@ distruggi_lock_file($filelock,C_DATI_PATH."/tema.php");
 } # fine else if ($continua != "SI")
 } # fine if ($continua != "NO")
 unlock_tabelle($tabelle_lock);
-} # fine if (!empty($cancella))
+} # fine if (!empty($cancella) and $id_utente == 1)
 
 
-if (!empty($importa_priv)) {
+if (!empty($importa_priv) and $id_utente == 1) {
 $id_utente_importa = aggslashdb($id_utente_importa);
 $id_utente_esporta = aggslashdb($id_utente_esporta);
 include("./includes/funzioni_menu.php");
@@ -640,7 +689,7 @@ for ($num1 = 0 ; $num1 < $num_ut_imp ; $num1++) $id_utenti_importa[$num1] = risu
 else $id_utenti_importa[0] = $id_utente_importa;
 for ($num_imp = 0 ; $num_imp < count($id_utenti_importa) ; $num_imp++) {
 $id_utente_importa = $id_utenti_importa[$num_imp];
-if ($id_utente_importa >= 2 and $id_utente_esporta >= 2 and $id_utente_importa != $id_utente_esporta) {
+if ($id_utente_importa >= 2 and $id_utente_esporta >= 2 and controlla_num_pos($id_utente_importa) == "SI" and controlla_num_pos($id_utente_esporta) == "SI" and $id_utente_importa != $id_utente_esporta) {
 $utente_imp = esegui_query("select * from $tableutenti where idutenti = '$id_utente_importa' ");
 $utente_esp = esegui_query("select * from $tableutenti where idutenti = '$id_utente_esporta' ");
 if (numlin_query($utente_imp) == 1 and numlin_query($utente_esp) == 1) {
@@ -653,15 +702,15 @@ for ($num1 = 0 ; $num1 < $num_pers ; $num1++) {
 $e_idpersonalizza = aggslashdb(risul_query($pers,$num1,'idpersonalizza'));
 $e_valpersonalizza = aggslashdb(risul_query($pers,$num1,'valpersonalizza'));
 $e_valpersonalizza_num = aggslashdb(risul_query($pers,$num1,'valpersonalizza_num'));
-if (strcmp($e_valpersonalizza,"")) {
+if (strcmp((string) $e_valpersonalizza,"")) {
 $valpersonalizza = ",valpersonalizza";
 $e_valpersonalizza = ",'$e_valpersonalizza'";
-} # fine if (strcmp($e_valpersonalizza,""))
+} # fine if (strcmp((string) $e_valpersonalizza,""))
 else $valpersonalizza = "";
-if (strcmp($e_valpersonalizza_num,"")) {
+if (strcmp((string) $e_valpersonalizza_num,"")) {
 $valpersonalizza_num = ",valpersonalizza_num";
 $e_valpersonalizza_num = ",'$e_valpersonalizza_num'";
-} # fine if (strcmp($e_valpersonalizza_num,""))
+} # fine if (strcmp((string) $e_valpersonalizza_num,""))
 else $valpersonalizza_num = "";
 esegui_query("insert into $tablepersonalizza (idpersonalizza,idutente$valpersonalizza$valpersonalizza_num) values ('$e_idpersonalizza','$id_utente_importa'$e_valpersonalizza$e_valpersonalizza_num) ");
 } # fine for $num1
@@ -732,13 +781,13 @@ $grup_importati = "SI";
 } # fine if ($tipo_importa == "grup" or $tipo_importa == "priv_grup" or $tipo_importa == "pers_grup" or $tipo_importa == "priv_pers_grup")
 
 } # fine if (numlin_query($utente_imp) == 1 and numlin_query($utente_esp) == 1)
-} # fine if ($id_utente_importa >= 2 and...
+} # fine if ($id_utente_importa >= 2 and $id_utente_esporta >= 2 and...
 } # fine for $num_imp
-if ($priv_importati == "SI") echo "<b>".mex("Privilegi importati",$pag).".</b><br>";
-if ($pers_importate == "SI") echo "<b>".mex("Personalizzazioni importate",$pag).".</b><br>";
-if ($grup_importati == "SI") echo "<b>".mex("Gruppi importati",$pag).".</b><br>";
+if (isset($priv_importati) and $priv_importati == "SI") echo "<b>".mex("Privilegi importati",$pag).".</b><br>";
+if (isset($pers_importate) and $pers_importate == "SI") echo "<b>".mex("Personalizzazioni importate",$pag).".</b><br>";
+if (isset($grup_importati) and $grup_importati == "SI") echo "<b>".mex("Gruppi importati",$pag).".</b><br>";
 unlock_tabelle($tabelle_lock);
-} # fine if (!empty($importa_priv))
+} # fine if (!empty($importa_priv) and $id_utente == 1)
 
 
 
@@ -747,10 +796,10 @@ if (!isset($mostra_tabella_iniziale) or $mostra_tabella_iniziale != "NO") {
 echo "<h4 id=\"h_usrs\"><span>";
 if (defined('C_NASCONDI_MARCA') and C_NASCONDI_MARCA == "SI") echo mex("Gestione degli utenti",$pag);
 else echo mex("Gestione degli utenti di hoteldruid",$pag);
-echo "</span></h4><br>";
+echo "</span></h4><br>$mess_agg";
 
 $tabelle_lock = "";
-$altre_tab_lock = array("$tableutenti","$tablegruppi","$tablerelgruppi");
+$altre_tab_lock = array($tableutenti,$tablegruppi,$tablerelgruppi);
 $tabelle_lock = lock_tabelle($tabelle_lock,$altre_tab_lock);
 $lista_utenti = esegui_query("select idutenti,nome_utente,password,tipo_pass from $tableutenti order by idutenti");
 $num_lista_utenti = numlin_query($lista_utenti);
@@ -782,14 +831,16 @@ echo "<div style=\"text-align: center;\">
 <div class=\"tab_cont\">
 <table class=\"usrs\" style=\"margin-left: auto; margin-right: auto;\" border=1 cellspacing=1 cellpadding=1>
 <tr style=\"background-color: $t1color;\"><td align=\"center\">".mex("N°",$pag)."</td>
-<td align=\"center\">".mex("nome",$pag)."</td>
-<td align=\"center\">".mex("login",$pag)."</td>
-<td align=\"center\">".mex("modifica",$pag)."</td></tr>";
+<td align=\"center\">".mex("nome",$pag)."</td>";
+if ($id_utente == 1) echo "<td align=\"center\">".mex("login",$pag)."</td>";
+echo "<td align=\"center\">".mex("modifica",$pag)."</td></tr>";
 $anni = esegui_query("select * from $tableanni order by idanni");
 $num_anni = numlin_query($anni);
 
 for ($num1 = 0 ; $num1 < $num_lista_utenti ; $num1++) {
 $id = risul_query($lista_utenti,$num1,'idutenti');
+if ($id_utente == 1 or ($priv_mod_pass == "p" and $id == $id_utente)) {
+
 $nome = risul_query($lista_utenti,$num1,'nome_utente');
 $tipo_pass = risul_query($lista_utenti,$num1,'tipo_pass');
 if ($tipo_pass == "n") $disab_sel = " selected";
@@ -805,9 +856,12 @@ else $mhash_sel = "";
 echo "<tr><td align=\"center\" valign=\"middle\">$id";
 if ($id == 1) echo "*";
 echo "</td>
-<td align=\"center\" valign=\"middle\"><input type=\"text\" name=\"nome$id\" size=\"15\" value=\"$nome\">
-<input type=\"hidden\" name=\"id_utente_tab$num1\" value=\"$id\"></td>
-<td align=\"center\" valign=\"middle\"><select name=\"tipo_pass$id\">";
+<td align=\"center\" valign=\"middle\">";
+if ($id_utente == 1) echo "<input type=\"text\" name=\"nome$id\" size=\"15\" value=\"$nome\">";
+else echo "$nome";
+echo "<input type=\"hidden\" name=\"id_utente_tab$num1\" value=\"$id\"></td>";
+if ($id_utente == 1) {
+echo "<td align=\"center\" valign=\"middle\"><select name=\"tipo_pass$id\">";
 if (!defined('C_DISABILITA_PASS_ADMIN') or C_DISABILITA_PASS_ADMIN != "NO" or $id != 1 or $disab_sel) echo "<option value=\"n\"$disab_sel>".mex("disabilitato",$pag)."</option>";
 #echo "<option value=\"t\"$testo_sel>".mex("password conservata in chiaro",$pag)."</option>";
 echo "<option value=\"5\"$md5_sel>".mex("password criptata con md5",$pag)."</option>";
@@ -815,15 +869,18 @@ echo "<option value=\"5\"$md5_sel>".mex("password criptata con md5",$pag)."</opt
 #<option value=\"h\"$mhash_sel>".mex("password criptata con mhash",$pag)."</option>";
 echo "</select>";
 if ($id == 1) echo "**";
-echo "</td>
-<td align=\"center\" valign=\"middle\"><small>";
+echo "</td>";
+} # fine if ($id_utente == 1)
+echo "<td align=\"center\" valign=\"middle\"><small>";
 if ($tipo_pass != "n") echo "<a href=\"./gestione_utenti.php?anno=$anno&amp;id_sessione=$id_sessione&amp;modifica_pass=SI&amp;id_utente_pass=$id\">".mex("password",$pag)."</a>";
 if ($tipo_pass != "n" and $id != 1) echo "<br>";
-if ($id != 1) echo "<a href=\"./privilegi_utenti.php?anno=$anno&amp;id_sessione=$id_sessione&amp;id_utente_privilegi=$id\">".mex("privilegi",$pag)."</a>";
+if ($id != 1 and $id_utente == 1) echo "<a href=\"./privilegi_utenti.php?anno=$anno&amp;id_sessione=$id_sessione&amp;id_utente_privilegi=$id\">".mex("privilegi",$pag)."</a>";
+if ($id_utente == 1) {
 if (!isset($gruppi_utente_nome[$id]) or !is_array($gruppi_utente_nome[$id])) $titolo_gruppi = "";
 else $titolo_gruppi = " title=\"".htmlspecialchars(implode(", ",$gruppi_utente_nome[$id]))."\"";
 echo "<br><a$titolo_gruppi href=\"./gestione_utenti.php?anno=$anno&amp;id_sessione=$id_sessione&amp;modifica_gruppi=SI&amp;id_utente_mod=$id\">".mex("gruppi",$pag)."</a>";
-if ($id != 1) {
+} # fine if ($id_utente == 1)
+if ($id != 1 and $id_utente == 1) {
 $dati_collegati = "NO";
 $clienti_esist = esegui_query("select idclienti from $tableclienti where utente_inserimento = '$id' ");
 if (numlin_query($clienti_esist) > 0) $dati_collegati = "SI";
@@ -842,18 +899,23 @@ if (numlin_query($soldo_esist) > 0) { $dati_collegati = "SI"; break; }
 } # fine for $num2
 } # fine if ($dati_collegati != "SI")
 if ($dati_collegati != "SI") echo "<br><a href=\"./gestione_utenti.php?anno=$anno&amp;id_sessione=$id_sessione&amp;cancella=SI&amp;id_utente_canc=$id\">".mex("cancella",$pag)."</a>";
-} # fine if ($id != 1)
+} # fine if ($id != 1 and $id_utente == 1)
 echo "</small></td></tr>";
+
+} # fine if ($id_utente == 1 or ($priv_mod_pass == "p" and $id == $id_utente))
 } # fine for $num1
 
-echo "</table></div>
-<small>* ".mex("Amministratore",$pag).".&nbsp;&nbsp;&nbsp;
+echo "</table></div>";
+if ($id_utente == 1) {
+echo "<small>* ".mex("Amministratore",$pag).".&nbsp;&nbsp;&nbsp;
 ** ".mex("Abilitare per usare altri utenti",$pag).".</small><br>
 <input type=\"hidden\" name=\"modifica_utenti\" value=\"1\">
 <input type=\"hidden\" name=\"num_utenti_tab\" value=\"$num_lista_utenti\">
-<button class=\"musr\" type=\"submit\"><div>".mex("Modifica gli utenti",$pag)."</div></button>
-</div></form></div><br>";
+<button class=\"musr\" type=\"submit\"><div>".mex("Modifica gli utenti",$pag)."</div></button>";
+} # fine if ($id_utente == 1)
+echo "</div></form></div><br>";
 
+if ($id_utente == 1) {
 if ($num_lista_utenti > 2) {
 $option_select_utenti = "";
 for ($num1 = 0 ; $num1 < $num_lista_utenti ; $num1++) {
@@ -907,6 +969,7 @@ echo "<form accept-charset=\"utf-8\" method=\"post\" action=\"gestione_utenti.ph
 <button class=\"ausr\" type=\"submit\"><div>".mex("Aggiungi",$pag)."</div></button>
 </div></form>";
 } # fine if (!isset($aggiungi_utenti) or $aggiungi_utenti != "NO")
+} # fine if ($id_utente == 1)
 
 echo "<br><div style=\"text-align: center;\">
 <form accept-charset=\"utf-8\" method=\"post\" action=\"personalizza.php\"><div>
@@ -923,7 +986,8 @@ if ($tema[$id_utente] and $tema[$id_utente] != "base" and @is_dir("./themes/".$t
 else include("./includes/foot.php");
 
 
-} # fine if ($id_utente and $id_utente == 1)
+} # fine if ($anno_utente_attivato == "SI" and $priv_mod_pass != "n")
+} # fine if ($id_utente)
 
 
 

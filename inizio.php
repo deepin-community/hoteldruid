@@ -2,7 +2,7 @@
 
 ##################################################################################
 #    HOTELDRUID
-#    Copyright (C) 2001-2021 by Marco Maria Francesco De Santis (marco@digitaldruid.net)
+#    Copyright (C) 2001-2023 by Marco Maria Francesco De Santis (marco@digitaldruid.net)
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published by
@@ -28,7 +28,15 @@ $titolo = "HotelDruid";
 $var_pag = array();
 $var_pag[0] = 'nuovo_mess';
 $var_pag[1] = 'mos_tut_dat';
-$n_var_pag = 1;
+$var_pag[2] = 'mese';
+$var_pag[3] = 'tipo_tabella';
+$var_pag[4] = 'torna_indietro';
+$var_pag[5] = 'logout';
+$var_pag[6] = 'vai_anno';
+$var_pag[7] = 'origine_vecchia';
+$var_pag[8] = 'indietro';
+$var_pag[9] = 'canc_mess_periodi';
+$n_var_pag = 10;
 
 include("./costanti.php");
 include("./includes/funzioni.php");
@@ -73,7 +81,7 @@ break;
 if (@is_file("./COPYING")) $file_copying = "file <a href=\"COPYING\">COPYING</a>";
 else $file_copying = "<a href=\"http://www.gnu.org/licenses/agpl-3.0.html\">AGPLv3</a> License";
 echo "<div style=\"text-align: center;\"><h3>".mex("Benvenuto a HOTELDRUID",$pag).".</h3><br><br>
-HOTELDRUID version ".C_PHPR_VERSIONE_TXT.", Copyright (C) 2001-2021 Marco M. F. De Santis<br>
+HOTELDRUID version ".C_PHPR_VERSIONE_TXT.", Copyright (C) 2001-2023 Marco M. F. De Santis<br>
 HotelDruid comes with ABSOLUTELY NO WARRANTY; <br>for details see the $file_copying.<br>
 This is free software, and you are welcome to redistribute it<br>
  under certain conditions; see the $file_copying for details.<br>
@@ -127,6 +135,7 @@ $priv_crea_interconnessioni = substr($priv_mod_pers,3,1);
 $priv_gest_pass_cc = substr($priv_mod_pers,5,1);
 $priv_ins_clienti = risul_query($privilegi_globali_utente,0,'priv_ins_clienti');
 if (substr($priv_ins_clienti,0,1) != "s") $inserimento_nuovi_clienti = "NO";
+else $inserimento_nuovi_clienti = "SI";
 if (substr($priv_ins_clienti,1,1) != "s" and substr($priv_ins_clienti,1,1) != "p" and substr($priv_ins_clienti,1,1) != "g") $modifica_clienti = "NO";
 $vedi_clienti = "NO";
 if (substr($priv_ins_clienti,2,1) == "s") $vedi_clienti = "SI";
@@ -263,8 +272,11 @@ include("./includes/funzioni_$PHPR_DB_TYPE.php");
 $numconnessione = connetti_db($PHPR_DB_NAME,$PHPR_DB_HOST,$PHPR_DB_PORT,$PHPR_DB_USER,$PHPR_DB_PASS,$PHPR_LOAD_EXT);
 } # fine if (!$numconnessione)
 $tablepersonalizza = $PHPR_TAB_PRE."personalizza";
+if (defined('C_CREA_ANNO_MANUALMENTE') and C_CREA_ANNO_MANUALMENTE == "SI") {
 $auto_crea_anno = esegui_query("select valpersonalizza from $tablepersonalizza where idpersonalizza = 'auto_crea_anno' and idutente = '1'");
 $auto_crea_anno = risul_query($auto_crea_anno,0,'valpersonalizza');
+} # fine if (defined('C_CREA_ANNO_MANUALMENTE') and C_CREA_ANNO_MANUALMENTE == "SI")
+else $auto_crea_anno = "SI";
 if ($auto_crea_anno == "SI") {
 $tableanni = $PHPR_TAB_PRE."anni";
 $ultimi_anni = esegui_query("select * from $tableanni order by idanni desc");
@@ -337,7 +349,9 @@ echo "<div class=\"logout\">".mex("Utente",$pag).": $nome_utente_login".".
 } # fine if ($nome_utente_login)
 
 $anno_succ = $anno + 1;
-echo "<br><div style=\"text-align: center;\"><h3 id=\"h_mm\"><span>".mex("Menù principale dell'anno",$pag)." $anno";
+if ($anno_corrente == $anno_succ and (!defined('C_CREA_ANNO_MANUALMENTE') or C_CREA_ANNO_MANUALMENTE != "SI") and !@is_file(C_DATI_PATH."/selectperiodi$anno_corrente.1.php")) $anno_menu = $anno_corrente;
+else $anno_menu = $anno;
+echo "<br><div style=\"text-align: center;\"><h3 id=\"h_mm\"><span>".mex("Menù principale dell'anno",$pag)." $anno_menu";
 if (isset($commento_subordinazione)) echo " ($commento_subordinazione)";
 echo "</span></h3><div id=\"mm_sub0\"></div>";
 if ($priv_ins_nuove_prenota == "s") {
@@ -387,6 +401,7 @@ echo " <select name=\"mese\">
 echo "<div id=\"mm_sub2\"></div>";
 
 if ($priv_vedi_beni_inv == "n" and $priv_vedi_inv_mag == "n" and $priv_vedi_inv_app == "n") $priv_vedi_tab_inventario = "n";
+else $priv_vedi_tab_inventario = "s";
 if ($priv_vedi_tab_prenotazioni != "n" or $vedi_clienti != "NO" or $priv_vedi_tab_costi != "n" or $priv_vedi_tab_periodi != "n" or $priv_vedi_tab_regole != "n" or $priv_vedi_tab_appartamenti != "n" or $priv_vedi_tab_stat != "n" or $priv_vedi_tab_doc != "n" or $priv_vedi_tab_inventario != "n") {
 echo "<form id=\"vtab\" accept-charset=\"utf-8\" method=\"post\" action=\"visualizza_tabelle.php\"><div>
 <input type=\"hidden\" name=\"anno\" value=\"$anno\">
@@ -497,7 +512,7 @@ echo "<span class=\"wsnw\">".$dati_cat_pers[$num1]['n_plur'].": <input type=\"te
 if ($num1 != ($dati_cat_pers['num'] - 1)) echo "; ";
 } # for $num1
 echo ")
-<input type=\"hidden\" name=\"num_cat_pers\" value=\"".$dati_cat_pers['num']."\">";
+<input type=\"hidden\" name=\"num_cat_pers_passa\" value=\"".$dati_cat_pers['num']."\">";
 } # fine if ($dati_cat_pers['num'])
 echo "</div></form></div></td></tr></table>";
 } # fine if ($priv_ins_nuove_prenota == "s" or $priv_vedi_tab_mesi != "n" or $priv_vedi_tab_prenotazioni != "n")
@@ -666,7 +681,7 @@ $costo_tot_p = punti_in_num($costo_tot,$stile_soldi);
 $da_pagare = $costo_tot - $pagato;
 $da_pagare_p = punti_in_num($da_pagare,$stile_soldi);
 $confermato = risul_query($prenotazioni,$num1,'conferma');
-$confermato = substr($confermato,0,1);
+$confermato = substr((string) $confermato,0,1);
 $colore = "";
 if ($pagato < $costo_tot) {
 $colore = $colore_giallo; #giallo
@@ -682,7 +697,7 @@ if ($priv_mod_prenota_iniziate != "s" and $id_periodo_corrente >= $id_data_inizi
 if ($priv_mod_prenota_ore != "000" and controlla_num_pos($priv_mod_prenota_ore) == "SI") {
 $adesso = date("YmdHis",(time() + (C_DIFF_ORE * 3600)));
 $data_ins = risul_query($prenotazioni,$num1,'datainserimento');
-$limite = date("YmdHis",mktime((substr($data_ins,11,2) + $priv_mod_prenota_ore),substr($data_ins,14,2),substr($data_ins,17,2),substr($data_ins,5,2),substr($data_ins,8,2),substr($data_ins,0,4)));
+$limite = date("YmdHis",mktime((substr($data_ins,11,2) + (int) $priv_mod_prenota_ore),substr($data_ins,14,2),substr($data_ins,17,2),substr($data_ins,5,2),substr($data_ins,8,2),substr($data_ins,0,4)));
 if ($adesso > $limite) $link_modifica = "NO";
 } # fine if ($priv_mod_prenota_ore != "000" and controlla_num_pos($priv_mod_prenota_ore) == "SI")
 $checkin = risul_query($prenotazioni,$num1,'checkin');
@@ -696,11 +711,11 @@ $checkout = "";
 else $stima_checkin = "";
 $promemoria = "&nbsp;";
 $commento = risul_query($prenotazioni,$num1,'commento');
-if (strstr($commento,">")) {
+if (strstr((string) $commento,">")) {
 $commento = explode(">",$commento);
-if (!$checkin and strcmp($commento[1],"")) $promemoria = "<small><small>".$commento[1]."</small></small>";
-if ($checkin and !$checkout and strcmp($commento[2],"")) $promemoria = "<small><small>".$commento[2]."</small></small>";
-} # fine if (strstr($commento,">"))
+if (!$checkin and strcmp((string) $commento[1],"")) $promemoria = "<small><small>".$commento[1]."</small></small>";
+if ($checkin and !$checkout and strcmp((string) $commento[2],"")) $promemoria = "<small><small>".$commento[2]."</small></small>";
+} # fine if (strstr((string) $commento,">"))
 $data_inserimento = risul_query($prenotazioni,$num1,'datainserimento');
 $host_inserimento = risul_query($prenotazioni,$num1,'hostinserimento');
 
@@ -788,12 +803,18 @@ echo "<form accept-charset=\"utf-8\" method=\"post\" action=\"personalizza.php\"
 <button class=\"conf\" type=\"submit\"><div>".mex("Configura e personalizza",$pag)."</div></button><br>
 </div></form><div class=\"mm_sub7\"></div>";
 } # fine if ($modifica_pers != "NO" or $priv_crea_backup == "s" or $priv_crea_interconnessioni == "s" or $priv_gest_pass_cc == "s")
+if (isset($vai_anno) and controlla_anno($vai_anno) != "NO") echo "<a name=\"vai_anno\"></a><div class=\"infobox\" style=\"margin: 4px auto; width: 22%; min-width: 220px;\">";
+else $vai_anno = "";
+if ($anno_corrente > $anno_menu and !$vai_anno and @is_file(C_DATI_PATH."/selectperiodi$anno_corrente.1.php")) $val_anno = $anno_corrente;
+else $val_anno = $vai_anno;
 echo "<form accept-charset=\"utf-8\" method=\"post\" action=\"inizio.php\"><div>
 <input type=\"hidden\" name=\"id_sessione\" value=\"$id_sessione\">
 ".ucfirst(mex("richiedi l'anno",$pag))."
-<input type=\"text\" name=\"anno\" size=\"4\" maxlength=\"4\">
+<input type=\"text\" name=\"anno\" size=\"4\" maxlength=\"4\" value=\"$val_anno\">
 <button class=\"gooo\" type=\"submit\"><div>".mex("vai",$pag)."</div></button>
-</div></form><br></div>
+</div></form>";
+if ($vai_anno) echo "<div style=\"height: 4px;\"></div><span class=\"colinfo\">".mex("Nota",$pag)."</span>: ".mex("ricordarsi di tornare al",$pag)." $anno ".mex("una volta conclusa la consultazione del",$pag)." $vai_anno.</div>";
+echo "<br></div>
 
 </div>";
 
@@ -825,24 +846,34 @@ $show_bar = "NO";
 if ($tema[$id_utente] != "base") include("./themes/".$tema[$id_utente]."/php/head.php");
 else include("./includes/head.php");
 echo "$form_aggiorna_sub";
+$anno_attuale = date("Y",(time() + (C_DIFF_ORE * 3600) - (C_GIORNI_NUOVO_ANNO * 86400)));
+if (@is_file(C_DATI_PATH."/selectperiodi$anno_attuale.1.php")) $anno_attuale_esist = 1;
+else $anno_attuale_esist = 0;
+if ($anno_corrente == ($anno_attuale + 1) and @is_file(C_DATI_PATH."/selectperiodi$anno_corrente.1.php")) {
+$anno_attuale = $anno_corrente;
+$anno_attuale_esist = 1;
+} # fine if ($anno_corrente == ($anno_attuale + 1) and @is_file(C_DATI_PATH."/selectperiodi$anno_corrente.1.php"))
 
 if (controlla_anno($anno) == "NO" or $id_utente != 1 or (isset($installazione_subordinata) and $installazione_subordinata == "SI") or (defined('C_CREA_ANNO_NON_ATTUALE') and C_CREA_ANNO_NON_ATTUALE == "NO" and $anno != $anno_corrente)) {
 if (controlla_anno($anno) == "SI" and $id_utente != 1) echo mex("Questo utente non ha i privilegi per creare nuovi anni",$pag).".<br>";
 else echo mex("Il formato dell'anno richiesto è sbagliato",$pag).".<br>";
+if ($anno_attuale == $anno) $anno_attuale = "";
 } # fine if (controlla_anno($anno) == "NO" or $id_utente != 1 or (isset($installazione_subordinata) and...
 else {
 
 echo "<br> ".mex("Non esiste l'anno ",$pag).$anno.mex(" nel database",$pag).". <br>";
-$anno_attuale = date("Y",(time() + (C_DIFF_ORE * 3600) - (C_GIORNI_NUOVO_ANNO * 86400)));
-if ($anno > $anno_attuale and @is_file(C_DATI_PATH."/selectperiodi$anno_attuale.1.php")) {
+if ($anno_attuale_esist and $anno > $anno_attuale) {
 $data_crea_anno = formatta_data(date("Y-m-d",mktime(0,0,0,1,(C_GIORNI_NUOVO_ANNO + 1),($anno_attuale + 1))));
-echo "<br>".mex("<span class=\"colred\">Avviso</span>: è consigliabile attendere fino al",$pag)." $data_crea_anno ".mex("per creare il nuovo anno, nel frattempo si possono aggiungere periodi oltre il",$pag)." $anno_attuale ".mex("dalla",$pag)."
+if (defined('C_CREA_ANNO_MANUALMENTE') and C_CREA_ANNO_MANUALMENTE == "SI") echo "<br>".mex("<span class=\"colred\">Avviso</span>: è consigliabile attendere fino al",$pag)." $data_crea_anno ".mex("per creare il nuovo anno, nel frattempo si possono aggiungere periodi oltre il",$pag);
+else echo "<br><span class=\"colinfo\">".mex("Nota",$pag)."</span>: ".mex("l'anno",$pag)." $anno_attuale ".mex("verrà archiviato automaticamente il",$pag)." $data_crea_anno, ".mex("nel frattempo si possono aggiungere periodi oltre il",$pag);
+echo " $anno_attuale ".mex("dalla",$pag)."
  <a href=\"./visualizza_tabelle.php?anno=$anno_attuale&amp;id_sessione=$id_sessione&amp;tipo_tabella=periodi#agg_per\">".mex("tabella con i periodi e le tariffe",$pag)."</a> ".mex("anche senza creare un nuovo anno",$pag).".<br>";
-} # fine if ($anno > $anno_attuale and @is_file(C_DATI_PATH."/selectperiodi$anno_attuale.1.php"))
+} # fine if ($anno_attuale_esist and $anno > $anno_attuale)
+if ((!$anno_attuale_esist and $anno == $anno_attuale) or $anno < $anno_attuale or (defined('C_CREA_ANNO_MANUALMENTE') and C_CREA_ANNO_MANUALMENTE == "SI")) {
 echo "<br><form accept-charset=\"utf-8\" method=\"post\" action=\"creaanno.php\"><div>
 <input type=\"hidden\" name=\"anno\" value=\"$anno\">
 <input type=\"hidden\" name=\"id_sessione\" value=\"$id_sessione\">
-<input type=\"hidden\" name=\"nuovo_mess\" value=\"".htmlspecialchars(fixset($nuovo_mess))."\">
+<input type=\"hidden\" name=\"nuovo_mess\" value=\"".htmlspecialchars(fixstr($nuovo_mess))."\">
 <input class=\"sbutton\" type=\"submit\" name=\"creaanno\" value=\"".mex("Crea l'anno",$pag)." $anno \">
  ".mex("con periodi",$pag).":<br>";
 unset($tipo_periodi_obbligati);
@@ -945,13 +976,15 @@ echo "<label><input type=\"checkbox\" name=\"importa_anno_prec\" value=\"SI\" ch
 ".mex("Importa dall'anno precedente prenotazioni, tariffe (compresi costi aggiuntivi), privilegi degli utenti e regole d'assegnazione.",$pag)."</label>";
 } # fine if (@is_file(C_DATI_PATH."/selectperiodi$anno_prec.1.php"))
 echo "</div></form>";
+} # fine ((!$anno_attuale_esist and $anno == $anno_attuale) or $anno < $anno_attuale or...
 
 } # fine else if (controlla_anno($anno) == "NO" or $id_utente != 1 or...
+if (!$anno_attuale_esist) $anno_attuale = "";
 echo "<br><hr style=\"width: 95%\"><br>
 <form accept-charset=\"utf-8\" method=\"post\" action=\"inizio.php\"><div>
 <input type=\"hidden\" name=\"id_sessione\" value=\"$id_sessione\">
 <br> ".mex("richiedi l'anno",$pag)."
-<input type=\"text\" name=\"anno\" size=\"4\" maxlength=\"4\">
+<input type=\"text\" name=\"anno\" size=\"4\" maxlength=\"4\" value=\"$anno_attuale\">
 <input class=\"sbutton\" type=\"submit\" value=\"".mex("vai",$pag)."\"><br>
 </div></form>";
 if ($tema[$id_utente] != "base") include("./themes/".$tema[$id_utente]."/php/foot.php");

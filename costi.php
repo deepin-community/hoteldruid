@@ -2,7 +2,7 @@
 
 ##################################################################################
 #    HOTELDRUID
-#    Copyright (C) 2001-2021 by Marco Maria Francesco De Santis (marco@digitaldruid.net)
+#    Copyright (C) 2001-2023 by Marco Maria Francesco De Santis (marco@digitaldruid.net)
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published by
@@ -33,7 +33,11 @@ $var_pag[5] = 'persona_costo';
 $var_pag[6] = 'inserisci_spesa';
 $var_pag[7] = 'entrata_da_prenota';
 $var_pag[8] = 'inserisci_entrata';
-$n_var_pag = 9;
+$var_pag[9] = 'id_pagamento';
+$var_pag[10] = 'giorno_pagamento';
+$var_pag[11] = 'mese_pagamento';
+$var_pag[12] = 'anno_pagamento';
+$n_var_pag = 13;
 
 include("./costanti.php");
 include(C_DATI_PATH."/dati_connessione.php");
@@ -101,6 +105,8 @@ else include("./includes/head.php");
 $Euro = nome_valuta();
 $altre_valute = altre_valute();
 $stile_soldi = stile_soldi();
+$stile_data = stile_data();
+$inserire = "";
 
 
 if ($priv_ins_entrate != "s") $inserisci_entrata = "";
@@ -114,22 +120,22 @@ $altre_tab_lock = array($tablepersonalizza,$tablecasse);
 $tabelle_lock = lock_tabelle($tabelle_lock,$altre_tab_lock);
 
 if (@get_magic_quotes_gpc()) $nome_costo = stripslashes($nome_costo);
-$nome_costo = htmlspecialchars($nome_costo);
+$nome_costo = htmlspecialchars(fixstr($nome_costo));
 $nome_costo = aggslashdb($nome_costo);
 if (@get_magic_quotes_gpc()) $persona_costo = stripslashes($persona_costo);
 $persona_costo = htmlspecialchars($persona_costo);
 $persona_costo = aggslashdb($persona_costo);
 if (!$nome_costo) {
-if ($inserisci_entrata) echo mex("Si deve inserire un nome per l' entrata",$pag).".<br>";
-if ($inserisci_spesa) echo mex("Si deve inserire un nome per la spesa",$pag).".<br>";
+if (!empty($inserisci_entrata)) echo mex("Si deve inserire un nome per l' entrata",$pag).".<br>";
+if (!empty($inserisci_spesa)) echo mex("Si deve inserire un nome per la spesa",$pag).".<br>";
 $inserire = "NO";
 } # fine if (!$nome_costo)
 
-if (!$val_costo) {
-if ($inserisci_entrata) echo mex("Si deve inserire il valore dell' entrata",$pag).".<br>";
-if ($inserisci_spesa) echo mex("Si deve inserire il valore della spesa",$pag).".<br>";
+if (empty($val_costo)) {
+if (!empty($inserisci_entrata)) echo mex("Si deve inserire il valore dell' entrata",$pag).".<br>";
+if (!empty($inserisci_spesa)) echo mex("Si deve inserire il valore della spesa",$pag).".<br>";
 $inserire = "NO";
-} # fine if (!$val_costo)
+} # fine if (empty($val_costo))
 else {
 $val_costo = formatta_soldi($val_costo);
 if (controlla_soldi($val_costo) == "NO") {
@@ -137,7 +143,7 @@ if ($inserisci_entrata) echo mex("Il valore dell' entrata è sbagliato",$pag).".
 if ($inserisci_spesa) echo mex("Il valore della spesa è sbagliato",$pag).".<br>";
 $inserire = "NO";
 } # fine if (controlla_soldi($val_costo) == "NO")
-} # fine else if (!$val_costo)
+} # fine else if (empty($val_costo))
 
 $nome_cassa = "";
 if (!$id_cassa or controlla_num_pos($id_cassa) != "SI") $inserire = "NO";
@@ -151,14 +157,14 @@ elseif ($id_cassa != 1) $nome_cassa = risul_query($cassa_esistente,0,'nome_cassa
 } # fine else if (!$id_cassa or controlla_num_pos($id_cassa) != "SI")
 
 if (@get_magic_quotes_gpc()) $metodo_pagamento = stripslashes($metodo_pagamento);
-$metodo_pagamento = htmlspecialchars($metodo_pagamento);
+$metodo_pagamento = htmlspecialchars(fixstr($metodo_pagamento));
 if (strcmp($metodo_pagamento,"")) {
 $metodi_pagamento = esegui_query("select valpersonalizza from $tablepersonalizza where idpersonalizza = 'metodi_pagamento' and idutente = '$id_utente'");
 $metodi_pagamento = risul_query($metodi_pagamento,0,'valpersonalizza');
 if (str_replace(",$metodo_pagamento,",",",",$metodi_pagamento,") == ",$metodi_pagamento,") $inserire = "NO";
 } # fine if (strcmp($metodo_pagamento,""))
 
-if (strcmp($valuta,"")) {
+if (strcmp(fixstr($valuta),"")) {
 $n_valuta = "-1";
 for ($num1 = 0 ; $num1 < $altre_valute['num'] ; $num1++) if ($valuta == $altre_valute[$num1]['nome']) $n_valuta = $num1;
 if ($n_valuta == "-1") $inserire = "NO";
@@ -172,17 +178,24 @@ $val_costo = round($val_costo);
 $val_costo = $val_costo * (double) $arrotond_tasse;
 $valuta = $altre_valute[$n_valuta]['nome'].">".$altre_valute[$n_valuta]['cambio'].">".$altre_valute[$n_valuta]['arrotond'];
 } # fine else if ($n_valuta == "-1")
-} # fine if (strcmp($valuta,""))
+} # fine if (strcmp(fixstr($valuta),""))
 else $costo_valuta = "";
 
 if ($inserire != "NO") {
 $datainserimento = date("Y-m-d H:i:s",(time() + (C_DIFF_ORE * 3600)));
+$datatransazione = $datainserimento;
+if (isset($giorno_pagamento) and isset($mese_pagamento) and isset($anno_pagamento)) {
+if ($giorno_pagamento >= 1 and $giorno_pagamento <= 31 and $mese_pagamento >= 1 and $mese_pagamento <= 12) {
+$anno_corr = date('Y',(time() + (C_DIFF_ORE * 3600)));
+if ($anno_pagamento >= ($anno_corr - 2) and $anno_pagamento <= ($anno_corr + 1)) $datatransazione = date("Y-m-d H:i:s",mktime(0,0,0,(int) $mese_pagamento,(int) $giorno_pagamento,(int) $anno_pagamento));
+} # fine if ($giorno_pagamento >= 1 and $giorno_pagamento <= 31 and $mese_pagamento >= 1 and...
+} # fine if (isset($giorno_pagamento) and isset($mese_pagamento) and isset($anno_pagamento))
 if ($priv_persona_ins_costi != "c") unset($persona_costo);
 if ($priv_persona_ins_costi == "u") $persona_costo = $nome_utente;
 if ($priv_entrate_da_prenota != "c") unset($entrata_da_prenota);
 if ($priv_entrate_da_prenota == "s") $entrata_da_prenota = "SI";
 $provenienza_costo = "";
-if ($inserisci_entrata and $entrata_da_prenota) {
+if (!empty($inserisci_entrata) and !empty($entrata_da_prenota)) {
 $provenienza_costo = "p";
 if ($anno >= substr($datainserimento,0,4)) {
 $costo0 = esegui_query("select * from $tablecosti where idcosti = 0");
@@ -190,15 +203,16 @@ $costo0 = risul_query($costo0,0,'val_costo');
 $costo0 = $costo0 + $val_costo;
 esegui_query("update $tablecosti set val_costo = '$costo0' where idcosti = 0 ");
 } # fine if ($anno >= substr($datainserimento,0,4))
-} # fine if ($inserisci_entrata and $entrata_da_prenota)
+} # fine if (!empty($inserisci_entrata) and !empty($entrata_da_prenota))
 $idcosti = esegui_query("select max(idcosti) from $tablecosti");
 $idcosti = risul_query($idcosti,0,0) + 1;
 $tipo_costo = "e";
 if ($inserisci_spesa) $tipo_costo = "s";
-esegui_query("insert into $tablecosti (idcosti,nome_costo,val_costo,tipo_costo,nome_cassa,persona_costo,provenienza_costo,metodo_pagamento,datainserimento,hostinserimento,utente_inserimento) values ('$idcosti','$nome_costo','$val_costo','$tipo_costo','".aggslashdb($nome_cassa)."','$persona_costo','$provenienza_costo','$metodo_pagamento','$datainserimento','$HOSTNAME','$id_utente') ");
+esegui_query("insert into $tablecosti (idcosti,nome_costo,val_costo,tipo_costo,nome_cassa,persona_costo,provenienza_costo,metodo_pagamento,data_transazione,datainserimento,hostinserimento,utente_inserimento) values ('$idcosti','$nome_costo','$val_costo','$tipo_costo','".aggslashdb($nome_cassa)."','$persona_costo','$provenienza_costo','$metodo_pagamento','$datatransazione','$datainserimento','$HOSTNAME','$id_utente') ");
 if ($valuta) esegui_query("update $tablecosti set valuta = '".aggslashdb($valuta)."', costo_valuta = '".aggslashdb($costo_valuta)."' where idcosti = '$idcosti' ");
-if ($inserisci_entrata) echo mex("L'entrata è stata inserita",$pag);
-if ($inserisci_spesa) echo mex("La spesa è stata inserita",$pag);
+if (!empty($id_pagamento)) esegui_query("update $tablecosti set id_pagamento = '".aggslashdb(htmlspecialchars($id_pagamento))."' where idcosti = '$idcosti' ");
+if (!empty($inserisci_entrata)) echo mex("L'entrata è stata inserita",$pag);
+if (!empty($inserisci_spesa)) echo mex("La spesa è stata inserita",$pag);
 echo " (".punti_in_num($val_costo,$stile_soldi)." $Euro";
 if ($valuta) echo " = ".punti_in_num($costo_valuta,$stile_soldi)." ".$altre_valute[$n_valuta]['nome'];
 echo ").<br>";
@@ -247,7 +261,8 @@ $metodo_pagamento_txt = "<tr><td>".mex("Metodo di pagamento",$pag).":
 <option value=\"\">----</option>";
 $metodi_pagamento = explode(",",$metodi_pagamento);
 for ($num1 = 0 ; $num1 < count($metodi_pagamento) ; $num1++) $metodo_pagamento_txt .= "<option value=\"".$metodi_pagamento[$num1]."\">".$metodi_pagamento[$num1]."</option>";
-$metodo_pagamento_txt .= "</select>&nbsp;(".mex("opzionale",$pag).").</td></tr>";
+$metodo_pagamento_txt .= "</select>, ".mex("id op.",$pag)."&nbsp;<input type=\"text\" name=\"id_pagamento\" value=\"\" size=\"10\" maxlength=\"300\">
+<small>(".mex("opzionale",$pag).")</small>.</td></tr>";
 } # fine if ($metodi_pagamento)
 
 if ($altre_valute['num']) {
@@ -257,6 +272,36 @@ for ($num1 = 0 ; $num1 < $altre_valute['num'] ; $num1++) $valute_txt .= "<option
 $valute_txt .= "</select>";
 } # fine if ($altre_valute['num'])
 else $valute_txt = $Euro;
+
+$data_txt = "<tr><td>".mex("Data operazione",$pag).":&nbsp;";
+$gio_corr = date('d',(time() + (C_DIFF_ORE * 3600)));
+$sel_gpagamento = "<select name=\"giorno_pagamento\">";
+for ($num1 = 1 ; $num1 <= 31; $num1++) {
+if (strlen($num1) == 1) $num1 = "0".$num1;
+if ($num1 == $gio_corr) $sel = " selected";
+else $sel = "";
+$sel_gpagamento .= "<option value=\"$num1\"$sel>$num1</option>";
+} # fine for $num1
+$sel_gpagamento .= "</select>";
+$mese_corr = date('m',(time() + (C_DIFF_ORE * 3600)));
+$sel_mpagamento = "<select name=\"mese_pagamento\">";
+for ($num1 = 1 ; $num1 <= 12 ; $num1++) {
+if (strlen($num1) == 1) $num1 = "0".$num1;
+if ($num1 == $mese_corr) $sel = " selected";
+else $sel = "";
+$sel_mpagamento .= "<option value=\"$num1\"$sel>$num1</option>";
+} # fine for $num1
+$sel_mpagamento .= "</select>";
+if ($stile_data == "usa") $data_txt .= "$sel_mpagamento/$sel_gpagamento";
+else $data_txt .= "$sel_gpagamento/$sel_mpagamento";
+$data_txt .= "/<select name=\"anno_pagamento\">";
+$anno_corr = date('Y',(time() + (C_DIFF_ORE * 3600)));
+for ($num1 = ($anno - 2) ; $num1 <= ($anno_corr + 1) ; $num1++) {
+if ($num1 == $anno_corr) $sel = " selected";
+else $sel = "";
+$data_txt .= "<option value=\"$num1\"$sel>$num1</option>";
+} # fine for $num1
+$data_txt .= "</select>.</td></tr>";
 
 if ($priv_ins_entrate == "s") {
 echo "<h3 id=\"h_iinc\"><span>".mex("Inserisci le entrate in cassa per l'anno",$pag)." $anno.</span></h3>
@@ -276,7 +321,8 @@ echo "".mex("Natura entrata",$pag).":&nbsp;
 ".mex("Importo",$pag).":&nbsp;
 <input type=\"text\" name=\"val_costo\" size=\"10\" value=\"\">&nbsp;$valute_txt.
 </td></tr>
-$metodo_pagamento_txt";
+$metodo_pagamento_txt
+$data_txt";
 if ($priv_persona_ins_costi == "c") {
 echo "<tr><td>".mex("Persona che inserisce",$pag).":&nbsp;
 <input type=\"text\" name=\"persona_costo\" size=\"20\" value=\"\">&nbsp;(".mex("opzionale",$pag).").
@@ -312,7 +358,8 @@ echo "".mex("Natura spesa",$pag).":&nbsp;
 ".mex("Importo",$pag).":&nbsp;
 <input type=\"text\" name=\"val_costo\" size=\"10\" value=\"\">&nbsp;$valute_txt.
 </td></tr>
-$metodo_pagamento_txt";
+$metodo_pagamento_txt
+$data_txt";
 if ($priv_persona_ins_costi == "c") {
 echo "<tr><td>".mex("Persona che inserisce",$pag).":&nbsp;
 <input type=\"text\" name=\"persona_costo\" size=\"20\" value=\"\">&nbsp;(".mex("opzionale",$pag).").

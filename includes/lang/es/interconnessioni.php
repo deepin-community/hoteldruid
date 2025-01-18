@@ -39,6 +39,8 @@ case "La prenotazione cancellata non era presente nel database":	$messaggio = "L
 case "gruppo":  				$messaggio = "grupo"; break;
 case "Attenzione":  				$messaggio = "Atención"; break;
 case "carta di credito non salvata":  		$messaggio = "la tarjeta de crédito no ha sido salvada"; break;
+case "Se vuoi collegare altri account per una interconnessione già attiva inquesta pagina, allora":	$messaggio = "Para conectar otras cuentas a una interconexión que ya está activa en esta página se pueden"; break;
+case "aggiungi altre interconnessioni":  	$messaggio = "añadir más interconexiones"; break;
 case "":  		$messaggio = ""; break;
 case "":  		$messaggio = ""; break;
 

@@ -41,4 +41,8 @@ quotation marks in this line:
 define('C_FILE_CSS_PERS',"");
 
 Now, if this file exists, it will be loaded after all other 
-css files, so it can overwrite all other css properties.
+css files, so it can overwrite all other css properties. You 
+can also set another css file for mobile browsers, just insert 
+its path in this other line:
+
+define('C_FILE_MOB_CSS_PERS',"");

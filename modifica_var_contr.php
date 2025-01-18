@@ -2,7 +2,7 @@
 
 ##################################################################################
 #    HOTELDRUID
-#    Copyright (C) 2001-2021 by Marco Maria Francesco De Santis (marco@digitaldruid.net)
+#    Copyright (C) 2001-2023 by Marco Maria Francesco De Santis (marco@digitaldruid.net)
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published by
@@ -78,26 +78,38 @@ $var_pag[50] = 'tipo_arr';
 $var_pag[51] = 'lista_val';
 $var_pag[52] = 'array2';
 $var_pag[53] = 'break_cont';
-$var_pag[54] = 'num_cond_mod';
-$var_pag[55] = 'tipo_val_se2';
-$var_pag[56] = 'val_se_txt2';
-$var_pag[57] = 'val_se_sel2';
-$var_pag[58] = 'canc_se';
-$var_pag[59] = 'var_pers_elimina';
-$var_pag[60] = 'nuova_var_pers';
-$var_pag[61] = 'aggiungi_var_pers';
-$var_pag[62] = 'solo_contr_cond';
-$var_pag[63] = 'nuovo_arr_pers';
-$var_pag[64] = 'aggiungi_arr_pers';
-$var_pag[65] = 'var_arr';
-$var_pag[66] = 'elimina_var_pers';
-$var_pag[67] = 'var_se2';
-$var_pag[68] = 'cond2';
-$var_pag[69] = 'sposta_su';
-$var_pag[70] = 'num_cond';
-$var_pag[71] = 'salta_a';
-$var_pag[72] = 'sposta_giu';
-$n_var_pag = 73;
+$var_pag[54] = 'val_se_sel2';
+$var_pag[55] = 'canc_se';
+$var_pag[56] = 'var_pers_elimina';
+$var_pag[57] = 'nuova_var_pers';
+$var_pag[58] = 'aggiungi_var_pers';
+$var_pag[59] = 'solo_contr_cond';
+$var_pag[60] = 'nuovo_arr_pers';
+$var_pag[61] = 'aggiungi_arr_pers';
+$var_pag[62] = 'var_arr';
+$var_pag[63] = 'elimina_var_pers';
+$var_pag[64] = 'sposta_su';
+$var_pag[65] = 'num_cond';
+$var_pag[66] = 'salta_a';
+$var_pag[67] = 'sposta_giu';
+$var_pag[68] = 'elimina_cond';
+$var_pag[69] = 'arr_pers_elimina';
+$var_pag[70] = 'elimina_arr_pers';
+$var_pag[71] = 'mod_contr_importa';
+$var_pag[72] = 'tipo_contr_imp';
+$var_pag[73] = 'contr_imp';
+$var_pag[74] = 'agg_se';
+$n_var_pag = 75;
+$num2 = 0;
+if (isset($_POST['num_se'])) $num2 = (int) $_POST['num_se'];
+elseif (isset($_GET['num_se'])) $num2 = (int) $_GET['num_se'];
+for ($num1 = 2 ; $num1 <= $num2 ; $num1++) {
+$var_pag[$n_var_pag++] = "var_se$num1";
+$var_pag[$n_var_pag++] = "cond$num1";
+$var_pag[$n_var_pag++] = "val_se_txt$num1";
+$var_pag[$n_var_pag++] = "tipo_val_se$num1";
+$var_pag[$n_var_pag++] = "val_se_sel$num1";
+} # fine for $num1
 
 include("./costanti.php");
 include(C_DATI_PATH."/dati_connessione.php");
@@ -128,6 +140,7 @@ if (substr($priv_mod_pers,0,1) != "s") $modifica_pers = "NO";
 else $modifica_pers = "SI";
 $priv_mod_doc = substr($priv_mod_pers,2,1);
 $priv_mod_doc_api = substr($priv_mod_pers,4,1);
+$priv_mod_doc_html = substr($priv_mod_pers,9,1);
 $contratti_consentiti = risul_query($privilegi_annuali_utente,0,'contratti_consentiti');
 $attiva_contratti_consentiti = substr($contratti_consentiti,0,1);
 if ($attiva_contratti_consentiti == "s") {
@@ -142,6 +155,7 @@ $anno_utente_attivato = "SI";
 $modifica_pers = "SI";
 $priv_mod_doc = "s";
 $priv_mod_doc_api = "s";
+$priv_mod_doc_html = "s";
 $attiva_contratti_consentiti = "n";
 } # fine else if ($id_utente != 1)
 
@@ -160,44 +174,20 @@ $stile_data = stile_data();
 
 if (!isset($contr_cond) or controlla_num_pos($contr_cond) == "NO" or $contr_cond < 1) $contr_cond = "";
 if ($attiva_contratti_consentiti != "n" and $contratti_consentiti_vett[$contr_cond] != "SI") $contr_cond = "";
-if (strcmp($contr_cond,"")) {
-$contr_cond_esist = esegui_query("select numero from $tablecontratti where numero = '".aggslashdb($contr_cond)."' and tipo $LIKE 'contr%' ");
+if (strcmp((string) $contr_cond,"")) {
+$contr_cond = (int) $contr_cond;
+$contr_cond_esist = esegui_query("select tipo from $tablecontratti where numero = '".aggslashdb($contr_cond)."' and tipo $LIKE 'contr%' ");
 if (numlin_query($contr_cond_esist) != 1) $contr_cond = "";
-elseif ($priv_mod_doc_api != "s") {
+else {
+if ($priv_mod_doc_html != "s" and risul_query($contr_cond_esist,0,'tipo') == "contrhtm") $contr_cond = "";
+if ($contr_cond and $priv_mod_doc_api != "s") {
 $api_esistente = esegui_query("select * from $tablecontratti where numero = '".aggslashdb($contr_cond)."' and tipo = 'api'");
 if (numlin_query($api_esistente)) $contr_cond = "";
-} # fine elseif ($priv_mod_doc_api != "s")
-} # fine if (strcmp($contr_cond,""))
+} # fine if ($contr_cond and $priv_mod_doc_api != "s")
+} # fine else if (numlin_query($contr_cond_esist) != 1)
+} # fine if (strcmp((string) $contr_cond,""))
 
-$trad_var = array();
-function mex2 ($messaggio) {
-global $trad_var,$lingua_mex;
-if (empty($trad_var)) {
-if ($lingua_mex != "ita") include("./includes/lang/$lingua_mex/visualizza_contratto_var.php");
-if (empty($trad_var['commento_personalizzato'])) $trad_var['commento_personalizzato'] = 'commento_personalizzato';
-if (empty($trad_var['campo_personalizzato'])) $trad_var['campo_personalizzato'] = 'campo_personalizzato';
-if (empty($trad_var['num_persone_tipo'])) $trad_var['num_persone_tipo'] = 'num_persone_tipo';
-} # fine if (empty($trad_var))
-if (!empty($trad_var[$messaggio])) $messaggio = $trad_var[$messaggio];
-else {
-if (substr($messaggio,-1) == ")") {
-$mess_vett = explode("(",substr($messaggio,0,-1));
-if (!empty($trad_var[$mess_vett[1]])) $messaggio = $mess_vett[0]."(".$trad_var[$mess_vett[1]].")";
-else {
-if (substr($mess_vett[1],0,24) == "commento_personalizzato_") $messaggio =  $mess_vett[0]."(".$trad_var['commento_personalizzato'].substr($mess_vett[1],23).")";
-elseif (substr($mess_vett[1],0,21) == "campo_personalizzato_") $messaggio =  $mess_vett[0]."(".$trad_var['campo_personalizzato'].substr($mess_vett[1],20).")";
-} # fine else if (!empty($trad_var[$mess_vett[1]]))
-} # fine if (substr($messaggio,-1) == ")")
-else {
-if (substr($messaggio,0,24) == "commento_personalizzato_") $messaggio = $trad_var['commento_personalizzato'].substr($messaggio,23);
-else {
-if (substr($messaggio,0,21) == "campo_personalizzato_") $messaggio = $trad_var['campo_personalizzato'].substr($messaggio,20);
-elseif (substr($messaggio,0,17) == "num_persone_tipo_") $messaggio = $trad_var['num_persone_tipo'].substr($messaggio,16);
-} # fine else if (substr($messaggio,0,24) == "commento_personalizzato_")
-} # fine else if (substr($messaggio,-1) == ")")
-} # fine else if ($trad_var[$messaggio])
-return $messaggio;
-} # fine function mex2
+include("./includes/funzioni_mod_contratti.php");
 
 $campi_pers_comm = esegui_query("select valpersonalizza from $tablepersonalizza where idpersonalizza = 'campi_pers_comm' and idutente = '$id_utente'");
 if (numlin_query($campi_pers_comm) == 1) {
@@ -213,11 +203,21 @@ $num_campi_pers_cliente = count($campi_pers_cliente);
 else $num_campi_pers_cliente = 0;
 include_once("./includes/funzioni_tariffe.php");
 $dati_cat_pers = dati_cat_pers($id_utente,$tablepersonalizza,$lingua_mex,"v",0,1);
-#$commento_personalizzato_ = mex2("commento_personalizzato")."_";
-#$campo_personalizzato_ = mex2("campo_personalizzato")."_";
+$dati_allegato = array('num' => 0);
+$allegati = esegui_query("select * from $tablecontratti where numero = '".aggslashdb($contr_cond)."' and tipo = 'allegato'");
+if (numlin_query($allegati)) {
+$allegati = risul_query($allegati,0,'testo');
+if ($allegati) {
+$allegati = explode(",",$allegati);
+$dati_allegato['num'] = (count($allegati) - 2);
+} # fine if ($allegati)
+} # fine if (numlin_query($allegati))
+#$commento_personalizzato_ = mexv("commento_personalizzato")."_";
+#$campo_personalizzato_ = mexv("campo_personalizzato")."_";
 $commento_personalizzato_ = "commento_personalizzato_";
 $campo_personalizzato_ = "campo_personalizzato_";
 $num_persone_tipo_ = "num_persone_tipo_";
+$allegato_ = "allegato";
 include("./includes/variabili_contratto.php");
 
 
@@ -236,59 +236,7 @@ if (isset($num_se) and $num_se > 80) $num_se = 80;
 
 
 if (!empty($cambia_qualcosa)) {
-
-function elimina_array_pers ($arr_pers_elimina) {
-global $tablecontratti,$LIKE,$pag;
-$arr_pers_elimina = aggslashdb($arr_pers_elimina);
-$continua = "SI";
-if (substr($arr_pers_elimina,0,1) != "a") $continua = "NO";
-$arr_pers_elimina = substr($arr_pers_elimina,1);
-if (controlla_num_pos($arr_pers_elimina) != "SI") $continua = "NO";
-if ($continua == "SI") {
-$n_arr_pers_el = esegui_query("select * from $tablecontratti where numero = '$arr_pers_elimina' and tipo $LIKE 'vett%'");
-if (numlin_query($n_arr_pers_el) != 1) $continua = "NO";
-else {
-$n_arr_pers_el = explode(";",risul_query($n_arr_pers_el,0,"testo"));
-$n_arr_pers_el = $n_arr_pers_el[0]."(".$n_arr_pers_el[1].")";
-$arr_pers_el = "a".$arr_pers_elimina;
-$condizioni = esegui_query("select * from $tablecontratti where tipo $LIKE 'cond%' order by numero");
-$num_condizioni = numlin_query($condizioni);
-$num_cond_canc = 0;
-for ($num1 = 0 ; $num1 < $num_condizioni ; $num1++) {
-$condizione = risul_query($condizioni,$num1,'testo');
-$condizione = explode("#@?",$condizione);
-$elimina_cond_corr = "NO";
-if ($condizione[0] == "rar$arr_pers_elimina") $elimina_cond_corr = "SI";
-if ($condizione[1]) {
-$se_cond = explode("#$?",$condizione[1]);
-$num_se_cond = count($se_cond);
-for ($num2 = 1 ; $num2 < $num_se_cond ; $num2++) {
-$se_cond_corr = explode("#%?",$se_cond[$num2]);
-if ($se_cond_corr[0] == $n_arr_pers_el) $elimina_cond_corr = "SI";
-if ($se_cond_corr[2] == "var" and $se_cond_corr[3] == $n_arr_pers_el) $elimina_cond_corr = "SI";
-} # fine for $num2
-} # fine if ($condizione[1])
-$azione = explode("#%?",$condizione[2]);
-if ($azione[0] == "set" and ($azione[1] == $arr_pers_el or ($azione[3] == "var" and $azione[4] == $n_arr_pers_el))) $elimina_cond_corr = "SI";
-if ($azione[0] == "set" and (($azione[5] == "var" and $azione[6] == $n_arr_pers_el) or ($azione[7] == "var" and $azione[8] == $n_arr_pers_el))) $elimina_cond_corr = "SI";
-if ($azione[0] == "trunc" and $azione[1] == $arr_pers_el) $elimina_cond_corr = "SI";
-if ($azione[0] == "oper" and ($azione[1] == $arr_pers_el or $azione[2] == $n_arr_pers_el or ($azione[4] == "var" and $azione[5] == $n_arr_pers_el))) $elimina_cond_corr = "SI";
-if ($azione[0] == "unset" and $azione[1] == $arr_pers_el) $elimina_cond_corr = "SI";
-if ($azione[0] == "array" and $azione[1] == $arr_pers_el) $elimina_cond_corr = "SI";
-if ($elimina_cond_corr == "SI") {
-$num_cond = risul_query($condizioni,$num1,'numero');
-$tipo_cond = risul_query($condizioni,$num1,'tipo');
-esegui_query("delete from $tablecontratti where numero = '$num_cond' and tipo = '$tipo_cond' ");
-$num_cond_canc++;
-} # fine ($elimina_cond_corr == "SI")
-} # fine for $num1
-esegui_query("delete from $tablecontratti where numero = '$arr_pers_elimina' and tipo $LIKE 'vett%'");
-if ($num_cond_canc) echo mex("Condizioni eliminate",$pag).": <em>$num_cond_canc</em>.<br><br>";
-echo mex("Array personalizzato eliminato",$pag).".<br><br>";
-} # fine else if (numlin_query($n_var_pers_el) != 1)
-} # fine if ($continua == "SI")
-return $continua;
-} # fine function elimina_arr_pers
+$mostra_form_iniziale = "";
 
 
 if (!empty($aggiungi_var_pers)) {
@@ -303,6 +251,7 @@ $ultima_parte = explode("_",$nuova_var_pers);
 $ultima_parte = (string) $ultima_parte[(count($ultima_parte) - 1)];
 if ($ultima_parte != "" and preg_replace("/[0-9]/","",$ultima_parte) == "") $continua = "NO";
 if (!empty($var_riserv[$nuova_var_pers]) or substr($nuova_var_pers,0,20) == "campo_personalizzato" or substr($nuova_var_pers,0,23) == "commento_personalizzato" or substr($nuova_var_pers,0,16) == "num_persone_tipo") $continua = "NO";
+if (substr($nuova_var_pers,0,8) == "allegato" and preg_replace("/[0-9]/","",substr($nuova_var_pers,8)) == "") $continua = "NO";
 if ($continua == "SI") {
 $tabelle_lock = array($tablecontratti);
 $tabelle_lock = lock_tabelle($tabelle_lock);
@@ -320,11 +269,11 @@ closedir($lang_dir);
 for ($num1 = 0 ; $num1 < $num_var_predef ; $num1++) {
 if ($nuova_var_pers == $var_predef[$num1]) $continua = "NO";
 } # fine for $num1
-if ($solo_contr_cond and strcmp($contr_cond,"")) {
+if ($solo_contr_cond and strcmp((string) $contr_cond,"")) {
 $tipo = "var$contr_cond";
 $contr_cond_esist = esegui_query("select numero from $tablecontratti where numero = '".aggslashdb($contr_cond)."' and tipo $LIKE 'contr%' ");
 if (numlin_query($contr_cond_esist) != 1) $continua = "NO";
-} # fine if ($solo_contr_cond and strcmp($contr_cond,""))
+} # fine if ($solo_contr_cond and strcmp((string) $contr_cond,""))
 else $tipo = "var";
 if ($continua == "SI") {
 $max_var = esegui_query("select max(numero) from $tablecontratti where tipo $LIKE 'var%'");
@@ -348,53 +297,12 @@ if ($continua == "SI") {
 $tabelle_lock = array($tablecontratti);
 $tabelle_lock = lock_tabelle($tabelle_lock);
 $n_var_pers_el = esegui_query("select * from $tablecontratti where numero = '$var_pers_elimina' and tipo $LIKE 'var%'");
-if (numlin_query($n_var_pers_el) != 1) $continua = "NO";
-else {
+if (numlin_query($n_var_pers_el) == 1) {
 $n_var_pers_el = risul_query($n_var_pers_el,0,"testo");
-$condizioni = esegui_query("select * from $tablecontratti where tipo $LIKE 'cond%' order by numero");
-$num_condizioni = numlin_query($condizioni);
-$num_cond_canc = 0;
-for ($num1 = 0 ; $num1 < $num_condizioni ; $num1++) {
-$condizione = risul_query($condizioni,$num1,'testo');
-$condizione = explode("#@?",$condizione);
-$elimina_cond_corr = "NO";
-if ($condizione[1]) {
-$se_cond = explode("#$?",$condizione[1]);
-$num_se_cond = count($se_cond);
-for ($num2 = 1 ; $num2 < $num_se_cond ; $num2++) {
-$se_cond_corr = explode("#%?",$se_cond[$num2]);
-if ($se_cond_corr[0] == $n_var_pers_el) $elimina_cond_corr = "SI";
-if ($se_cond_corr[2] == "var" and $se_cond_corr[3] == $n_var_pers_el) $elimina_cond_corr = "SI";
-} # fine for $num2
-} # fine if ($condizione[1])
-$azione = explode("#%?",$condizione[2]);
-if ($azione[0] == "set" and ($azione[1] == $var_pers_elimina or ($azione[3] == "var" and $azione[4] == $n_var_pers_el))) $elimina_cond_corr = "SI";
-if ($azione[0] == "set" and (($azione[5] == "var" and $azione[6] == $n_var_pers_el) or ($azione[7] == "var" and $azione[8] == $n_var_pers_el))) $elimina_cond_corr = "SI";
-if ($azione[0] == "trunc" and $azione[1] == $var_pers_elimina) $elimina_cond_corr = "SI";
-if ($azione[0] == "oper" and ($azione[1] == $var_pers_elimina or $azione[2] == $n_var_pers_el or ($azione[4] == "var" and $azione[5] == $n_var_pers_el))) $elimina_cond_corr = "SI";
-if ($azione[0] == "date" and ($azione[1] == $var_pers_elimina or $azione[2] == $n_var_pers_el)) $elimina_cond_corr = "SI";
-if ($azione[0] == "opdat" and ($azione[1] == $var_pers_elimina or $azione[3] == $n_var_pers_el or $azione[4] == $n_var_pers_el)) $elimina_cond_corr = "SI";
-if ($elimina_cond_corr == "SI") {
-$num_cond = risul_query($condizioni,$num1,'numero');
-$tipo_cond = risul_query($condizioni,$num1,'tipo');
-esegui_query("delete from $tablecontratti where numero = '$num_cond' and tipo = '$tipo_cond' ");
-$num_cond_canc++;
-} # fine ($elimina_cond_corr == "SI")
-} # fine for $num1
-$array = esegui_query("select * from $tablecontratti where tipo $LIKE 'vett%' and testo $LIKE '%;$n_var_pers_el%' ");
-$num_array = numlin_query($array);
-for ($num1 = 0 ; $num1 < $num_array ; $num1++) {
-$var_arr = explode(";",risul_query($array,$num1,'testo'));
-$var_arr = $var_arr[1];
-if ($var_arr == $n_var_pers_el) {
-$num_arr = risul_query($array,$num1,'numero');
-elimina_array_pers("a".$num_arr);
-} # fine if ($var_arr == $n_var_pers_el)
-} # fine for $num1
+$num_cond_canc = elimina_cond_variabile_pers($n_var_pers_el,$var_pers_elimina,"",$tablecontratti);
 esegui_query("delete from $tablecontratti where numero = '$var_pers_elimina' and tipo $LIKE 'var%'");
-if ($num_cond_canc) echo mex("Condizioni eliminate",$pag).": <em>$num_cond_canc</em>.<br><br>";
 echo mex("Variabile personalizzata eliminata",$pag).".<br>";
-} # fine else if (numlin_query($n_var_pers_el) != 1)
+} # fine if (numlin_query($n_var_pers_el) == 1)
 unlock_tabelle($tabelle_lock);
 } # fine if ($continua == "SI")
 if ($continua != "SI") echo mex("I dati inseriti sono <div style=\"display: inline; color: red;\">errati</div>",$pag).".<br>";
@@ -412,7 +320,7 @@ if (preg_replace("/[A-Za-z0-9_]/","",$nuovo_arr_pers) != "") $continua = "NO";
 $ultima_parte = explode("_",$nuovo_arr_pers);
 $ultima_parte = (string) $ultima_parte[(count($ultima_parte) - 1)];
 if ($ultima_parte != "" and preg_replace("/[0-9]/","",$ultima_parte) == "") $continua = "NO";
-if ($var_riserv[$nuovo_arr_pers]) $continua = "NO";
+if (!empty($var_riserv[$nuovo_arr_pers])) $continua = "NO";
 if ($continua == "SI") {
 $tabelle_lock = array("$tablecontratti");
 $tabelle_lock = lock_tabelle($tabelle_lock);
@@ -430,15 +338,15 @@ closedir($lang_dir);
 for ($num1 = 0 ; $num1 < $num_var_predef ; $num1++) {
 if ($nuovo_arr_pers == $var_predef[$num1]) $continua = "NO";
 } # fine for $num1
-if ($solo_contr_cond and strcmp($contr_cond,"")) {
+if ($solo_contr_cond and strcmp((string) $contr_cond,"")) {
 $tipo = "vett$contr_cond";
 $contr_cond_esist = esegui_query("select numero from $tablecontratti where numero = '".aggslashdb($contr_cond)."' and tipo $LIKE 'contr%' ");
 if (numlin_query($contr_cond_esist) != 1) $continua = "NO";
-} # fine if ($solo_contr_cond and strcmp($contr_cond,""))
+} # fine if ($solo_contr_cond and strcmp((string) $contr_cond,""))
 else {
 $solo_contr_cond = "";
 $tipo = "vett";
-} # fine else if ($solo_contr_cond and strcmp($contr_cond,""))
+} # fine else if ($solo_contr_cond and strcmp((string) $contr_cond,""))
 if ($continua == "SI") {
 if ($solo_contr_cond) $variabili_pers = esegui_query("select * from $tablecontratti where tipo = 'var' or tipo = 'var$contr_cond' order by tipo, numero");
 else $variabili_pers = esegui_query("select * from $tablecontratti where tipo = 'var' order by numero");
@@ -450,7 +358,7 @@ $var_predef[$num_var_predef] = $var_pers;
 $num_var_predef++;
 $nome_var[$num_var_pers] = $var_pers;
 } # fine for $num1
-if (!$var_arr) {
+if (empty($var_arr)) {
 echo "<form accept-charset=\"utf-8\" method=\"post\" action=\"$pag\"><div>
 <input type=\"hidden\" name=\"anno\" value=\"$anno\">
 <input type=\"hidden\" name=\"id_sessione\" value=\"$id_sessione\">
@@ -461,12 +369,12 @@ echo "<form accept-charset=\"utf-8\" method=\"post\" action=\"$pag\"><div>
 <input type=\"hidden\" name=\"aggiungi_arr_pers\" value=\"SI\">
 ".mex("Array della variabile",$pag).": <select name=\"var_arr\">";
 for ($num1 = 0 ; $num1 < $num_var_predef ; $num1++) {
-echo "<option value=\"".$var_predef[$num1]."\">".mex2($var_predef[$num1])."</option>";
+echo "<option value=\"".$var_predef[$num1]."\">".mexv($var_predef[$num1])."</option>";
 } # fine for $num1
 echo "</select>
 <input class=\"sbutton\" type=\"submit\" name=\"torna\" value=\"".mex("Aggiungi",$pag)."\">
 </div></form><br>";
-} # fine if (!$var_arr)
+} # fine if (empty($var_arr))
 else {
 $var_arr_num = -1;
 for ($num1 = 0 ; $num1 < $num_var_predef ; $num1++) {
@@ -480,7 +388,7 @@ else $max_arr = 1;
 esegui_query("insert into $tablecontratti (numero,tipo,testo) values ('$max_arr','$tipo','$nuovo_arr_pers;$var_arr')");
 echo mex("Nuovo array personalizzato inserito",$pag).".<br>";
 } # fine if ($continua == "SI")
-} # fine else if (!$var_arr)
+} # fine else if (empty($var_arr))
 } # fine if ($continua == "SI")
 unlock_tabelle($tabelle_lock);
 } # fine if ($continua == "SI")
@@ -492,7 +400,7 @@ if (!empty($elimina_arr_pers)) {
 $mostra_form_iniziale = "NO";
 $tabelle_lock = array($tablecontratti);
 $tabelle_lock = lock_tabelle($tabelle_lock);
-$continua = elimina_array_pers($arr_pers_elimina);
+$continua = elimina_array_pers($arr_pers_elimina,"",$tablecontratti);
 unlock_tabelle($tabelle_lock);
 if ($continua != "SI") echo mex("I dati inseriti sono <div style=\"display: inline; color: red;\">errati</div>",$pag).".<br>";
 } # fine if (!empty($elimina_arr_pers))
@@ -504,14 +412,14 @@ $tabelle_lock = lock_tabelle($tabelle_lock);
 if ($contr_imp) {
 if (controlla_num_pos($contr_imp) == "NO" or $contr_imp < 1) $contr_imp = "";
 if ($contr_imp == $contr_cond or ($attiva_contratti_consentiti != "n" and $contratti_consentiti_vett[$contr_imp] != "SI")) $contr_imp = "";
-if (strcmp($contr_imp,"")) {
+if (strcmp((string) $contr_imp,"")) {
 $contr_imp_esist = esegui_query("select numero from $tablecontratti where numero = '".aggslashdb($contr_imp)."' and tipo $LIKE 'contr%' ");
 if (numlin_query($contr_imp_esist) != 1) $contr_imp = "";
 else {
 $contr_imp_esist = esegui_query("select numero from $tablecontratti where numero = '$contr_imp' and tipo = 'impor_vc' ");
 if (numlin_query($contr_imp_esist)) $contr_imp = "";
 } # fine else if (numlin_query($contr_imp_esist) != 1)
-} # fine if (strcmp($contr_imp,""))
+} # fine if (strcmp((string) $contr_imp,""))
 if ($contr_imp) {
 esegui_query("delete from $tablecontratti where tipo = 'var$contr_cond' or tipo = 'cond$contr_cond' or tipo = 'vett$contr_cond' ");
 if ($tipo_contr_imp != "importa") {
@@ -543,32 +451,35 @@ unlock_tabelle($tabelle_lock);
 if (!empty($aggiungi_cond)) {
 $mostra_form_iniziale = "NO";
 $continua = "SI";
-if (substr($inizializza,0,1) == "a") {
+if (substr(fixstr($inizializza),0,1) == "a") {
 $num_arr_rip = substr($inizializza,1);
 $inizializza = "rar$num_arr_rip";
 $arr_esistente = esegui_query("select * from $tablecontratti where (tipo = 'vett' or tipo = 'vett$contr_cond') and numero = '".aggslashdb($num_arr_rip)."'");
 if (numlin_query($arr_esistente) != 1) $continua = "NO";
 } # fine if (substr($inizializza,0,1) == "a")
-if ($inizializza != "rpt" and $inizializza != "inr" and $inizializza != "ind" and $inizializza != "ros" and $inizializza != "rca" and $inizializza != "rpa" and $inizializza != "run" and $inizializza != "rds" and preg_replace("/rar[1-9][0-9]*/","",$inizializza) != "") $continua = "NO";
-if (isset($cond_sempre) and strcmp($cond_sempre,"") and $cond_sempre != "SI" and $cond_sempre != "NO") $continua = "NO";
-if ($azione != "set" and $azione != "trunc" and $azione != "oper" and $azione != "date" and $azione != "unset" and $azione != "array" and $azione != "break" and $azione != "cont") $continua = "NO";
-if ($oper_data and $azione = "date") $azione = "opdat";
+if ($inizializza != "rpt" and $inizializza != "inr" and $inizializza != "ind" and $inizializza != "ros" and $inizializza != "rca" and $inizializza != "rpa" and $inizializza != "run" and $inizializza != "rds" and preg_replace("/rar[1-9][0-9]*/","",fixstr($inizializza)) != "") $continua = "NO";
+if (isset($cond_sempre) and strcmp((string) $cond_sempre,"") and $cond_sempre != "SI" and $cond_sempre != "NO") $continua = "NO";
+if (fix_set($azione) != "set" and $azione != "trunc" and $azione != "oper" and $azione != "date" and $azione != "unset" and $azione != "array" and $azione != "break" and $azione != "cont") $continua = "NO";
+if (!empty($oper_data) and $azione = "date") $azione = "opdat";
 if ($num_se < 1 or $num_se > 80) $continua = "NO";
 if ($num_se > 1 and $and_or != "and" and $and_or != "or") $continua = "NO";
 if ($continua == "SI") {
 
-function controlla_var_allora ($var_allora,&$continua,$contr_cond) {
-if ($var_allora != "-1" and $var_allora != "-2") {
-global $tablecontratti,$LIKE;
+function controlla_var_allora (&$var_allora,&$continua,$contr_cond) {
 $var_allora = aggslashdb($var_allora);
+$var_trovata = 0;
+global $dati_allegato;
+for ($num1 = 1 ; $num1 <= $dati_allegato['num'] ; $num1++) if ((string) $var_allora == (string) (-100 - $num1)) $var_trovata = 1;
+if (!$var_trovata and $var_allora != "-1" and $var_allora != "-2" and $var_allora != "-3") {
+global $tablecontratti,$LIKE;
 if (substr($var_allora,0,1) != "a") $var_esistente = esegui_query("select * from $tablecontratti where (tipo = 'var' or tipo = 'var$contr_cond') and numero = '$var_allora'");
 else $var_esistente = esegui_query("select * from $tablecontratti where (tipo = 'vett' or tipo = 'vett$contr_cond') and numero = '".substr($var_allora,1)."'");
 if (numlin_query($var_esistente) != 1) $continua = "NO";
-} # fine ($var_allora != "-1" and $var_allora != "-2")
+} # fine (!$var_trovata and $var_allora != "-1" and $var_allora != "-2" and...
 } # fine function controlla_var_allora
-function controlla_var_se ($var_se,&$continua,$var_predef,$num_var_predef,$contr_cond) {
+function controlla_var_se (&$var_se,&$continua,$var_predef,$num_var_predef,$contr_cond) {
 global $tablecontratti,$LIKE;
-$var_se = aggslashdb($var_se);
+$var_se = aggslashdb(fixstr($var_se));
 $var_se_trovata = "NO";
 if (str_replace("(","",$var_se) == $var_se) $var_se_contr = $var_se;
 else {
@@ -583,7 +494,8 @@ if ($var_predef[$num1] == $var_se) $var_se_trovata = "SI";
 if ($var_se_trovata != "SI") $continua = "NO";
 return $var_se;
 } # fine function controlla_var_se
-function controlla_testo_input ($var_txt) {
+function controlla_testo_input (&$var_txt) {
+$var_txt = fixstr($var_txt);
 if (@get_magic_quotes_gpc()) $var_txt = stripslashes($var_txt);
 if (defined('C_RESTRIZIONI_DEMO_ADMIN') and C_RESTRIZIONI_DEMO_ADMIN == "SI") $var_txt = htmlspecialchars($var_txt);
 $var_txt = str_replace("#%?","#?",$var_txt);
@@ -597,19 +509,22 @@ return $var_txt;
 $testo = "$inizializza#@?";
 $tabelle_lock = array($tablecontratti);
 $tabelle_lock = lock_tabelle($tabelle_lock);
-if ($num_cond_mod) {
+if (!empty($num_cond_mod) and controlla_num($num_cond_mod) != "NO") {
 $cond_esist = @esegui_query("select numero from $tablecontratti where numero = '".aggslashdb($num_cond_mod)."' and tipo = 'cond$contr_cond' ");
 if (!numlin_query($cond_esist)) $continua = "NO";
-} # fine if ($num_cond_mod)
+} # fine if (!empty($num_cond_mod) and controlla_num($num_cond_mod) != "NO")
+else $num_cond_mod = "";
 if (!isset($cond_sempre) or $cond_sempre != "SI") {
 if ($num_se > 1) $testo .= $and_or;
 for ($num1 = 1 ; $num1 <= $num_se ; $num1++) {
 controlla_var_se(${"var_se".$num1},$continua,$var_predef,$num_var_predef,$contr_cond);
-if (${"cond".$num1} != "=" and ${"cond".$num1} != "!=" and ${"cond".$num1} != "mag" and ${"cond".$num1} != "min" and ${"cond".$num1} != "con" and ${"cond".$num1} != "cmm") $continua = "NO";
+if (${"cond".$num1} != "=" and ${"cond".$num1} != "!=" and ${"cond".$num1} != "mag" and ${"cond".$num1} != "min" and ${"cond".$num1} != "con" and ${"cond".$num1} != "cmm" and ${"cond".$num1} != "nco" and ${"cond".$num1} != "ncm") $continua = "NO";
 if (${"cond".$num1} == "mag") ${"cond".$num1} = ">";
 if (${"cond".$num1} == "min") ${"cond".$num1} = "<";
 if (${"cond".$num1} == "con") ${"cond".$num1} = "{}";
 if (${"cond".$num1} == "cmm") ${"cond".$num1} = "{A}";
+if (${"cond".$num1} == "nco") ${"cond".$num1} = "!{}";
+if (${"cond".$num1} == "ncm") ${"cond".$num1} = "!{A}";
 if (${"tipo_val_se".$num1} != "txt" and ${"tipo_val_se".$num1} != "var") $continua = "NO";
 if (${"tipo_val_se".$num1} == "txt") $val_se = controlla_testo_input(${"val_se_txt".$num1});
 else $val_se = controlla_var_se(${"val_se_sel".$num1},$continua,$var_predef,$num_var_predef,$contr_cond);
@@ -626,11 +541,11 @@ $val_allora = controlla_testo_input($val_allora_txt);
 $oper_allora_sel = "";
 } # fine if ($tipo_val_allora == "txt")
 else $val_allora = controlla_var_se($val_allora_sel,$continua,$var_predef,$num_var_predef,$contr_cond);
-if ($oper_allora_sel != "" and $oper_allora_sel != "low" and $oper_allora_sel != "upp" and $oper_allora_sel != "url" and $oper_allora_sel != "asc" and $oper_allora_sel != "eas" and $oper_allora_sel != "md5") $continua = "NO";
-if ($tipo_val_sost1 != "txt" and $tipo_val_sost1 != "var") $continua = "NO";
+if ($oper_allora_sel != "" and $oper_allora_sel != "low" and $oper_allora_sel != "upp" and $oper_allora_sel != "url" and $oper_allora_sel != "asc" and $oper_allora_sel != "eas" and $oper_allora_sel != "md5" and $oper_allora_sel != "eht" and $oper_allora_sel != "dht" and $oper_allora_sel != "e64" and $oper_allora_sel != "d64" and $oper_allora_sel != "2c0" and $oper_allora_sel != "0c2" and $oper_allora_sel != "1c0" and $oper_allora_sel != "0c1" and $oper_allora_sel != "3c0" and $oper_allora_sel != "0c3") $continua = "NO";
+if (fix_set($tipo_val_sost1) != "txt" and $tipo_val_sost1 != "var") $continua = "NO";
 if ($tipo_val_sost1 == "txt") $val_sost1 = controlla_testo_input($val_sost1_txt);
 else $val_sost1 = controlla_var_se($val_sost1_sel,$continua,$var_predef,$num_var_predef,$contr_cond);
-if ($tipo_val_sost2 == "txt") $val_sost2 = controlla_testo_input($val_sost2_txt);
+if (fix_set($tipo_val_sost2) == "txt") $val_sost2 = controlla_testo_input($val_sost2_txt);
 else $val_sost2 = controlla_var_se($val_sost2_sel,$continua,$var_predef,$num_var_predef,$contr_cond);
 $testo .= "set#%?$var_allora#%?$oper_str#%?$tipo_val_allora#%?$val_allora#%?$tipo_val_sost1#%?$val_sost1#%?$tipo_val_sost2#%?$val_sost2#%?$oper_allora_sel";
 } # fine if ($azione == "set")
@@ -655,7 +570,7 @@ else $val_oper = controlla_var_se($val_oper_sel,$continua,$var_predef,$num_var_p
 $val_arrotond = formatta_soldi($val_arrotond);
 if (controlla_soldi($val_arrotond) == "NO") $continua = "NO";
 if ($operatore == "/" and !$val_arrotond) $continua = "NO";
-if (strcmp($val_arrotond,"") and !strcmp(str_replace("0","",$val_arrotond),"")) $continua = "NO";
+if (strcmp((string) $val_arrotond,"") and !strcmp(str_replace("0","",$val_arrotond),"")) $continua = "NO";
 $testo .= "oper#%?$var_oper#%?$var_oper2#%?$operatore#%?$tipo_val_oper#%?$val_oper#%?$val_arrotond";
 } # fine if ($azione == "oper")
 if ($azione == "date") {
@@ -663,7 +578,7 @@ controlla_var_allora($var_data,$continua,$contr_cond);
 controlla_var_se($var_data2,$continua,$var_predef,$num_var_predef,$contr_cond);
 if ($subdata != "gi" and $subdata != "me" and $subdata != "an" and $subdata != "gs" and $subdata != "is" and $subdata != "da") $continua = "NO";
 if ($oper_giorni != "+" and $oper_giorni != "-") $continua = "NO";
-if (!strcmp($num_giorni,"") or controlla_num_pos($num_giorni) == "NO") $continua = "NO";
+if (!strcmp((string) $num_giorni,"") or controlla_num_pos($num_giorni) == "NO") $continua = "NO";
 if ($num_giorni and $oper_giorni == "-") $num_giorni = ($num_giorni * -1);
 if ($tipo_giorni != "g" and $tipo_giorni != "m" and $tipo_giorni != "a") $continua = "NO";
 $testo .= "date#%?$var_data#%?$var_data2#%?$subdata#%?$num_giorni#%?$tipo_giorni";
@@ -818,8 +733,10 @@ $variabili_pers = esegui_query("select * from $tablecontratti where tipo = 'var'
 $num_variabili_pers = numlin_query($variabili_pers);
 $option_var_pers = "";
 $option_var_pers_tipo = "";
-$nome_var['-1'] = mex2('messaggio_di_errore');
-$nome_var['-2'] = mex2('errore_ripetizione');
+$nome_var['-1'] = mexv('messaggio_di_errore');
+$nome_var['-2'] = mexv('errore_ripetizione');
+$nome_var['-3'] = mexv('nome_documento_scaricato');
+for ($num1 = 1 ; $num1 <= $dati_allegato['num'] ; $num1++) $nome_var[(-100 - $num1)] = mexv('allegato').$num1;
 $num_var_predef_orig = $num_var_predef;
 for ($num1 = 0 ; $num1 < $num_variabili_pers ; $num1++) {
 $var_pers = risul_query($variabili_pers,$num1,'testo');
@@ -867,12 +784,12 @@ $arr_pers_vett = explode(";",risul_query($array_pers,$num1,'testo'));
 $arr_pers = $arr_pers_vett[0];
 $var_arr_pers = $arr_pers_vett[1];
 $num_arr_pers = risul_query($array_pers,$num1,'numero');
-$option_arr_pers .= "<option value=\"a$num_arr_pers\">$arr_pers(".mex2($var_arr_pers).")</option>";
+$option_arr_pers .= "<option value=\"a$num_arr_pers\">$arr_pers(".mexv($var_arr_pers).")</option>";
 $var_non_predef = esegui_query("select numero from $tablecontratti where (tipo = 'var' or tipo = 'var$contr_cond') and testo = '".aggslashdb($var_arr_pers)."' ");
 if (numlin_query($var_non_predef)) $opt_arr_var_non_predef .= "<option value=\"a$num_arr_pers\">$arr_pers($var_arr_pers)</option>";
 $var_predef[$num_var_predef] = "$arr_pers($var_arr_pers)";
 $num_var_predef++;
-$nome_var["a$num_arr_pers"] = "$arr_pers(".mex2($var_arr_pers).")";
+$nome_var["a$num_arr_pers"] = "$arr_pers(".mexv($var_arr_pers).")";
 } # fine for $num1
 $option_var_pers .= $option_arr_pers;
 
@@ -901,7 +818,7 @@ $nomi_contratti = explode("#@&",risul_query($nomi_contratti,0,'valpersonalizza')
 $num_nomi_contratti = count($nomi_contratti);
 for ($num1 = 0 ; $num1 < $num_nomi_contratti ; $num1++) {
 $dati_nome_contratto = explode("#?&",$nomi_contratti[$num1]);
-$nome_contratto[$dati_nome_contratto[0]] = $dati_nome_contratto[1];
+$nome_contratto[$dati_nome_contratto[0]] = fixset($dati_nome_contratto[1]);
 } # fine for $num1
 if (!$contr_cond) {
 $sel = " selected";
@@ -959,12 +876,12 @@ $num_condizioni_rar = numlin_query($condizioni_rar);
 for ($num1 = 0 ; $num1 < $num_condizioni_rar ; $num1++) {
 $cond = risul_query($condizioni_rar,$num1,'testo');
 $num_arr_rip = substr($cond,3,(strlen(strstr($cond,"#@?")) * -1));
-if (!$num_cond_rip_a['num'][$num_arr_rip]) {
+if (empty($num_cond_rip_a['num'][$num_arr_rip])) {
 $num_rip_a++;
 $num_cond_rip_a['num'][$num_arr_rip] = $num_rip_a;
 $num_cond_rip_a['arr'][$num_rip_a] = $num_arr_rip;
 $ordine_rar .= ", testo $LIKE 'rar$num_arr_rip%' desc";
-} # fine if (!$num_cond_rip_a['num'][$num_arr_rip])
+} # fine if (empty($num_cond_rip_a['num'][$num_arr_rip]))
 } # fine for $num1
 
 $azione_orig = fixset($azione);
@@ -1028,7 +945,7 @@ if (!empty($agg_se) or !empty($canc_se)) $num_cond_mod = "";
 if ($num1 == $num_cond_rpt and $condizione[0] == "ros") echo "</table><br>".mex("Condizioni applicate",$pag)." ".mex("solo nelle ripetizioni degli ospiti",$pag)." (<em>".mex("tutte le altre condizioni non verranno più applicate in queste ripetizioni",$pag)."</em>):<br><table>";
 if ($num1 == $num_cond_rip_o and $condizione[0] == "rca") echo "</table><br>".mex("Condizioni applicate",$pag)." ".mex("solo nelle ripetizioni dei costi aggiuntivi",$pag)." (<em>".mex("tutte le altre condizioni non verranno più applicate in queste ripetizioni",$pag)."</em>):<br><table>";
 if ($num1 == $num_cond_rip_c and $condizione[0] == "rpa") echo "</table><br>".mex("Condizioni applicate",$pag)." ".mex("solo nelle ripetizioni dei pagamenti",$pag)." (<em>".mex("tutte le altre condizioni non verranno più applicate in queste ripetizioni",$pag)."</em>):<br><table>";
-if ($num1 == $num_cond_rip_p and $condizione[0] == "run") echo "</table><br>".mex("Condizioni applicate",$pag)." 111".mex("solo nelle ripetizioni delle unità",$pag)." (<em>".mex("tutte le altre condizioni non verranno più applicate in queste ripetizioni",$pag)."</em>):<br><table>";
+if ($num1 == $num_cond_rip_p and $condizione[0] == "run") echo "</table><br>".mex("Condizioni applicate",$pag)." ".mex("solo nelle ripetizioni delle unità",$pag)." (<em>".mex("tutte le altre condizioni non verranno più applicate in queste ripetizioni",$pag)."</em>):<br><table>";
 if ($num1 == $num_cond_rip_u and $condizione[0] == "rds") echo "</table><br>".mex("Condizioni applicate",$pag)." ".mex("solo nelle ripetizioni dei documenti salvati",$pag)." (<em>".mex("tutte le altre condizioni non verranno più applicate in queste ripetizioni",$pag)."</em>):<br><table>";
 if ($num1 == $num_cond_rip_d and $condizione[0] == "rar".$num_cond_rip_a['arr'][1]) echo "</table><br>".mex("Condizioni applicate",$pag)." ".mex("solo nelle ripetizioni dell'array",$pag)." [".$nome_var["a".$num_cond_rip_a['arr'][1]]."] (<em>".mex("tutte le altre condizioni non verranno più applicate in queste ripetizioni",$pag)."</em>):<br><table>";
 for ($num2 = 1 ; $num2 < $num_rip_a ; $num2++) if ($num1 == $num_cond_rip_a[$num2] and $condizione[0] == "rar".$num_cond_rip_a['arr'][($num2 + 1)]) echo "</table><br>".mex("Condizioni applicate",$pag)." ".mex("solo nelle ripetizioni dell'array",$pag)." [".$nome_var["a".$num_cond_rip_a['arr'][($num2 + 1)]]."] (<em>".mex("tutte le altre condizioni non verranno più applicate in queste ripetizioni",$pag)."</em>):<br><table>";
@@ -1051,14 +968,16 @@ if ($se_cond[0] == "or") $str_cond .= "".mex("o",$pag)."";
 else $str_cond .= "".mex("e",$pag)."";
 } # fine if ($num2 > 1)
 else $str_cond .= mex("se",$pag);
-$str_cond .= " [".mex2($se_cond_corr[0])."] ";
+$str_cond .= " [".mexv($se_cond_corr[0])."] ";
 if ($se_cond_corr[1] == "=") $str_cond .= mex("è uguale a",$pag);
 if ($se_cond_corr[1] == "!=") $str_cond .= mex("è diverso da",$pag);
 if ($se_cond_corr[1] == ">") $str_cond .= mex("è maggiore di",$pag);
 if ($se_cond_corr[1] == "<") $str_cond .= mex("è minore di",$pag);
 if ($se_cond_corr[1] == "{}") $str_cond .= mex("contiene",$pag);
 if ($se_cond_corr[1] == "{A}") $str_cond .= mex("contiene",$pag)." (".mex("maiusc./minusc.",$pag).")";
-if ($se_cond_corr[2] == "var") $str_cond .= " [".mex2($se_cond_corr[3])."] ";
+if ($se_cond_corr[1] == "!{}") $str_cond .= mex("non contiene",$pag);
+if ($se_cond_corr[1] == "!{A}") $str_cond .= mex("non contiene",$pag)." (".mex("maiusc./minusc.",$pag).")";
+if ($se_cond_corr[2] == "var") $str_cond .= " [".mexv($se_cond_corr[3])."] ";
 else $str_cond .= " \"".htmlspecialchars($se_cond_corr[3])."\" ";
 if (isset($num_cond_mod) and $num_cond_mod == $num_cond) {
 ${"var_se".$num2} = $se_cond_corr[0];
@@ -1067,6 +986,8 @@ if (${"cond".$num2} == ">") ${"cond".$num2} = "mag";
 if (${"cond".$num2} == "<") ${"cond".$num2} = "min";
 if (${"cond".$num2} == "{}") ${"cond".$num2} = "con";
 if (${"cond".$num2} == "{A}") ${"cond".$num2} = "cmm";
+if (${"cond".$num2} == "!{}") ${"cond".$num2} = "nco";
+if (${"cond".$num2} == "!{A}") ${"cond".$num2} = "ncm";
 ${"tipo_val_se".$num2} = $se_cond_corr[2];
 if ($se_cond_corr[2] == "var") ${"val_se_sel".$num2} = $se_cond_corr[3];
 else ${"val_se_txt".$num2} = $se_cond_corr[3];
@@ -1080,23 +1001,33 @@ $str_cond .= mex("porre",$pag)." [".$nome_var[$azione[1]]."] ";
 if ($azione[2] == "=") $str_cond .= mex("uguale a",$pag);
 if ($azione[2] == ".=") $str_cond .= mex("concatenato con",$pag);
 if ($azione[3] == "var") {
-$str_cond .= " [".mex2($azione[4])."]";
+$str_cond .= " [".mexv($azione[4])."]";
 if ($azione[9] == "low") $str_cond .= " ".mex("in minuscole",$pag);
 if ($azione[9] == "upp") $str_cond .= " ".mex("in maiuscole",$pag);
 if ($azione[9] == "url") $str_cond .= " ".mex("codificato per URL",$pag);
 if ($azione[9] == "asc") $str_cond .= " ".mex("codificato in ASCII",$pag);
 if ($azione[9] == "eas") $str_cond .= " ".mex("in ASCII esteso",$pag);
 if ($azione[9] == "md5") $str_cond .= " ".mex("codificato con MD5",$pag);
+if ($azione[9] == "eht") $str_cond .= " ".mex("codificato in HTML",$pag);
+if ($azione[9] == "dht") $str_cond .= " ".mex("decodificato da HTML",$pag);
+if ($azione[9] == "e64") $str_cond .= " ".mex("codificato in MIME base64",$pag);
+if ($azione[9] == "d64") $str_cond .= " ".mex("decodificato da MIME base64",$pag);
+if ($azione[9] == "0c1") $str_cond .= " ".mex("convertito da base",$pag)."10 ".mex("a base",$pag)."2";
+if ($azione[9] == "1c0") $str_cond .= " ".mex("convertito da base",$pag)."2 ".mex("a base",$pag)."10";
+if ($azione[9] == "0c2") $str_cond .= " ".mex("convertito da base",$pag)."10 ".mex("a base",$pag)."16";
+if ($azione[9] == "2c0") $str_cond .= " ".mex("convertito da base",$pag)."16 ".mex("a base",$pag)."10";
+if ($azione[9] == "0c3") $str_cond .= " ".mex("convertito da base",$pag)."10 ".mex("a base",$pag)."36";
+if ($azione[9] == "3c0") $str_cond .= " ".mex("convertito da base",$pag)."36 ".mex("a base",$pag)."10";
 } # fine if ($azione[3] == "var")
 else $str_cond .= " \"".htmlspecialchars($azione[4])."\"";
-if (strcmp($azione[6],"")) {
+if (strcmp((string) $azione[6],"")) {
 $str_cond .= " ".mex("sostituendo",$pag)." ";
-if ($azione[5] == "var") $str_cond .= "[".mex2($azione[6])."]";
+if ($azione[5] == "var") $str_cond .= "[".mexv($azione[6])."]";
 else $str_cond .= "\"".htmlspecialchars($azione[6])."\"";
 $str_cond .= " ".mex("con",$pag)." ";
-if ($azione[7] == "var") $str_cond .= "[".mex2($azione[8])."]";
+if ($azione[7] == "var") $str_cond .= "[".mexv($azione[8])."]";
 else $str_cond .= "\"".htmlspecialchars($azione[8])."\"";
-} # fine if (strcmp($azione[6],""))
+} # fine if (strcmp((string) $azione[6],""))
 if (isset($num_cond_mod) and $num_cond_mod == $num_cond) {
 $oper_str = $azione[2];
 $var_allora = $azione[1];
@@ -1118,12 +1049,12 @@ $str_cond .= mex("troncare",$pag)." [".$nome_var[$azione[1]]."] ";
 if ($azione[2] < 0) $str_cond .= mex("prima di",$pag)." ".($azione[2] * -1);
 else $str_cond .= mex("dopo",$pag)." ".$azione[2];
 $str_cond .= " ".mex("caratteri",$pag);
-if (strcmp($azione[3],"")) {
+if (strcmp((string) $azione[3],"")) {
 $str_cond .= " (".mex("riempiendo i mancanti con",$pag)." \"".htmlspecialchars($azione[3])."\"";
 if ($azione[4] == "ini") $str_cond .= " ".mex("all'inizio",$pag);
 if ($azione[4] == "fin") $str_cond .= " ".mex("alla fine",$pag);
 $str_cond .= ")";
-} # fine if (strcmp($azione[3],""))
+} # fine if (strcmp((string) $azione[3],""))
 if (isset($num_cond_mod) and $num_cond_mod == $num_cond) {
 $var_trunc = $azione[1];
 $val_trunc = $azione[2];
@@ -1134,11 +1065,11 @@ $pos_trunc2 = $azione[4];
 
 if ($azione[0] == "oper") {
 $str_cond .= mex("porre",$pag)." [".$nome_var[$azione[1]]."] ".mex("uguale a",$pag);
-$str_cond .= " [".mex2($azione[2])."] ";
+$str_cond .= " [".mexv($azione[2])."] ";
 $str_cond .= $azione[3]." ";
-if ($azione[4] == "var") $str_cond .= "[".mex2($azione[5])."]";
+if ($azione[4] == "var") $str_cond .= "[".mexv($azione[5])."]";
 else $str_cond .= $azione[5];
-if (strcmp($azione[6],"")) $str_cond .= " (".mex("arrotondato a",$pag)." ".$azione[6].")";
+if (strcmp((string) $azione[6],"")) $str_cond .= " (".mex("arrotondato a",$pag)." ".$azione[6].")";
 if (isset($num_cond_mod) and $num_cond_mod == $num_cond) {
 $var_oper = $azione[1];
 $var_oper2 = $azione[2];
@@ -1158,7 +1089,7 @@ if ($azione[3] == "an") $str_cond .= mex("l'anno",$pag);
 if ($azione[3] == "gs") $str_cond .= mex("il giorno della settimana",$pag);
 if ($azione[3] == "is") $str_cond .= mex("la data",$pag)." (".mex("formato ISO",$pag).")";
 if ($azione[3] == "da") $str_cond .= mex("la data",$pag)." (".mex("formato corrente",$pag).")";
-$str_cond .= "\" ".mex("della data",$pag)." [".mex2($azione[2])."]";
+$str_cond .= "\" ".mex("della data",$pag)." [".mexv($azione[2])."]";
 if ($azione[4]) {
 if ($azione[4] < 0) $str_cond .= " - ".($azione[4] * -1)." ";
 else $str_cond .= " + ".$azione[4]." ";
@@ -1185,8 +1116,8 @@ $str_cond .= mex("porre",$pag)." [".$nome_var[$azione[1]]."] ".mex("uguale al nu
 if ($azione[2] == "g") $str_cond .= mex("giorni",$pag);
 if ($azione[2] == "m") $str_cond .= mex("mesi",$pag);
 if ($azione[2] == "a") $str_cond .= mex("anni",$pag);
-$str_cond .= "\" ".mex("dalla data",$pag)." [".mex2($azione[3])."]";
-$str_cond .= " ".mex("alla data",$pag)." [".mex2($azione[4])."]";
+$str_cond .= "\" ".mex("dalla data",$pag)." [".mexv($azione[3])."]";
+$str_cond .= " ".mex("alla data",$pag)." [".mexv($azione[4])."]";
 if (isset($num_cond_mod) and $num_cond_mod == $num_cond) {
 $var_data = $azione[1];
 $tipo_int = $azione[2];
@@ -1348,7 +1279,7 @@ echo " ".mex("variabili e condizioni del documento",$pag)."
 $opt_contr_imp</select>
 <input class=\"sbutton\" type=\"submit\" value=\"".mex("Modifica",$pag)."\">
 </div></form>";
-if ($num_condizioni > 0) echo "<small>&nbsp;&nbsp;(".mex("le variabili e condizioni attuali verranno cancellate",$pag).")</small>";
+if (isset($num_condizioni) and $num_condizioni > 0) echo "<small>&nbsp;&nbsp;(".mex("le variabili e condizioni attuali verranno cancellate",$pag).")</small>";
 if ($contr_importa_vc and ($attiva_contratti_consentiti == "n" or $contratti_consentiti_vett[$contr_importa_vc] == "SI")) {
 echo "<form accept-charset=\"utf-8\" method=\"post\" action=\"$pag\"><div>
 <input type=\"hidden\" name=\"anno\" value=\"$anno\">
@@ -1363,15 +1294,17 @@ echo "<br><br>";
 
 
 if($option_var_pers and !$contr_importa_vc) {
-$option_var_pers .= "<option value=\"-2\">".mex2('errore_ripetizione')."</option>
-<option value=\"-1\">".mex2('messaggio_di_errore')."</option>";
+for ($num1 = 1 ; $num1 <= $dati_allegato['num'] ; $num1++) $option_var_pers .= "<option value=\"".(-100 - $num1)."\">".mexv('allegato')."$num1</option>";
+$option_var_pers .= "<option value=\"-3\">".mexv('nome_documento_scaricato')."</option>
+<option value=\"-2\">".mexv('errore_ripetizione')."</option>
+<option value=\"-1\">".mexv('messaggio_di_errore')."</option>";
 
 
 $option_var_predef = "";
 $option_var_predef_data = "";
 for ($num1 = 0 ; $num1 < $num_var_predef ; $num1++) {
-$option_var_predef .= "<option value=\"".$var_predef[$num1]."\">".mex2($var_predef[$num1])."</option>";
-if (!empty($var_predef_data[$var_predef[$num1]]) or $num1 >= $num_var_predef_orig) $option_var_predef_data .= "<option value=\"".$var_predef[$num1]."\">".mex2($var_predef[$num1])."</option>";
+$option_var_predef .= "<option value=\"".$var_predef[$num1]."\">".mexv($var_predef[$num1])."</option>";
+if (!empty($var_predef_data[$var_predef[$num1]]) or $num1 >= $num_var_predef_orig) $option_var_predef_data .= "<option value=\"".$var_predef[$num1]."\">".mexv($var_predef[$num1])."</option>";
 } # fine for $num1
 
 
@@ -1409,7 +1342,7 @@ $input_cond_contr
 <input type=\"hidden\" name=\"cambia_qualcosa\" value=\"SI\">
 <input type=\"hidden\" name=\"aggiungi_cond\" value=\"SI\">
 <input type=\"hidden\" name=\"num_se\" value=\"$num_se\">
-<input type=\"hidden\" name=\"and_or\" value=\"".htmlspecialchars(fixset($and_or))."\">
+<input type=\"hidden\" name=\"and_or\" value=\"".htmlspecialchars(fixstr($and_or))."\">
 <input type=\"hidden\" name=\"num_cond_mod\" value=\"$num_cond_mod\">";
 if (!$num_cond_mod) echo "<b>".ucfirst(mex("nuova condizione",$pag))."</b> ".mex("da applicare",$pag);
 else echo "".ucfirst(mex("modifica la condizione",$pag))." <b>$num_cond_mod_vedi</b> ".mex("da applicare",$pag);
@@ -1474,6 +1407,8 @@ $sel_mag = "";
 $sel_min = "";
 $sel_con = "";
 $sel_cmm = "";
+$sel_nco = "";
+$sel_ncm = "";
 if (isset(${"cond".$num1})) {
 if (${"cond".$num1} == "=") $sel_ug = " selected";
 if (${"cond".$num1} == "!=") $sel_div = " selected";
@@ -1481,6 +1416,8 @@ if (${"cond".$num1} == "mag") $sel_mag = " selected";
 if (${"cond".$num1} == "min") $sel_min = " selected";
 if (${"cond".$num1} == "con") $sel_con = " selected";
 if (${"cond".$num1} == "cmm") $sel_cmm = " selected";
+if (${"cond".$num1} == "nco") $sel_nco = " selected";
+if (${"cond".$num1} == "ncm") $sel_ncm = " selected";
 } # fine if (isset(${"cond".$num1}))
 echo "<td>$fr_se</td><td><select name=\"var_se$num1\">
 ".str_replace("\"".fixset(${"var_se".$num1})."\">","\"".fixset(${"var_se".$num1})."\" selected>",$option_var_predef)."
@@ -1491,10 +1428,12 @@ echo "<td>$fr_se</td><td><select name=\"var_se$num1\">
 <option value=\"min\"$sel_min>".mex("è minore di",$pag)."</option>
 <option value=\"con\"$sel_con>".mex("contiene",$pag)."</option>
 <option value=\"cmm\"$sel_cmm>".mex("contiene",$pag)." (".mex("maiusc./minusc.",$pag).")</option>
+<option value=\"nco\"$sel_nco>".mex("non contiene",$pag)."</option>
+<option value=\"ncm\"$sel_ncm>".mex("non contiene",$pag)." (".mex("maiusc./minusc.",$pag).")</option>
 </select></td><td><b style=\"font-size: 260%;\">{</b></td><td>
 <table cellspacing=\"0\"><tr><td>
 <input type=\"radio\" id=\"val_se_txt$num1\" name=\"tipo_val_se$num1\" value=\"txt\"$chk_txt></td><td>
-<input type=\"text\" name=\"val_se_txt$num1\" value=\"".htmlspecialchars(fixset(${"val_se_txt".$num1}))."\" size=\"20\" maxlength=\"750\" onfocus=\"document.getElementById('val_se_txt$num1').checked='1'\">
+<input type=\"text\" name=\"val_se_txt$num1\" value=\"".htmlspecialchars(fixstr(${"val_se_txt".$num1}))."\" size=\"20\" maxlength=\"750\" onfocus=\"document.getElementById('val_se_txt$num1').checked='1'\">
 </td></tr><tr><td><input type=\"radio\" id=\"val_se_sel$num1\" name=\"tipo_val_se$num1\" value=\"var\"$chk_var></td><td>
 <select name=\"val_se_sel$num1\" onfocus=\"document.getElementById('val_se_sel$num1').checked='1'\">
 ".str_replace("\"".fixset(${"val_se_sel".$num1})."\">","\"".fixset(${"val_se_sel".$num1})."\" selected>",$option_var_predef)."
@@ -1526,6 +1465,16 @@ $sel_oper_url = "";
 $sel_oper_asc = "";
 $sel_oper_eas = "";
 $sel_oper_md5 = "";
+$sel_oper_eht = "";
+$sel_oper_dht = "";
+$sel_oper_e64 = "";
+$sel_oper_d64 = "";
+$sel_oper_0c2 = "";
+$sel_oper_2c0 = "";
+$sel_oper_0c1 = "";
+$sel_oper_1c0 = "";
+$sel_oper_0c3 = "";
+$sel_oper_3c0 = "";
 if (empty($oper_allora_sel)) $sel_oper_no = " selected";
 else {
 if ($oper_allora_sel == "low") $sel_oper_low = " selected";
@@ -1534,6 +1483,16 @@ if ($oper_allora_sel == "url") $sel_oper_url = " selected";
 if ($oper_allora_sel == "asc") $sel_oper_asc = " selected";
 if ($oper_allora_sel == "eas") $sel_oper_eas = " selected";
 if ($oper_allora_sel == "md5") $sel_oper_md5 = " selected";
+if ($oper_allora_sel == "eht") $sel_oper_eht = " selected";
+if ($oper_allora_sel == "dht") $sel_oper_dht = " selected";
+if ($oper_allora_sel == "e64") $sel_oper_e64 = " selected";
+if ($oper_allora_sel == "d64") $sel_oper_d64 = " selected";
+if ($oper_allora_sel == "0c2") $sel_oper_0c2 = " selected";
+if ($oper_allora_sel == "2c0") $sel_oper_2c0 = " selected";
+if ($oper_allora_sel == "0c1") $sel_oper_0c1 = " selected";
+if ($oper_allora_sel == "1c0") $sel_oper_1c0 = " selected";
+if ($oper_allora_sel == "0c3") $sel_oper_0c3 = " selected";
+if ($oper_allora_sel == "3c0") $sel_oper_3c0 = " selected";
 } # fine else if (empty($oper_allora_sel))
 echo "<table onclick=\"document.getElementById('az_set').checked='1'\"><tr><td>
 <input type=\"radio\" id=\"az_set\" name=\"azione\" value=\"set\"$chk_az>
@@ -1546,7 +1505,7 @@ echo "<table onclick=\"document.getElementById('az_set').checked='1'\"><tr><td>
 <td><b style=\"font-size: 260%;\">{</b></td><td>
 <table cellspacing=\"0\"><tr><td>
 <input type=\"radio\" id=\"val_all_txt\" name=\"tipo_val_allora\" value=\"txt\"$chk_txt></td><td>
-<input type=\"text\" name=\"val_allora_txt\" value=\"".htmlspecialchars(fixset($val_allora_txt))."\" size=\"20\" maxlength=\"750\" onfocus=\"document.getElementById('val_all_txt').checked='1'\">
+<input type=\"text\" name=\"val_allora_txt\" value=\"".htmlspecialchars(fixstr($val_allora_txt))."\" size=\"20\" maxlength=\"750\" onfocus=\"document.getElementById('val_all_txt').checked='1'\">
 </td></tr><tr><td><input type=\"radio\" id=\"val_all_sel\" name=\"tipo_val_allora\" value=\"var\"$chk_var></td><td>
 <select name=\"val_allora_sel\" onfocus=\"document.getElementById('val_all_sel').checked='1'\">
 ".str_replace("\"".fixset($val_allora_sel)."\">","\"".fixset($val_allora_sel)."\" selected>",$option_var_predef)."
@@ -1558,12 +1517,22 @@ echo "<table onclick=\"document.getElementById('az_set').checked='1'\"><tr><td>
 <option value=\"asc\"$sel_oper_asc>".mex("codificato in ASCII",$pag)."</option>
 <option value=\"eas\"$sel_oper_eas>".mex("in ASCII esteso",$pag)."</option>
 <option value=\"md5\"$sel_oper_md5>".mex("codificato con MD5",$pag)."</option>
+<option value=\"eht\"$sel_oper_eht>".mex("codif. in HTML",$pag)."</option>
+<option value=\"dht\"$sel_oper_dht>".mex("decodif. da HTML",$pag)."</option>
+<option value=\"e64\"$sel_oper_e64>".mex("codif. in base64",$pag)."</option>
+<option value=\"d64\"$sel_oper_d64>".mex("decodif. da base64",$pag)."</option>
+<option value=\"0c2\"$sel_oper_0c2>".mex("da base",$pag)." 10 ".mex("a",$pag)." 2</option>
+<option value=\"2c0\"$sel_oper_2c0>".mex("da base",$pag)." 2 ".mex("a",$pag)." 10</option>
+<option value=\"0c1\"$sel_oper_0c1>".mex("da base",$pag)." 10 ".mex("a",$pag)." 16</option>
+<option value=\"1c0\"$sel_oper_1c0>".mex("da base",$pag)." 16 ".mex("a",$pag)." 10</option>
+<option value=\"0c3\"$sel_oper_0c3>".mex("da base",$pag)." 10 ".mex("a",$pag)." 36</option>
+<option value=\"3c0\"$sel_oper_3c0>".mex("da base",$pag)." 36 ".mex("a",$pag)." 10</option>
 </select></td></tr></table></td><td>
 (".str_replace(" ","&nbsp;",mex("sostituendo",$pag))."</td><td>
 <b style=\"font-size: 260%;\">{</b></td><td>
 <table cellspacing=\"0\"><tr><td>
 <input type=\"radio\" id=\"val_s1_txt\" name=\"tipo_val_sost1\" value=\"txt\"$chk_txt_s1></td><td>
-<input type=\"text\" name=\"val_sost1_txt\" value=\"".htmlspecialchars(fixset($val_sost1_txt))."\" size=\"20\" maxlength=\"750\" onfocus=\"document.getElementById('val_s1_txt').checked='1'\">
+<input type=\"text\" name=\"val_sost1_txt\" value=\"".htmlspecialchars(fixstr($val_sost1_txt))."\" size=\"20\" maxlength=\"750\" onfocus=\"document.getElementById('val_s1_txt').checked='1'\">
 </td></tr><tr><td><input type=\"radio\" id=\"val_s1_sel\" name=\"tipo_val_sost1\" value=\"var\"$chk_var_s1></td><td>
 <select name=\"val_sost1_sel\" onfocus=\"document.getElementById('val_s1_sel').checked='1'\">
 ".str_replace("\"".fixset($val_sost1_sel)."\">","\"".fixset($val_sost1_sel)."\" selected>",$option_var_predef)."
@@ -1572,7 +1541,7 @@ echo "<table onclick=\"document.getElementById('az_set').checked='1'\"><tr><td>
 <b style=\"font-size: 260%;\">{</b></td><td>
 <table cellspacing=\"0\"><tr><td>
 <input type=\"radio\" id=\"val_s2_txt\" name=\"tipo_val_sost2\" value=\"txt\"$chk_txt_s2></td><td>
-<input type=\"text\" name=\"val_sost2_txt\" value=\"".htmlspecialchars(fixset($val_sost2_txt))."\" size=\"20\" maxlength=\"750\" onfocus=\"document.getElementById('val_s2_txt').checked='1'\">
+<input type=\"text\" name=\"val_sost2_txt\" value=\"".htmlspecialchars(fixstr($val_sost2_txt))."\" size=\"20\" maxlength=\"750\" onfocus=\"document.getElementById('val_s2_txt').checked='1'\">
 </td></tr><tr><td><input type=\"radio\" id=\"val_s2_sel\" name=\"tipo_val_sost2\" value=\"var\"$chk_var_s2></td><td>
 <select name=\"val_sost2_sel\" onfocus=\"document.getElementById('val_s2_sel').checked='1'\">
 ".str_replace("\"".fixset($val_sost2_sel)."\">","\"".fixset($val_sost2_sel)."\" selected>",$option_var_predef)."
@@ -1592,7 +1561,7 @@ echo "<table onclick=\"document.getElementById('az_trunc').checked='1'\"><tr><td
 <input type=\"text\" name=\"val_trunc\" value=\"".fixset($val_trunc)."\" size=\"3\" maxlength=\"12\"></td><td>
 ".str_replace(" ","&nbsp;",mex("caratteri",$pag))."</td><td>
 <td>(".str_replace(" ","&nbsp;",mex("se mancanti riempire con",$pag))."</td><td>
-<input type=\"text\" name=\"val_trunc2\" value=\"".htmlspecialchars(fixset($val_trunc2))."\" size=\"10\" maxlength=\"750\"></td>
+<input type=\"text\" name=\"val_trunc2\" value=\"".htmlspecialchars(fixstr($val_trunc2))."\" size=\"10\" maxlength=\"750\"></td>
 <td>".str_replace(" ","&nbsp;",mex("la parte",$pag))."</td><td>
 <select name=\"pos_trunc2\">
 <option value=\"ini\"$sel_ini>".mex("iniziale",$pag)."</option>
@@ -1614,7 +1583,7 @@ if ($operatore == "/") $sel_div = " selected";
 } # fine if (isset($operatore))
 if (isset($tipo_val_oper) and $tipo_val_oper == "var") { $chk_var = " checked"; $chk_txt = ""; }
 else { $chk_var = ""; $chk_txt = " checked"; }
-if (!isset($val_oper_txt) or !strcmp($val_oper_txt,"")) $val_oper_txt = "0";
+if (!isset($val_oper_txt) or !strcmp((string) $val_oper_txt,"")) $val_oper_txt = "0";
 echo "<table><tr onclick=\"document.getElementById('az_oper').checked='1'\"><td>
 <input type=\"radio\" id=\"az_oper\" name=\"azione\" value=\"oper\"$chk_az>
 </td><td>".ucfirst(mex("porre",$pag))." </td><td><select name=\"var_oper\">
@@ -1638,7 +1607,7 @@ echo "<table><tr onclick=\"document.getElementById('az_oper').checked='1'\"><td>
 ".str_replace("\"".fixset($val_oper_sel)."\">","\"".fixset($val_oper_sel)."\" selected>",$option_var_predef)."
 </select></td></tr></table>
 </td><td>(".str_replace(" ","&nbsp;",mex("arrotondato a",$pag))."</td><td>
-<input type=\"text\" name=\"val_arrotond\" value=\"".htmlspecialchars(fixset($val_arrotond))."\" size=\"15\" maxlength=\"50\"></td><td>)
+<input type=\"text\" name=\"val_arrotond\" value=\"".htmlspecialchars(fixstr($val_arrotond))."\" size=\"15\" maxlength=\"50\"></td><td>)
 </td></tr><tr><td></td><td colspan=\"9\"><small>
 (".mex("Utilizzare una variabile personalizzata che finisce con \"_p\" per aggiungervi i separatori delle migliaia e 2 decimali dopo l'operazione",$pag).")
 </small></td></tr></table><br>";
@@ -1669,7 +1638,7 @@ if (isset($oper_giorni)) {
 if ($oper_giorni == "+") $sel_piu = " selected";
 if ($oper_giorni == "-") $sel_men = " selected";
 } # fine if (isset($oper_giorni))
-if (!isset($num_giorni) or !strcmp($num_giorni,"")) $num_giorni = "0";
+if (!isset($num_giorni) or !strcmp((string) $num_giorni,"")) $num_giorni = "0";
 $sel_g = "";
 $sel_m = "";
 $sel_a = "";
@@ -1748,7 +1717,7 @@ echo "<table onclick=\"document.getElementById('az_azzera').checked='1'\"><tr><t
 <input type=\"radio\" id=\"az_azzera\" name=\"azione\" value=\"unset\"$chk_az>
 </td><td>".str_replace(" ","&nbsp;",ucfirst(mex("azzera l'array",$pag)))."</td><td>
 <select name=\"arr_azz\">
-".str_replace("\"$arr_azz\">","\"$arr_azz\" selected>",$option_arr_pers)."
+".str_replace("\"".fix_set($arr_azz)."\">","\"$arr_azz\" selected>",$option_arr_pers)."
 </select></td></tr></table><br>";
 } # fine if ($option_arr_pers)
 
@@ -1759,15 +1728,17 @@ $chk_dat = "";
 $chk_dap = "";
 $chk_val = "";
 $chk_cop = "";
-if ($tipo_arr == "dat" or !$tipo_arr) $chk_dat = " checked";
+if (empty($tipo_arr) or $tipo_arr == "dat") $chk_dat = " checked";
+else {
 if ($tipo_arr == "dap") $chk_dap = " checked";
 if ($tipo_arr == "val") $chk_val = " checked";
 if ($tipo_arr == "cop") $chk_cop = " checked";
+} # fine else if (empty($tipo_arr) or $tipo_arr == "dat")
 echo "<table onclick=\"document.getElementById('az_array').checked='1'\"><tr><td>
 <input type=\"radio\" id=\"az_array\" name=\"azione\" value=\"array\"$chk_az>
 </td><td>".str_replace(" ","&nbsp;",ucfirst(mex("assegna all'array",$pag)))."</td><td>
 <select name=\"array\">
-".str_replace("\"$array\">","\"$array\" selected>",$opt_arr_var_non_predef)."
+".str_replace("\"".fix_set($array)."\">","\"$array\" selected>",$opt_arr_var_non_predef)."
 </select></td><td>
 <b style=\"font-size: 260%;\">{</b></td><td>
 <table cellspacing=\"0\">
@@ -1781,7 +1752,7 @@ echo "<table onclick=\"document.getElementById('az_array').checked='1'\"><tr><td
 <input type=\"radio\" id=\"arr_val\" name=\"tipo_arr\" value=\"val\"$chk_val></td><td>
 <table cellspacing=\"0\"><tr><td>
 ".str_replace(" ","&nbsp;",mex("una lista di valori predefiniti",$pag)).":</td>
-<td><input type=\"text\" name=\"lista_val\" value=\"".htmlspecialchars($lista_val)."\" size=\"26\"></td>
+<td><input type=\"text\" name=\"lista_val\" value=\"".htmlspecialchars(fixstr($lista_val))."\" size=\"26\"></td>
 <td>(".str_replace(" ","&nbsp;",mex("separati da virgole",$pag)).").
 </td></tr></table></td></tr>
 <tr onclick=\"document.getElementById('arr_cop').checked='1'\"><td>
@@ -1789,7 +1760,7 @@ echo "<table onclick=\"document.getElementById('az_array').checked='1'\"><tr><td
 <table cellspacing=\"0\"><tr><td>
 ".str_replace(" ","&nbsp;",mex("i valori dell'array",$pag)." ")."</td>
 <td><select name=\"array2\">
-".str_replace("\"$array2\">","\"$array2\" selected>",$option_arr_pers)."
+".str_replace("\"".fix_set($array2)."\">","\"$array2\" selected>",$option_arr_pers)."
 </select>.</td></tr></table></td></tr></table>
 </td></tr></table><br>";
 } # fine if ($opt_arr_var_non_predef)

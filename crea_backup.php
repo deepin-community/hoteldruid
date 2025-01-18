@@ -2,7 +2,7 @@
 
 ##################################################################################
 #    HOTELDRUID
-#    Copyright (C) 2001-2021 by Marco Maria Francesco De Santis (marco@digitaldruid.net)
+#    Copyright (C) 2001-2023 by Marco Maria Francesco De Santis (marco@digitaldruid.net)
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published by
@@ -45,7 +45,20 @@ $var_pag[16] = 'mostra_header';
 $var_pag[17] = 'salva_backup';
 $var_pag[18] = 'includi_modelli';
 $var_pag[19] = 'cancella_backup';
-$n_var_pag = 20;
+$var_pag[20] = 'utente_backup';
+$var_pag[21] = 'lista_anni_passa';
+$n_var_pag = 22;
+if (isset($_REQUEST['lista_anni_passa'])) $num2 = $_REQUEST['lista_anni_passa'];
+else $num2 = 0;
+if ($num2) {
+$num2 = explode(",",$num2);
+$num3 = count($num2);
+for ($num1 = 1 ; $num1 < $num3 ; $num1++) {
+$num4 = (int) $num2[$num1];
+$var_pag[$n_var_pag++] = "anno_sel$num4";
+} # fine for $num1
+} # fine if ($num2)
+
 
 include("./costanti.php");
 include(C_DATI_PATH."/dati_connessione.php");
@@ -61,10 +74,12 @@ $tableprivilegi = $PHPR_TAB_PRE."privilegi";
 $tablepersonalizza = $PHPR_TAB_PRE."personalizza";
 $tablecache = $PHPR_TAB_PRE."cache";
 
-if (defined("C_UTENTE_BACKUP_ESTERNO") and C_UTENTE_BACKUP_ESTERNO != "" and $utente_backup == C_UTENTE_BACKUP_ESTERNO and (!defined('C_VERSIONE_ATTUALE') or !defined('C_PHPR_VERSIONE_NUM') or (double) C_VERSIONE_ATTUALE == (double) C_PHPR_VERSIONE_NUM)) $id_utente = "b";
+if (defined("C_UTENTE_BACKUP_ESTERNO") and C_UTENTE_BACKUP_ESTERNO != "" and isset($utente_backup) and $utente_backup == C_UTENTE_BACKUP_ESTERNO and (!defined('C_VERSIONE_ATTUALE') or !defined('C_PHPR_VERSIONE_NUM') or (double) C_VERSIONE_ATTUALE == (double) C_PHPR_VERSIONE_NUM)) $id_utente = "b";
 else $id_utente = controlla_login($numconnessione,$PHPR_TAB_PRE,$id_sessione,$nome_utente_phpr,$password_phpr,$anno);
 if ($id_utente) {
 
+$privilegi_annuali_utente = null;
+$privilegi_globali_utente = null;
 if ($id_utente != 1 and $id_utente != "b") {
 $privilegi_annuali_utente = esegui_query("select * from $tableprivilegi where idutente = '$id_utente' and anno = '$anno'");
 if (numlin_query($privilegi_annuali_utente) == 0) $anno_utente_attivato = "NO";
@@ -72,8 +87,6 @@ else $anno_utente_attivato = "SI";
 $privilegi_globali_utente = esegui_query("select * from $tableprivilegi where idutente = '$id_utente' and anno = '1'");
 $priv_mod_pers = risul_query($privilegi_globali_utente,0,'priv_mod_pers');
 $priv_crea_backup = substr($priv_mod_pers,1,1);
-chiudi_query($privilegi_annuali_utente);
-chiudi_query($privilegi_globali_utente);
 } # fine if ($id_utente != 1 and $id_utente != "b")
 else {
 $priv_crea_backup = "s";
@@ -96,6 +109,8 @@ $titolo = "HotelDruid: ".mex("Backup",$pag);
 if ($tema[$id_utente] and $tema[$id_utente] != "base" and @is_dir("./themes/".$tema[$id_utente]."/php")) include("./themes/".$tema[$id_utente]."/php/head.php");
 else include("./includes/head.php");
 } # fine if (fixset($mostra_header) != "NO")
+if ($privilegi_annuali_utente) chiudi_query($privilegi_annuali_utente);
+if ($privilegi_globali_utente) chiudi_query($privilegi_globali_utente);
 
 
 
@@ -132,14 +147,14 @@ $num_anni = numlin_query($anni);
 $cond_anni = "";
 $cond_personalizza = "";
 $cond_ic_e_priv = "";
-if ($anni_backup) {
+if (!empty($anni_backup)) {
 for ($num1 = 0 ; $num1 < $num_anni ; $num1++) {
 $anno_reg = risul_query($anni,$num1,'idanni');
-if (${'anno_sel'.$anno_reg}) {
+if (!empty(${'anno_sel'.$anno_reg})) {
 if (!$cond_anni) $cond_anni = "where ";
 else $cond_anni .= " or ";
 $cond_anni .= "idanni = '$anno_reg'";
-} # fine if (${'anno_sel'.$anno_reg})
+} # fine if (!empty(${'anno_sel'.$anno_reg}))
 else {
 if (!$cond_personalizza) $cond_personalizza = "where ";
 else $cond_personalizza .= " and ";
@@ -147,11 +162,10 @@ $cond_personalizza .= "idpersonalizza != 'giorno_vedi_ini_sett$anno_reg'";
 if (!$cond_ic_e_priv) $cond_ic_e_priv = "where ";
 else $cond_ic_e_priv .= " and ";
 $cond_ic_e_priv .= "anno != '$anno_reg'";
-
-} # fine else if (${'anno_sel'.$anno_reg})
+} # fine else if (!empty(${'anno_sel'.$anno_reg}))
 } # fine for $num1
 if (!$cond_anni) $anni_backup = "";
-} # fine if ($anni_backup)
+} # fine if (!empty($anni_backup))
 
 $tabelle_lock = "";
 $altre_tab_lock = array($tableanni);
@@ -278,13 +292,13 @@ if (@is_file(C_DATI_PATH."/dati_interconnessioni.php")) dump_testo("/dati_interc
 if (@is_file(C_DATI_PATH."/log_utenti.php")) dump_testo("/log_utenti.php",$file);
 for ($num1 = 0 ; $num1 < $num_anni ; $num1++) {
 $anno_reg = risul_query($anni,$num1,'idanni');
-if (!$anni_backup or ${'anno_sel'.$anno_reg}) {
+if (empty($anni_backup) or !empty(${'anno_sel'.$anno_reg})) {
 for ($num2 = 0 ; $num2 < numlin_query($utenti) ; $num2++) {
 $idutente_reg = risul_query($utenti,$num2,'idutenti');
 if (@is_file(C_DATI_PATH."/selectperiodi$anno_reg.$idutente_reg.php")) dump_testo("/selectperiodi$anno_reg.$idutente_reg.php",$file);
 if (@is_file(C_DATI_PATH."/selperiodimenu$anno_reg.$idutente_reg.php")) dump_testo("/selperiodimenu$anno_reg.$idutente_reg.php",$file);
 } # fine for $num2
-} # fine if (!$anni_backup or ${'anno_sel'.$anno_reg})
+} # fine if (empty($anni_backup) or !empty(${'anno_sel'.$anno_reg}))
 } # fine for $num1
 
 fwrite($file,"<database>
@@ -319,7 +333,7 @@ dump_tabella("interconnessioni",$file,$cond_ic_e_priv);
 dump_tabella("messaggi",$file);
 for ($num1 = 0 ; $num1 < $num_anni ; $num1++) {
 $anno_reg = risul_query($anni,$num1,'idanni');
-if (!$anni_backup or ${'anno_sel'.$anno_reg}) {
+if (empty($anni_backup) or !empty(${'anno_sel'.$anno_reg})) {
 dump_tabella("prenota$anno_reg",$file);
 dump_tabella("prenotacanc$anno_reg",$file);
 dump_tabella("costiprenota$anno_reg",$file);
@@ -329,13 +343,13 @@ dump_tabella("ntariffe$anno_reg",$file);
 dump_tabella("regole$anno_reg",$file);
 dump_tabella("soldi$anno_reg",$file);
 dump_tabella("costi$anno_reg",$file);
-} # fine if (!$anni_backup or ${'anno_sel'.$anno_reg})
+} # fine if (empty($anni_backup) or !empty(${'anno_sel'.$anno_reg}))
 } # fine for $num1
 fwrite($file,"</database>
 ");
 echo "<br>";
 
-if ($includi_modelli == "SI") {
+if (isset($includi_modelli) and $includi_modelli == "SI") {
 $lingua_orig = $lingua_mex;
 if ($id_utente != 1) {
 include(C_DATI_PATH."/lingua.php");
@@ -376,7 +390,7 @@ closedir($lang_dir);
 closedir($templates_dir);
 } # fine for $num_cart
 $lingua_mex = $lingua_orig;
-} # fine if ($includi_modelli == "SI")
+} # fine if (isset($includi_modelli) and $includi_modelli == "SI")
 
 fwrite($file,"</backup>");
 flock($file,3);
@@ -446,6 +460,7 @@ $file_tmp = C_DATI_PATH."/hoteld_doc_backup.php.tmp";
 $file_backup = C_DATI_PATH."/hoteld_doc_backup.php";
 } # fine else if (!isset($backup_contratti) or $backup_contratti != "SI")
 if (empty($file_backup_upload)) {
+$file_backup_upload = fixstr($file_backup_upload);
 if (!empty($HTTP_POST_FILES['file_backup_upload']['tmp_name'])) $file_backup_upload = $HTTP_POST_FILES['file_backup_upload']['tmp_name'];
 else if (!empty($_FILES['file_backup_upload']['tmp_name'])) $file_backup_upload = $_FILES['file_backup_upload']['tmp_name'];
 } # fine if (empty($file_backup_upload))
@@ -502,7 +517,7 @@ if ($filelock) {
 if (@is_file($file)) {
 if (isset($compresso) and $compresso == "SI") {
 list($usec,$sec) = explode(' ',microtime());
-mt_srand((float) $sec + ((float) $usec * 100000));
+mt_srand((float) $sec + (int) ((float) $usec * 1000000.0));
 $file_compresso = C_DATI_PATH."/backup".mt_rand(10000,99999).".php.gz";
 $cfp = gzopen($file_compresso,"wb9");
 $fbackup = fopen($file,"r");
@@ -615,7 +630,7 @@ echo "<form accept-charset=\"utf-8\" method=\"post\" action=\"./crea_backup.php\
 <input type=\"hidden\" name=\"anno\" value=\"$anno\">
 <input type=\"hidden\" name=\"id_sessione\" value=\"$id_sessione\">
 <input type=\"hidden\" name=\"ripristina_backup\" value=\"$ripristina_backup\">
-<input type=\"hidden\" name=\"mantieni_anni\" value=\"".htmlspecialchars(fixset($mantieni_anni))."\">
+<input type=\"hidden\" name=\"mantieni_anni\" value=\"".htmlspecialchars(fixstr($mantieni_anni))."\">
 <input type=\"hidden\" name=\"azione\" value=\"SI\">
 <input type=\"hidden\" name=\"continua\" value=\"SI\">";
 
@@ -648,11 +663,11 @@ echo "".mex("Database già esistente",$pag)."?
 (".mex("Se già esistente e non vuoto usare un prefisso non presente nel database per il nome delle tabelle",$pag).")</small><br>";
 if (!$HOTELD_DB_HOST) echo "".mex("Nome del computer a cui collegarsi",$pag).":
 <input type=\"text\" name=\"N_PHPR_DB_HOST\" value=\"localhost\"><br>";
-if (!strcmp($HOTELD_DB_PORT,"")) echo "".mex("Numero della porta a cui collegarsi",$pag).": 
+if (!strcmp((string) $HOTELD_DB_PORT,"")) echo "".mex("Numero della porta a cui collegarsi",$pag).": 
 <input type=\"text\" name=\"N_PHPR_DB_PORT\" value=\"5432\">(".mex("Normalmete 5432 o 5433 per Postgresql o 3306 per Mysql",$pag).")<br>";
 if (!$HOTELD_DB_USER) echo "".mex("Nome per l'autenticazione al database",$pag).": 
 <input type=\"text\" name=\"N_PHPR_DB_USER\"><br>";
-if (!strcmp($HOTELD_DB_PASS,"")) echo "".mex("Parola segreta per l'autenticazione al database",$pag).": 
+if (!strcmp((string) $HOTELD_DB_PASS,"")) echo "".mex("Parola segreta per l'autenticazione al database",$pag).": 
 <input type=\"text\" name=\"N_PHPR_DB_PASS\"><br>";
 echo "".mex("Caricare la libreria dinamica \"pgsql.so\" o \"mysql.so\"",$pag)."?
 <select name=\"N_PHPR_LOAD_EXT\">
@@ -842,7 +857,7 @@ echo "<form accept-charset=\"utf-8\" method=\"post\" action=\"./crea_backup.php\
 <button class=\"rdbk\" type=\"submit\" name=\"ripristina_backup\" value=\"1\"><div>".mex("Ripristina i documenti dal file",$pag)."</div></button><br>
 <table><tr><td style=\"width: 30px;\"></td><td>
 <label><input type=\"radio\" name=\"modalita\" value=\"aggiungi\" checked>".mex("aggiungi ai documenti attuali",$pag)."</label>";
-if ($info_contr['max_contr'] > 1) {
+if (fixset($info_contr['max_contr']) > 1) {
 echo " <select name=\"contr_agg\">
 <option value=\"\" selected>".mex("tutti i documenti contenuti nel file",$pag)."</option>";
 unset($nomi_contratti);
@@ -854,11 +869,11 @@ $nomi_contratti[$nome_con[0]] = $nome_con[1];
 } # fine for $num1
 for ($num1 = 1 ; $num1 <= $info_contr['max_contr'] ; $num1++) {
 echo "<option value=\"$num1\">".mex("solo il documento",$pag)." $num1";
-if (isset($nomi_contratti[$num1]) and strcmp($nomi_contratti[$num1],"")) echo " (".$nomi_contratti[$num1].")";
+if (isset($nomi_contratti[$num1]) and strcmp((string) $nomi_contratti[$num1],"")) echo " (".$nomi_contratti[$num1].")";
 echo "</option>";
 } # fine for $num1
 echo "</select>";
-} # fine if ($info_contr['max_contr'] > 1)
+} # fine if (fixset($info_contr['max_contr'] > 1))
 echo "<br><label><input type=\"radio\" name=\"modalita\" value=\"rimpiazza\">".mex("rimpiazza i documenti attuali",$pag)."</label> (".mex("i documenti attuali verranno cancellati",$pag).")<br>";
 echo "</td></tr></table></div></form><table><tr><td style=\"height: 1px;\"></td></tr></table>";
 } # fine if ($file_esistente == "SI")
@@ -906,6 +921,7 @@ echo " (".mex("sovrascrivendo l'attuale",$pag)." ".mex("creato il",$pag)." $data
 echo ".<br><table><tr><td style=\"width: 30px;\"></td><td>";
 $anni = esegui_query("select * from $tableanni order by idanni");
 $num_anni = numlin_query($anni);
+$lista_anni = "";
 if ($num_anni > 1) {
 echo "<div><label><input type=\"radio\" name=\"anni_backup\" value=\"\" checked>".mex("Includi tutti gli anni",$pag)."</label></div>
 <div onclick=\"document.getElementById('ab_sel').checked='1'\"><label><input type=\"radio\" name=\"anni_backup\" id=\"ab_sel\" value=\"sel\">".mex("Includi solo gli anni selezionati",$pag)."</label>: ";
@@ -913,10 +929,12 @@ for ($num1 = 0 ; $num1 < $num_anni ; $num1++) {
 $anno_corr = risul_query($anni,$num1,'idanni');
 echo "<label><input type=\"checkbox\" name=\"anno_sel$anno_corr\" value=\"1\"> $anno_corr</label>";
 if ($num1 != ($num_anni - 1)) echo "; ";
+$lista_anni .= ",$anno_corr";
 } # fine for $num1
 echo "</div>";
 } # fine if ($num_anni > 1)
-echo "<label><input type=\"checkbox\" name=\"includi_modelli\" value=\"SI\" checked> ".mex("Includi le pagine per il sito web",$pag)."</label>
+echo "<input type=\"hidden\" name=\"lista_anni_passa\" value=\"$lista_anni\">
+<label><input type=\"checkbox\" name=\"includi_modelli\" value=\"SI\" checked> ".mex("Includi le pagine per il sito web",$pag)."</label>
 </td></tr></table></div></form>
 <table><tr><td style=\"height: 8px;\"></td></tr></table>";
 

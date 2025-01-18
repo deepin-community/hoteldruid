@@ -2,7 +2,7 @@
 
 ##################################################################################
 #    HOTELDRUID
-#    Copyright (C) 2001-2021 by Marco Maria Francesco De Santis (marco@digitaldruid.net)
+#    Copyright (C) 2001-2023 by Marco Maria Francesco De Santis (marco@digitaldruid.net)
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published by
@@ -53,83 +53,113 @@ $var_pag[25] = 'testo_prefisso_clienti';
 $var_pag[26] = 'vedi_messaggi';
 $var_pag[27] = 'ins_messaggi';
 $var_pag[28] = 'seleziona_casse';
-$var_pag[29] = 'cassa_sel1';
-$var_pag[30] = 'vedi_beni_inv_gr';
-$var_pag[31] = 'vedi_beni_inv';
-$var_pag[32] = 'ins_beni_inv';
-$var_pag[33] = 'vedi_inv_mag_gr';
-$var_pag[34] = 'vedi_inv_mag';
-$var_pag[35] = 'ins_mag';
-$var_pag[36] = 'ins_beni_in_mag_gr';
-$var_pag[37] = 'ins_beni_in_mag';
-$var_pag[38] = 'mod_beni_in_mag_gr';
-$var_pag[39] = 'mod_beni_in_mag';
-$var_pag[40] = 'vedi_inv_app_gr';
-$var_pag[41] = 'vedi_inv_app';
-$var_pag[42] = 'ins_beni_in_app_gr';
-$var_pag[43] = 'ins_beni_in_app';
-$var_pag[44] = 'mod_beni_in_app_gr';
-$var_pag[45] = 'mod_beni_in_app';
-$var_pag[46] = 'mod_priv';
-$var_pag[47] = 'continua';
-$var_pag[48] = 'modifica_privilegi_anno';
-$var_pag[49] = 'modp_origine_prenota';
-$var_pag[50] = 'modp_tariffa';
-$var_pag[51] = 'modp_num_persone';
-$var_pag[52] = 'modp_commento';
-$var_pag[53] = 'modp_comm_pers';
-$var_pag[54] = 'ins_comm_pers';
-$var_pag[55] = 'ins_origine_prenota';
-$var_pag[56] = 'ins_num_persone';
-$var_pag[57] = 'modp_prenota';
-$var_pag[58] = 'modp_date_prenota';
-$var_pag[59] = 'inserisci_prenotazioni';
-$var_pag[60] = 'ins_conferma_prenota';
-$var_pag[61] = 'ins_checkin';
-$var_pag[62] = 'ins_costi_agg_prenota';
-$var_pag[63] = 'ins_commento';
-$var_pag[64] = 'nuove_casse_sel';
-$var_pag[65] = 'cambia_casse_sel';
-$var_pag[66] = 'num_contratti_sel';
-$var_pag[67] = 'usa_regola1';
-$var_pag[68] = 'avvisa_regola1';
-$var_pag[69] = 'seleziona_tariffe';
-$var_pag[70] = 'nuove_tariffe_sel';
-$var_pag[71] = 'cambia_tariffe_sel';
-$var_pag[72] = 'seleziona_costi_agg';
-$var_pag[73] = 'seleziona_contratti';
-$var_pag[74] = 'nuovi_contratti_sel';
-$var_pag[75] = 'cambia_contratti_sel';
-$var_pag[76] = 'ins_assegnazione_app';
-$var_pag[77] = 'ins_caparra';
-$var_pag[78] = 'ins_passato';
-$var_pag[79] = 'ins_multiple';
-$var_pag[80] = 'modp_cliente';
-$var_pag[81] = 'modp_checkin';
-$var_pag[82] = 'modp_pagato';
-$var_pag[83] = 'modp_attiva_ore_mod';
-$var_pag[84] = 'modp_num_ore_mod';
-$var_pag[85] = 'modp_canc';
-$var_pag[86] = 'modp_canc_dopo_conf';
-$var_pag[87] = 'ins_spese';
-$var_pag[88] = 'ins_entrate';
-$var_pag[89] = 'sottrai_entrate';
-$var_pag[90] = 'persona_spese';
-$var_pag[91] = 'mod_tariffe';
-$var_pag[92] = 'mod_reg1';
-$var_pag[93] = 'mod_reg2';
-$var_pag[94] = 'ins_costi_agg';
-$var_pag[95] = 'mod_costi_agg';
-$var_pag[96] = 'canc_costi_agg';
-$var_pag[97] = 'vedi_tab_mesi';
-$var_pag[98] = 'vedi_tab_tutte_prenota';
-$var_pag[99] = 'vedi_tab_costi';
-$var_pag[100] = 'vedi_tab_tariffe';
-$var_pag[101] = 'vedi_tab_regole';
-$var_pag[102] = 'vedi_tab_appartamenti';
-$var_pag[103] = 'vedi_tab_doc';
-$var_pag[104] = 'vedi_tab_stat';
-$n_var_pag = 105;
+$var_pag[29] = 'vedi_beni_inv_gr';
+$var_pag[30] = 'vedi_beni_inv';
+$var_pag[31] = 'ins_beni_inv';
+$var_pag[32] = 'vedi_inv_mag_gr';
+$var_pag[33] = 'vedi_inv_mag';
+$var_pag[34] = 'ins_mag';
+$var_pag[35] = 'ins_beni_in_mag_gr';
+$var_pag[36] = 'ins_beni_in_mag';
+$var_pag[37] = 'mod_beni_in_mag_gr';
+$var_pag[38] = 'mod_beni_in_mag';
+$var_pag[39] = 'vedi_inv_app_gr';
+$var_pag[40] = 'vedi_inv_app';
+$var_pag[41] = 'ins_beni_in_app_gr';
+$var_pag[42] = 'ins_beni_in_app';
+$var_pag[43] = 'mod_beni_in_app_gr';
+$var_pag[44] = 'mod_beni_in_app';
+$var_pag[45] = 'mod_priv';
+$var_pag[46] = 'continua';
+$var_pag[47] = 'modifica_privilegi_anno';
+$var_pag[48] = 'modp_origine_prenota';
+$var_pag[49] = 'modp_tariffa';
+$var_pag[50] = 'modp_num_persone';
+$var_pag[51] = 'modp_commento';
+$var_pag[52] = 'modp_comm_pers';
+$var_pag[53] = 'ins_comm_pers';
+$var_pag[54] = 'ins_origine_prenota';
+$var_pag[55] = 'ins_num_persone';
+$var_pag[56] = 'modp_prenota';
+$var_pag[57] = 'modp_date_prenota';
+$var_pag[58] = 'inserisci_prenotazioni';
+$var_pag[59] = 'ins_conferma_prenota';
+$var_pag[60] = 'ins_checkin';
+$var_pag[61] = 'ins_costi_agg_prenota';
+$var_pag[62] = 'ins_commento';
+$var_pag[63] = 'nuove_casse_sel';
+$var_pag[64] = 'cambia_casse_sel';
+$var_pag[65] = 'num_contratti_sel';
+$var_pag[66] = 'usa_regola1';
+$var_pag[67] = 'avvisa_regola1';
+$var_pag[68] = 'seleziona_tariffe';
+$var_pag[69] = 'nuove_tariffe_sel';
+$var_pag[70] = 'cambia_tariffe_sel';
+$var_pag[71] = 'seleziona_costi_agg';
+$var_pag[72] = 'seleziona_contratti';
+$var_pag[73] = 'nuovi_contratti_sel';
+$var_pag[74] = 'cambia_contratti_sel';
+$var_pag[75] = 'ins_assegnazione_app';
+$var_pag[76] = 'ins_caparra';
+$var_pag[77] = 'ins_passato';
+$var_pag[78] = 'ins_multiple';
+$var_pag[79] = 'modp_cliente';
+$var_pag[80] = 'modp_checkin';
+$var_pag[81] = 'modp_pagato';
+$var_pag[82] = 'modp_attiva_ore_mod';
+$var_pag[83] = 'modp_num_ore_mod';
+$var_pag[84] = 'modp_canc';
+$var_pag[85] = 'modp_canc_dopo_conf';
+$var_pag[86] = 'ins_spese';
+$var_pag[87] = 'ins_entrate';
+$var_pag[88] = 'sottrai_entrate';
+$var_pag[89] = 'persona_spese';
+$var_pag[90] = 'mod_tariffe';
+$var_pag[91] = 'mod_reg1';
+$var_pag[92] = 'mod_reg2';
+$var_pag[93] = 'ins_costi_agg';
+$var_pag[94] = 'mod_costi_agg';
+$var_pag[95] = 'canc_costi_agg';
+$var_pag[96] = 'vedi_tab_mesi';
+$var_pag[97] = 'vedi_tab_tutte_prenota';
+$var_pag[98] = 'vedi_tab_costi';
+$var_pag[99] = 'vedi_tab_tariffe';
+$var_pag[100] = 'vedi_tab_regole';
+$var_pag[101] = 'vedi_tab_appartamenti';
+$var_pag[102] = 'vedi_tab_doc';
+$var_pag[103] = 'vedi_tab_stat';
+$var_pag[104] = 'modp_cassa_pagamenti';
+$var_pag[105] = 'cambia_costi_agg_sel';
+$var_pag[106] = 'nuovi_costi_agg_sel';
+$var_pag[107] = 'nuove_motivazioni_reg1';
+$var_pag[108] = 'cambia_motivazioni_reg1';
+$var_pag[109] = 'lista_casse_passa';
+$var_pag[110] = 'modp_gia_iniziate';
+$var_pag[111] = 'modp_ut_ins';
+$var_pag[112] = 'cancella_contr';
+$var_pag[113] = 'ins_sconto';
+$var_pag[114] = 'modp_app_prenota';
+$var_pag[115] = 'modp_pren_comp';
+$var_pag[116] = 'modp_vedi_comm';
+$var_pag[117] = 'modp_sconto';
+$var_pag[118] = 'modp_caparra';
+$var_pag[119] = 'modp_costi_agg';
+$var_pag[120] = 'modp_codice';
+$var_pag[121] = 'modp_canc_perm';
+$var_pag[122] = 'modp_attiva_ore_canc';
+$var_pag[123] = 'modp_num_ore_canc';
+$var_pag[124] = 'oscura_tab_mesi';
+$var_pag[125] = 'modifica_doc_html';
+$var_pag[126] = 'modifica_pass';
+$n_var_pag = 127;
+$num2 = 0;
+if (isset($_POST['lista_casse_passa'])) $num2 = $_POST['lista_casse_passa'];
+elseif (isset($_GET['lista_casse_passa'])) $num2 = $_GET['lista_casse_passa'];
+if ($num2) {
+$num2 = explode(",",$num2);
+$num3 = count($num2);
+for ($num1 = 1 ; $num1 < $num3 ; $num1++) $var_pag[$n_var_pag++] = "cassa_sel".(int) $num2[$num1];
+} # fine if ($num2)
 $num2 = 0;
 if (isset($_POST['modifica_privilegi_anno'])) $num2 = (int) $_POST['modifica_privilegi_anno'];
 elseif (isset($_GET['modifica_privilegi_anno'])) $num2 = (int) $_GET['modifica_privilegi_anno'];
@@ -220,6 +250,7 @@ $var_pag[$n_var_pag++] = "vedi_tab_doc$num2";
 $var_pag[$n_var_pag++] = "vedi_tab_spren_gr$num2";
 $var_pag[$n_var_pag++] = "vedi_tab_sapp_gr$num2";
 $var_pag[$n_var_pag++] = "vedi_tab_stat$num2";
+$var_pag[$n_var_pag++] = "lista_ca_passa$num2";
 $num3 = 0;
 if (isset($_POST["numero_tariffe$num2"])) $num3 = (int) $_POST["numero_tariffe$num2"];
 elseif (isset($_GET["numero_tariffe$num2"])) $num3 = (int) $_GET["numero_tariffe$num2"];
@@ -228,6 +259,18 @@ $num3 = 0;
 if (isset($_POST['num_contratti_sel'])) $num3 = (int) $_POST['num_contratti_sel'];
 elseif (isset($_GET['num_contratti_sel'])) $num3 = (int) $_GET['num_contratti_sel'];
 for ($num1 = 1 ; $num1 <= $num3 ; $num1++) $var_pag[$n_var_pag++] = "contratto_sel$num2$num1";
+$num3 = 0;
+if (isset($_POST["num_motivazioni$num2"])) $num3 = (int) $_POST["num_motivazioni$num2"];
+elseif (isset($_GET["num_motivazioni$num2"])) $num3 = (int) $_GET["num_motivazioni$num2"];
+for ($num1 = 0 ; $num1 < $num3 ; $num1++) $var_pag[$n_var_pag++] = "var_mot_$num2$num1";
+$num3 = 0;
+if (isset($_POST["lista_ca_passa$num2"])) $num3 = $_POST["lista_ca_passa$num2"];
+elseif (isset($_GET["lista_ca_passa$num2"])) $num3 = $_GET["lista_ca_passa$num2"];
+if ($num3) {
+$num3 = explode(",",$num3);
+$num5 = count($num3);
+for ($num4 = 1 ; $num4 < $num5 ; $num4++) $var_pag[$n_var_pag++] = "costo_agg_sel$num2".(int) $num3[$num4];
+} # fine if ($num2)
 } # fine if ($num2)
 
 include("./costanti.php");
@@ -349,6 +392,8 @@ priv_mod_pers(varchar15)	s-n			1 modifica delle proprie personalizzazioni si - n
 				s-g-t-n			7 modifica le tipologie di persone: si, solo per lui - si, anche per i suoi gruppi - si, anche per tutti - no
 				s-g-t-n			8 modifica le valute: si, solo per lui - si, anche per i suoi gruppi - si, anche per tutti - no
 				s-c-n			9 modifica pagine web: si - solo con modifica costi aggiuntivi - no
+				s-n			10 modifica i documenti con formato HTML: si - no
+				p-n			11 modifica delle password: solo la propria - no
 
 priv_ins_clienti(varchar5)	s-n			1 inserimento nuovi clienti si-no
 				s-p-g-n			2 modifica e cancella clienti: si - solo propri - solo dei suoi gruppi - no
@@ -382,7 +427,7 @@ $tablenometariffe_mostra = $tablenometariffe;
 } # fine else if ($modifica_privilegi_anno and controlla_anno($modifica_privilegi_anno) == "SI") 
 $altre_tab_lock = array($tableanni,$tablenometariffe_mostra,$tablecontratti,$tablecasse);
 $tabelle_lock = lock_tabelle($tabelle_lock,$altre_tab_lock);
-if (controlla_num_pos($id_utente_privilegi) != "SI") $id_utente_privilegi = "-1";
+if (!isset($id_utente_privilegi) or controlla_num_pos($id_utente_privilegi) != "SI") $id_utente_privilegi = "-1";
 $id_utente_privilegi = aggslashdb($id_utente_privilegi);
 $utente_privilegi = esegui_query("select * from $tableutenti where idutenti = '$id_utente_privilegi'");
 if (numlin_query($utente_privilegi)) {
@@ -400,7 +445,7 @@ $privilegi_anno[$anno_mostra] = esegui_query("select * from $tableprivilegi wher
 
 
 if (!empty($modifica_privilegi_globali)) {
-$testo_prefisso_clienti = str_replace(",","",fixset($testo_prefisso_clienti));
+$testo_prefisso_clienti = str_replace(",","",fixstr($testo_prefisso_clienti));
 $modificare = "";
 if (!empty($tipo_prefisso_clienti) and $tipo_prefisso_clienti != "n" and !$testo_prefisso_clienti) {
 $modificare = "NO";
@@ -438,6 +483,11 @@ if ($modpers_cat_pers == "g") echo mex("L'utente",$pag)." <i>$nome_utente_privil
 if ($modpers_cat_pers == "t") echo mex("L'utente",$pag)." <i>$nome_utente_privilegi</i> ".mex("potrà modificare le sue <b>tipologie di persone</b>",$pag)." ".mex("e quelle di tutti gli altri utenti",$pag).".<br>";
 if ($modpers_cat_pers == "n") echo mex("L'utente",$pag)." <i>$nome_utente_privilegi</i> ".mex("non potrà più modificare le sue <b>tipologie di persone</b>",$pag).".<br>";
 } # fine if (substr($priv_mod_pers,6,1) != $modpers_cat_pers)
+if (substr($priv_mod_pers,10,1) != $modifica_pass) {
+$dati_da_modificare .= "<input type=\"hidden\" name=\"modifica_pass\" value=\"".htmlspecialchars($modifica_pass)."\">";
+if ($modifica_pass == "p") echo mex("L'utente",$pag)." <i>$nome_utente_privilegi</i> ".mex("potrà modificare solo la sua <b>password</b>",$pag).".<br>";
+if ($modifica_pass == "n") echo mex("L'utente",$pag)." <i>$nome_utente_privilegi</i> ".mex("non potrà più modificare le <b>password</b>",$pag).".<br>";
+} # fine if (substr($priv_mod_pers,10,1) != $modifica_pass)
 if (substr($priv_mod_pers,1,1) != $crea_backup) {
 $dati_da_modificare .= "<input type=\"hidden\" name=\"crea_backup\" value=\"".htmlspecialchars($crea_backup)."\">";
 if ($crea_backup == "s") echo mex("L'utente",$pag)." <i>$nome_utente_privilegi</i> ".mex("potrà creare i <b>backup</b>",$pag).".<br>";
@@ -464,6 +514,13 @@ $dati_da_modificare .= "<input type=\"hidden\" name=\"modifica_doc\" value=\"".h
 if ($modifica_doc == "s") echo mex("L'utente",$pag)." <i>$nome_utente_privilegi</i> ".mex("potrà modificare i <b>documenti</b>",$pag).".<br>";
 if ($modifica_doc == "n") echo mex("L'utente",$pag)." <i>$nome_utente_privilegi</i> ".mex("non potrà più modificare i <b>documenti</b>",$pag).".<br>";
 } # fine if (substr($priv_mod_pers,2,1) != $modifica_doc)
+if ($modifica_doc == "n") $modifica_doc_html = "n";
+if (substr($priv_mod_pers,9,1) != $modifica_doc_html) {
+$dati_da_modificare .= "<input type=\"hidden\" name=\"modifica_doc_html\" value=\"".htmlspecialchars($modifica_doc_html)."\">";
+if ($modifica_doc_html == "s") echo mex("L'utente",$pag)." <i>$nome_utente_privilegi</i> ".mex("potrà modificare i <b>documenti con formato HTML</b>",$pag).".
+<b class=\"colwarn\">".mex("Attenzione",$pag)."</b>: ".mex("questo può consentire di portare attacchi di tipo \"Cross Site Scripting\" per rubare le credenziali di altri utenti",$pag).".<br>";
+if ($modifica_doc_html == "n") echo mex("L'utente",$pag)." <i>$nome_utente_privilegi</i> ".mex("non potrà più modificare i <b>documenti con formato HTML</b>",$pag).".<br>";
+} # fine if (substr($priv_mod_pers,9,1) != $modifica_doc_html)
 if ($modifica_doc == "n") $modifica_doc_api = "n";
 if (substr($priv_mod_pers,4,1) != $modifica_doc_api) {
 $dati_da_modificare .= "<input type=\"hidden\" name=\"modifica_doc_api\" value=\"".htmlspecialchars($modifica_doc_api)."\">";
@@ -536,7 +593,7 @@ $casse = esegui_query("select * from $tablecasse order by idcasse ");
 $num_casse = numlin_query($casse);
 for ($num1 = 0 ; $num1 < $num_casse ; $num1++) {
 $id_cassa = risul_query($casse,$num1,'idcasse');
-if (${"cassa_sel".$id_cassa}) $nuove_casse_sel .= ",".$id_cassa;
+if (!empty(${"cassa_sel".$id_cassa})) $nuove_casse_sel .= ",".$id_cassa;
 } # fine for $num1
 if ($nuove_casse_sel) $nuove_casse_sel = substr($nuove_casse_sel,1);
 if ($nuove_casse_sel != substr($casse_consentite,2)) {
@@ -631,7 +688,9 @@ if (isset($modifica_doc_api) and ($modifica_doc_api == "s" or $modifica_doc_api 
 if (isset($gest_pass_cc) and ($gest_pass_cc == "s" or $gest_pass_cc == "n")) $nuovi_priv_mod_pers = substr($nuovi_priv_mod_pers,0,5).$gest_pass_cc.substr($nuovi_priv_mod_pers,6);
 if (isset($modpers_cat_pers) and ($modpers_cat_pers == "s" or $modpers_cat_pers == "g" or $modpers_cat_pers == "t" or $modpers_cat_pers == "n")) $nuovi_priv_mod_pers = substr($nuovi_priv_mod_pers,0,6).$modpers_cat_pers.substr($nuovi_priv_mod_pers,7);
 if (isset($modpers_valute) and ($modpers_valute == "s" or $modpers_valute == "g" or $modpers_valute == "t" or $modpers_valute == "n")) $nuovi_priv_mod_pers = substr($nuovi_priv_mod_pers,0,7).$modpers_valute.substr($nuovi_priv_mod_pers,8);
-if (isset($crea_pagineweb) and ($crea_pagineweb == "s" or $crea_pagineweb == "c" or $crea_pagineweb == "n")) $nuovi_priv_mod_pers = substr($nuovi_priv_mod_pers,0,8).$crea_pagineweb;
+if (isset($crea_pagineweb) and ($crea_pagineweb == "s" or $crea_pagineweb == "c" or $crea_pagineweb == "n")) $nuovi_priv_mod_pers = substr($nuovi_priv_mod_pers,0,8).$crea_pagineweb.substr($nuovi_priv_mod_pers,9);
+if (isset($modifica_doc_html) and ($modifica_doc_html == "s" or $modifica_doc_html == "n")) $nuovi_priv_mod_pers = substr($nuovi_priv_mod_pers,0,9).$modifica_doc_html.substr($nuovi_priv_mod_pers,10);
+if (isset($modifica_pass) and ($modifica_pass == "p" or $modifica_pass == "n")) $nuovi_priv_mod_pers = substr($nuovi_priv_mod_pers,0,10).$modifica_pass;
 if ($nuovi_priv_mod_pers != $priv_mod_pers) esegui_query("update $tableprivilegi set priv_mod_pers = '$nuovi_priv_mod_pers' where idutente = '$id_utente_privilegi' and anno = '1'");
 $nuovi_priv_ins_clienti = $priv_ins_clienti;
 if (isset($inserimento_clienti) and ($inserimento_clienti == "s" or $inserimento_clienti == "n")) $nuovi_priv_ins_clienti = $inserimento_clienti.substr($nuovi_priv_ins_clienti,1);
@@ -653,7 +712,7 @@ if (isset($ins_messaggi) and ($ins_messaggi == "s" or $ins_messaggi == "n")) $nu
 if ($nuovi_priv_messaggi != $priv_messaggi) esegui_query("update $tableprivilegi set priv_messaggi = '$nuovi_priv_messaggi' where idutente = '$id_utente_privilegi' and anno = '1'");
 $nuove_casse_consentite = $casse_consentite;
 if (isset($seleziona_casse) and ($seleziona_casse == "n" or $seleziona_casse == "s")) $nuove_casse_consentite = $seleziona_casse.",".substr($nuove_casse_consentite,2);
-if (!empty($cambia_casse_sel)) $nuove_casse_consentite = substr($nuove_casse_consentite,0,2).$nuove_casse_sel;
+if (!empty($cambia_casse_sel) and preg_replace("/[0-9]+(,[0-9]+)*/","",$nuove_casse_sel) == "") $nuove_casse_consentite = substr($nuove_casse_consentite,0,2).$nuove_casse_sel;
 if ($nuove_casse_consentite != $casse_consentite) esegui_query("update $tableprivilegi set casse_consentite = '$nuove_casse_consentite' where idutente = '$id_utente_privilegi' and anno = '1'");
 $nuovi_priv_inventario = $priv_inventario;
 if (isset($vedi_beni_inv) and ($vedi_beni_inv == "s" or $vedi_beni_inv == "p" or $vedi_beni_inv == "g" or $vedi_beni_inv == "n")) $nuovi_priv_inventario = $vedi_beni_inv.substr($nuovi_priv_inventario,1);
@@ -712,13 +771,13 @@ if (${"usa_regola1".$anno_modifica} == "n") echo mex("L'utente",$pag)." <i>$nome
 if (${"usa_regola1".$anno_modifica} == "s") echo mex("L'utente",$pag)." <i>$nome_utente_privilegi</i> ".mex("potrà inserire le sue prenotazioni solo nei <b>periodi della regola 1</b> selezionati nel",$pag)." $anno_modifica.<br>";
 } # fine if (substr($regole1_consentite,0,1) != fix_set(${"usa_regola1".$anno_modifica}))
 $nuove_motivazioni_sel = "";
-for ($num1 = 0 ; $num1 < ${"num_motivazioni".$anno_modifica} ; $num1++) if (${"var_mot_".$anno_modifica.$num1}) $nuove_motivazioni_sel .= "#@^".${"var_mot_".$anno_modifica.$num1};
+for ($num1 = 0 ; $num1 < ${"num_motivazioni".$anno_modifica} ; $num1++) if (!empty(${"var_mot_".$anno_modifica.$num1})) $nuove_motivazioni_sel .= "#@^".${"var_mot_".$anno_modifica.$num1};
 if ($nuove_motivazioni_sel) $nuove_motivazioni_sel = substr($nuove_motivazioni_sel,3);
-if ($nuove_motivazioni_sel != substr($regole1_consentite,3)) {
+if (htmlspecialchars($nuove_motivazioni_sel) != substr($regole1_consentite,3)) {
 $dati_da_modificare .= "<input type=\"hidden\" name=\"nuove_motivazioni_reg1\" value=\"".htmlspecialchars($nuove_motivazioni_sel)."\">
 <input type=\"hidden\" name=\"cambia_motivazioni_reg1\" value=\"SI\">";
 echo mex("Verranno cambiate le motivazioni selezionate della <b>regola 1</b> per l'anno",$pag)." $anno_modifica.<br>";
-} # fine if ($nuove_motivazioni_sel != substr($regole1_consentite,1)
+} # fine if (htmlspecialchars($nuove_motivazioni_sel) != substr($regole1_consentite,1)
 if (substr($regole1_consentite,1,1) != fix_set(${"avvisa_regola1".$anno_modifica})) {
 $dati_da_modificare .= "<input type=\"hidden\" name=\"avvisa_regola1\" value=\"".htmlspecialchars(${"avvisa_regola1".$anno_modifica})."\">";
 if (${"avvisa_regola1".$anno_modifica} == "s") echo mex("L'utente",$pag)." <i>$nome_utente_privilegi</i> ".mex("verrà avvisato <b>sempre</b> quando inserirà prenotazioni nei periodi delle regole 1 del",$pag)." $anno_modifica.<br>";
@@ -949,7 +1008,7 @@ if ($cassa_pagamenti != fix_set(${"modp_cassa_pagamenti".$anno_modifica})) {
 $dati_da_modificare .= "<input type=\"hidden\" name=\"modp_cassa_pagamenti\" value=\"".htmlspecialchars(${"modp_cassa_pagamenti".$anno_modifica})."\">";
 if (${"modp_cassa_pagamenti".$anno_modifica} == "#1#") $nome_cassa = mex("cassa principale",$pag);
 else $nome_cassa = ${"modp_cassa_pagamenti".$anno_modifica};
-if (strcmp(${"modp_cassa_pagamenti".$anno_modifica},"")) echo mex("I pagamenti inseriti nelle prenotazioni dall'utente",$pag)." <i>$nome_utente_privilegi</i> ".mex("verranno anche registrati come entrate nella cassa chiamata",$pag)." \"<b>$nome_cassa</b>\" ".mex("nel",$pag)." $anno_modifica.<br>";
+if (strcmp((string) ${"modp_cassa_pagamenti".$anno_modifica},"")) echo mex("I pagamenti inseriti nelle prenotazioni dall'utente",$pag)." <i>$nome_utente_privilegi</i> ".mex("verranno anche registrati come entrate nella cassa chiamata",$pag)." \"<b>$nome_cassa</b>\" ".mex("nel",$pag)." $anno_modifica.<br>";
 else echo mex("I pagamenti inseriti nelle prenotazioni dall'utente",$pag)." <i>$nome_utente_privilegi</i> ".mex("non verranno registrati in cassa nel",$pag)." $anno_modifica.<br>";
 } # fine if ($cassa_pagamenti != fix_set(${"modp_cassa_pagamenti".$anno_modifica}))
 if (${"modp_ut_ins".$anno_modifica} == "n" and ${"modp_vedi_utins".$anno_modifica} == "SI") ${"modp_ut_ins".$anno_modifica} = "v";
@@ -1155,20 +1214,20 @@ else {
 $nuove_regole1_consentite = $regole1_consentite;
 if (isset($usa_regola1) and ($usa_regola1 == "n" or $usa_regola1 == "s")) $nuove_regole1_consentite = $usa_regola1.substr($nuove_regole1_consentite,1);
 if (isset($avvisa_regola1) and ($avvisa_regola1 == "s" or $avvisa_regola1 == "n" or $avvisa_regola1 == "m" or $avvisa_regola1 == "f")) $nuove_regole1_consentite = substr($nuove_regole1_consentite,0,1).$avvisa_regola1.substr($nuove_regole1_consentite,2);
-if (!empty($cambia_motivazioni_reg1)) $nuove_regole1_consentite = substr($nuove_regole1_consentite,0,3).$nuove_motivazioni_reg1;
-if ($nuove_regole1_consentite != $regole1_consentite) esegui_query("update $tableprivilegi set regole1_consentite = '$nuove_regole1_consentite' where idutente = '$id_utente_privilegi' and anno = '$anno_modifica'");
+if (!empty($cambia_motivazioni_reg1)) $nuove_regole1_consentite = substr($nuove_regole1_consentite,0,3).htmlspecialchars($nuove_motivazioni_reg1);
+if ($nuove_regole1_consentite != $regole1_consentite) esegui_query("update $tableprivilegi set regole1_consentite = '".aggslashdb($nuove_regole1_consentite)."' where idutente = '$id_utente_privilegi' and anno = '$anno_modifica'");
 $nuove_tariffe_consentite = $tariffe_consentite;
 if (isset($seleziona_tariffe) and ($seleziona_tariffe == "n" or $seleziona_tariffe == "s")) $nuove_tariffe_consentite = $seleziona_tariffe.substr($nuove_tariffe_consentite,1);
-if (!empty($cambia_tariffe_sel)) $nuove_tariffe_consentite = substr($nuove_tariffe_consentite,0,2).$nuove_tariffe_sel;
+if (!empty($cambia_tariffe_sel) and preg_replace("/[0-9]+(,[0-9]+)*/","",$nuove_tariffe_sel) == "") $nuove_tariffe_consentite = substr($nuove_tariffe_consentite,0,2).$nuove_tariffe_sel;
 if ($nuove_tariffe_consentite != $tariffe_consentite) esegui_query("update $tableprivilegi set tariffe_consentite = '$nuove_tariffe_consentite' where idutente = '$id_utente_privilegi' and anno = '$anno_modifica'");
 $nuovi_costi_agg_consentiti = $costi_agg_consentiti;
 if (isset($seleziona_costi_agg) and ($seleziona_costi_agg == "n" or $seleziona_costi_agg == "s")) $nuovi_costi_agg_consentiti = $seleziona_costi_agg.substr($nuovi_costi_agg_consentiti,1);
-if (!empty($cambia_costi_agg_sel)) $nuovi_costi_agg_consentiti = substr($nuovi_costi_agg_consentiti,0,2).$nuovi_costi_agg_sel;
+if (!empty($cambia_costi_agg_sel) and preg_replace("/[0-9]+(,[0-9]+)*/","",$nuovi_costi_agg_sel) == "") $nuovi_costi_agg_consentiti = substr($nuovi_costi_agg_consentiti,0,2).$nuovi_costi_agg_sel;
 if ($nuovi_costi_agg_consentiti != $costi_agg_consentiti) esegui_query("update $tableprivilegi set costi_agg_consentiti = '$nuovi_costi_agg_consentiti' where idutente = '$id_utente_privilegi' and anno = '$anno_modifica'");
 $nuovi_contratti_consentiti = $contratti_consentiti;
 if (isset($seleziona_contratti) and ($seleziona_contratti == "n" or $seleziona_contratti == "s")) $nuovi_contratti_consentiti = $seleziona_contratti.substr($nuovi_contratti_consentiti,1);
 if (isset($cancella_contr) and ($cancella_contr == "n" or $cancella_contr == "s")) $nuovi_contratti_consentiti = substr($nuovi_contratti_consentiti,0,1).$cancella_contr.substr($nuovi_contratti_consentiti,2);
-if (!empty($cambia_contratti_sel)) $nuovi_contratti_consentiti = substr($nuovi_contratti_consentiti,0,3).$nuovi_contratti_sel;
+if (!empty($cambia_contratti_sel) and preg_replace("/[0-9]+(,[0-9]+)*/","",$nuovi_contratti_sel) == "") $nuovi_contratti_consentiti = substr($nuovi_contratti_consentiti,0,3).$nuovi_contratti_sel;
 if ($nuovi_contratti_consentiti != $contratti_consentiti) esegui_query("update $tableprivilegi set contratti_consentiti = '$nuovi_contratti_consentiti' where idutente = '$id_utente_privilegi' and anno = '$anno_modifica'");
 $nuovi_priv_ins_prenota = $priv_ins_prenota;
 if (isset($inserisci_prenotazioni) and ($inserisci_prenotazioni == "n" or $inserisci_prenotazioni == "s")) $nuovi_priv_ins_prenota = $inserisci_prenotazioni.substr($nuovi_priv_ins_prenota,1);
@@ -1259,7 +1318,7 @@ else $mostra_form_iniziale = "NO";
 
 if (!empty($attiva_anno)) {
 if (controlla_anno($attiva_anno) == "SI" and $anno_esistente[$attiva_anno] == "SI" and numlin_query($privilegi_anno[$attiva_anno]) == 0) {
-esegui_query("insert into $tableprivilegi (idutente,anno,regole1_consentite,tariffe_consentite,costi_agg_consentiti,contratti_consentiti,priv_ins_prenota,priv_mod_prenota,priv_ins_costi,priv_vedi_tab,priv_ins_tariffe) values ('$id_utente_privilegi','$attiva_anno','nm,','n,','n,','ns,','nnnnnnnnnnnnn','nnnnnnnnnnnn000000nnnnnnnsns','nnnn','nnnnnnnno','nnnnnn')");
+esegui_query("insert into $tableprivilegi (idutente,anno,regole1_consentite,tariffe_consentite,costi_agg_consentiti,contratti_consentiti,priv_ins_prenota,priv_mod_prenota,priv_ins_costi,priv_vedi_tab,priv_ins_tariffe) values ('$id_utente_privilegi','$attiva_anno','nm,','n,','n,','ns,','nnnnnnnnnsnnn','nnnnnnnnnnnn000000nnnnnnnsns','nnnn','nnnnnnnno','nnnnnn')");
 $privilegi_anno[$attiva_anno] = esegui_query("select * from $tableprivilegi where idutente = '$id_utente_privilegi' and anno = '$attiva_anno'");
 include("./includes/funzioni_menu.php");
 $tipo_periodi_cambia = esegui_query("select * from $tableanni where idanni = '$attiva_anno'");
@@ -1295,7 +1354,7 @@ echo "<br><div style=\"text-align: center;\">
 <input type=\"hidden\" name=\"anno\" value=\"$anno\">
 <input type=\"hidden\" name=\"id_sessione\" value=\"$id_sessione\">
 <input type=\"hidden\" name=\"id_utente_privilegi\" value=\"$id_utente_privilegi\">
-<input class=\"sbutton\" type=\"submit\" name=\"torna\" value=\"".mex("Torna indietro",$pag)."\">
+<input class=\"sbutton\" type=\"submit\" value=\"".mex("Torna indietro",$pag)."\">
 </div></form></div><br>";
 } # fine if(isset($mostra_form_iniziale) and $mostra_form_iniziale == "NO")
 
@@ -1396,6 +1455,17 @@ $b_slash_SI = "";
 $checked_NO = "";
 $b_NO = "";
 $b_slash_NO = "";
+if (substr($priv_mod_pers,10,1) == "p") { $checked_SI = " checked"; $b_SI = "<b>"; $b_slash_SI = "</b>"; }
+if (substr($priv_mod_pers,10,1) == "n") { $checked_NO = " checked"; $b_NO = "<b>"; $b_slash_NO = "</b>"; }
+echo "".mex("Modifica delle password",$pag).":
+ <label><input type=\"radio\" name=\"modifica_pass\" value=\"p\"$checked_SI>$b_SI".mex("Si",$pag).", ".mex("solo la propria",$pag)."$b_slash_SI</label>
+ <label><input type=\"radio\" name=\"modifica_pass\" value=\"n\"$checked_NO>$b_NO".mex("No",$pag)."$b_slash_NO</label><br>";
+$checked_SI = "";
+$b_SI = "";
+$b_slash_SI = "";
+$checked_NO = "";
+$b_NO = "";
+$b_slash_NO = "";
 if (substr($priv_mod_pers,1,1) == "s") { $checked_SI = " checked"; $b_SI = "<b>"; $b_slash_SI = "</b>"; }
 if (substr($priv_mod_pers,1,1) == "n") { $checked_NO = " checked"; $b_NO = "<b>"; $b_slash_NO = "</b>"; }
 echo "".ucfirst(mex("creazione, download e cancellazione del backup completo",$pag)).":
@@ -1456,9 +1526,20 @@ $b_slash_SI = "";
 $checked_NO = "";
 $b_NO = "";
 $b_slash_NO = "";
+if (substr($priv_mod_pers,9,1) == "s") { $checked_SI = " checked"; $b_SI = "<b>"; $b_slash_SI = "</b>"; }
+if (substr($priv_mod_pers,9,1) == "n") { $checked_NO = " checked"; $b_NO = "<b>"; $b_slash_NO = "</b>"; }
+echo "<table><tr><td style=\"width: 30px;\"></td><td>".mex("Modifica dei documenti in formato HTML",$pag).":
+ <label><input type=\"radio\" name=\"modifica_doc_html\" value=\"s\"$checked_SI>$b_SI".mex("Si",$pag)."$b_slash_SI</label>
+ <label><input type=\"radio\" name=\"modifica_doc_html\" value=\"n\"$checked_NO>$b_NO".mex("No",$pag)."$b_slash_NO</label><br>";
+$checked_SI = "";
+$b_SI = "";
+$b_slash_SI = "";
+$checked_NO = "";
+$b_NO = "";
+$b_slash_NO = "";
 if (substr($priv_mod_pers,4,1) == "s") { $checked_SI = " checked"; $b_SI = "<b>"; $b_slash_SI = "</b>"; }
 if (substr($priv_mod_pers,4,1) == "n") { $checked_NO = " checked"; $b_NO = "<b>"; $b_slash_NO = "</b>"; }
-echo "<table><tr><td style=\"width: 30px;\"></td><td>".mex("Modifica dei documenti come API",$pag).":
+echo "".mex("Modifica dei documenti come API",$pag).":
  <label><input type=\"radio\" name=\"modifica_doc_api\" value=\"s\"$checked_SI>$b_SI".mex("Si",$pag)."$b_slash_SI</label>
  <label><input type=\"radio\" name=\"modifica_doc_api\" value=\"n\"$checked_NO>$b_NO".mex("No",$pag)."$b_slash_NO</label>
 </td></tr></table><br>";
@@ -1590,7 +1671,7 @@ echo "<table cellpadding=\"0\" cellspacing=\"0\"><tr><td style=\"width: 30px;\">
  <label><input type=\"radio\" name=\"ins_messaggi\" value=\"n\"$checked_NO>$b_NO".mex("No",$pag)."$b_slash_NO</label>
 </td></tr></table><br>";
 
-$casse_consentite = risul_query($privilegi_globali,0,'casse_consentite');
+$casse_consentite = (string) risul_query($privilegi_globali,0,'casse_consentite');
 $vett_casse_consentite = explode(",",$casse_consentite);
 unset($cassa_selezionata);
 for ($num1 = 1 ; $num1 < count($vett_casse_consentite) ; $num1++) $cassa_selezionata[$vett_casse_consentite[$num1]] = "SI";
@@ -1610,8 +1691,10 @@ echo "<label><input type=\"radio\" name=\"seleziona_casse\" value=\"n\"$checked_
 $num_colonna = 1;
 $casse = esegui_query("select * from $tablecasse order by idcasse ");
 $num_casse = numlin_query($casse);
+$lista_casse_passa = "";
 for ($num1 = 0 ; $num1 < $num_casse ; $num1++) {
 $id_cassa = risul_query($casse,$num1,'idcasse');
+$lista_casse_passa .= ",$id_cassa";
 if ($id_cassa == 1)  $nome_cassa = mex("cassa principale",$pag);
 else $nome_cassa = risul_query($casse,$num1,'nome_cassa');
 if ($num_colonna == 1) echo "<tr>";
@@ -1629,7 +1712,7 @@ if ($num_colonna != 1) {
 for ($num1 = $num_colonna ; $num1 <= 5 ; $num1++) echo "<td>&nbsp;</td>";
 echo "</tr>";
 } # fine if ($num_colonna != 1)
-echo "</table></div><br>";
+echo "</table></div><input type=\"hidden\" name=\"lista_casse_passa\" value=\"$lista_casse_passa\"><br>";
 
 $priv_inventario = risul_query($privilegi_globali,0,'priv_inventario');
 $checked_SI = "";
@@ -1841,7 +1924,7 @@ $tipo_periodi_mostra = risul_query($anni,$num1,'tipo_periodi');
 echo "<br><a name=\"anno$anno_mostra\"></a><div>
 <div style=\"text-align: center;\">".mex("Privilegi per l'anno",$pag)." <b>$anno_mostra</b></div>";
 if (numlin_query($privilegi_anno[$anno_mostra]) == 0) {
-echo "<form accept-charset=\"utf-8\" method=\"post\" action=\"privilegi_utenti.php\"><div>
+echo "<form accept-charset=\"utf-8\" method=\"post\" action=\"privilegi_utenti.php#anno$anno_mostra\"><div>
 <input type=\"hidden\" name=\"anno\" value=\"$anno\">
 <input type=\"hidden\" name=\"id_sessione\" value=\"$id_sessione\">
 <input type=\"hidden\" name=\"id_utente_privilegi\" value=\"$id_utente_privilegi\">
@@ -1852,7 +1935,7 @@ echo "<form accept-charset=\"utf-8\" method=\"post\" action=\"privilegi_utenti.p
 } # fine if (numlin_query($privilegi_anno[$anno_mostra]) == 0)
 
 else {
-echo "<form accept-charset=\"utf-8\" method=\"post\" action=\"privilegi_utenti.php\"><div>
+echo "<form accept-charset=\"utf-8\" method=\"post\" action=\"privilegi_utenti.php#anno$anno_mostra\"><div>
 <input type=\"hidden\" name=\"anno\" value=\"$anno\">
 <input type=\"hidden\" name=\"id_sessione\" value=\"$id_sessione\">
 <input type=\"hidden\" name=\"id_utente_privilegi\" value=\"$id_utente_privilegi\">
@@ -1900,21 +1983,21 @@ $motivazione = " ";
 $motivazione_vedi = mex("nessuna",$pag);
 } # fine if (!$motivazione)
 else $motivazione_vedi = $motivazione;
-if ($motivazioni_presenti[$motivazione] != "SI") {
+if (!isset($motivazioni_presenti[$motivazione]) or $motivazioni_presenti[$motivazione] != "SI") {
 $motivazioni_presenti[$motivazione] = "SI";
 $var_motivazione = "var_mot_".$anno_mostra.$num_motivazioni;
 $num_motivazioni++;
 $checked_SI = "";
 $b_SI = "";
 $b_slash_SI = "";
-if ($motivazioni_selezionate[$motivazione] == "SI") { $checked_SI = " checked"; $b_SI = "<b>"; $b_slash_SI = "</b>"; }
+if (isset($motivazioni_selezionate[$motivazione]) and $motivazioni_selezionate[$motivazione] == "SI") { $checked_SI = " checked"; $b_SI = "<b>"; $b_slash_SI = "</b>"; }
 echo "<td><label><input type=\"checkbox\" name=\"$var_motivazione\" value=\"$motivazione\"$checked_SI> $b_SI$motivazione_vedi$b_slash_SI</label></td>";
 if ($celle == $num_colonne) {
 echo "</tr><tr>";
 $celle = 0;
 } # fine if ($celle == 3)
 $celle++;
-} # fine if ($motivazioni_presenti[$motivazione] != "SI")
+} # fine if (!isset($motivazioni_presenti[$motivazione]) or $motivazioni_presenti[$motivazione] != "SI")
 } # fine for $num2
 if ($celle != 1) for ($num2 = $celle ; $num2 <= $num_colonne ; $num2++) echo "<td>&nbsp;</td>";
 if ($num_regole == 0) echo "<td style=\"width: 250px;\">&nbsp;</td>";
@@ -2013,8 +2096,10 @@ echo "<label><input type=\"radio\" name=\"seleziona_costi_agg$anno_mostra\" valu
 <label><input type=\"radio\" name=\"seleziona_costi_agg$anno_mostra\" value=\"s\"$checked_SI>$b_SI
  ".mex("Permetti l'uso solo dei <i>costi aggiuntivi</i> selezionati nell'inserimento e modifica delle prenotazioni",$pag)."$b_slash_SI</label>:<br>
 <table style=\"margin-left: auto; margin-right: auto;\"><tr>";
+$lista_ca_passa = "";
 for ($num2 = 0 ; $num2 < $dati_ca['num'] ; $num2++) {
 $idntariffe = $dati_ca[$num2]['id'];
+$lista_ca_passa .= ",$idntariffe";
 $nome_costo = $dati_ca[$num2]['nome'];
 if ($dati_ca[$num2]['tipo'] == "u") $tipo_costo = "Costo unico";
 if ($dati_ca[$num2]['tipo'] == "s" and $tipo_periodi_mostra == "s") $tipo_costo = "Costo settimanale";
@@ -2031,7 +2116,7 @@ $celle++;
 } # fine for $num2
 if ($celle != 1) for ($num2 = $celle ; $num2 <= $num_colonne ; $num2++) echo "<td>&nbsp;</td>";
 if ($dati_ca['num'] == 0) echo "<td style=\"width: 250px;\">&nbsp;</td>";
-echo "</tr></table><br>";
+echo "</tr></table><input type=\"hidden\" name=\"lista_ca_passa$anno_mostra\" value=\"$lista_ca_passa\"><br>";
 
 $nomi_contratti = esegui_query("select valpersonalizza from $tablepersonalizza where idpersonalizza = 'nomi_contratti'");
 $nomi_contratti = risul_query($nomi_contratti,0,'valpersonalizza');
@@ -2516,7 +2601,7 @@ echo " <label><input id=\"mpvpn$anno_mostra\" type=\"radio\" name=\"modp_pagato$
  <option value=\"NO\"$sel_GR>".mex("senza mostrare i valori",$pag)."</option>
  </select><br>";
 $cassa_pagamenti = risul_query($privilegi_anno[$anno_mostra],0,'cassa_pagamenti');
-if (!strcmp($cassa_pagamenti,"")) $sel = " selected";
+if (!strcmp((string) $cassa_pagamenti,"")) $sel = " selected";
 else $sel = "";
 $opt_casse = "<option value=\"\"$sel>----</option>";
 $cassa_trovata = 0;

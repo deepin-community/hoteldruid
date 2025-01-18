@@ -269,6 +269,17 @@ case "Prenotazioni cancellate":  		$messaggio = "Reservas borradas"; break;
 case "Data o orario stimato di entrata <span class=\"colred\">errato</span>":	$messaggio = "Fecha o horario de entrada estimativo <span class=\"colred\">equivocado</span>"; break;
 case "Data cancellazione":  			$messaggio = "Fecha de cancelación"; break;
 case "Cancellata dall'utente":  		$messaggio = "Borrada por el usuario"; break;
+case "Per la tariffa selezionata si deve inserire un <span class=\"colred\">numero minimo</span> di":	$messaggio = "Para la tarifa seleccionada hay que insertar un <span class=\"colred\">número mínimo</span> de"; break;
+case "persona":  				$messaggio = "persona"; break;
+case "id operazione":  				$messaggio = "id operación"; break;
+case "id op.":  				$messaggio = "id op."; break;
+case "Data operazione":  			$messaggio = "Fecha de la operación"; break;
+case "Data":  					$messaggio = "Fecha"; break;
+case "Note":  					$messaggio = "Notas"; break;
+case "Informazioni extra":  			$messaggio = "Informaciones extra"; break;
+case "Inserisci una prenotazione uguale":  	$messaggio = "Insertar una reserva igual"; break;
+case "Inserisci prenotazioni uguali":  		$messaggio = "Insertar reservas iguales"; break;
+case "Cambia il cliente anche nei pagamenti effettuati":	$messaggio = "Cambiar el cliente también en los pagos realizados"; break;
 case "":  		$messaggio = ""; break;
 case "":  		$messaggio = ""; break;
 

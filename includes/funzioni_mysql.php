@@ -2,7 +2,7 @@
 
 ##################################################################################
 #    HOTELDRUID
-#    Copyright (C) 2001-2018 by Marco Maria Francesco De Santis (marco@digitaldruid.net)
+#    Copyright (C) 2001-2023 by Marco Maria Francesco De Santis (marco@digitaldruid.net)
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published by
@@ -199,9 +199,10 @@ return $risul;
 
 
 
-function unlock_tabelle ($tabelle_lock,$azione = "") {
+function unlock_tabelle (&$tabelle_lock,$azione = "") {
 
 $risul = mysql_query("unlock tables");
+$tabelle_lock = null;
 
 } # fine function unlock_tabelle
 

@@ -39,13 +39,13 @@ if ($lista_cassa == 1) $cond_cassa = "(nome_cassa = '' or nome_cassa is NULL) ";
 else $cond_cassa = "nome_cassa = '".aggslashdb(risul_query($cassa_esist,0,'nome_cassa'))."' ";
 $num_pagamenti = 0;
 for ($num1 = 1 ; $num1 <= $num_ripeti ; $num1++) {
-$pagamenti = esegui_query("select val_costo,tipo_costo,valuta,costo_valuta,persona_costo,metodo_pagamento,datainserimento from $tablecosti where $cond_cassa and (tipo_costo = 'e' or tipo_costo = 's') order by tipo_costo,datainserimento");
+$pagamenti = esegui_query("select * from $tablecosti where $cond_cassa and (tipo_costo = 'e' or tipo_costo = 's') order by tipo_costo,datainserimento");
 $num_pagamenti2 = numlin_query($pagamenti);
 $num_r++;
 for ($num2 = 0 ; $num2 < $num_pagamenti2 ; $num2++) {
 ${"data_paga".$num_pagamenti."_".$num_r} = substr(risul_query($pagamenti,$num2,'datainserimento'),0,10);
 ${"utente_paga".$num_pagamenti."_".$num_r} = risul_query($pagamenti,$num2,'persona_costo');
-if (strcmp(risul_query($pagamenti,$num2,'metodo_pagamento'),"")) ${"metodo_paga".$num_pagamenti."_".$num_r} = risul_query($pagamenti,$num2,'metodo_pagamento');
+if (strcmp((string) risul_query($pagamenti,$num2,'metodo_pagamento'),"")) ${"metodo_paga".$num_pagamenti."_".$num_r} = risul_query($pagamenti,$num2,'metodo_pagamento');
 ${"saldo_paga".$num_pagamenti."_".$num_r} = risul_query($pagamenti,$num2,'val_costo');
 if (risul_query($pagamenti,$num2,'tipo_costo') == "s") ${"saldo_paga".$num_pagamenti."_".$num_r} = (${"saldo_paga".$num_pagamenti."_".$num_r} * -1);
 $valuta_paga = risul_query($pagamenti,$num2,'valuta');
@@ -55,9 +55,15 @@ ${"valuta_paga".$num_pagamenti."_".$num_r} = $valuta_paga[0];
 ${"tasso_cambio_paga".$num_pagamenti."_".$num_r} = $valuta_paga[1];
 ${"valore_valuta_paga".$num_pagamenti."_".$num_r} = converti_valuta(${"saldo_paga".$num_pagamenti."_".$num_r},$valuta_paga[1],$valuta_paga[2]);
 } # fine if ($valuta_paga)
+if (!defined('C_VERSIONE_ATTUALE') or C_VERSIONE_ATTUALE > 3.04) {
+${"data_operazione_paga".$num_pagamenti."_".$num_r} = substr(risul_query($pagamenti,$num2,'data_transazione'),0,10);
+if (strcmp((string) risul_query($pagamenti,$num2,'id_pagamento'),"")) ${"id_paga".$num_pagamenti."_".$num_r} = risul_query($pagamenti,$num2,'id_pagamento');
+${"note_paga".$num_pagamenti."_".$num_r} = risul_query($pagamenti,$num2,'nome_costo');
+} # fine if (!defined('C_VERSIONE_ATTUALE') or C_VERSIONE_ATTUALE > 3.04)
 $num_pagamenti++;
 } # fine for $num2
 ${"num_pagamenti_".$num_r} = $num_pagamenti;
+chiudi_query($pagamenti);
 } # fine for $num1
 } # fine if (numlin_query($cassa_esist))
 

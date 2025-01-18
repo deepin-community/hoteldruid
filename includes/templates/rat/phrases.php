@@ -22,6 +22,7 @@
 
 
 
+if (!function_exists('mext_rat')) {
 function mext_rat ($messaggio,$pag,$lingua="") {
 if ($lingua) $lingua_mex = $lingua;
 else global $lingua_mex;
@@ -124,6 +125,7 @@ else $messaggio = mex($messaggio,$pag);
 
 return $messaggio;
 } # fine function mext_rat
+} # fine if (!function_exists('mext_rat'))
 
 
 

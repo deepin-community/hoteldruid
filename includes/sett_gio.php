@@ -23,7 +23,8 @@
 
 $tableanni = $PHPR_TAB_PRE."anni";
 $tipo_periodi = esegui_query("select * from $tableanni where idanni = '$anno' ");
-$tipo_periodi = risul_query($tipo_periodi,0,'tipo_periodi');
+if (numlin_query($tipo_periodi)) $tipo_periodi = risul_query($tipo_periodi,0,'tipo_periodi');
+else $tipo_periodi = "g";
 if ($tipo_periodi == "g") {
 $parola_settimanale = "giornaliero";
 $parola_settimanali = "giornalieri";

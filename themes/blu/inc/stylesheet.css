@@ -103,7 +103,8 @@ table.t1 tr:first-child td, table.me1 tr:first-child td { background-image: url(
 table.t1 tr:last-child td, table.me1 tr:last-child td { background-image: url("../img/bar_bg_bot.png"); background-repeat: repeat-x; background-position: left bottom; }
 table.me1 table, table.me1 table tr:first-child td { background: transparent; }
 table.t1 tr:not(:first-child):hover, table.t1wc tr:hover, table.m1 tr:not(:first-child):hover, table.m2 tr:not(:first-child):hover { background-color: #eeeeee; }
-table.t1 tr:last-child:hover td { background-image: none; }
+table tr:last-child td.bcolclosed, table tr:last-child.bcoldeleted td, table.t1 tr:last-child:hover td { background-image: none; }
+table tr:not(:first-child):hover td.bcolclosed { background-color: #bcbcbc; }
 table.t1 tr:not(:first-child):hover td.t1left, table.t1 tr:not(:first-child):hover td.t1left1, table.t1 tr:not(:first-child):hover td.t1left2, table.m1 tr:not(:first-child):hover td.t1left, table.m2 tr:not(:first-child):hover td.t1left { background-color: #eeeeee; }
 table.t1 tr td { border-color: #abbbc1; }
 
@@ -144,7 +145,7 @@ button.intc, button.bkup, button.xusr, button.musr, button.ausr, button.abkp, bu
 button.ubkp, button.rbkp, button.dcbk, button.rdbk, button.snml, button.cdoc, button.xdoc, button.adoc, 
 button.crep, button.iinc, button.iexp, button.exin, button.rlpe, button.rule, button.ainv, button.cinv, 
 button.xavl, button.cusr, button.pasw, button.login {
-background: #ffffff url("../../../img/button28.gif") repeat-x bottom; min-height: 36px; }
+background: #ffffff url("../../../img/button28.gif") repeat-x bottom; min-height: 36px; color: #000000; }
 
 
 button.login div { background: url("../img/key.png") no-repeat left center; padding: 8px 2px 8px 36px; margin: 0 0 0 1px; }

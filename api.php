@@ -2,7 +2,7 @@
 
 ##################################################################################
 #    HOTELDRUID
-#    Copyright (C) 2017-2021 by Marco Maria Francesco De Santis (marco@digitaldruid.net)
+#    Copyright (C) 2001-2023 by Marco Maria Francesco De Santis (marco@digitaldruid.net)
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published by
@@ -27,13 +27,32 @@ $var_pag = array();
 $var_pag[0] = 'doc';
 $var_pag[1] = 'pass';
 $var_pag[2] = 'res_year';
-$n_var_pag = 3;
+$var_pag[3] = 'res_num';
+$var_pag[4] = 'res_from';
+$var_pag[5] = 'res_to';
+$var_pag[6] = 'res_ins_from';
+$var_pag[7] = 'res_ins_to';
+$var_pag[8] = 'res_arr';
+$var_pag[9] = 'res_dep';
+$var_pag[10] = 'clients';
+$var_pag[11] = 'cashbox';
+$var_pag[12] = 'session_data';
+$var_pag[13] = 'cli_id';
+$var_pag[14] = 'priv_r';
+$var_pag[15] = 'azione';
+$var_pag[16] = 'tipo_ic';
+$var_pag[17] = 'valore_xml';
+$var_pag[18] = 'token';
+$var_pag[19] = 'ord_ic';
+$var_pag[20] = 'tweb';
+$n_var_pag = 21;
 
 include("./costanti.php");
 include(C_DATI_PATH."/dati_connessione.php");
 include("./includes/funzioni_$PHPR_DB_TYPE.php");
 $numconnessione = connetti_db($PHPR_DB_NAME,$PHPR_DB_HOST,$PHPR_DB_PORT,$PHPR_DB_USER,$PHPR_DB_PASS,$PHPR_LOAD_EXT);
 include("./includes/funzioni.php");
+include("./includes/funzioni_email.php");
 $tableutenti = $PHPR_TAB_PRE."utenti";
 $tablesessioni = $PHPR_TAB_PRE."sessioni";
 $tablepersonalizza = $PHPR_TAB_PRE."personalizza";
@@ -61,16 +80,21 @@ $tablecasse = $PHPR_TAB_PRE."casse";
 
 
 # API Documenti
-if ($doc) {
+if (!empty($doc)) {
 $session_data = "";
 $id_sessione = "";
 $numero_contratto = aggslashdb((int) $doc);
 $api_esistente = esegui_query("select * from $tablecontratti where numero = '$numero_contratto' and tipo = 'api'");
 if (numlin_query($api_esistente)) {
-$max_log_sbagliati = 10;
-$minuti_durata_sessione = 30;
+$pass_api = risul_query($api_esistente,0,'testo');
+$id_utente = explode(";",$pass_api);
+$indirizzi_ip_api = $id_utente[1];
+$id_utente = $id_utente[0];
 if ($_SERVER['REMOTE_ADDR']) $REMOTE_ADDR = $_SERVER['REMOTE_ADDR'];
 $REMOTE_ADDR = aggslashdb($REMOTE_ADDR);
+if (!$indirizzi_ip_api or strstr(",$indirizzi_ip_api,",",$REMOTE_ADDR,")) {
+$max_log_sbagliati = 10;
+$minuti_durata_sessione = 30;
 $limite_transazioni_vecchie = date("Y-m-d H:i:s",(time() - ($minuti_durata_sessione * 60) + (C_DIFF_ORE * 3600)));
 esegui_query("delete from $tabletransazioniweb where tipo_transazione = 'api_l' and ultimo_accesso <= '$limite_transazioni_vecchie'");
 $login_sbagliati = esegui_query("select tipo_transazione from $tabletransazioniweb where tipo_transazione = 'api_l' and dati_transazione1 = 'doc$numero_contratto' and dati_transazione2 = '$REMOTE_ADDR' ");
@@ -79,10 +103,7 @@ if ($login_sbagliati >= $max_log_sbagliati) echo "Excessive number of failed log
 else {
 
 if (@get_magic_quotes_gpc()) $pass = stripslashes($pass);
-$pass_api = risul_query($api_esistente,0,'testo');
-$id_utente = explode(";",$pass_api);
-$id_utente = $id_utente[0];
-$pass_api = substr($pass_api,(strlen($id_utente) + 1));
+$pass_api = substr($pass_api,(strlen($id_utente) + strlen($indirizzi_ip_api) + 2));
 if ($pass == $pass_api) {
 
 $raggiunto_limite = 0;
@@ -105,7 +126,7 @@ if ($raggiunto_limite) echo "REACHED LIMIT IN LAST MINUTE (".C_LIMITE_CHIAMATE_A
 else {
 
 
-if ($res_year) {
+if (!empty($res_year)) {
 if (preg_match("/[0-9]{4,4}/",$res_year)) {
 if (@is_file(C_DATI_PATH."/selectperiodi$res_year.1.php")) $anno = $res_year;
 else {
@@ -114,7 +135,7 @@ else $res_year = "";
 } # fine else if (@is_file(C_DATI_PATH."/selectperiodi$res_year.1.php"))
 } # fine if (preg_match("/[0-9]{4,4}/",$res_year))
 else $res_year = "";
-} # fine if ($res_year)
+} # fine if (!empty($res_year))
 
 $anno_esist = 1;
 # Se ci troviamo dopo il periodo di creazione dell'anno ma questo non è stato ancora creato
@@ -130,6 +151,7 @@ if ($id_utente != 1) {
 $tableprivilegi = $PHPR_TAB_PRE."privilegi";
 $tablerelgruppi = $PHPR_TAB_PRE."relgruppi";
 $privilegi_annuali_utente = esegui_query("select * from $tableprivilegi where idutente = '$id_utente' and anno = '$anno'");
+$prendi_gruppi = "";
 if (numlin_query($privilegi_annuali_utente) == 0) $anno_utente_attivato = "NO";
 else {
 $anno_utente_attivato = "SI";
@@ -241,9 +263,48 @@ $num_campi_pers_cliente = count($campi_pers_cliente);
 else $num_campi_pers_cliente = 0;
 include_once("./includes/funzioni_tariffe.php");
 $dati_cat_pers = dati_cat_pers($id_utente,$tablepersonalizza,$lingua_mex,"v",0,1);
+$dati_allegato = array('num' => 0);
+/*# PER ORA IL FORMATO EMAIL NON PUÒ ESSERE API (poi sostituire con nuova funzione dati_allegato($num_contr), da sostituire anche in visualizza_contratto, in funzioni_contratti?)
+$allegati_email = esegui_query("select * from $tablecontratti where numero = '$numero_contratto' and tipo = 'allegato'");
+if (numlin_query($allegati_email)) {
+$allegati_email = risul_query($allegati_email,0,'testo');
+if ($allegati_email) {
+if (strstr($allegati_email,":")) $contr_multilingua = 1;
+else $contr_multilingua = 0;
+$allegati_email = explode(",",$allegati_email);
+$dati_allegato['num'] = (count($allegati_email) - 2);
+for ($num1 = 1 ; $num1 <= $dati_allegato['num'] ; $num1++) {
+$dati_allegato['ln_corr'][$num1] = "SI";
+if ($contr_multilingua) {
+$all_vett = explode(">",$allegati_email[$num1]);
+$num_ln = count($all_vett);
+} # fine if ($contr_multilingua)
+else $num_ln = 1;
+for ($num2 = 0 ; $num2 < $num_ln ; $num2++) {
+if ($contr_multilingua) {
+$num_all = substr(strstr($all_vett[$num2],":"),1);
+$ln_corr = substr(str_replace(":$num_all","",$all_vett[$num2]),4);
+} # fine if ($contr_multilingua)
+else $num_all = $allegati_email[$num1];
+$allegato_email = esegui_query("select * from $tablecontratti where numero = '$num_all' and tipo = 'file_all'");
+$allegato_email = risul_query($allegato_email,0,'testo');
+$allegato_email = explode(",",$allegato_email);
+if ($contr_multilingua) $dati_allegato["ln$ln_corr"][$num1] = $allegato_email[0];
+else $dati_allegato['corr'][$num1] = $allegato_email[0];
+} # fine for $num2
+} # fine for $num1
+unset($ln_corr);
+unset($num_all);
+unset($all_vett);
+unset($num_ln);
+unset($allegato_email);
+} # fine if ($allegati_email)
+} # fine if (numlin_query($allegati_email))
+unset($allegati_email);*/
 $commento_personalizzato_ = "commento_personalizzato_";
 $campo_personalizzato_ = "campo_personalizzato_";
 $num_persone_tipo_ = "num_persone_tipo_";
+$allegato_ = "allegato";
 include("./includes/variabili_contratto.php");
 
 $tableprenota = $PHPR_TAB_PRE."prenota".$anno;
@@ -315,18 +376,18 @@ else $fine_for = 0;
 } # fine if (!$res_fine)
 else $fine_for = $res_fine;
 for ($num2 = $ini_for ; $num2 <= $fine_for ; $num2++) {
-if (!$prenota_in_lista[$num2]) {
+if (empty($prenota_in_lista[$num2])) {
 $prenota_in_lista[$num2] = 1;
 $query_prenota .= ",$num2";
-} # fine if (!$prenota_in_lista[$num2])
+} # fine if (empty($prenota_in_lista[$num2]))
 } # fine for $num2
 } # fine if (!$res_ini or !$res_fine or $res_fine >= $res_ini)
 } # fine if (str_replace("-","",$num_pren) != $num_pren)
 else {
-if (preg_match("/[0-9]*/",$num_pren) and !$prenota_in_lista[$num_pren]) {
+if (preg_match("/[0-9]*/",$num_pren) and empty($prenota_in_lista[$num_pren])) {
 $prenota_in_lista[$num_pren] = 1;
 $query_prenota .= ",$num_pren";
-} # fine if (preg_match("/[0-9]*/",$num_pren) and !$prenota_in_lista[$num_pren])
+} # fine if (preg_match("/[0-9]*/",$num_pren) and empty($prenota_in_lista[$num_pren]))
 } # fine else if (str_replace("-","",$num_pren) != $num_pren)
 } # fine for $num1
 if ($query_prenota) $lista_prenota = 1;
@@ -390,9 +451,9 @@ if ($clients == "guests") $query_clienti = "select idclienti from $tableclienti 
 if (!$query_clienti) $query_clienti = "select idclienti from $tableclienti where idclienti < '-3'";
 } # fine if (!empty($clients) and !$query_prenota)
 
-if (isset($cashbox) and strcmp($cashbox,"") and !$query_prenota and !$query_clienti) {
+if (isset($cashbox) and strcmp((string) $cashbox,"") and !$query_prenota and !$query_clienti) {
 $query_cassa = "select idcasse from $tablecasse where nome_cassa = '".aggslashdb($cashbox)."' ";
-} # fine if (isset($cashbox) and strcmp($cashbox,"") and !$query_prenota and !$query_clienti)
+} # fine if (isset($cashbox) and strcmp((string) $cashbox,"") and !$query_prenota and !$query_clienti)
 
 if (!$query_prenota and !$query_clienti and !$query_cassa) {
 if (empty($res_year)) $res_year = $anno;
@@ -449,6 +510,8 @@ $mostra_headers = "SI";
 $messaggio_di_errore = "";
 $num_contr_esist = 0;
 $contratto = crea_contratto($numero_contratto,$tipo_contratto,"1","","","");
+if (!empty($nome_file_contr['downl']['num'])) $n_file = $nome_file_contr['downl']['num'];
+else $n_file = 1;
 
 if ($messaggio_di_errore) {
 $tipo_contratto = "contrhtm";
@@ -463,6 +526,8 @@ $messaggio_di_errore
 if ($dir_salva and !$num_contr_esist) $mostra_headers = "NO";
 $foothtm = "";
 
+if (!empty($nome_file_contr['downl']['datdownl'])) $dati_download = explode(">",$nome_file_contr['downl']['datdownl']);
+else $dati_download = "";
 if ($tipo_contratto == "contrhtm") {
 $show_bar = "NO";
 $headhtm = esegui_query("select testo from $tablecontratti where numero = '$numero_contratto' and tipo = 'headhtm'");
@@ -475,9 +540,10 @@ if (numlin_query($foothtm)) $foothtm = risul_query($foothtm,0,'testo');
 } # fine if ($tipo_contratto == "contrhtm")
 if ($tipo_contratto == "contrrtf") {
 $mostra_headers = "NO";
-if ($nome_file_contr) $nome_file = $nome_file_contr[$n_file];
-else $nome_file = str_replace("\\","_",str_replace("/","_",str_replace(" ","_",$nome_contratto))).".rtf";
+if (isset($nome_file_contr[$n_file])) $nome_file = $nome_file_contr[$n_file];
+else $nome_file = str_replace("\"","_",str_replace("\\","_",str_replace("/","_",str_replace(" ","_",$nome_contratto)))).".rtf";
 if (substr($nome_file,-3) == ".gz") $nome_file = substr($nome_file,0,-3);
+if (isset($dati_download[1]) and $dati_download[1] == "var" and isset($nome_file_contr['downl'][$n_file]) and strcmp($nome_file_contr['downl'][$n_file],"")) $nome_file = $nome_file_contr['downl'][$n_file].substr($nome_file,-4);
 header("Pragma: public");
 header("Last-Modified: ".gmdate("D, d M Y H:i:s")." GMT");
 header("Cache-Control: no-store, no-cache, must-revalidate");
@@ -491,16 +557,15 @@ header("Content-Disposition: inline; filename=\"$nome_file\"");
 } # fine if ($tipo_contratto == "contrrtf")
 if ($tipo_contratto == "contrtxt") {
 $mostra_headers = "NO";
-if ($nome_file_contr) {
+if (isset($nome_file_contr[$n_file])) {
 $nome_file = $nome_file_contr[$n_file];
 if (substr($nome_file,-3) == ".gz") $nome_file = substr($nome_file,0,-3);
-} # fine if ($nome_file_contr)
-else $nome_file = str_replace("\\","_",str_replace("/","_",str_replace(" ","_",$nome_contratto))).".txt";
-$est_txt = esegui_query("select * from $tablecontratti where numero = '$numero_contratto' and tipo = 'est_txt'");
-if (numlin_query($est_txt)) {
-$est_txt = risul_query($est_txt,0,'testo');
-$nome_file = substr($nome_file,0,-4).".$est_txt";
-} # fine if (numlin_query($est_txt))
+} # fine if (isset($nome_file_contr[$n_file]))
+else $nome_file = str_replace("\"","_",str_replace("\\","_",str_replace("/","_",str_replace(" ","_",$nome_contratto)))).".txt";
+if ($dati_download) {
+if (isset($dati_download[1]) and $dati_download[1] == "var" and isset($nome_file_contr['downl'][$n_file]) and strcmp($nome_file_contr['downl'][$n_file],"")) $nome_file = $nome_file_contr['downl'][$n_file].substr($nome_file,-4);
+if ($dati_download[0]) $nome_file = substr($nome_file,0,-4).".".$dati_download[0];
+} # fine if ($dati_download)
 header("Pragma: public");
 header("Last-Modified: ".gmdate("D, d M Y H:i:s")." GMT");
 header("Cache-Control: no-store, no-cache, must-revalidate");
@@ -534,19 +599,16 @@ $pag = $pag_orig;
 } # fine else if ($raggiunto_limite)
 } # fine if ($pass == $pass_api)
 else {
-$versione_transazione = prendi_numero_versione($tabletransazioniweb,"idtransazioni","anno");
-$adesso = date("YmdHis");
-list($usec, $sec) = explode(' ', microtime());
-mt_srand((float) $sec + ((float) $usec * 100000));
-$val_casuale = mt_rand(100000,999999);
-$id_transazione = $adesso.$val_casuale.$versione_transazione;
+$id_transazione = crea_id_sessione("",$tabletransazioniweb,16,0,"idtransazioni","anno");
 $ultimo_accesso = date("Y-m-d H:i:s",(time() + (C_DIFF_ORE * 3600)));
 esegui_query("insert into $tabletransazioniweb (idtransazioni,tipo_transazione,dati_transazione1,dati_transazione2,ultimo_accesso) values ('$id_transazione','api_l','doc$numero_contratto','$REMOTE_ADDR','$ultimo_accesso')");
 } # fine else if ($pass == $pass_api)
 
 } # fine else if ($login_sbagliati >= $max_log_sbagliati)
+} # fine if (!$indirizzi_ip_api or strstr(",$indirizzi_ip_api,",",$REMOTE_ADDR,"))
+else echo "$REMOTE_ADDR not allowed.";
 } # fine if (numlin_query($api_esistente))
-} # fine if ($doc)
+} # fine if (!empty($doc))
 
 
 
@@ -558,13 +620,14 @@ if ($_SERVER['REMOTE_ADDR']) $REMOTE_ADDR = $_SERVER['REMOTE_ADDR'];
 if ($REMOTE_ADDR == C_IP_MOD_EXT_CARTE_CREDITO or ($REMOTE_ADDR == "::1" and C_IP_MOD_EXT_CARTE_CREDITO == "127.0.0.1")) {
 $cli_pass = 0;
 $cli_presfut = 0;
+$cli_id = fixstr($cli_id);
 # Non fare lock in scrittura sulle stesse tabelle dalle funzioni delle interconnessioni, altrimenti si blocca quando si attiva cc_hd_token
-if ($tweb) $tabelle_lock = array($tabletransazioniweb);
+if (!empty($tweb)) $tabelle_lock = array($tabletransazioniweb);
 else {
 if (strstr($cli_id,",")) $tabelle_lock = array($tablesessioni,$tabletransazioni);
 else $tabelle_lock = array($tablesessioni);
-} # fine else if ($tweb)
-if (($cli_id == "pass" or $cli_id == "pres_fut") and !$tweb) {
+} # fine else if (!empty($tweb))
+if (($cli_id == "pass" or $cli_id == "pres_fut") and empty($tweb)) {
 $anni_esist = esegui_query("select * from $tableanni order by idanni");
 $num_anni = numlin_query($anni_esist);
 unset($anni);
@@ -607,11 +670,11 @@ $num_lock++;
 $altre_tab_lock[$num_lock] = $tableprivilegi;
 $num_lock++;
 $altre_tab_lock[$num_lock] = $tablerelgruppi;
-} # fine if (($cli_id == "pass" or $cli_id == "pres_fut") and !$tweb)
+} # fine if (($cli_id == "pass" or $cli_id == "pres_fut") and empty($tweb))
 else {
-if ($cli_id or $priv_r) $altre_tab_lock = array($tableclienti,$tablepersonalizza,$tableprivilegi,$tablerelgruppi);
+if ($cli_id or !empty($priv_r)) $altre_tab_lock = array($tableclienti,$tablepersonalizza,$tableprivilegi,$tablerelgruppi);
 else $altre_tab_lock = array($tablepersonalizza);
-} # fine else if (($cli_id == "pass" or $cli_id == "pres_fut") and !$tweb)
+} # fine else if (($cli_id == "pass" or $cli_id == "pres_fut") and empty($tweb))
 $tabelle_lock = lock_tabelle($tabelle_lock,$altre_tab_lock);
 $sessione_trovata = 0;
 if (defined('C_UTENTE_CANC_CC') and $id_sessione == C_UTENTE_CANC_CC and $cli_id == "pres_fut") $sessione_trovata = 1;
@@ -619,16 +682,16 @@ else {
 $minuti_durata_sessione = esegui_query("select valpersonalizza_num from $tablepersonalizza where idpersonalizza = 'minuti_durata_sessione' and idutente = '1'");
 $minuti_durata_sessione = risul_query($minuti_durata_sessione,0,'valpersonalizza_num');
 $limite_sessioni_vecchie = date("Y-m-d H:i:s",(time() - ($minuti_durata_sessione * 60) + (C_DIFF_ORE * 3600)));
-if ($tweb) {
+if (!empty($tweb)) {
 esegui_query("delete from $tabletransazioniweb where tipo_transazione = 'pay_c' and ultimo_accesso <= '$limite_sessioni_vecchie'");
 $sessione = esegui_query("select * from $tabletransazioniweb where tipo_transazione = 'pay_c' and idtransazioni = '".aggslashdb($id_sessione)."' ");
 $sessione_trovata = numlin_query($sessione);
-} # fine if ($tweb)
+} # fine if (!empty($tweb))
 else {
 esegui_query("delete from $tablesessioni where ultimo_accesso <= '$limite_sessioni_vecchie'");
 $sessione = esegui_query("select * from $tablesessioni where idsessioni = '$id_sessione'");
 $sessione_trovata = numlin_query($sessione);
-} # fine else if ($tweb)
+} # fine else if (!empty($tweb))
 } # fine else if (defined('C_UTENTE_CANC_CC') and $id_sessione == C_UTENTE_CANC_CC and $cli_id == "pres_fut")
 if ($sessione_trovata) {
 
@@ -636,12 +699,12 @@ if ($sessione_trovata) {
 @include(C_DATI_PATH."/tema.php");
 if (defined('C_UTENTE_CANC_CC') and $id_sessione == C_UTENTE_CANC_CC) $id_utente = 1;
 else {
-if ($tweb) {
-$id_utente = "t";
+if (!empty($tweb)) $id_utente = "t";
+else $id_utente = risul_query($sessione,0,'idutente');
+if ($id_utente == -1 or $id_utente == "t") {
 $lingua[$id_utente] = $lingua[1];
 $tema[$id_utente] = $tema[1];
-} # fine if ($tweb)
-else $id_utente = risul_query($sessione,0,'idutente');
+} # fine if ($id_utente == -1 or $id_utente == "t")
 } # fine else if (defined('C_UTENTE_CANC_CC') and $id_sessione == C_UTENTE_CANC_CC)
 echo "<user_id>$id_utente<user_id>
 <lang>".$lingua[$id_utente]."</lang>
@@ -650,8 +713,10 @@ if (defined('C_FILE_CSS_PERS') and C_FILE_CSS_PERS != "" and @is_file(C_FILE_CSS
 if (defined('C_FILE_MOB_CSS_PERS') and C_FILE_MOB_CSS_PERS != "" and @is_file(C_FILE_MOB_CSS_PERS)) echo "<mob_css_pers>".C_FILE_MOB_CSS_PERS."</mob_css_pers>";
 $idclienti = aggslashdb($cli_id);
 
-if ($priv_r or ($cli_id and $id_utente != 1 and !$tweb)) {
+if (!empty($priv_r) or ($cli_id and $id_utente != 1 and empty($tweb))) {
 $privilegi_annuali_utente = esegui_query("select * from $tableprivilegi where idutente = '$id_utente' and anno = '$anno'");
+$prendi_gruppi = "";
+$priv_gest_pass_cc = "";
 if (numlin_query($privilegi_annuali_utente) == 0) $anno_utente_attivato = "NO";
 else {
 $anno_utente_attivato = "SI";
@@ -680,9 +745,9 @@ $num_utenti_gruppo = numlin_query($utenti_gruppo);
 for ($num2 = 0 ; $num2 < $num_utenti_gruppo ; $num2++) $utenti_gruppi[risul_query($utenti_gruppo,$num2,'idutente')] = 1;
 } # fine for $num1
 } # fine if ($prendi_gruppi == "SI")
-} # fine if ($priv_r or ($cli_id and $id_utente != 1 and !$tweb))
+} # fine if (!empty($priv_r) or ($cli_id and $id_utente != 1 and empty($tweb)))
 
-if (($cli_id == "pass" or $cli_id == "pres_fut") and !$tweb) {
+if (($cli_id == "pass" or $cli_id == "pres_fut") and empty($tweb)) {
 if ($cli_id == "pass") $cli_pass = 1;
 if ($cli_id == "pres_fut") $cli_presfut = 1;
 $cli_id = "";
@@ -694,7 +759,7 @@ foreach ($utenti_gruppi as $idut_gr => $val) if ($idut_gr != $id_utente) $condiz
 $condizione_utente_canc .= " )";
 } # fine if ($id_utente != 1 and ($modifica_clienti == "PROPRI" or $modifica_clienti == "GRUPPI"))
 else $condizione_utente_canc = "";
-} # fine if (($cli_id == "pass" or $cli_id == "pres_fut") and !$tweb)
+} # fine if (($cli_id == "pass" or $cli_id == "pres_fut") and empty($tweb))
 
 if ($cli_id and $id_utente != 1) {
 $cli_priv = 0;
@@ -766,7 +831,7 @@ $num_clienti = numlin_query($clienti);
 $lista_clienti_canc = "";
 for ($num1 = 0; $num1 < $num_clienti; $num1++) {
 $idclienti = risul_query($clienti,$num1,'idclienti');
-if (!$cliente_attivo[$idclienti]) $lista_clienti_canc .= ",$idclienti";
+if (empty($cliente_attivo[$idclienti])) $lista_clienti_canc .= ",$idclienti";
 } # fine for $num1
 echo "<cli_pass>".substr($lista_clienti_canc,1)."</cli_pass>";
 } # fine if ($cli_pass)
@@ -777,11 +842,11 @@ echo "<cli_presfut>".substr($lista_clienti_att,1).";</cli_presfut>";
 } # fine if ($cli_presfut)
 } # fine if ($cli_pass or $cli_presfut)
 
-if ($priv_r) {
+if (!empty($priv_r)) {
 $val_priv_r = "";
 if ($priv_r == "priv_gest_pass_cc") $val_priv_r = $priv_gest_pass_cc;
 if ($val_priv_r) echo "<privr_$priv_r>$val_priv_r</privr_$priv_r>";
-} # fine if ($priv_r)
+} # fine if (!empty($priv_r))
 
 } # fine if ($sessione_trovata)
 unlock_tabelle($tabelle_lock);
@@ -799,7 +864,7 @@ if ($_SERVER['REMOTE_ADDR']) $REMOTE_ADDR = $_SERVER['REMOTE_ADDR'];
 if ($REMOTE_ADDR == C_IP_MOD_EXT_CARTE_CREDITO or ($REMOTE_ADDR == "::1" and C_IP_MOD_EXT_CARTE_CREDITO == "127.0.0.1")) {
 
 
-if ($azione == "pull_xml" and $tipo_ic == "boo" and $valore_xml and $token) {
+if ($azione == "pull_xml" and isset($tipo_ic) and $tipo_ic == "boo" and !empty($valore_xml) and !empty($token)) {
 
 $file_interconnessioni = C_DATI_PATH."/dati_interconnessioni.php";
 if (@is_file($file_interconnessioni)) {
@@ -810,14 +875,14 @@ $funz_import_reservations = "";
 
 $interconn_dir = opendir("./includes/interconnect/");
 while ($mod_ext = readdir($interconn_dir)) {
-if ($mod_ext != "." and $mod_ext != ".." and $mod_ext == $tipo_ic.$ord_ic and @is_dir("./includes/interconnect/$mod_ext")) {
+if ($mod_ext != "." and $mod_ext != ".." and $mod_ext == $tipo_ic.fixset($ord_ic) and @is_dir("./includes/interconnect/$mod_ext")) {
 include("./includes/interconnect/$mod_ext/name.php");
 if ($ic_present[$interconnection_name] == "SI") {
 include("./includes/interconnect/$mod_ext/functions_import.php");
 $funz_import_reservations = "import_reservations_".$interconnection_func_name;
 } # fine if ($ic_present[$interconnection_name] == "SI")
 break;
-} # fine if ($mod_ext != "." and $mod_ext != ".." and $mod_ext == $tipo_ic.$ord_ic and...
+} # fine if ($mod_ext != "." and $mod_ext != ".." and $mod_ext == $tipo_ic.fixset($ord_ic) and...
 } # fine while ($mod_ext = readdir($interconn_dir))
 closedir($interconn_dir);
 if ($funz_import_reservations) {
@@ -840,12 +905,8 @@ if (stristr($valore_xml,"<id>$token_res_id<")) {
 @include(C_DATI_PATH."/lingua.php");
 $lingua_mex = $lingua[1];
 $id_utente_sessione = "-1";
-$adesso = $anno.date("mdHis",(time() + (C_DIFF_ORE * 3600)));
-$versione_unica = prendi_numero_versione($tableversioni);
-list($usec, $sec) = explode(' ', microtime());
-mt_srand((float) $sec + ((float) $usec * 100000));
-$val_casuale = mt_rand(100000,999999);
-$id_sessione = $adesso.$val_casuale.$versione_unica;
+$id_sessione = crea_id_sessione($anno,$tableversioni);
+if (C_VERSIONE_ATTUALE < 3.04) $id_sessione = substr($id_sessione,0,20).substr($id_sessione,30);
 $ultimo_accesso = date("Y-m-d H:i:s",(time() + (C_DIFF_ORE * 3600)));
 if ($_SERVER['REMOTE_ADDR']) $REMOTE_ADDR = $_SERVER['REMOTE_ADDR'];
 $REMOTE_ADDR = aggslashdb($REMOTE_ADDR);
@@ -867,7 +928,7 @@ $id_utente = $id_utente_origi;
 } # fine if ($funz_import_reservations)
 } # fine if (@is_array($ic_present))
 } # fine if (@is_file($file_interconnessioni))
-} # fine if ($azione == "pull_xml" and $tipo_ic == "boo" and $valore_xml and $token)
+} # fine if ($azione == "pull_xml" and isset($tipo_ic) and $tipo_ic == "boo" and !empty($valore_xml) and !empty($token))
 
 
 } # fine if ($REMOTE_ADDR == C_IP_MOD_EXT_CARTE_CREDITO or ($REMOTE_ADDR == "::1" and C_IP_MOD_EXT_CARTE_CREDITO == "127.0.0.1"))

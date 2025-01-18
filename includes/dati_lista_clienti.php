@@ -2,7 +2,7 @@
 
 ##################################################################################
 #    HOTELDRUID
-#    Copyright (C) 2018-2021 by Marco Maria Francesco De Santis (marco@digitaldruid.net)
+#    Copyright (C) 2018-2023 by Marco Maria Francesco De Santis (marco@digitaldruid.net)
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published by
@@ -42,41 +42,42 @@ $num_c++;
 $lista_c[$num_c] = $lista_clienti[$num1];
 ${"cognome_".$num_c} = risul_query($dati_cliente,0,'cognome');
 # I controlli di non vuoto servono a risparmiare memoria, creando solo le variabili necessarie
-if (strcmp(risul_query($dati_cliente,0,'nome'),"")) ${"nome_".$num_c} = risul_query($dati_cliente,0,'nome');
-if (strcmp(risul_query($dati_cliente,0,'soprannome'),"")) ${"soprannome_".$num_c} = risul_query($dati_cliente,0,'soprannome');
-if (strcmp(risul_query($dati_cliente,0,'titolo'),"")) ${"titolo_".$num_c} = risul_query($dati_cliente,0,'titolo');
-if (strcmp(risul_query($dati_cliente,0,'sesso'),"")) ${"sesso_".$num_c} = risul_query($dati_cliente,0,'sesso');
-if (strcmp(risul_query($dati_cliente,0,'datanascita'),"")) ${"data_nascita_".$num_c} = risul_query($dati_cliente,0,'datanascita');
-if (strcmp(risul_query($dati_cliente,0,'cittanascita'),"")) ${"citta_nascita_".$num_c} = risul_query($dati_cliente,0,'cittanascita');
-if (strcmp(risul_query($dati_cliente,0,'regionenascita'),"")) ${"regione_nascita_".$num_c} = risul_query($dati_cliente,0,'regionenascita');
-if (strcmp(risul_query($dati_cliente,0,'nazionenascita'),"")) ${"nazione_nascita_".$num_c} = risul_query($dati_cliente,0,'nazionenascita');
-if (strcmp(risul_query($dati_cliente,0,'nazionalita'),"")) ${"cittadinanza_".$num_c} = risul_query($dati_cliente,0,'nazionalita');
-if (strcmp(risul_query($dati_cliente,0,'lingua'),"")) ${"codice_lingua_".$num_c} = risul_query($dati_cliente,0,'lingua');
-if (strcmp(risul_query($dati_cliente,0,'nazione'),"")) ${"nazione_".$num_c} = risul_query($dati_cliente,0,'nazione');
-if (strcmp(risul_query($dati_cliente,0,'regione'),"")) ${"regione_".$num_c} = risul_query($dati_cliente,0,'regione');
-if (strcmp(risul_query($dati_cliente,0,'citta'),"")) ${"citta_".$num_c} = risul_query($dati_cliente,0,'citta');
+if (strcmp((string) risul_query($dati_cliente,0,'nome'),"")) ${"nome_".$num_c} = risul_query($dati_cliente,0,'nome');
+if (strcmp((string) risul_query($dati_cliente,0,'soprannome'),"")) ${"soprannome_".$num_c} = risul_query($dati_cliente,0,'soprannome');
+if (strcmp((string) risul_query($dati_cliente,0,'titolo'),"")) ${"titolo_".$num_c} = risul_query($dati_cliente,0,'titolo');
+if (strcmp((string) risul_query($dati_cliente,0,'sesso'),"")) ${"sesso_".$num_c} = risul_query($dati_cliente,0,'sesso');
+if (strcmp((string) risul_query($dati_cliente,0,'datanascita'),"")) ${"data_nascita_".$num_c} = risul_query($dati_cliente,0,'datanascita');
+if (strcmp((string) risul_query($dati_cliente,0,'cittanascita'),"")) ${"citta_nascita_".$num_c} = risul_query($dati_cliente,0,'cittanascita');
+if (strcmp((string) risul_query($dati_cliente,0,'regionenascita'),"")) ${"regione_nascita_".$num_c} = risul_query($dati_cliente,0,'regionenascita');
+if (strcmp((string) risul_query($dati_cliente,0,'nazionenascita'),"")) ${"nazione_nascita_".$num_c} = risul_query($dati_cliente,0,'nazionenascita');
+if (strcmp((string) risul_query($dati_cliente,0,'nazionalita'),"")) ${"cittadinanza_".$num_c} = risul_query($dati_cliente,0,'nazionalita');
+if (strcmp((string) risul_query($dati_cliente,0,'lingua'),"")) ${"codice_lingua_".$num_c} = risul_query($dati_cliente,0,'lingua');
+if (strcmp((string) risul_query($dati_cliente,0,'nazione'),"")) ${"nazione_".$num_c} = risul_query($dati_cliente,0,'nazione');
+if (strcmp((string) risul_query($dati_cliente,0,'regione'),"")) ${"regione_".$num_c} = risul_query($dati_cliente,0,'regione');
+if (strcmp((string) risul_query($dati_cliente,0,'citta'),"")) ${"citta_".$num_c} = risul_query($dati_cliente,0,'citta');
 if ($priv_vedi_indirizzo == "s") {
-if (strcmp(risul_query($dati_cliente,0,'via'),"")) ${"via_".$num_c} = risul_query($dati_cliente,0,'via');
-if (strcmp(risul_query($dati_cliente,0,'numcivico'),"")) ${"numcivico_".$num_c} = risul_query($dati_cliente,0,'numcivico');
-if (strcmp(risul_query($dati_cliente,0,'cap'),"")) ${"cap_".$num_c} = risul_query($dati_cliente,0,'cap');
+if (strcmp((string) risul_query($dati_cliente,0,'via'),"")) ${"via_".$num_c} = risul_query($dati_cliente,0,'via');
+if (strcmp((string) risul_query($dati_cliente,0,'numcivico'),"")) ${"numcivico_".$num_c} = risul_query($dati_cliente,0,'numcivico');
+if (strcmp((string) risul_query($dati_cliente,0,'cap'),"")) ${"cap_".$num_c} = risul_query($dati_cliente,0,'cap');
 } # fine if ($priv_vedi_indirizzo == "s")
-if (strcmp(risul_query($dati_cliente,0,'documento'),"")) ${"documento_".$num_c} = risul_query($dati_cliente,0,'documento');
-if (strcmp(risul_query($dati_cliente,0,'tipodoc'),"")) ${"tipo_documento_".$num_c} = risul_query($dati_cliente,0,'tipodoc');
-if (strcmp(risul_query($dati_cliente,0,'cittadoc'),"")) ${"citta_documento_".$num_c} = risul_query($dati_cliente,0,'cittadoc');
-if (strcmp(risul_query($dati_cliente,0,'regionedoc'),"")) ${"regione_documento_".$num_c} = risul_query($dati_cliente,0,'regionedoc');
-if (strcmp(risul_query($dati_cliente,0,'nazionedoc'),"")) ${"nazione_documento_".$num_c} = risul_query($dati_cliente,0,'nazionedoc');
-if (strcmp(risul_query($dati_cliente,0,'scadenzadoc'),"")) ${"scadenza_documento_".$num_c} = risul_query($dati_cliente,0,'scadenzadoc');
+if (strcmp((string) risul_query($dati_cliente,0,'documento'),"")) ${"documento_".$num_c} = risul_query($dati_cliente,0,'documento');
+if (strcmp((string) risul_query($dati_cliente,0,'tipodoc'),"")) ${"tipo_documento_".$num_c} = risul_query($dati_cliente,0,'tipodoc');
+if (strcmp((string) risul_query($dati_cliente,0,'cittadoc'),"")) ${"citta_documento_".$num_c} = risul_query($dati_cliente,0,'cittadoc');
+if (strcmp((string) risul_query($dati_cliente,0,'regionedoc'),"")) ${"regione_documento_".$num_c} = risul_query($dati_cliente,0,'regionedoc');
+if (strcmp((string) risul_query($dati_cliente,0,'nazionedoc'),"")) ${"nazione_documento_".$num_c} = risul_query($dati_cliente,0,'nazionedoc');
+if (strcmp((string) risul_query($dati_cliente,0,'scadenzadoc'),"")) ${"scadenza_documento_".$num_c} = risul_query($dati_cliente,0,'scadenzadoc');
 if ($priv_vedi_telefoni == "s") {
-if (strcmp(risul_query($dati_cliente,0,'telefono'),"")) ${"telefono_".$num_c} = risul_query($dati_cliente,0,'telefono');
-if (strcmp(risul_query($dati_cliente,0,'telefono2'),"")) ${"telefono2_".$num_c} = risul_query($dati_cliente,0,'telefono2');
-if (strcmp(risul_query($dati_cliente,0,'telefono3'),"")) ${"telefono3_".$num_c} = risul_query($dati_cliente,0,'telefono3');
-if (strcmp(risul_query($dati_cliente,0,'fax'),"")) ${"fax_".$num_c} = risul_query($dati_cliente,0,'fax');
-if (strcmp(risul_query($dati_cliente,0,'email'),"")) ${"email_".$num_c} = risul_query($dati_cliente,0,'email');
-if (strcmp(risul_query($dati_cliente,0,'email2'),"")) ${"email2_".$num_c} = risul_query($dati_cliente,0,'email2');
-if (strcmp(risul_query($dati_cliente,0,'email3'),"")) ${"email_certificata_".$num_c} = risul_query($dati_cliente,0,'email3');
+if (strcmp((string) risul_query($dati_cliente,0,'telefono'),"")) ${"telefono_".$num_c} = risul_query($dati_cliente,0,'telefono');
+if (strcmp((string) risul_query($dati_cliente,0,'telefono2'),"")) ${"telefono2_".$num_c} = risul_query($dati_cliente,0,'telefono2');
+if (strcmp((string) risul_query($dati_cliente,0,'telefono3'),"")) ${"telefono3_".$num_c} = risul_query($dati_cliente,0,'telefono3');
+if (strcmp((string) risul_query($dati_cliente,0,'fax'),"")) ${"fax_".$num_c} = risul_query($dati_cliente,0,'fax');
+if (strcmp((string) risul_query($dati_cliente,0,'email'),"")) ${"email_".$num_c} = risul_query($dati_cliente,0,'email');
+if (strcmp((string) risul_query($dati_cliente,0,'email2'),"")) ${"email2_".$num_c} = risul_query($dati_cliente,0,'email2');
+if (strcmp((string) risul_query($dati_cliente,0,'email3'),"")) ${"email_certificata_".$num_c} = risul_query($dati_cliente,0,'email3');
 } # fine if ($priv_vedi_telefoni == "s")
-if (strcmp(risul_query($dati_cliente,0,'cod_fiscale'),"")) ${"codice_fiscale_".$num_c} = risul_query($dati_cliente,0,'cod_fiscale');
-if (strcmp(risul_query($dati_cliente,0,'partita_iva'),"")) ${"partita_iva_".$num_c} = risul_query($dati_cliente,0,'partita_iva');
+if (strcmp((string) risul_query($dati_cliente,0,'cod_fiscale'),"")) ${"codice_fiscale_".$num_c} = risul_query($dati_cliente,0,'cod_fiscale');
+if (strcmp((string) risul_query($dati_cliente,0,'partita_iva'),"")) ${"partita_iva_".$num_c} = risul_query($dati_cliente,0,'partita_iva');
+${"numero_cliente_".$num_c} = $id_clienti;
 $dati_relcliente = esegui_query("select * from $tablerelclienti where idclienti = '$id_clienti' and tipo = 'campo_pers' ");
 $num_dati_relcliente = numlin_query($dati_relcliente);
 for ($num2 = 0 ; $num2 < $num_dati_relcliente ; $num2++) {
@@ -113,6 +114,7 @@ unset(${"num_persone_$num1"});
 unset(${"unita_occupata_$num1"});
 unset(${"unita_assegnabili_$num1"});
 unset(${"pagato_$num1"});
+unset(${"conferma_$num1"});
 unset(${"costo_tot_$num1"});
 unset(${"n_letti_agg_$num1"});
 unset(${"codice_prenotazione_$num1"});

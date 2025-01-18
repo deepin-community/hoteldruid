@@ -1,8 +1,36 @@
-hoteldruid (3.0.3-1) UNRELEASED; urgency=medium
+hoteldruid (3.0.6-1) unstable; urgency=low
 
-  * update
+  * New upstream release
+    - Fixes multiple sql injection and XSS vulnerabilities.
+      (Ref: CVE-2023-33817, CVE-2023-43371, CVE-2023-34537, CVE-2023-34854,
+      CVE-2023-47164, CVE-2022-45592, CVE-2023-43373 CVE-2023-43374,
+      CVE-2023-43375, CVE-2023-43376, CVE-2023-43377)
+      (Closes: #1038251, #1052572, #1055772)
 
- -- Marco Maria Francesco De Santis <marco@digitaldruid.net>  Thu, 28 Apr 2022 18:24:02 +0800
+ -- Marco Maria Francesco De Santis <marco@digitaldruid.net>  Fri, 03 Nov 2023 10:09:42 +0000
+
+hoteldruid (3.0.5-1) unstable; urgency=low
+
+  * New upstream release
+    - Fixes XSS vulnerabilities. (Ref: CVE-2023-29839)
+  * debian/control: updated Standards-Version
+  * debian/control: added recommendation on php-mbstring previously
+    included in core php packages
+  * fixed icon name in desktop file
+  * fixed launchable field in appdata file
+
+ -- Marco Maria Francesco De Santis <marco@digitaldruid.net>  Thu, 16 Mar 2023 09:34:09 +0000
+
+hoteldruid (3.0.4-1) unstable; urgency=low
+
+  * New upstream release
+    - Fixes remote code execution, XSS and session security vulnerabilities.
+      (Ref: CVE-2021-42949, CVE-2021-42948, CVE-2022-22909, CVE-2022-26564)
+  * Added path to phpmailer in file costanti.php in patch debianize
+  * debian/control: added suggest on libphp-phpmailer
+  * debian/copyright: added Upstream-Contact
+
+ -- Marco Maria Francesco De Santis <marco@digitaldruid.net>  Sat, 16 Apr 2022 10:43:10 +0100
 
 hoteldruid (3.0.3-1) unstable; urgency=low
 

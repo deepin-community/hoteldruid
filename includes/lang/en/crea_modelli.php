@@ -1,6 +1,6 @@
 <?php
 
-if (substr($messaggio,0,4) != "var_") {
+if (substr((string) $messaggio,0,4) != "var_") {
 switch ($messaggio) {
 
 # translate YES and NO in upper case
@@ -67,8 +67,6 @@ case "Mostrare la caparra se presente?":  	$messaggio = "Show the deposit if pre
 case "Mostrare quali sono i giorni pieni all'interno dei periodi dove non c'è più disponibilità?":	$messaggio = "Show which days are full inside the periods where there is no more availability?"; break;
 case "Mostrare la form di richiesta prenotazione?":	$messaggio = "Show the request reservation form?"; break;
 case "Indirizzo email a cui inviare le richieste di prenotazione":	$messaggio = "Email address to which send the requests for reservation"; break;
-case "Mascherare la provenienza dell'email sull'envelope?":	$messaggio = "Masquerade sender on the email envelope?"; break;
-case "provare a cambiare se non si riescono a spedire le email":	$messaggio = "try to change this if you can't send the email"; break;
 case "Tag html di apertura per la formattazione delle font":	$messaggio = "Opening html tag for formatting fonts"; break;
 case "Tag html di chiusura per la formattazione delle font":	$messaggio = "Closing html tag for formatting fonts"; break;
 case "Tag html di apertura per la formattazione delle font rosse":	$messaggio = "Opening html tag for formatting red fonts"; break;
@@ -333,6 +331,10 @@ case "Valuta della caparra":  			$messaggio = "Deposit currency"; break;
 case "Seconda email":  				$messaggio = "Second email"; break;
 case "PEC o codice destinatario":  		$messaggio = "Certified email"; break;
 case "non deve contenere \"php\" e deve terminare con \".js\"":	$messaggio = "must not contain \"php\" and must end with \".js\""; break;
+case "notte":  					$messaggio = "night"; break;
+case "notti":  					$messaggio = "nights"; break;
+case "cambia date":  				$messaggio = "change dates"; break;
+case "Per questa tariffa si deve inserire un minimo di":	$messaggio = "For this rate you have to insert at least"; break;
 case "":  		$messaggio = ""; break;
 case "":  		$messaggio = ""; break;
 
@@ -340,7 +342,7 @@ case "":  		$messaggio = ""; break;
 case "mdl_disponibilita":  			$messaggio = "availability_tpl"; break;
 
 } # fine switch ($messaggio)
-} # fine if (substr($messaggio,0,4) != "var_")
+} # fine if (substr((string) $messaggio,0,4) != "var_")
 
 
 else {
@@ -381,7 +383,6 @@ case "var_mostra_frase_alternativa_regola1":  	$messaggio = "var_show_alternativ
 case "var_mostra_caparra":  			$messaggio = "var_show_deposit"; break;
 case "var_mostra_richiesta_via_mail":  		$messaggio = "var_show_request_by_mail"; break;
 case "var_indirizzo_email":  			$messaggio = "var_email_address"; break;
-case "var_maschera_email":  			$messaggio = "var_masquerade_email_envelope"; break;
 case "var_mostra_giorni_pieni":  		$messaggio = "var_show_full_days"; break;
 case "var_mostra_bottone_paypal":  		$messaggio = "var_show_paypal_button"; break;
 case "var_nome_modello_paypal":  		$messaggio = "var_paypal_template_name"; break;
@@ -616,11 +617,15 @@ case "var_fr_con_posizioni_vicine":  		$messaggio = "var_phr_with_nearby_positio
 case "var_fr_Codice_promozionale":  		$messaggio = "var_phr_Promotional_code"; break;
 case "var_fr_Codice_promozionale_applicato":  	$messaggio = "var_phr_Promotional_code_applied"; break;
 case "var_fr_Si_deve_inserire_almeno_una_persona_che_possa_ecc":	$messaggio = "var_phr_You_must_include_at_least_one_person_who_can_etc"; break;
+case "var_fr_notte":  				$messaggio = "var_phr_night"; break;
+case "var_fr_notti":  				$messaggio = "var_phr_nights"; break;
+case "var_fr_cambia_date":  			$messaggio = "var_phr_change_dates"; break;
+case "var_fr_Per_questa_tariffa_si_deve_inserire_un_minimo_di":	$messaggio = "var_phr_For_this_rate_you_have_to_insert_at_least"; break;
 case "var_":  		$messaggio = "var_"; break;
 case "var_":  		$messaggio = "var_"; break;
 
 } # fine switch ($messaggio)
-} # fine else if (substr($messaggio,0,4) != "var_")
+} # fine else if (substr((string) $messaggio,0,4) != "var_")
 
 
 

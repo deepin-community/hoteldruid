@@ -6,7 +6,7 @@
 #                                                         #
 ###########################################################
 
-HOTELDRUID versión 3.0.3
+HOTELDRUID versión 3.0.6
 Programa para la gestión de habitaciones de hotel o de 
 alquiler semanal y diario de apartamentos.
 
@@ -31,7 +31,7 @@ datos utilizando el sistema de backup de hoteldruid.
 
 REQUISITOS SOFTWARE
 -apache (>=1.3.26) o otro servidor de web que soporte php
--php (>=3.0.18) con estensión para postgresql, mysql o sqlite3
+-php (>=4.0.4) con estensión para postgresql, mysql o sqlite3
 -postgresql (>=7.4.7) o mysql (>=4.1.11) o sqlite (>=3.7.9)
 -un navegador que soporte html 4.01 con encoding utf-8
 

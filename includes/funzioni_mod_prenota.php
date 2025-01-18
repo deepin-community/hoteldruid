@@ -2,7 +2,7 @@
 
 ##################################################################################
 #    HOTELDRUID
-#    Copyright (C) 2001-2019 by Marco Maria Francesco De Santis (marco@digitaldruid.net)
+#    Copyright (C) 2001-2023 by Marco Maria Francesco De Santis (marco@digitaldruid.net)
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published by
@@ -67,12 +67,13 @@ return $id_prenota_prec;
 
 
 
-function cancella_prenotazione ($id_prenota,$cancella_pagato,$metodo_pagamento,$priv_mod_pagato,$lock,$anno,$PHPR_TAB_PRE,$id_utente,&$stato_canc,$metodo_pagamento_imp="",$dettagli_prenota="",$modo=array()) {
+function cancella_prenotazione ($id_prenota,$cancella_pagato,$metodo_pagamento,$priv_mod_pagato,$lock,$anno,$PHPR_TAB_PRE,$id_utente,&$stato_canc,$metodo_pagamento_imp="",$dettagli_prenota="",$modo=array(),$cassa_pagamenti="") {
 $pag = "modifica_prenota.php";
 $tableprenota = $PHPR_TAB_PRE."prenota".$anno;
 $tableprenotacanc = $PHPR_TAB_PRE."prenotacanc".$anno;
 $tableperiodi = $PHPR_TAB_PRE."periodi".$anno;
 $tablesoldi = $PHPR_TAB_PRE."soldi".$anno;
+$tablecosti = $PHPR_TAB_PRE."costi".$anno;
 $tableanni = $PHPR_TAB_PRE."anni";
 $tablepersonalizza = $PHPR_TAB_PRE."personalizza";
 $tablecostiprenota = $PHPR_TAB_PRE."costiprenota".$anno;
@@ -83,12 +84,21 @@ $tableutenti = $PHPR_TAB_PRE."utenti";
 $testo = "";
 
 $continua_canc = "SI";
+if (strcmp($cassa_pagamenti,"")) {
+if (defined('C_VERSIONE_ATTUALE') and C_VERSIONE_ATTUALE < 3.00) $tabelle_lock = array($tableprenota,$tablecostiprenota,$tablerclientiprenota,$tablecosti,$tablesoldi,$tableinterconnessioni);
+else $tabelle_lock = array($tableprenota,$tableprenotacanc,$tablecostiprenota,$tablerclientiprenota,$tablecosti,$tablesoldi,$tableinterconnessioni);
+} # fine if (strcmp($cassa_pagamenti,""))
+else {
 if (defined('C_VERSIONE_ATTUALE') and C_VERSIONE_ATTUALE < 3.00) $tabelle_lock = array($tableprenota,$tablecostiprenota,$tablerclientiprenota,$tablesoldi,$tableinterconnessioni);
 else $tabelle_lock = array($tableprenota,$tableprenotacanc,$tablecostiprenota,$tablerclientiprenota,$tablesoldi,$tableinterconnessioni);
-if ($dettagli_prenota) $altre_tab_lock = array($tableanni,$tableperiodi,$tableclienti,$tablepersonalizza);
+} # fine else if (strcmp($cassa_pagamenti,""))
+if ($dettagli_prenota or strcmp($cassa_pagamenti,"")) {
+$altre_tab_lock = array($tableanni,$tableperiodi,$tableclienti,$tablepersonalizza);
+$stile_data = stile_data($id_utente);
+} # fine if ($dettagli_prenota or strcmp($cassa_pagamenti,""))
 else $altre_tab_lock = array($tableanni,$tableperiodi,$tablepersonalizza);
-if (!empty($modo['gia_canc'])) $dati_prenota = esegui_query("select * from $tableprenotacanc where idprenota = '$id_prenota' and idclienti != '0' ");
-else $dati_prenota = esegui_query("select * from $tableprenota where idprenota = '$id_prenota' and idclienti != '0' ");
+if (!empty($modo['gia_canc'])) $dati_prenota = esegui_query("select * from $tableprenotacanc where idprenota = '".aggslashdb($id_prenota)."' and idclienti != '0' ");
+else $dati_prenota = esegui_query("select * from $tableprenota where idprenota = '".aggslashdb($id_prenota)."' and idclienti != '0' ");
 $num_dati_prenota = numlin_query($dati_prenota);
 if ($num_dati_prenota == 0) {
 $testo .= mex("La prenotazione",$pag)." $id_prenota ".mex("era già stata cancellata",$pag)."!<br>";
@@ -110,6 +120,7 @@ $id_prenota_succ = trova_prenota_succ($anno,$d_id_data_fine,$PHPR_TAB_PRE,$id_pr
 if ($id_prenota_succ == "soloanno") $id_prenota_succ = "";
 if ($id_prenota_succ) {
 $tableprenota_succ = $PHPR_TAB_PRE."prenota".($anno + 1);
+$tableprenotacanc_succ = $PHPR_TAB_PRE."prenotacanc".($anno + 1);
 $tablecostiprenota_succ = $PHPR_TAB_PRE."costiprenota".($anno + 1);
 $tablerclientiprenota_succ = $PHPR_TAB_PRE."rclientiprenota".($anno + 1);
 } # fine if ($id_prenota_succ)
@@ -127,10 +138,17 @@ $tableprenotacanc = $PHPR_TAB_PRE."prenotacanc".($anno - 1);
 $tablecostiprenota = $PHPR_TAB_PRE."costiprenota".($anno - 1);
 $tablerclientiprenota = $PHPR_TAB_PRE."rclientiprenota".($anno - 1);
 $tablesoldi = $PHPR_TAB_PRE."soldi".($anno - 1);
+$tablecosti = $PHPR_TAB_PRE."costi".($anno - 1);
 } # fine if ($id_prenota_prec)
 if ($id_prenota_succ) {
+if (strcmp($cassa_pagamenti,"")) {
+if (defined('C_VERSIONE_ATTUALE') and C_VERSIONE_ATTUALE < 3.00) $tabelle_lock = array($tableprenota,$tableprenota_succ,$tablecostiprenota,$tablecostiprenota_succ,$tablerclientiprenota,$tablerclientiprenota_succ,$tablecosti,$tablesoldi,$tableinterconnessioni);
+else $tabelle_lock = array($tableprenota,$tableprenota_succ,$tableprenotacanc,$tableprenotacanc_succ,$tablecostiprenota,$tablecostiprenota_succ,$tablerclientiprenota,$tablerclientiprenota_succ,$tablecosti,$tablesoldi,$tableinterconnessioni);
+} # fine if (strcmp($cassa_pagamenti,""))
+else {
 if (defined('C_VERSIONE_ATTUALE') and C_VERSIONE_ATTUALE < 3.00) $tabelle_lock = array($tableprenota,$tableprenota_succ,$tablecostiprenota,$tablecostiprenota_succ,$tablerclientiprenota,$tablerclientiprenota_succ,$tablesoldi,$tableinterconnessioni);
 else $tabelle_lock = array($tableprenota,$tableprenota_succ,$tableprenotacanc,$tableprenotacanc_succ,$tablecostiprenota,$tablecostiprenota_succ,$tablerclientiprenota,$tablerclientiprenota_succ,$tablesoldi,$tableinterconnessioni);
+} # fine else if (strcmp($cassa_pagamenti,""))
 } # fine if ($id_prenota_succ)
 
 if (!$modo['permanente']) {
@@ -155,28 +173,86 @@ if (empty($modo['gia_canc'])) {
 $d_pagato = risul_query($dati_prenota,0,'pagato');
 if ($d_pagato != 0) {
 if ($cancella_pagato and $priv_mod_pagato == "s") {
+if (is_array($metodo_pagamento)) {
+$valuta_pagamento = $metodo_pagamento['valuta'];
+$id_pagamento = $metodo_pagamento['id'];
+$giorno_pagamento = $metodo_pagamento['giorno'];
+$mese_pagamento = $metodo_pagamento['mese'];
+$anno_pagamento = $metodo_pagamento['anno'];
+$note_pagamento = $metodo_pagamento['note'];
+$metodo_pagamento = $metodo_pagamento['metodo'];
+} # fine if (is_array($metodo_pagamento))
 if (@get_magic_quotes_gpc()) $metodo_pagamento = (string) stripslashes($metodo_pagamento);
 $metodo_pagamento = htmlspecialchars($metodo_pagamento);
-if ($metodo_pagamento != "") {
+if ($metodo_pagamento != "" or !empty($id_pagamento)) {
 $metodi_pagamento = esegui_query("select valpersonalizza from $tablepersonalizza where idpersonalizza = 'metodi_pagamento' and idutente = '$id_utente'");
 $metodi_pagamento = risul_query($metodi_pagamento,0,'valpersonalizza');
+if (!$metodi_pagamento and !strcmp((string) $metodo_pagamento_imp,"")) $id_pagamento = "";
 $metodi_pagamento = explode(",",$metodi_pagamento);
 $metodo_trovato = "NO";
 for ($num1 = 0 ; $num1 < count($metodi_pagamento) ; $num1++) if ($metodi_pagamento[$num1] == $metodo_pagamento) $metodo_trovato = "SI";
 if ($metodo_trovato == "NO") $metodo_pagamento = "";
-} # fine if ($metodo_pagamento != "")
-if (strcmp($metodo_pagamento_imp,"")) $metodo_pagamento = $metodo_pagamento_imp;
+} # fine if ($metodo_pagamento != "" or !empty($id_pagamento))
+if (strcmp((string) $metodo_pagamento_imp,"")) $metodo_pagamento = $metodo_pagamento_imp;
 $metodo_pagamento = aggslashdb($metodo_pagamento);
 $datainserimento_saldo = date("Y-m-d H:i:s",(time() + (C_DIFF_ORE * 3600)));
-$motivazione_saldo = risul_query($dati_prenota,0,'idclienti');
+$datatransazione_saldo = $datainserimento_saldo;
+if (isset($giorno_pagamento) and isset($mese_pagamento) and isset($anno_pagamento)) {
+if ($giorno_pagamento >= 1 and $giorno_pagamento <= 31 and $mese_pagamento >= 1 and $mese_pagamento <= 12) {
+$anno_corr = date('Y',(time() + (C_DIFF_ORE * 3600)));
+if ($anno_pagamento >= ($anno_corr - 2) and $anno_pagamento <= ($anno_corr + 1)) $datatransazione_saldo = date("Y-m-d H:i:s",mktime(0,0,0,(int) $mese_pagamento,(int) $giorno_pagamento,(int) $anno_pagamento));
+} # fine if ($giorno_pagamento >= 1 and $giorno_pagamento <= 31 and $mese_pagamento >= 1 and...
+} # fine if (isset($giorno_pagamento) and isset($mese_pagamento) and isset($anno_pagamento))
+$idcliente_saldo = risul_query($dati_prenota,0,'idclienti');
 $d_idinizioprenota = risul_query($dati_prenota,0,'iddatainizio');
 $d_idfineprenota = risul_query($dati_prenota,0,'iddatafine');
-$motivazione_saldo .= ";$d_idinizioprenota;$d_idfineprenota;$id_prenota";
+$motivazione_saldo = "$idcliente_saldo;$d_idinizioprenota;$d_idfineprenota;$id_prenota";
 $saldo = 0 - $d_pagato;
+$valuta = "";
+if (isset($valuta_pagamento) and strcmp((string) $valuta_pagamento,"")) {
+if (!isset($altre_valute)) $altre_valute = altre_valute();
+$valuta_pag = fixset($altre_valute['id'][$valuta_pagamento]);
+if (strcmp((string) $valuta_pag,"")) {
+$valuta = $valuta_pagamento.">".$altre_valute[$valuta_pag]['cambio'].">".$altre_valute[$valuta_pag]['arrotond'];
+$saldo_valuta = converti_valuta($saldo,$altre_valute[$valuta_pag]['cambio'],$altre_valute[$valuta_pag]['arrotond']);
+} # fine else if (strcmp((string) $valuta_pag,""))
+} # fine if (isset($valuta_pagamento) and strcmp((string) $valuta_pagamento,""))
 $idsoldi = esegui_query("select max(idsoldi) from $tablesoldi");
 $idsoldi = risul_query($idsoldi,0,0) + 1;
-esegui_query("insert into $tablesoldi (idsoldi,motivazione,saldo_prenota,soldi_prima,data_inserimento,metodo_pagamento,utente_inserimento) values ('$idsoldi','$motivazione_saldo','$saldo','$d_pagato','$datainserimento_saldo','$metodo_pagamento','$id_utente')");
+esegui_query("insert into $tablesoldi (idsoldi,motivazione,metodo_pagamento,saldo_prenota,soldi_prima,data_transazione,data_inserimento,utente_inserimento) values ('$idsoldi','$motivazione_saldo','$metodo_pagamento','$saldo','$d_pagato','$datatransazione_saldo','$datainserimento_saldo','$id_utente')");
 if (!$modo['permanente']) esegui_query("update $tableprenota set pagato = '0' where idprenota = '$id_prenota' ");
+if ($valuta) esegui_query("update $tablesoldi set valuta = '".aggslashdb($valuta)."', saldo_valuta = '".aggslashdb($saldo_valuta)."' where idsoldi = '$idsoldi' ");
+if (!empty($id_pagamento)) esegui_query("update $tablesoldi set id_pagamento = '".aggslashdb(htmlspecialchars($id_pagamento))."' where idsoldi = '$idsoldi' ");
+if (!empty($note_pagamento)) esegui_query("update $tablesoldi set note = '".aggslashdb(htmlspecialchars($note_pagamento))."' where idsoldi = '$idsoldi' ");
+
+if (strcmp($cassa_pagamenti,"")) {
+if ($anno >= substr($datainserimento_saldo,0,4)) {
+$costo0 = esegui_query("select * from $tablecosti where idcosti = '0' ");
+$costo0 = risul_query($costo0,0,'val_costo');
+$costo0 = (double) $costo0 + (double) $saldo;
+esegui_query("update $tablecosti set val_costo = '$costo0' where idcosti = '0' ");
+} # fine if ($anno_saldo >= substr($datainserimento_saldo,0,4))
+if (!$d_idinizioprenota) $data_inizio_costo = "?";
+else {
+$data_inizio_costo = esegui_query("select datainizio from $tableperiodi where idperiodi = '$d_idinizioprenota' ");
+$data_inizio_costo = formatta_data(risul_query($data_inizio_costo,0,'datainizio'),$stile_data);
+} # fine else if (!$d_idinizioprenota)
+$data_fine_costo = esegui_query("select datafine from $tableperiodi where idperiodi = '$d_idfineprenota' ");
+$data_fine_costo = formatta_data(risul_query($data_fine_costo,0,'datafine'),$stile_data);
+$cognome_saldo = esegui_query("select cognome from $tableclienti where idclienti = '$idcliente_saldo' ");
+$cognome_saldo = risul_query($cognome_saldo,0,'cognome');
+$nome_costo = "".mex("Prenotazione",$pag)." $id_prenota ".mex("dal",$pag)." $data_inizio_costo ".mex("al",$pag)." $data_fine_costo ".mex("per",$pag)." $cognome_saldo";
+if (!empty($note_pagamento)) $nome_costo .= " - ".htmlspecialchars($note_pagamento);
+$idcosti = esegui_query("select max(idcosti) from $tablecosti");
+$idcosti = risul_query($idcosti,0,0) + 1;
+if ($cassa_pagamenti == "#1#") $nome_cassa = "";
+else $nome_cassa = $cassa_pagamenti;
+global $nome_utente,$HOSTNAME;
+esegui_query("insert into $tablecosti (idcosti,nome_costo,val_costo,tipo_costo,nome_cassa,persona_costo,provenienza_costo,metodo_pagamento,data_transazione,datainserimento,hostinserimento,utente_inserimento) values ('$idcosti','".aggslashdb($nome_costo)."','$saldo','e','".aggslashdb($nome_cassa)."','".aggslashdb(htmlspecialchars(fixstr($nome_utente)))."','p','$metodo_pagamento','$datatransazione_saldo','$datainserimento_saldo','".aggslashdb(htmlspecialchars(fixstr($HOSTNAME)))."','$id_utente') ");
+if ($valuta) esegui_query("update $tablecosti set valuta = '".aggslashdb($valuta)."', costo_valuta = '".aggslashdb($saldo_valuta)."' where idcosti = '$idcosti' ");
+if (!empty($id_pagamento)) esegui_query("update $tablecosti set id_pagamento = '".aggslashdb(htmlspecialchars($id_pagamento))."' where idcosti = '$idcosti' ");
+} # fine if (strcmp($cassa_pagamenti,""))
+
 } # fine if ($cancella_pagato and $priv_mod_pagato == "s")
 else {
 $soldi_prenota_cancellate = esegui_query("select * from $tablesoldi where idsoldi = 1");
@@ -203,7 +279,7 @@ esegui_query("delete from $tablerclientiprenota where idprenota = '$id_prenota'"
 } # fine if ($modo['permanente'])
 else {
 esegui_query("insert into $tableprenotacanc select * from $tableprenota where idprenota = '$id_prenota' ");
-$d_commento = risul_query($dati_prenota,0,'commento');
+$d_commento = (string) risul_query($dati_prenota,0,'commento');
 $tipo_commento = "hd_del_res";
 $n_commento = "$nome_ut_canc|".date("Y-m-d H:i",(time() + (C_DIFF_ORE * 3600)));
 if (strstr($d_commento,">")) $n_commento = $d_commento.">".$tipo_commento."<".$n_commento;
@@ -247,7 +323,6 @@ if (numlin_query($data_inizio)) $data_inizio = risul_query($data_inizio,0,'datai
 else $data_inizio = "";
 if (numlin_query($data_fine)) $data_fine = risul_query($data_fine,0,'datafine');
 else $data_fine = "";
-$stile_data = stile_data($id_utente);
 $data_inizio = formatta_data($data_inizio,$stile_data);
 $data_fine = formatta_data($data_fine,$stile_data);
 $testo .= mex("Prenotazione",$pag)." $id_prenota ".mex("a nome di",$pag)." <b>$cognome_cliente</b> ".mex("dal",$pag)." $data_inizio ".mex("al",$pag)." $data_fine <em>".mex("cancellata",$pag)."</em>";
@@ -306,7 +381,7 @@ if ($id_periodo_corrente >= $id_inizio_prenota) $priv_mod_prenotazioni = "n";
 if ($priv_mod_prenota_ore != "000") {
 $adesso = date("YmdHis",(time() + (C_DIFF_ORE * 3600)));
 $data_ins = risul_query($d_prenota,0,'datainserimento');
-$limite = date("YmdHis",mktime((substr($data_ins,11,2) + $priv_mod_prenota_ore),substr($data_ins,14,2),substr($data_ins,17,2),substr($data_ins,5,2),substr($data_ins,8,2),substr($data_ins,0,4)));
+$limite = date("YmdHis",mktime((substr($data_ins,11,2) + (int) $priv_mod_prenota_ore),substr($data_ins,14,2),substr($data_ins,17,2),substr($data_ins,5,2),substr($data_ins,8,2),substr($data_ins,0,4)));
 if ($adesso > $limite) $priv_mod_prenotazioni = "n";
 } # fine if ($priv_mod_prenota_ore != "000")
 } # fine else if (!numlin_query($d_prenota))
@@ -521,11 +596,11 @@ $d_valuta_tariffa = explode(">",$d_valuta_tariffa);
 $d_valuta_caparra = explode("<",$d_valuta_tariffa[1]);
 $d_valuta_tariffa = explode("<",$d_valuta_tariffa[0]);
 $d_valuta_tariffa_idpr[$id_prenota] = $d_valuta_tariffa[0];
-$d_cambio_tariffa_idpr[$id_prenota] = $d_valuta_tariffa[1];
-$d_arrotond_tariffa_idpr[$id_prenota] = $d_valuta_tariffa[2];
+$d_cambio_tariffa_idpr[$id_prenota] = fixset($d_valuta_tariffa[1]);
+$d_arrotond_tariffa_idpr[$id_prenota] = fixset($d_valuta_tariffa[2]);
 $d_valuta_caparra_idpr[$id_prenota] = $d_valuta_caparra[0];
-$d_cambio_caparra_idpr[$id_prenota] = $d_valuta_caparra[1];
-$d_arrotond_caparra_idpr[$id_prenota] = $d_valuta_caparra[2];
+$d_cambio_caparra_idpr[$id_prenota] = fixset($d_valuta_caparra[1]);
+$d_arrotond_caparra_idpr[$id_prenota] = fixset($d_valuta_caparra[2]);
 } # fine if ($d_valuta_tariffa)
 else {
 $d_valuta_tariffa = array();
@@ -673,14 +748,14 @@ unset($n_caparra_idpr);
 unset($n_commissioni_idpr);
 for ($num_idpr = 0 ; $num_idpr < $num_id_prenota ; $num_idpr++) {
 $id_prenota = $id_prenota_idpr[$num_idpr];
-if ($tipo_sposta == "fisso" and strcmp($n_appartamento_idpr[$id_prenota],"")) $n_assegnazioneapp_idpr[$id_prenota] = "k";
+if ($tipo_sposta == "fisso" and strcmp((string) $n_appartamento_idpr[$id_prenota],"")) $n_assegnazioneapp_idpr[$id_prenota] = "k";
 $n_sconto = explode("#>&",$n_sconto_caparra_idpr[$id_prenota]);
-if (strcmp($n_sconto[1],"")) $n_caparra = (double) $n_sconto[1];
+if (strcmp((string) $n_sconto[1],"")) $n_caparra = (double) $n_sconto[1];
 else $n_caparra = "";
-if (strcmp($n_sconto[2],"")) $n_commissioni = (double) $n_sconto[2];
+if (strcmp((string) $n_sconto[2],"")) $n_commissioni = (double) $n_sconto[2];
 else $n_commissioni = "";
 $n_valuta_tariffa = $n_sconto[3];
-if (strcmp($n_sconto[0],"")) $n_sconto = (double) $n_sconto[0];
+if (strcmp((string) $n_sconto[0],"")) $n_sconto = (double) $n_sconto[0];
 else $n_sconto = "";
 $n_sconto_idpr[$id_prenota] = $n_sconto;
 $n_caparra_idpr[$id_prenota] = $n_caparra;
@@ -749,7 +824,7 @@ $n_tariffesettimanali = $n_tariffesettimanali_idpr[$id_prenota];
 $prenota_comp = $prenota_comp_idpr[$id_prenota];
 $n_pagato = $n_pagato_idpr[$id_prenota];
 $n_confermato = $n_confermato_idpr[$id_prenota];
-global ${"dati_cap".$id_prenota},${"metodo_pagamento".$id_prenota},${"valuta_pagamento".$id_prenota};
+global ${"dati_cap".$id_prenota},${"metodo_pagamento".$id_prenota},${"valuta_pagamento".$id_prenota},${"id_pagamento".$id_prenota},${"giorno_pagamento".$id_prenota},${"mese_pagamento".$id_prenota},${"anno_pagamento".$id_prenota},${"note_pagamento".$id_prenota};
 $dati_cap = ${"dati_cap".$id_prenota};
 unset($num_costi_presenti);
 
@@ -769,24 +844,24 @@ $cancellata = "SI";
 $inizioperiodo = "";
 $fineperiodo = "";
 } # fine if ($n_data_inserimento != $d_data_inserimento_idpr[$num_idpr] or ...
-if (strcmp($n_appartamento,"")) $appartamento = $n_appartamento;
+if (strcmp((string) $n_appartamento,"")) $appartamento = $n_appartamento;
 else $appartamento = risul_query($dati_prenota_idpr[$id_prenota],0,'idappartamenti');
 if ($n_numpersone != "") $numpersone = $n_numpersone;
 else $numpersone = risul_query($dati_prenota_idpr[$id_prenota],0,'num_persone');
 if (!$numpersone) $numpersone = 0;
 if ($n_assegnazioneapp != "") $assegnazioneapp = $n_assegnazioneapp;
 else $assegnazioneapp = risul_query($dati_prenota_idpr[$id_prenota],0,'assegnazioneapp');
-if ($tipo_n_app == "aggiungi" and strcmp($n_appartamento,"") and $assegnazioneapp == "k") {
+if ($tipo_n_app == "aggiungi" and strcmp((string) $n_appartamento,"") and $assegnazioneapp == "k") {
 $n_assegnazioneapp = "c";
 $assegnazioneapp = "c";
 $n_lista_app = risul_query($dati_prenota_idpr[$id_prenota],0,'app_assegnabili');
 if (!strstr(",$n_lista_app,",",$n_appartamento,")) {
-if (!strcmp($n_lista_app,"")) $n_lista_app = risul_query($dati_prenota_idpr[$id_prenota],0,'idappartamenti');
+if (!strcmp((string) $n_lista_app,"")) $n_lista_app = risul_query($dati_prenota_idpr[$id_prenota],0,'idappartamenti');
 $n_lista_app .= ",$n_appartamento";
 } # fine if (!strstr(",$n_lista_app,",",$n_appartamento,"))
 $n_assegnazioneapp_idpr[$id_prenota] = $n_assegnazioneapp;
 $n_lista_app_idpr[$id_prenota] = $n_lista_app;
-} # fine if ($tipo_n_app == "aggiungi" and strcmp($n_appartamento,"" and $n_assegnazioneapp == "k")
+} # fine if ($tipo_n_app == "aggiungi" and strcmp((string) $n_appartamento,"" and $n_assegnazioneapp == "k")
 if ($n_lista_app != "") $lista_app = $n_lista_app;
 else $lista_app = risul_query($dati_prenota_idpr[$id_prenota],0,'app_assegnabili');
 if ($n_inizioperiodo != "") $inizioperiodo = $n_inizioperiodo;
@@ -818,12 +893,12 @@ $maxoccupanti = risul_query($appartamento_esistente,0,'maxoccupanti');
 if ($maxoccupanti and $numpersone > $maxoccupanti and $n_numpersone) $inserire = "NO";
 } # fine else if (numlin_query($appartamento_esistente) != 1)
 
-if (strcmp($n_appartamento,"")) {
+if (strcmp((string) $n_appartamento,"")) {
 $appartamento_chiuso = esegui_query("select idregole from $tableregole where iddatainizio <= '$fineperiodo' and iddatafine >= '$inizioperiodo' and app_agenzia = '$appartamento' and motivazione2 = 'x' ");
 if (numlin_query($appartamento_chiuso)) $inserire = "NO";
-} # fine if (strcmp($n_appartamento,""))
+} # fine if (strcmp((string) $n_appartamento,""))
 
-if ($assegnazioneapp == "c" and str_replace(",".$appartamento.",","",",".$lista_app.",") == ",".$lista_app."," and (strcmp($n_appartamento,"") or $n_assegnazioneapp or $n_lista_app)) $inserire = "NO";
+if ($assegnazioneapp == "c" and str_replace(",".$appartamento.",","",",".$lista_app.",") == ",".$lista_app."," and (strcmp((string) $n_appartamento,"") or $n_assegnazioneapp or $n_lista_app)) $inserire = "NO";
 
 if ($attiva_regole1_consentite == "s" and ($n_appartamento != "" or $n_assegnazioneapp != "" or $n_lista_app != "")) {
 unset($appartameti_in_lista);
@@ -873,7 +948,7 @@ for ($num2 = $inizioperiodo; $num2 <= $fineperiodo; $num2++) {
 $rigasettimana = esegui_query("select * from $tableperiodi where idperiodi = '$num2' ");
 $esistetariffa = risul_query($rigasettimana,0,$n_tipotariffa);
 $esistetariffap = risul_query($rigasettimana,0,$n_tipotariffa."p");
-if ((!strcmp($esistetariffa,"") or $esistetariffa < 0) and (!strcmp($esistetariffap,"") or $esistetariffap < 0)) $inserire = "NO";
+if ((!strcmp((string) $esistetariffa,"") or $esistetariffa < 0) and (!strcmp((string) $esistetariffap,"") or $esistetariffap < 0)) $inserire = "NO";
 if ($n_nometipotariffa != $d_nome_tariffa_idpr[$id_prenota] and !empty($dati_tariffe[$n_tipotariffa]['chiusa'][$num2])) $inserire = "NO";
 } # fine for $num2
 } # fine if ($n_nometipotariffa != "")
@@ -915,20 +990,20 @@ $cat_persone_idpr[$id_prenota] = $cat_persone;
 } # fine if ($dati_cat_pers['num'])
 
 if ($priv_mod_commenti_pers != "s" and $tipo_commento != "checkin" and $tipo_commento != "checkout") $tipo_commento = "";
-if ($priv_mod_commento != "s" and !strcmp($tipo_commento,"")) $n_commento = "";
-if ($priv_mod_commento != "s" and ((strcmp($n_commento,"") and (!strcmp($tipo_commento,"") or $tipo_commento == "checkin" or $tipo_commento == "checkout")) or $n_cancella_commento)) $inserire = "NO";
-if ($priv_mod_commenti_pers == "s" and strcmp($tipo_commento,"") and empty($comm_pers_presenti[$tipo_commento]) and $tipo_commento != "checkin" and $tipo_commento != "checkout") $inserire = "NO";
+if ($priv_mod_commento != "s" and !strcmp((string) $tipo_commento,"")) $n_commento = "";
+if ($priv_mod_commento != "s" and ((strcmp((string) $n_commento,"") and (!strcmp((string) $tipo_commento,"") or $tipo_commento == "checkin" or $tipo_commento == "checkout")) or $n_cancella_commento)) $inserire = "NO";
+if ($priv_mod_commenti_pers == "s" and strcmp((string) $tipo_commento,"") and empty($comm_pers_presenti[$tipo_commento]) and $tipo_commento != "checkin" and $tipo_commento != "checkout") $inserire = "NO";
 
-if (strcmp($n_sconto,"") and ($priv_mod_sconto != "s" or controlla_soldi($n_sconto) == "NO")) $inserire = "NO";
+if (strcmp((string) $n_sconto,"") and ($priv_mod_sconto != "s" or controlla_soldi($n_sconto) == "NO")) $inserire = "NO";
 
-if (strcmp($n_caparra,"")) {
+if (strcmp((string) $n_caparra,"")) {
 $caparra = $n_caparra;
 if ($priv_mod_caparra != "s" or controlla_soldi($n_caparra,"SI") == "NO") $inserire = "NO";
 if ($n_caparra > $n_costo_tot) $inserire = "NO";
-} # fine if (strcmp($n_caparra,""))
+} # fine if (strcmp((string) $n_caparra,""))
 else $caparra = $d_caparra_idpr[$id_prenota];
 
-if (strcmp($n_commissioni,"") and ($priv_mod_caparra != "s" or controlla_soldi($n_commissioni,"SI") == "NO")) $inserire = "NO";
+if (strcmp((string) $n_commissioni,"") and ($priv_mod_caparra != "s" or controlla_soldi($n_commissioni,"SI") == "NO")) $inserire = "NO";
 
 if ($costi_aggiuntivi_modificati_int) {
 $costi_aggiuntivi_modificati = explode("#@&",$costi_aggiuntivi_modificati_int);
@@ -939,7 +1014,7 @@ for ($num2 = 0 ; $num2 < $nca_mod ; $num2++) {
 $costo_agg_modificato = explode("#?&",$costi_aggiuntivi_modificati[$num2]);
 if ($costo_agg_modificato[0] == $dati_cap[$numca]['id']) $num_costo_mod = $num2;
 } # fine for $num2
-$costo_agg_modificato = explode("#?&",fixset($costi_aggiuntivi_modificati[$num_costo_mod]));
+$costo_agg_modificato = explode("#?&",fixstr($costi_aggiuntivi_modificati[$num_costo_mod]));
 if (!isset($costo_agg_modificato[1]) or $costo_agg_modificato[1] != "cancella") {
 $num_costo = $dati_ca['id'][$dati_cap[$numca]['idntariffe']];
 if ($dati_ca[$num_costo]['id'] == $dati_cap[$numca]['idntariffe'] and $dati_cap[$numca]['nome'] == $dati_ca[$num_costo]['nome'] and $dati_ca[$num_costo]['numlimite']) $num_limite = (string) $dati_ca[$num_costo]['numlimite'];
@@ -949,7 +1024,7 @@ $settimane_costo = $costo_agg_modificato[1];
 $moltiplica = $costo_agg_modificato[2];
 $cat_pers_ca = $costo_agg_modificato[3];
 if ($dati_cap[$numca]['letto'] == "s" and $dati_cat_pers['num'] and $cat_pers_ca != "e") {
-if (!strcmp($dati_cat_pers[$cat_pers_ca]['n_plur'],"")) $inserire = "NO";
+if (!strcmp((string) $dati_cat_pers[$cat_pers_ca]['n_plur'],"")) $inserire = "NO";
 elseif ($cat_pers_ca != $dati_cap[$numca]['cat_pers']['ord'][0] or !$dati_cap[$numca]['cat_pers'][$dati_cap[$numca]['cat_pers']['ord'][0]]['esist']) {
 $cambia_cat_pers_ca_mod_idpr[$id_prenota][$num_costo_mod] = $dati_cat_pers['arrotond']."<$cat_pers_ca>>".$dati_cat_pers[$cat_pers_ca]['osp_princ'].">".$dati_cat_pers[$cat_pers_ca]['perc'].">".$dati_cat_pers['lang'].">".$dati_cat_pers[$cat_pers_ca]['n_sing'].">".$dati_cat_pers[$cat_pers_ca]['n_plur'];
 } # fine elseif ($cat_pers_ca != $dati_cap[$numca]['cat_pers']['ord'][0] or...
@@ -963,7 +1038,7 @@ if (controlla_num_limite_costo($tablecostiprenota,$tableprenota,$dati_cap,$numca
 if (str_replace(",$appartamento,","",",".$dati_cap[$numca]['appincompatibili'].",") != ",".$dati_cap[$numca]['appincompatibili'].",") $inserire = "NO";
 } # fine if (!isset($costo_agg_modificato[1]) or $costo_agg_modificato[1] != "cancella")
 if (!empty($dati_cap[$numca]['tipo_beniinv'])) {
-if ($costo_agg_modificato[1] != "cancella") $num_ripetizioni_costo = "";
+if (fixset($costo_agg_modificato[1]) != "cancella") $num_ripetizioni_costo = "";
 else $num_ripetizioni_costo = "0";
 $risul = controlla_beni_inventario_costo($tablerelinventario,$dati_cap,$numca,$beniinv_presenti,$num_ripetizioni_costo,"SI",$inizioperiodo,$fineperiodo,$settimane_costo,$moltiplica,$appartamento);
 if ($risul != "SI") $inserire = "NO";
@@ -979,13 +1054,13 @@ if ($costi_aggiuntivi_da_inserire_int) {
 $costi_aggiuntivi_da_inserire = explode("#@&",$costi_aggiuntivi_da_inserire_int);
 for ($num2 = 0 ; $num2 < count($costi_aggiuntivi_da_inserire) ; $num2++) {
 $costo_agg_da_inserire = explode("#?&",$costi_aggiuntivi_da_inserire[$num2]);
-$num_costo = $dati_ca['id'][$costo_agg_da_inserire[9]];
-if ($costo_agg_da_inserire[9] != $dati_ca[$num_costo]['id'] and $costo_agg_da_inserire[9] != "-1") $inserire = "NO";
+$num_costo = fixset($dati_ca['id'][$costo_agg_da_inserire[9]]);
+if ($costo_agg_da_inserire[9] != fixset($dati_ca[$num_costo]['id']) and $costo_agg_da_inserire[9] != "-1") $inserire = "NO";
 elseif (controlla_num_limite_costo($tablecostiprenota,$tableprenota,$dati_ca,$num_costo,$num_costi_presenti,$inizioperiodo,$fineperiodo,$costo_agg_da_inserire[6],$costo_agg_da_inserire[7],"",$tra_anni) == "NO") $inserire = "NO";
-if (str_replace(",$appartamento,","",",".$dati_ca[$num_costo]['appincompatibili'].",") != ",".$dati_ca[$num_costo]['appincompatibili'].",") $inserire = "NO";
+if (str_replace(",$appartamento,","",",".fixset($dati_ca[$num_costo]['appincompatibili']).",") != ",".fixset($dati_ca[$num_costo]['appincompatibili']).",") $inserire = "NO";
 if ($costo_agg_da_inserire[8] != "n" and $dati_cat_pers['num']) {
 $cat_pers_ca = $costo_agg_da_inserire[19];
-if (!strcmp($dati_cat_pers[$cat_pers_ca]['n_plur'],"")) $inserire = "NO";
+if (!strcmp((string) $dati_cat_pers[$cat_pers_ca]['n_plur'],"")) $inserire = "NO";
 else $cambia_cat_pers_ca_ins_idpr[$id_prenota][$num2] = $dati_cat_pers['arrotond']."<$cat_pers_ca>>".$dati_cat_pers[$cat_pers_ca]['osp_princ'].">".$dati_cat_pers[$cat_pers_ca]['perc'].">".$dati_cat_pers['lang'].">".$dati_cat_pers[$cat_pers_ca]['n_sing'].">".$dati_cat_pers[$cat_pers_ca]['n_plur'];
 } # fine if ($costo_agg_da_inserire[8] != "n" and $dati_cat_pers['num'])
 if (!empty($dati_ca[$num_costo]['tipo_beniinv'])) {
@@ -998,11 +1073,11 @@ if ($risul != "SI") $inserire = "NO";
 if ($dati_da_anno_prec == "SI") passa_var_a_anno_corr($id_prenota,$tableperiodi,$tableprenota,$tablecostiprenota,$d_id_data_inizio,$d_id_data_fine,$n_fineperiodo,$inizioperiodo,$fineperiodo,$lunghezza_periodo);
 
 if ($priv_mod_caparra != "s" and ($n_met_paga_caparra or $n_valuta_caparra)) $inserire = "NO";
-if (strcmp($n_valuta_caparra,"") or strcmp(${"valuta_pagamento".$id_prenota},"")) {
+if (strcmp((string) $n_valuta_caparra,"") or strcmp((string) ${"valuta_pagamento".$id_prenota},"")) {
 if (@get_magic_quotes_gpc()) ${"valuta_pagamento".$id_prenota} = stripslashes(${"valuta_pagamento".$id_prenota});
 if (!@is_array($altre_valute)) $altre_valute = altre_valute();
-if (strcmp($n_valuta_caparra,"") and $n_valuta_caparra != ">0" and !strcmp($altre_valute['id'][$n_valuta_caparra],"")) $inserire = "NO";
-if (strcmp(${"valuta_pagamento".$id_prenota},"")) {
+if (strcmp((string) $n_valuta_caparra,"") and $n_valuta_caparra != ">0" and !strcmp((string) $altre_valute['id'][$n_valuta_caparra],"")) $inserire = "NO";
+if (strcmp((string) ${"valuta_pagamento".$id_prenota},"")) {
 if (substr(${"valuta_pagamento".$id_prenota},0,1) == ">") {
 ${"valuta_pagamento".$id_prenota} = substr(${"valuta_pagamento".$id_prenota},1);
 $valuta_trovata = 0;
@@ -1020,20 +1095,23 @@ if (!$valuta_trovata) $inserire = "NO";
 } # fine if (substr(${"valuta_pagamento".$id_prenota},0,1) == ">")
 else {
 $valuta_pag = $altre_valute['id'][${"valuta_pagamento".$id_prenota}];
-if (!strcmp($valuta_pag,"")) $inserire = "NO";
+if (!strcmp((string) $valuta_pag,"")) $inserire = "NO";
 else {
 $cambio_pagamento_idpr[$id_prenota] = $altre_valute[$valuta_pag]['cambio'];
 $arrotond_pagamento_idpr[$id_prenota] = $altre_valute[$valuta_pag]['arrotond'];
-} # fine else if (!strcmp($valuta_pag,""))
+} # fine else if (!strcmp((string) $valuta_pag,""))
 } # fine else if (substr(${"valuta_pagamento".$id_prenota},0,1) == ">")
-} # fine if (strcmp(${"valuta_pagamento".$id_prenota},""))
-} # fine if (strcmp($n_valuta_caparra,"") or strcmp(${"valuta_pagamento".$id_prenota},""))
-if ($n_met_paga_caparra or ${"metodo_pagamento".$id_prenota}) {
+} # fine if (strcmp((string) ${"valuta_pagamento".$id_prenota},""))
+} # fine if (strcmp((string) $n_valuta_caparra,"") or strcmp((string) ${"valuta_pagamento".$id_prenota},""))
+if ($n_met_paga_caparra or !empty(${"metodo_pagamento".$id_prenota}) or !empty(${"id_pagamento".$id_prenota})) {
 if (@get_magic_quotes_gpc()) ${"metodo_pagamento".$id_prenota} = stripslashes(${"metodo_pagamento".$id_prenota});
 #${"metodo_pagamento".$id_prenota} = htmlspecialchars(${"metodo_pagamento".$id_prenota});
-$metodi_pagamento = esegui_query("select valpersonalizza from $tablepersonalizza where idpersonalizza = 'metodi_pagamento' and idutente = '$id_utente'");
-$metodi_pagamento = risul_query($metodi_pagamento,0,'valpersonalizza');
-$metodi_pagamento = explode(",",$metodi_pagamento);
+if (!isset($metodi_pagamento)) {
+$metodi_pagamento_int = esegui_query("select valpersonalizza from $tablepersonalizza where idpersonalizza = 'metodi_pagamento' and idutente = '$id_utente'");
+$metodi_pagamento_int = (string) risul_query($metodi_pagamento_int,0,'valpersonalizza');
+$metodi_pagamento = explode(",",$metodi_pagamento_int);
+} # fine if (!isset($metodi_pagamento))
+if (!$metodi_pagamento_int) ${"id_pagamento".$id_prenota} = "";
 if ($n_met_paga_caparra) {
 $metodo_trovato = "NO";
 for ($num1 = 0 ; $num1 < count($metodi_pagamento) ; $num1++) if ($metodi_pagamento[$num1] == $n_met_paga_caparra) $metodo_trovato = "SI";
@@ -1044,13 +1122,13 @@ $metodo_trovato = "NO";
 for ($num1 = 0 ; $num1 < count($metodi_pagamento) ; $num1++) if ($metodi_pagamento[$num1] == ${"metodo_pagamento".$id_prenota}) $metodo_trovato = "SI";
 if ($metodo_trovato == "NO") $inserire = "NO";
 } # fine if (${"metodo_pagamento".$id_prenota})
-} # fine if ($n_met_paga_caparra or ${"metodo_pagamento".$id_prenota})
+} # fine if ($n_met_paga_caparra or !empty(${"metodo_pagamento".$id_prenota}) or...
 
 if (($priv_mod_pagato == "n" or $priv_mod_pagato == "v") and $n_confermato != "") $inserire = "NO";
 if ($n_confermato and $n_confermato != "S" and $n_confermato != "N") $inserire = "NO";
 
-if ($priv_mod_pagato != "s" and strcmp($n_pagato,"")) $inserire = "NO";
-if (strcmp($n_pagato,"") and controlla_soldi($n_pagato,"SI") == "NO" or $n_pagato > $n_costo_tot) $inserire = "NO";
+if ($priv_mod_pagato != "s" and strcmp((string) $n_pagato,"")) $inserire = "NO";
+if (strcmp((string) $n_pagato,"") and controlla_soldi($n_pagato,"SI") == "NO" or $n_pagato > $n_costo_tot) $inserire = "NO";
 
 if ($inserire == "NO") break;
 } # fine for $num_idpr
@@ -1060,19 +1138,21 @@ if ($priv_mod_orig_prenota != "s" and $n_origine_prenota) $inserire = "NO";
 if ($n_origine_prenota) {
 if (@get_magic_quotes_gpc()) $n_origine_prenota = stripslashes($n_origine_prenota);
 $n_origine_prenota = htmlspecialchars($n_origine_prenota);
+if (!isset($origini_prenota)) {
 $origini_prenota = esegui_query("select valpersonalizza from $tablepersonalizza where idpersonalizza = 'origini_prenota' and idutente = '$id_utente'");
 $origini_prenota = risul_query($origini_prenota,0,'valpersonalizza');
 $origini_prenota = explode(",",$origini_prenota);
+} # fine if (!isset($origini_prenota))
 $origine_trovata = "NO";
 for ($num1 = 0 ; $num1 < count($origini_prenota) ; $num1++) if ($origini_prenota[$num1] == $n_origine_prenota) $origine_trovata = "SI";
 if ($origine_trovata == "NO") $inserire = "NO";
 } # fine if ($n_origine_prenota)
 
-if ($id_nuovo_utente_inserimento != "" and ($priv_mod_utente_ins == "s" or ($priv_mod_utente_ins == "g" and $utenti_gruppi[$id_nuovo_utente_inserimento]))) {
+if ($id_nuovo_utente_inserimento != "" and ($priv_mod_utente_ins == "s" or ($priv_mod_utente_ins == "g" and $utenti_gruppi[$id_nuovo_utente_inserimento])) and controlla_num_pos($id_nuovo_utente_inserimento) == "SI") {
 $id_nuovo_utente_inserimento = aggslashdb($id_nuovo_utente_inserimento);
 $verifica_utente = esegui_query("select * from $tableutenti where idutenti = '$id_nuovo_utente_inserimento'");
 if (numlin_query($verifica_utente) != 1) $inserire = "NO";
-} # fine if ($id_nuovo_utente_inserimento != "" and ($priv_mod_utente_ins == "s" or ($priv_mod_utente_ins == "g" and $utenti_gruppi[$id_nuovo_utente_inserimento])))
+} # fine if ($id_nuovo_utente_inserimento != "" and ($priv_mod_utente_ins == "s" or ($priv_mod_utente_ins == "g" and...
 
 if ($n_commento != "") {
 if (@get_magic_quotes_gpc()) $n_commento = stripslashes($n_commento);
@@ -1251,7 +1331,7 @@ echo mex("Non si è potuto spostare la prenotazione per la registrazione dell'en
 if ($inserire != "NO" and $tableprenota_da_aggiornare) {
 for ($num_idpr = 0 ; $num_idpr < $num_id_prenota ; $num_idpr++) {
 $id_prenota = $id_prenota_idpr[$num_idpr];
-if (strcmp($app_prenota_id[$id_prenota],"") and !strcmp($app_orig_prenota_id[$id_prenota],"")) $app_orig_prenota_id[$id_prenota] = $app_prenota_id[$id_prenota]."x";
+if (strcmp((string) $app_prenota_id[$id_prenota],"") and !strcmp((string) $app_orig_prenota_id[$id_prenota],"")) $app_orig_prenota_id[$id_prenota] = $app_prenota_id[$id_prenota]."x";
 } # fine for $num_idpr
 $risul_agg = aggiorna_tableprenota($app_prenota_id,$app_orig_prenota_id,$tableprenota);
 if (!$risul_agg) $inserire = "NO";
@@ -1380,7 +1460,7 @@ if ($n_nometipotariffa != "") {
 if (substr($n_costo_tariffa,-1) == "p") $n_costo_tariffa = substr($n_costo_tariffa,0,-1)."#@&p";
 $n_tariffa = aggslashdb($n_nometipotariffa)."#@&".$n_costo_tariffa;
 esegui_query("update $tableprenota set tariffa = '$n_tariffa' where idprenota = '$id_prenota' ");
-if (!strcmp($dati_tariffe[$n_tipotariffa_idpr[$id_prenota]]['tasse_percent'],"")) esegui_query("update $tableprenota set tasseperc = NULL where idprenota = '$id_prenota' ");
+if (!strcmp((string) $dati_tariffe[$n_tipotariffa_idpr[$id_prenota]]['tasse_percent'],"")) esegui_query("update $tableprenota set tasseperc = NULL where idprenota = '$id_prenota' ");
 else esegui_query("update $tableprenota set tasseperc = '".$dati_tariffe[$n_tipotariffa_idpr[$id_prenota]]['tasse_percent']."' where idprenota = '$id_prenota' ");
 } # fine if ($n_nometipotariffa != "")
 
@@ -1413,7 +1493,7 @@ $idcostiprenota = risul_query($idcostiprenota,0,0) + 1;
 if ($costo_agg_da_inserire[15]) $costo_agg_da_inserire[15] = $num_ripetizioni_costo_ins_idpr[$id_prenota][$num2].";".$costo_agg_da_inserire[15];
 esegui_query("insert into $tablecostiprenota (idcostiprenota,idprenota,tipo,nome,valore,associasett,settimane,moltiplica,letto,idntariffe,varmoltiplica,varnumsett,varperiodipermessi,vartariffeassociate,vartariffeincomp,varbeniinv,varappincompatibili,variazione,categoria,datainserimento,hostinserimento,utente_inserimento) values ('$idcostiprenota','$id_prenota','".$costo_agg_da_inserire[0]."','".aggslashdb($costo_agg_da_inserire[1])."','".$costo_agg_da_inserire[2]."','".$costo_agg_da_inserire[5]."','".$costo_agg_da_inserire[6]."','".$costo_agg_da_inserire[7]."','".$costo_agg_da_inserire[8]."','".$costo_agg_da_inserire[9]."','".$costo_agg_da_inserire[10]."','".$costo_agg_da_inserire[11]."','".$costo_agg_da_inserire[12]."','".$costo_agg_da_inserire[13]."','".$costo_agg_da_inserire[14]."','".$costo_agg_da_inserire[15]."','".$costo_agg_da_inserire[16]."','".$costo_agg_da_inserire[17]."','".$costo_agg_da_inserire[18]."','$datainserimento','$HOSTNAME','$id_utente')");
 if (substr($costo_agg_da_inserire[0],1,1) != "f") esegui_query("update $tablecostiprenota set valore_perc = '".$costo_agg_da_inserire[3]."', arrotonda = '".$costo_agg_da_inserire[4]."' where idcostiprenota = '$idcostiprenota'");
-if ($dati_ca[$num_costo]['tasseperc']) esegui_query("update $tablecostiprenota set tasseperc = '".$dati_ca[$num_costo]['tasseperc']."' where idcostiprenota = '$idcostiprenota'");
+if (!empty($dati_ca[$num_costo]['tasseperc'])) esegui_query("update $tablecostiprenota set tasseperc = '".$dati_ca[$num_costo]['tasseperc']."' where idcostiprenota = '$idcostiprenota'");
 if (!empty($cambia_cat_pers_ca_ins_idpr[$id_prenota][$num2])) esegui_query("update $tablecostiprenota set cat_persone = '".aggslashdb($cambia_cat_pers_ca_ins_idpr[$id_prenota][$num2])."' where idcostiprenota = '$idcostiprenota' ");
 } # fine for $num2
 } # fine if ($costi_aggiuntivi_da_inserire_int)
@@ -1453,100 +1533,100 @@ if ((string) $n_app_eliminati_costi != (string) $d_app_eliminati_costi) {
 esegui_query("update $tableprenota set incompatibilita = '".aggslashdb($n_app_eliminati_costi)."' where idprenota = '$id_prenota' ");
 } # fine if ((string) $n_app_eliminati_costi != (string) $d_app_eliminati_costi)
 
-if (strcmp($n_sconto,"")) {
+if (strcmp((string) $n_sconto,"")) {
 esegui_query("update $tableprenota set sconto = '$n_sconto' where idprenota = '$id_prenota' ");
-} # fine if (strcmp($n_sconto,""))
+} # fine if (strcmp((string) $n_sconto,""))
 
-if (strcmp($n_caparra,"")) {
+if (strcmp((string) $n_caparra,"")) {
 esegui_query("update $tableprenota set caparra = '$n_caparra' where idprenota = '$id_prenota' ");
-} # fine if (strcmp($n_caparra,""))
+} # fine if (strcmp((string) $n_caparra,""))
 
 $aggiorna_valuta = 0;
-if (strcmp($n_valuta_tariffa,"")) {
+if (strcmp((string) $n_valuta_tariffa,"")) {
 $aggiorna_valuta = 1;
 if ($n_valuta_tariffa == ">0") $valuta_prenota = ">";
 else {
 if (!@is_array($altre_valute)) $altre_valute = altre_valute();
 $valuta = $altre_valute['id'][$n_valuta_tariffa];
-if (strcmp($valuta,"")) $valuta_prenota = "$n_valuta_tariffa<".$altre_valute[$valuta]['cambio']."<".$altre_valute[$valuta]['arrotond'].">";
+if (strcmp((string) $valuta,"")) $valuta_prenota = "$n_valuta_tariffa<".$altre_valute[$valuta]['cambio']."<".$altre_valute[$valuta]['arrotond'].">";
 else $valuta_prenota = ">";
 } # fine else if ($n_valuta_tariffa == ">0")
-} # fine if (strcmp($n_valuta_tariffa,""))
+} # fine if (strcmp((string) $n_valuta_tariffa,""))
 else {
-if (strcmp($d_valuta_tariffa_idpr[$id_prenota],"")) $valuta_prenota = $d_valuta_tariffa_idpr[$id_prenota]."<".$d_cambio_tariffa_idpr[$id_prenota]."<".$d_arrotond_tariffa_idpr[$id_prenota].">";
+if (strcmp((string) $d_valuta_tariffa_idpr[$id_prenota],"")) $valuta_prenota = $d_valuta_tariffa_idpr[$id_prenota]."<".$d_cambio_tariffa_idpr[$id_prenota]."<".$d_arrotond_tariffa_idpr[$id_prenota].">";
 else $valuta_prenota = ">";
-} # fine else if (strcmp($n_valuta_tariffa,""))
+} # fine else if (strcmp((string) $n_valuta_tariffa,""))
 
-if (strcmp($n_valuta_caparra,"")) {
+if (strcmp((string) $n_valuta_caparra,"")) {
 $aggiorna_valuta = 1;
 if ($n_valuta_caparra != ">0") $valuta_prenota .= "$n_valuta_caparra<".$altre_valute[$altre_valute['id'][$n_valuta_caparra]]['cambio']."<".$altre_valute[$altre_valute['id'][$n_valuta_caparra]]['arrotond'];
-} # fine if (strcmp($n_valuta_caparra,""))
-elseif (strcmp($d_valuta_caparra_idpr[$id_prenota],"")) $valuta_prenota .= $d_valuta_caparra_idpr[$id_prenota]."<".$d_cambio_caparra_idpr[$id_prenota]."<".$d_arrotond_caparra_idpr[$id_prenota];
+} # fine if (strcmp((string) $n_valuta_caparra,""))
+elseif (strcmp((string) $d_valuta_caparra_idpr[$id_prenota],"")) $valuta_prenota .= $d_valuta_caparra_idpr[$id_prenota]."<".$d_cambio_caparra_idpr[$id_prenota]."<".$d_arrotond_caparra_idpr[$id_prenota];
 
 if ($aggiorna_valuta) {
 if ($valuta_prenota == ">") esegui_query("update $tableprenota set valuta = NULL where idprenota = '$id_prenota' ");
 else esegui_query("update $tableprenota set valuta = '".aggslashdb($valuta_prenota)."' where idprenota = '$id_prenota' ");
 } # fine if ($aggiorna_valuta)
 
-if (strcmp($n_met_paga_caparra,"")) {
+if (strcmp((string) $n_met_paga_caparra,"")) {
 esegui_query("update $tableprenota set metodo_pagamento = '".aggslashdb($n_met_paga_caparra)."' where idprenota = '$id_prenota' ");
-} # fine if (strcmp($n_met_paga_caparra,""))
+} # fine if (strcmp((string) $n_met_paga_caparra,""))
 
-if (strcmp($n_commissioni,"")) {
+if (strcmp((string) $n_commissioni,"")) {
 esegui_query("update $tableprenota set commissioni = '$n_commissioni' where idprenota = '$id_prenota' ");
-} # fine if (strcmp($n_commissioni,""))
+} # fine if (strcmp((string) $n_commissioni,""))
 
 if ($n_origine_prenota != "") {
 esegui_query("update $tableprenota set origine = '".aggslashdb($n_origine_prenota)."' where idprenota = '$id_prenota' ");
 } # fine if ($n_origine_prenota != "")
 
-if (strcmp($n_pagato,"")) {
+if (strcmp((string) $n_pagato,"")) {
 esegui_query("update $tableprenota set pagato = '$n_pagato' where idprenota = '$id_prenota' ");
 if ($prenota_in_anno_succ) esegui_query("update $tableprenota_orig set pagato = '$n_pagato' where idprenota = '$id_prenota_orig' ");
-} # fine if (strcmp($n_pagato,""))
+} # fine if (strcmp((string) $n_pagato,""))
 
 if ($n_confermato != "") {
 esegui_query("update $tableprenota set conferma = '$n_confermato' where idprenota = '$id_prenota' ");
 } # fine if ($n_confermato != "")
 
-if (strcmp($n_commento,"") and ($tipo_commento == "checkin" or $tipo_commento == "checkout")) {
+if (strcmp((string) $n_commento,"") and ($tipo_commento == "checkin" or $tipo_commento == "checkout")) {
 $n_comm_checkin = "";
 $n_comm_checkout = "";
 if ($tipo_commento == "checkin" and !$d_checkin_idpr[$id_prenota]) $n_comm_checkin = $n_commento;
-if ($tipo_commento == "checkout" and !$d_checkout_idpr[$id_prenota]) $n_comm_checkout = $n_commento;
+if ($tipo_commento == "checkout" and (!$d_checkout_idpr[$id_prenota] or !$d_checkin_idpr[$id_prenota])) $n_comm_checkout = $n_commento;
 $n_comm = $d_commento;
 $altri_comm = "";
 if (strstr($n_comm,">")) {
 $n_comm = explode(">",$n_comm);
-if (strcmp($n_comm[1],"")) {
+if (strcmp((string) $n_comm[1],"")) {
 if ($n_comm_checkin) $n_comm_checkin = $n_comm[1]." - $n_comm_checkin";
 else $n_comm_checkin = $n_comm[1];
-} # fine if (strcmp($n_comm[1],""))
-if (strcmp($n_comm[2],"")) {
+} # fine if (strcmp((string) $n_comm[1],""))
+if (strcmp((string) $n_comm[2],"")) {
 if ($n_comm_checkout) $n_comm_checkout = $n_comm[2]." - $n_comm_checkout";
 else $n_comm_checkout = $n_comm[2];
-} # fine if (strcmp($n_comm[2],""))
+} # fine if (strcmp((string) $n_comm[2],""))
 for ($num1 = 3 ; $num1 < count($n_comm) ; $num1++) {
 $altri_comm .= ">".$n_comm[$num1];
 } # fine for $num1
 $n_comm = $n_comm[0];
 } # fine if (strstr($n_comm,">"))
-if (strcmp($n_comm_checkin,"") or strcmp($n_comm_checkout,"")) $n_comm .= ">$n_comm_checkin>$n_comm_checkout";
+if (strcmp((string) $n_comm_checkin,"") or strcmp((string) $n_comm_checkout,"")) $n_comm .= ">$n_comm_checkin>$n_comm_checkout";
 elseif ($altri_comm) $n_comm .= ">>";
 if ($altri_comm) $n_comm .= $altri_comm;
 esegui_query("update $tableprenota set commento = '".aggslashdb($n_comm)."' where idprenota = '$id_prenota' ");
-} # fine if (strcmp($n_commento,"") and ($tipo_commento == "checkin" or...
+} # fine if (strcmp((string) $n_commento,"") and ($tipo_commento == "checkin" or...
 
-if ((strcmp($n_commento,"") and !strcmp($tipo_commento,"")) or $n_cancella_commento == "SI") {
+if ((strcmp((string) $n_commento,"") and !strcmp((string) $tipo_commento,"")) or $n_cancella_commento == "SI") {
 $n_comm = $n_commento;
 if ($n_cancella_commento == "SI") $n_comm = "";
-if (strstr($d_commento,">")) $n_comm = $n_comm.strstr($d_commento,">");
+if (strstr((string) $d_commento,">")) $n_comm = $n_comm.strstr($d_commento,">");
 esegui_query("update $tableprenota set commento = '".aggslashdb($n_comm)."' where idprenota = '$id_prenota' ");
-} # fine if ((strcmp($n_commento,"") and !strcmp($tipo_commento,"")) or $n_cancella_commento == "SI")
+} # fine if ((strcmp((string) $n_commento,"") and !strcmp((string) $tipo_commento,"")) or $n_cancella_commento == "SI")
 
-if (strcmp($tipo_commento,"") and !empty($comm_pers_presenti[$tipo_commento])) {
+if (strcmp((string) $tipo_commento,"") and !empty($comm_pers_presenti[$tipo_commento])) {
 $n_comm = $d_commento;
-if (strstr($d_commento,">")) {
+if (strstr((string) $d_commento,">")) {
 $d_comm = explode(">",$d_commento);
 $num_comm = count($d_comm);
 if ($num_comm < 4) {
@@ -1559,22 +1639,22 @@ $n_comm_inserito = 0;
 for ($num1 = 3 ; $num1 < $num_comm ; $num1++) {
 if (substr($d_comm[$num1],0,(strlen($tipo_commento) + 1)) == "$tipo_commento<") {
 $n_comm_inserito = 1;
-if (strcmp($n_commento,"")) $n_comm .= ">".$tipo_commento."<".$n_commento;
+if (strcmp((string) $n_commento,"")) $n_comm .= ">".$tipo_commento."<".$n_commento;
 } # fine if (substr($d_comm[$num1],0,(strlen($tipo_commento) + 1)) == "$tipo_commento<")
 else $n_comm .= ">".$d_comm[$num1];
 } # fine for $num1
-if (!$n_comm_inserito and strcmp($n_commento,"")) $n_comm .= ">".$tipo_commento."<".$n_commento;
+if (!$n_comm_inserito and strcmp((string) $n_commento,"")) $n_comm .= ">".$tipo_commento."<".$n_commento;
 } # fine else if ($num_comm < 4)
-} # fine if (strstr($d_commento,">"))
-elseif (strcmp($n_commento,"")) $n_comm .= ">>>".$tipo_commento."<".$n_commento;
+} # fine if (strstr((string) $d_commento,">"))
+elseif (strcmp((string) $n_commento,"")) $n_comm .= ">>>".$tipo_commento."<".$n_commento;
 if ($n_comm != $d_commento) esegui_query("update $tableprenota set commento = '".aggslashdb($n_comm)."' where idprenota = '$id_prenota' ");
-} # fine if (strcmp($tipo_commento,"") and !empty($comm_pers_presenti[$tipo_commento]))
+} # fine if (strcmp((string) $tipo_commento,"") and !empty($comm_pers_presenti[$tipo_commento]))
 
 $adesso = date("Y-m-d H:i:s",(time() + (C_DIFF_ORE * 3600)));
-if (strcmp($n_costo_tot,"")) {
+if (strcmp((string) $n_costo_tot,"")) {
 esegui_query("update $tableprenota set tariffa_tot = '$n_costo_tot', data_modifica = '$adesso' where idprenota = '$id_prenota' ");
 if ($prenota_in_anno_succ) esegui_query("update $tableprenota_orig set tariffa_tot = '$n_costo_tot', data_modifica = '$adesso' where idprenota = '$id_prenota_orig' ");
-} # fine if (strcmp($n_costo_tot,""))
+} # fine if (strcmp((string) $n_costo_tot,""))
 
 if ($dati_da_anno_prec == "SI") passa_var_a_anno_corr($id_prenota,$tableperiodi,$tableprenota,$tablecostiprenota,$d_id_data_inizio,$d_id_data_fine,$n_fineperiodo,$inizioperiodo,$fineperiodo,$lunghezza_periodo);
 
@@ -1599,8 +1679,15 @@ else include("./includes/interconnect/aggiorna_ic.php");
 for ($num_idpr = 0 ; $num_idpr < $num_id_prenota ; $num_idpr++) {
 $id_prenota = $id_prenota_idpr[$num_idpr];
 $n_pagato = $n_pagato_idpr[$id_prenota];
-if (strcmp($n_pagato,"")) {
+if (strcmp((string) $n_pagato,"")) {
 $datainserimento_saldo = date("Y-m-d H:i:s",(time() + (C_DIFF_ORE * 3600)));
+$datatransazione_saldo = $datainserimento_saldo;
+if (isset(${"giorno_pagamento".$id_prenota}) and isset(${"mese_pagamento".$id_prenota}) and isset(${"anno_pagamento".$id_prenota})) {
+if (${"giorno_pagamento".$id_prenota} >= 1 and ${"giorno_pagamento".$id_prenota} <= 31 and ${"mese_pagamento".$id_prenota} >= 1 and ${"mese_pagamento".$id_prenota} <= 12) {
+$anno_corr = date('Y',(time() + (C_DIFF_ORE * 3600)));
+if (${"anno_pagamento".$id_prenota} >= ($anno_corr - 2) and ${"anno_pagamento".$id_prenota} <= ($anno_corr + 1)) $datatransazione_saldo = date("Y-m-d H:i:s",mktime(0,0,0,(int) ${"mese_pagamento".$id_prenota},(int) ${"giorno_pagamento".$id_prenota},(int) ${"anno_pagamento".$id_prenota}));
+} # fine if (${"giorno_pagamento".$id_prenota} >= 1 and ${"giorno_pagamento".$id_prenota} <= 31 and...
+} # fine if (isset(${"giorno_pagamento".$id_prenota}) and isset(${"mese_pagamento".$id_prenota}) and...
 $idcliente_saldo = risul_query($dati_prenota_idpr[$id_prenota],0,'idclienti');
 $d_idinizioprenota = risul_query($dati_prenota_idpr[$id_prenota],0,'iddatainizio');
 $d_idfineprenota = risul_query($dati_prenota_idpr[$id_prenota],0,'iddatafine');
@@ -1612,22 +1699,23 @@ $motivazione_saldo = "$idcliente_saldo;$idinizioperiodo_saldo;$idfineperiodo_sal
 $pagato_attuale = risul_query($dati_prenota_idpr[$id_prenota],0,'pagato');
 if (!$pagato_attuale) $pagato_attuale = 0;
 $saldo = $n_pagato - $pagato_attuale;
-if (strcmp(${"valuta_pagamento".$id_prenota},"")) {
+if (strcmp((string) ${"valuta_pagamento".$id_prenota},"")) {
 $valuta = ${"valuta_pagamento".$id_prenota}.">".$cambio_pagamento_idpr[$id_prenota].">".$arrotond_pagamento_idpr[$id_prenota];
 $saldo_valuta = converti_valuta($saldo,$cambio_pagamento_idpr[$id_prenota],$arrotond_pagamento_idpr[$id_prenota]);
-} # fine if (strcmp(${"valuta_pagamento".$id_prenota},""))
+} # fine if (strcmp((string) ${"valuta_pagamento".$id_prenota},""))
 else {
 $valuta = "";
 $saldo_valuta = "";
-} # fine else if (strcmp(${"valuta_pagamento".$id_prenota},""))
-$metodo_pagamento = ${"metodo_pagamento".$id_prenota};
-$metodo_pagamento = aggslashdb($metodo_pagamento);
+} # fine else if (strcmp((string) ${"valuta_pagamento".$id_prenota},""))
+$metodo_pagamento = aggslashdb(${"metodo_pagamento".$id_prenota});
 $tabelle_lock = array($tablesoldi);
 $tabelle_lock = lock_tabelle($tabelle_lock);
 $idsoldi = esegui_query("select max(idsoldi) from $tablesoldi");
 $idsoldi = risul_query($idsoldi,0,0) + 1;
-esegui_query("insert into $tablesoldi (idsoldi,motivazione,metodo_pagamento,saldo_prenota,soldi_prima,data_inserimento,utente_inserimento) values ('$idsoldi','$motivazione_saldo','$metodo_pagamento','$saldo','$pagato_attuale','$datainserimento_saldo','$id_utente')");
+esegui_query("insert into $tablesoldi (idsoldi,motivazione,metodo_pagamento,saldo_prenota,soldi_prima,data_transazione,data_inserimento,utente_inserimento) values ('$idsoldi','$motivazione_saldo','$metodo_pagamento','$saldo','$pagato_attuale','$datatransazione_saldo','$datainserimento_saldo','$id_utente')");
 if ($valuta) esegui_query("update $tablesoldi set valuta = '".aggslashdb($valuta)."', saldo_valuta = '".aggslashdb($saldo_valuta)."' where idsoldi = '$idsoldi' ");
+if (!empty(${"id_pagamento".$id_prenota})) esegui_query("update $tablesoldi set id_pagamento = '".aggslashdb(htmlspecialchars(${"id_pagamento".$id_prenota}))."' where idsoldi = '$idsoldi' ");
+if (!empty(${"note_pagamento".$id_prenota})) esegui_query("update $tablesoldi set note = '".aggslashdb(htmlspecialchars(${"note_pagamento".$id_prenota}))."' where idsoldi = '$idsoldi' ");
 unlock_tabelle($tabelle_lock);
 
 if (strcmp($cassa_pagamenti,"")) {
@@ -1650,16 +1738,18 @@ $data_fine_costo = formatta_data(risul_query($data_fine_costo,0,'datafine'),$sti
 $cognome_saldo = esegui_query("select cognome from $tableclienti where idclienti = '$idcliente_saldo' ");
 $cognome_saldo = risul_query($cognome_saldo,0,'cognome');
 $nome_costo = "".mex("Prenotazione",$pag)." $id_prenota ".mex("dal",$pag)." $data_inizio_costo ".mex("al",$pag)." $data_fine_costo ".mex("per",$pag)." $cognome_saldo";
+if (!empty(${"note_pagamento".$id_prenota})) $nome_costo .= " - ".htmlspecialchars(${"note_pagamento".$id_prenota});
 $idcosti = esegui_query("select max(idcosti) from $tablecosti");
 $idcosti = risul_query($idcosti,0,0) + 1;
 if ($cassa_pagamenti == "#1#") $nome_cassa = "";
 else $nome_cassa = $cassa_pagamenti;
-esegui_query("insert into $tablecosti (idcosti,nome_costo,val_costo,tipo_costo,nome_cassa,persona_costo,provenienza_costo,metodo_pagamento,datainserimento,hostinserimento,utente_inserimento) values ('$idcosti','".aggslashdb($nome_costo)."','$saldo','e','".aggslashdb($nome_cassa)."','".aggslashdb($nome_utente)."','p','$metodo_pagamento','$datainserimento_saldo','$HOSTNAME','$id_utente') ");
+esegui_query("insert into $tablecosti (idcosti,nome_costo,val_costo,tipo_costo,nome_cassa,persona_costo,provenienza_costo,metodo_pagamento,data_transazione,datainserimento,hostinserimento,utente_inserimento) values ('$idcosti','".aggslashdb($nome_costo)."','$saldo','e','".aggslashdb($nome_cassa)."','".aggslashdb($nome_utente)."','p','$metodo_pagamento','$datatransazione_saldo','$datainserimento_saldo','$HOSTNAME','$id_utente') ");
 if ($valuta) esegui_query("update $tablecosti set valuta = '".aggslashdb($valuta)."', costo_valuta = '".aggslashdb($saldo_valuta)."' where idcosti = '$idcosti' ");
+if (!empty(${"id_pagamento".$id_prenota})) esegui_query("update $tablecosti set id_pagamento = '".aggslashdb(htmlspecialchars(${"id_pagamento".$id_prenota}))."' where idcosti = '$idcosti' ");
 unlock_tabelle($tabelle_lock);
 } # fine if (strcmp($cassa_pagamenti,""))
 
-} # fine if (strcmp($n_pagato,""))
+} # fine if (strcmp((string) $n_pagato,""))
 } # fine for $num_idpr
 
 } # fine else if ($inserire == "NO")

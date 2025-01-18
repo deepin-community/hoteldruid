@@ -2,7 +2,7 @@
 
 ##################################################################################
 #    HOTELDRUID
-#    Copyright (C) 2001-2019 by Marco Maria Francesco De Santis (marco@digitaldruid.net)
+#    Copyright (C) 2001-2023 by Marco Maria Francesco De Santis (marco@digitaldruid.net)
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published by
@@ -32,25 +32,32 @@ $var_mod[3] = "tariffe_mostra";
 $var_mod[4] = "nomi_tariffe_imposte";
 $var_mod[5] = "raggruppa_quadro_disponibilita_con_regola_2";
 $var_mod[6] = "raggruppa_quadro_disponibilita_con_persone";
-$var_mod[7] = "colore_inizio_settimana_quadro_disponibilita";
-$var_mod[8] = "colore_libero_quadro_disponibilita";
-$var_mod[9] = "colore_occupato_quadro_disponibilita";
-$var_mod[10] = "apertura_font_quadro_disponibilita";
-$var_mod[11] = "chiusura_font_quadro_disponibilita";
-$var_mod[12] = "mostra_numero_liberi_quadro_disponibilita";
-$var_mod[13] = "considera_motivazioni_regola1";
-$var_mod[14] = "apertura_tag_font";
-$var_mod[15] = "chiusura_tag_font";
-$var_mod[16] = "file_css_frame";
-$var_mod[17] = "file_js_frame";
-$var_mod[18] = "tema_modello";
+$var_mod[7] = "colore_sfondo_quadro_disponibilita";
+$var_mod[8] = "colore_inizio_settimana_quadro_disponibilita";
+$var_mod[9] = "colore_libero_quadro_disponibilita";
+$var_mod[10] = "colore_occupato_quadro_disponibilita";
+$var_mod[11] = "apertura_font_quadro_disponibilita";
+$var_mod[12] = "chiusura_font_quadro_disponibilita";
+$var_mod[13] = "mostra_numero_liberi_quadro_disponibilita";
+$var_mod[14] = "considera_motivazioni_regola1";
+$var_mod[15] = "apertura_tag_font";
+$var_mod[16] = "chiusura_tag_font";
+$var_mod[17] = "file_css_frame";
+$var_mod[18] = "file_js_frame";
+$var_mod[19] = "tema_modello";
 
 $num_var_mod = count($var_mod);
 
 
 
 
-function recupera_var_modello_cal ($nome_file,$percorso_cartella_modello,$pag,$fr_frase,$num_frasi,$var_mod,$num_var_mod,$tipo_periodi,$var_per_crea_mod,$anno_modello,$PHPR_TAB_PRE) {
+function recupera_var_modello_cal ($nome_file,$percorso_cartella_modello,$pag,&$fr_frase,&$frase,$num_frasi,$var_mod,$num_var_mod,$tipo_periodi,$var_per_crea_mod,$anno_modello,$lingua_modello,$PHPR_TAB_PRE) {
+
+# Se sono state aggiunte frasi prima dell'uscita di una nuova versione
+/*for ($num_fr = 0 ; $num_fr < $num_frasi ; $num_fr++) {
+global ${$fr_frase[$num_fr]};
+${$fr_frase[$num_fr]} = mext_cal($frase[$num_fr],$pag,$lingua_modello);
+} # fine for $num_fr*/
 
 $linee_file = file("$percorso_cartella_modello/$nome_file");
 $num_linee_file = count($linee_file);
@@ -291,15 +298,17 @@ if ($continua != "NO") {
 $SI = mex("SI",$pag);
 $NO = mex("NO",$pag);
 global $M_PHPR_DB_TYPE,$M_PHPR_DB_NAME,$M_PHPR_DB_HOST,$M_PHPR_DB_PORT,$M_PHPR_DB_USER,$M_PHPR_DB_PASS,$M_PHPR_LOAD_EXT,$M_PHPR_TAB_PRE;
-if ($tipo_db == "mysql" and @function_exists('mysqli_connect')) $tipo_db = "mysqli";
-$M_PHPR_DB_TYPE = $tipo_db;
-$M_PHPR_DB_NAME = $nome_db;
-$M_PHPR_DB_HOST = $computer_db;
-$M_PHPR_DB_PORT = $porta_db;
-$M_PHPR_DB_USER = $utente_db;
-$M_PHPR_DB_PASS = $password_db;
+if (isset($tipo_db) and $tipo_db == "mysql" and @function_exists('mysqli_connect')) $tipo_db = "mysqli";
+$M_PHPR_DB_TYPE = fixstr($tipo_db);
+$M_PHPR_DB_NAME = fixstr($nome_db);
+$M_PHPR_DB_HOST = fixstr($computer_db);
+$M_PHPR_DB_PORT = fixstr($porta_db);
+$M_PHPR_DB_USER = fixstr($utente_db);
+$M_PHPR_DB_PASS = fixstr($password_db);
+if (strtoupper(fixstr($carica_estensione_db)) == $SI) $carica_estensione_db = "SI";
+else $carica_estensione_db = "NO";
 $M_PHPR_LOAD_EXT = $carica_estensione_db;
-$M_PHPR_TAB_PRE = $prefisso_tabelle_db;
+$M_PHPR_TAB_PRE = fixstr($prefisso_tabelle_db);
 
 if (strtoupper($estendi_ultima_data) == $SI) $estendi_ultima_data = "SI";
 else $estendi_ultima_data = "NO";
@@ -335,14 +344,14 @@ for ($num1 = 0 ; $num1 < $num_regole ; $num1 = $num1 + 1) {
 $idregole = risul_query($regole,$num1,'idregole');
 $motivazione = risul_query($regole,$num1,'motivazione');
 if (!$motivazione) $motivazione = " ";
-if ($motivazioni_presenti[$motivazione] != "SI") {
+if (!isset($motivazioni_presenti[$motivazione]) or $motivazioni_presenti[$motivazione] != "SI") {
 $motivazioni_presenti[$motivazione] = "SI";
 $var_motivazione = "var_mot_".$num_motivazioni;
 $num_motivazioni++;
 global $$var_motivazione;
 $$var_motivazione = "";
-if (strtoupper($considera_motivazioni_regola1[$motivazione]) == $SI) $$var_motivazione = $motivazione;
-} # fine if ($motivazioni_presenti[$motivazione] != "SI")
+if (strtoupper(fixstr($considera_motivazioni_regola1[$motivazione])) == $SI) $$var_motivazione = $motivazione;
+} # fine if (!isset($motivazioni_presenti[$motivazione]) or $motivazioni_presenti[$motivazione] != "SI")
 } # fine for $num1
 
 global $data_presel,$data_fissa_sel;
@@ -373,7 +382,7 @@ $lingua_mex = $lingua_mex_orig;
 function crea_modello_cal ($percorso_cartella_modello,$anno_modello,$PHPR_TAB_PRE,$pag,$lingua_modello,$silenzio,$fr_frase,$frase,$num_frasi,$tipo_periodi,$lingua_orig="") {
 global $num_periodi_date,$M_PHPR_DB_TYPE,$M_PHPR_DB_NAME,$M_PHPR_DB_HOST,$M_PHPR_DB_PORT,$M_PHPR_DB_USER,$M_PHPR_DB_PASS,$M_PHPR_LOAD_EXT,$M_PHPR_TAB_PRE,$estendi_ultima_data,$file_css_frame,$file_js_frame,$tema_modello,$id_transazione,$id_utente,$lingua_mex;
 global $modello_esistente,$cambia_frasi,$template_data_dir,$template_file_name,$parola_settimane,$stile_tabella_cal,$prima_parte_html,$ultima_parte_html,$num_motivazioni,$apertura_tag_font,$chiusura_tag_font,$data_presel,$data_fissa_sel,$numero_giorni,$allinea_disponibilita_con_arrivo;
-global $mostra_quadro_disp,$mostra_numero_liberi_quadro_disponibilita,$colore_inizio_settimana_quadro_disponibilita,$colore_libero_quadro_disponibilita,$colore_occupato_quadro_disponibilita,$apertura_font_quadro_disponibilita,$chiusura_font_quadro_disponibilita;
+global $mostra_quadro_disp,$mostra_numero_liberi_quadro_disponibilita,$colore_sfondo_quadro_disponibilita,$colore_inizio_settimana_quadro_disponibilita,$colore_libero_quadro_disponibilita,$colore_occupato_quadro_disponibilita,$apertura_font_quadro_disponibilita,$chiusura_font_quadro_disponibilita;
 $tablenometariffe_modello = $PHPR_TAB_PRE."ntariffe".$anno_modello;
 $tableperiodi_modello = $PHPR_TAB_PRE."periodi".$anno_modello;
 $tableregole = $PHPR_TAB_PRE."regole".$anno_modello;
@@ -572,8 +581,10 @@ if ($file_js_frame == "https://") $file_js_frame = "";
 if (!preg_match("/^((?!php).)+\.js$/i",$file_js_frame)) $file_js_frame = "";
 
 $num_colori = 0;
+$num_valori = 0;
+$tema_trovato = 0;
 $extra_head_frame = "";
-if (strcmp($tema_modello,"")) {
+if (strcmp((string) $tema_modello,"")) {
 include("./includes/templates/$template_data_dir/themes.php");
 $num_temi = count($template_theme_name);
 for ($num1 = 1 ; $num1 <= $num_temi ; $num1++) {
@@ -593,8 +604,8 @@ global ${"valore_tema_".$num1};
 if (!empty($valori_tema[$num1]['pattern']) and !preg_match("/".$valori_tema[$num1]['pattern']."/i",${"valore_tema_".$num1})) ${"valore_tema_".$num1} = "";
 ${"valore_tema_".$num1} = formatta_input_var_x_file(${"valore_tema_".$num1});
 $valore_sost = ${"valore_tema_".$num1};
-if (!strcmp($valore_sost,"")) $valore_sost = fixset($valori_tema[$num1]['null']);
-elseif (isset($valori_tema[$num1]['replace']) and strcmp($valori_tema[$num1]['replace'],"")) $valore_sost = str_replace("[theme_value_$num1]",$valore_sost,$valori_tema[$num1]['replace']);
+if (!strcmp((string) $valore_sost,"")) $valore_sost = fixstr($valori_tema[$num1]['null']);
+elseif (isset($valori_tema[$num1]['replace']) and strcmp((string) $valori_tema[$num1]['replace'],"")) $valore_sost = str_replace("[theme_value_$num1]",$valore_sost,$valori_tema[$num1]['replace']);
 $prima_parte_html = str_replace("[theme_value_$num1]",$valore_sost,$prima_parte_html);
 $ultima_parte_html = str_replace("[theme_value_$num1]",$valore_sost,$ultima_parte_html);
 $extra_head_frame = str_replace("[theme_value_$num1]",$valore_sost,$extra_head_frame);
@@ -616,7 +627,7 @@ $extra_head_frame = str_replace("[theme_color_$num1]",${"colore_tema_".$num1},$e
 } # fine for $num1
 } # fine if ($tema_trovato)
 else $tema_modello = "";
-} # fine if (strcmp($tema_modello,""))
+} # fine if (strcmp((string) $tema_modello,""))
 
 if (defined('C_EXT_DB_DATA_PATH') and C_EXT_DB_DATA_PATH) {
 $HOTELD_DB_TYPE = "";
@@ -630,9 +641,9 @@ include(C_EXT_DB_DATA_PATH);
 if ($HOTELD_DB_TYPE) $M_PHPR_DB_TYPE = "";
 if ($HOTELD_DB_NAME) $M_PHPR_DB_NAME = "";
 if ($HOTELD_DB_HOST) $M_PHPR_DB_HOST = "";
-if (strcmp($HOTELD_DB_PORT,"")) $M_PHPR_DB_PORT = "";
+if (strcmp((string) $HOTELD_DB_PORT,"")) $M_PHPR_DB_PORT = "";
 if ($HOTELD_DB_USER) $M_PHPR_DB_USER = "";
-if (strcmp($HOTELD_DB_PASS,"")) $M_PHPR_DB_PASS = "";
+if (strcmp((string) $HOTELD_DB_PASS,"")) $M_PHPR_DB_PASS = "";
 if ($HOTELD_TAB_PRE) $M_PHPR_TAB_PRE = "";
 } # fine if (defined('C_EXT_DB_DATA_PATH') and C_EXT_DB_DATA_PATH)
 
@@ -645,6 +656,7 @@ $M_PHPR_DB_PASS = formatta_input_var_x_file($M_PHPR_DB_PASS);
 $M_PHPR_LOAD_EXT = formatta_input_var_x_file($M_PHPR_LOAD_EXT);
 $M_PHPR_TAB_PRE = formatta_input_var_x_file($M_PHPR_TAB_PRE);
 $stile_tabella_cal = formatta_input_var_x_file($stile_tabella_cal);
+$colore_sfondo_quadro_disponibilita = formatta_input_var_x_file($colore_sfondo_quadro_disponibilita);
 $colore_inizio_settimana_quadro_disponibilita = formatta_input_var_x_file($colore_inizio_settimana_quadro_disponibilita);
 $colore_libero_quadro_disponibilita = formatta_input_var_x_file($colore_libero_quadro_disponibilita);
 $colore_occupato_quadro_disponibilita = formatta_input_var_x_file($colore_occupato_quadro_disponibilita);
@@ -705,12 +717,12 @@ else $cost_percorso_a_dati = "./";
 } # fine else if (substr(C_DATI_PATH,0,1) == "/")
 } # fine if ((string) $cost_percorso_a_dati == "")
 
-if ($template_file_name[$lingua_modello]) $nome_file = $template_file_name[$lingua_modello];
+if (!empty($template_file_name[$lingua_modello])) $nome_file = $template_file_name[$lingua_modello];
 else {
 $template_file_name_m = mext_cal($template_file_name['ita'],$pag,$lingua_modello);
 if ($template_file_name_m != $template_file_name['ita'] and $template_file_name_m != $template_file_name['en'] and $template_file_name_m != $template_file_name['es']) $nome_file = $template_file_name_m;
 else $nome_file = $lingua_modello."_".$template_file_name['en'];
-} # fine else if ($template_file_name[$lingua_modello])
+} # fine else if (!empty($template_file_name[$lingua_modello]))
 $file = @fopen("$percorso_cartella_modello/$nome_file","w+");
 if ($file) {
 flock($file,2);
@@ -752,6 +764,7 @@ fwrite($file,"<?php if (empty(\$framed) and empty(\$_GET['framed']) and empty(\$
 \$".mex("var_raggruppa_quadro_disponibilita_con_regola_2",$pag)." = \"".mex("$raggruppa_quadro_disponibilita_con_regola_2",$pag)."\";
 \$".mex("var_raggruppa_quadro_disponibilita_con_persone",$pag)." = \"".mex("$raggruppa_quadro_disponibilita_con_persone",$pag)."\";
 \$".mext_cal("var_stile_tabella_cal",$pag)." = \"$stile_tabella_cal\";
+\$".mex("var_colore_sfondo_quadro_disponibilita",$pag)." = \"$colore_sfondo_quadro_disponibilita\";
 \$".mex("var_colore_inizio_settimana_quadro_disponibilita",$pag)." = \"$colore_inizio_settimana_quadro_disponibilita\";
 \$".mex("var_colore_libero_quadro_disponibilita",$pag)." = \"$colore_libero_quadro_disponibilita\";
 \$".mex("var_colore_occupato_quadro_disponibilita",$pag)." = \"$colore_occupato_quadro_disponibilita\";
@@ -804,7 +817,8 @@ define('C_PAGINA_WEB','1');
 
 \$var_pag = array();
 \$var_pag[0] = 'framed';
-\$n_var_pag = 1;
+\$var_pag[1] = 'id_data_inizio_tab_disp';
+\$n_var_pag = 2;
 
 \$anno = \$".mex("var_anno",$pag).";
 \$parole_sost = 0;
@@ -859,6 +873,7 @@ else \$allinea_disponibilita_con_arrivo = \"NO\";
 if (strtoupper(\$".mex("var_raggruppa_quadro_disponibilita_con_persone",$pag).") == \"$SI\") \$mostra_quadro_disp = \"pers\";
 if (strtoupper(\$".mex("var_raggruppa_quadro_disponibilita_con_regola_2",$pag).") == \"$SI\") \$mostra_quadro_disp = \"reg2\";
 \$stile_tabella_cal = \$".mext_cal("var_stile_tabella_cal",$pag).";
+\$c_sfondo_tab_disp = \$".mex("var_colore_sfondo_quadro_disponibilita",$pag).";
 \$c_inisett_tab_disp = \$".mex("var_colore_inizio_settimana_quadro_disponibilita",$pag).";
 \$c_libero_tab_disp = \$".mex("var_colore_libero_quadro_disponibilita",$pag).";
 \$c_occupato_tab_disp = \$".mex("var_colore_occupato_quadro_disponibilita",$pag) .";

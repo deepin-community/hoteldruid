@@ -137,6 +137,9 @@ case "E-mail certificata (PEC) o codice destinatario":	$messaggio = "Certified e
 case "email":  					$messaggio = "email"; break;
 case "2ª email":  				$messaggio = "2nd email"; break;
 case "PEC/codice":  				$messaggio = "certified email"; break;
+case "Per questa tariffa si deve inserire un numero minimo di":	$messaggio = "For this rate you have to insert at least"; break;
+case "persona":  				$messaggio = "person"; break;
+case "Usa il cliente della prenotazione originale":	$messaggio = "Use the client from the original reservation"; break;
 case "":  		$messaggio = ""; break;
 case "":  		$messaggio = ""; break;
 

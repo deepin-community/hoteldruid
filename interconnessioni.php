@@ -2,7 +2,7 @@
 
 ##################################################################################
 #    HOTELDRUID
-#    Copyright (C) 2001-2021 by Marco Maria Francesco De Santis (marco@digitaldruid.net)
+#    Copyright (C) 2001-2023 by Marco Maria Francesco De Santis (marco@digitaldruid.net)
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published by
@@ -43,29 +43,44 @@ $var_pag[15] = 'importa_prezzo_sbagliato';
 $var_pag[16] = 'cancella_prenota_permanente';
 $var_pag[17] = 'nuova_pass';
 $var_pag[18] = 'cancella';
-$var_pag[19] = 'hotel_id_1';
-$var_pag[20] = 'aggiorna_prezzi';
-$var_pag[21] = 'aggiorna_disponibilita';
-$var_pag[22] = 'aggiorna_restrizioni';
-$var_pag[23] = 'aggiorna';
-$var_pag[24] = 'data_agg';
-$n_var_pag = 25;
-if (@is_array($_POST)) {
-reset($_POST);
-for ($num1 = 0 ; $num1 < count($_POST); $num1++) {
-$var_POST = key($_POST);
-if (!isset($$var_POST)) {
-if (substr($var_POST,0,12) == "tipotariffa_" or substr($var_POST,0,16) == "tipo_ro_tariffa_" or substr($var_POST,0,14) == "costolettoagg_" or substr($var_POST,0,17) == "tariffa_hotel_id_" or substr($var_POST,0,13) == "app_hotel_id_" or substr($var_POST,0,8) == "num_cond"
- or substr($var_POST,0,8) == "ic_user_" or substr($var_POST,0,11) == "ic_orgpass_" or substr($var_POST,0,12) == "ic_password_" or substr($var_POST,0,7) == "ic_org_" or substr($var_POST,0,11) == "ic_hotelid_") $var_pag[$n_var_pag++] = $var_POST;
-} # fine if (!isset($$var_POST))
-next($_POST);
-} # fine for $num1
-} # fine if (@is_array($_POST))
+$var_pag[19] = 'aggiorna_prezzi';
+$var_pag[20] = 'aggiorna_disponibilita';
+$var_pag[21] = 'aggiorna_restrizioni';
+$var_pag[22] = 'aggiorna';
+$var_pag[23] = 'data_agg';
+$var_pag[24] = 'commenti_prenota';
+$var_pag[25] = 'scarica_future';
+$var_pag[26] = 'cont';
+$var_pag[27] = 'utente_azione_ic';
+$var_pag[28] = 'aggiorna_cache';
+$var_pag[29] = 'interc_dir_passa';
+$var_pag[30] = 'int_ric';
+$var_pag[31] = 'id_ric';
+$var_pag[32] = 'url_subordinazione';
+$var_pag[33] = 'utente_subordinazione';
+$var_pag[34] = 'password_subordinazione';
+$var_pag[35] = 'commento_subordinazione';
+$var_pag[36] = 'compresso_subordinazione';
+$var_pag[37] = 'crea_subordinazione';
+$var_pag[38] = 'mantieni_anni';
+$var_pag[39] = 'modifica_utente_agg';
+$var_pag[40] = 'n_utente_agg';
+$var_pag[41] = 'continua';
+$var_pag[42] = 'cancella_subordinazione';
+$var_pag[43] = 'aggiorna_subordinazione';
+$var_pag[44] = 'agg_disp';
+$var_pag[45] = 'agg_tar';
+$n_var_pag = 46;
+$num1 = "";
+if (isset($_POST['interc_dir_passa'])) $num1 = $_POST['interc_dir_passa'];
+elseif (isset($_GET['interc_dir_passa'])) $num1 = $_GET['interc_dir_passa'];
+if ($num1 and strlen($num1) < 7 and preg_match("/[a-z]{2,4}[0-9]{0,2}/",$num1) and @is_file("includes/interconnect/$num1/var.php")) include("includes/interconnect/$num1/var.php");
 
 include("./costanti.php");
 include(C_DATI_PATH."/dati_connessione.php");
 include("./includes/funzioni_$PHPR_DB_TYPE.php");
 include("./includes/funzioni_backup.php");
+include("./includes/funzioni_email.php");
 $numconnessione = connetti_db_per_backup($PHPR_DB_TYPE,$PHPR_DB_NAME,$PHPR_DB_HOST,$PHPR_DB_PORT,$PHPR_DB_USER,$PHPR_DB_PASS,$PHPR_LOAD_EXT,$PHPR_TAB_PRE,$ext_pgsql_caricata,$ext_mysql_caricata);
 if (!isset($anno)) {
 if (isset($_GET['anno'])) $anno = $_GET['anno'];
@@ -115,12 +130,8 @@ include(C_DATI_PATH."/lingua.php");
 $lingua_mex = $lingua[1];
 if (defined('C_URL_MOD_EXT_CARTE_CREDITO') and C_URL_MOD_EXT_CARTE_CREDITO != "") {
 $id_utente_sessione = "-1";
-$adesso = $anno.date("mdHis",(time() + (C_DIFF_ORE * 3600)));
-$versione_unica = prendi_numero_versione($tableversioni);
-list($usec, $sec) = explode(' ', microtime());
-mt_srand((float) $sec + ((float) $usec * 100000));
-$val_casuale = mt_rand(100000,999999);
-$id_sessione = $adesso.$val_casuale.$versione_unica;
+$id_sessione = crea_id_sessione($anno,$tableversioni);
+if (C_VERSIONE_ATTUALE < 3.04) $id_sessione = substr($id_sessione,0,20).substr($id_sessione,30);
 $ultimo_accesso = date("Y-m-d H:i:s",(time() + (C_DIFF_ORE * 3600)));
 if ($_SERVER['REMOTE_ADDR']) $REMOTE_ADDR = $_SERVER['REMOTE_ADDR'];
 $REMOTE_ADDR = aggslashdb($REMOTE_ADDR);
@@ -145,6 +156,7 @@ if ($id_utente != 1 and $id_utente != "a") {
 $privilegi_globali_utente = esegui_query("select * from $tableprivilegi where idutente = '$id_utente' and anno = '1'");
 $priv_mod_pers = risul_query($privilegi_globali_utente,0,'priv_mod_pers');
 $priv_crea_interconnessioni = substr($priv_mod_pers,3,1);
+$priv_gest_pass_cc = substr($priv_mod_pers,5,1);
 $privilegi_annuali_utente = esegui_query("select * from $tableprivilegi where idutente = '$id_utente' and anno = '$anno'");
 if (numlin_query($privilegi_annuali_utente) == 0) $anno_utente_attivato = "NO";
 else {
@@ -167,12 +179,20 @@ for ($num1 = 0 ; $num1 < count($tariffe_consentite) ; $num1++) if ($tariffe_cons
 else {
 if ($id_utente == 1) {
 $priv_crea_interconnessioni = "s";
+$priv_gest_pass_cc = "s";
 $anno_utente_attivato = "SI";
 $attiva_regole1_consentite = "n";
 $attiva_tariffe_consentite = "n";
 $priv_mod_reg2 = "s";
 } # fine if ($id_utente == 1)
-else $priv_crea_interconnessioni = "n";
+else {
+$priv_crea_interconnessioni = "n";
+$priv_gest_pass_cc = "n";
+$anno_utente_attivato = "SI";
+$attiva_regole1_consentite = "n";
+$attiva_tariffe_consentite = "n";
+$priv_mod_reg2 = "n";
+} # fine else if ($id_utente == 1)
 } # fine else if ($id_utente != 1 and $id_utente != "a")
 
 if ($id_utente and ($priv_crea_interconnessioni != "s" or $anno_utente_attivato != "SI") and !$id_utente_azione_ic) {
@@ -185,8 +205,10 @@ if ($id_utente and (($priv_crea_interconnessioni == "s" and $anno_utente_attivat
 if (@is_file(C_DATI_PATH."/dati_subordinazione.php")) {
 $installazione_subordinata = "SI";
 $priv_crea_interconnessioni = "n";
+$priv_gest_pass_cc = "n";
 $priv_mod_reg2 = "n";
 } # fine if (@is_file(C_DATI_PATH."/dati_subordinazione.php"))
+unset($ic_present);
 
 
 $titolo = "HotelDruid: ".mex("Interconnessioni",$pag);
@@ -268,13 +290,85 @@ return $errore;
 } # fine function scarica_backup_subordinazione
 
 
+function variabili_x_form (&$lista_tutti_app,&$maxocc,&$lista_regola2,&$lista_regola3,&$origini_prenota,&$campi_pers_comm,&$num_appartamenti,&$pass_cc,$priv_gest_pass_cc,$id_sessione,$tableappartamenti,$tableregole,$tablepersonalizza) {
+
+$lista_tutti_app = "";
+$maxocc = array();
+$appartamenti = esegui_query("select * from $tableappartamenti order by idappartamenti");
+$num_appartamenti = numlin_query($appartamenti);
+for ($num1 = 0 ; $num1 < $num_appartamenti ; $num1++) {
+$idapp = risul_query($appartamenti,$num1,'idappartamenti');
+$maxocc[$idapp] = risul_query($appartamenti,$num1,'maxoccupanti');
+$lista_tutti_app .= "$idapp,";
+} # fine for $num1
+$lista_tutti_app = substr($lista_tutti_app,0,-1);
+
+$lista_regola2 = array();
+$regole2 = esegui_query("select * from $tableregole where tariffa_per_app != ''");
+$num_regole2 = numlin_query($regole2);
+for ($num1 = 0 ; $num1 < $num_regole2 ; $num1++) {
+$tariffa = risul_query($regole2,$num1,'tariffa_per_app');
+$lista_app = risul_query($regole2,$num1,'motivazione');
+if (strcmp((string) $lista_app,"")) {
+$lista_regola2[$tariffa] = explode(",",$lista_app);
+$lista_regola2[$tariffa]['num'] = count($lista_regola2[$tariffa]);
+} # fine if (strcmp((string) $lista_app,""))
+else $lista_regola2[$tariffa]['num'] = 0;
+$lista_regola2[$tariffa]['txt'] = $lista_app;
+$lista_app2 = risul_query($regole2,$num1,'motivazione2');
+$lista_regola2[$tariffa]['txt2'] = $lista_app;
+if ($lista_app and $lista_app2) $lista_regola2[$tariffa]['txt2'] .= ",$lista_app2";
+$lista_regola2[$tariffa]['napp'] = risul_query($regole2,$num1,'motivazione3');
+if (substr(fixstr($lista_regola2[$tariffa]['napp']),0,1) == "v") {
+$lista_regola2[$tariffa]['vapp'] = 1;
+$lista_regola2[$tariffa]['napp'] = substr($lista_regola2[$tariffa]['napp'],1);
+} # fine if (substr($lista_regola2[$tariffa]['napp'],0,1) == "v")
+} # fine for $num1
+
+$lista_regola3 = array();
+$regole3 = esegui_query("select * from $tableregole where tariffa_per_persone != '' order by tariffa_per_persone");
+$num_regole3 = numlin_query($regole3);
+for ($num1 = 0 ; $num1 < $num_regole3 ; $num1++) {
+if (risul_query($regole3,$num1,'tariffa_per_persone')) {
+$tariffa = risul_query($regole3,$num1,'tariffa_per_persone');
+if (risul_query($regole3,$num1,'iddatainizio')) $lista_regola3[$tariffa] = risul_query($regole3,$num1,'iddatainizio');
+if (risul_query($regole3,$num1,'iddatafine')) $lista_regola3['min'][$tariffa] = risul_query($regole3,$num1,'iddatafine');
+} # fine if (risul_query($regole3,$num1,'tariffa_per_persone'))
+} # fine for $num1
+
+$origini_prenota = esegui_query("select valpersonalizza from $tablepersonalizza where idpersonalizza = 'origini_prenota' and idutente = '1' ");
+$origini_prenota = (string) risul_query($origini_prenota,0,"valpersonalizza");
+$origini_prenota = explode(",",$origini_prenota);
+
+$campi_pers_comm = esegui_query("select valpersonalizza from $tablepersonalizza where idpersonalizza = 'campi_pers_comm' and idutente = '1' ");
+if (numlin_query($campi_pers_comm) == 1) $campi_pers_comm = $campi_pers_comm = explode(">",risul_query($campi_pers_comm,0,'valpersonalizza'));
+else $campi_pers_comm = array();
+
+$pass_cc = 0;
+if ($priv_gest_pass_cc == "s") {
+if (defined('C_URL_MOD_EXT_CARTE_CREDITO') and C_URL_MOD_EXT_CARTE_CREDITO != "") {
+if (substr(C_URL_MOD_EXT_CARTE_CREDITO,0,17) == "https://localhost") $ext_html = file(C_URL_MOD_EXT_CARTE_CREDITO."personalizza.php?id_sessione=$id_sessione&stato_cc=1",false,stream_context_create(array("ssl" => array("verify_peer" => true,"allow_self_signed" => true))));
+else $ext_html = @file(C_URL_MOD_EXT_CARTE_CREDITO."personalizza.php?id_sessione=$id_sessione&stato_cc=1");
+if ($ext_html and strstr(implode("",$ext_html),"pass_cc_attiva")) $pass_cc = 1;
+} # fine if (defined('C_URL_MOD_EXT_CARTE_CREDITO') and C_URL_MOD_EXT_CARTE_CREDITO != "")
+else {
+if (function_exists('openssl_pkey_new')) {
+$cert_cc = esegui_query("select valpersonalizza from $tablepersonalizza where idpersonalizza = 'cert_cc' and idutente = '1'");
+if (numlin_query($cert_cc)) $pass_cc = 1;
+} # fine if (function_exists('openssl_pkey_new'))
+} # fine else if (defined('C_URL_MOD_EXT_CARTE_CREDITO') and C_URL_MOD_EXT_CARTE_CREDITO != "")
+} # fine if ($priv_gest_pass_cc == "s") {
+
+} # fine function variabili_x_form
+
+
 
 if ((isset($azione_ic) and $azione_ic == "SI") or $id_utente_azione_ic) {
 $mostra_form_iniziale = "NO";
 $modifica_interconnessione = "NO";
 
 
-if (($aggiorna_subordinazione or $id_utente_azione_ic) and @is_file(C_DATI_PATH."/dati_subordinazione.php")) {
+if ((!empty($aggiorna_subordinazione) or $id_utente_azione_ic) and @is_file(C_DATI_PATH."/dati_subordinazione.php")) {
 include(C_DATI_PATH."/dati_subordinazione.php");
 $file_backup = C_DATI_PATH."/sub_backup.php";
 $filelock = crea_lock_file($file_backup);
@@ -316,7 +410,7 @@ $indirizzo_ip = risul_query($dati_sessione,0,'indirizzo_ip');
 $user_agent = risul_query($dati_sessione,0,'user_agent');
 $ultimo_accesso = risul_query($dati_sessione,0,'ultimo_accesso');
 } # fine if ($num_lin_dati_sessione == 1)
-ripristina_backup($file_backup,"SI",$pag,$numconnessione,$database_esistente,$tempdatabase,$PHPR_DB_TYPE,$PHPR_DB_NAME,$PHPR_DB_HOST,$PHPR_DB_PORT,$PHPR_DB_USER,$PHPR_DB_PASS,$PHPR_LOAD_EXT,$PHPR_TAB_PRE,$N_PHPR_DB_TYPE,$N_PHPR_DB_NAME,$N_PHPR_DB_HOST,$N_PHPR_DB_PORT,$N_PHPR_DB_USER,$N_PHPR_DB_PASS,$N_PHPR_LOAD_EXT,$N_PHPR_TAB_PRE,$ext_pgsql_caricata,$ext_mysql_caricata,$mantieni_anni);
+ripristina_backup($file_backup,"SI",$pag,$numconnessione,"","",$PHPR_DB_TYPE,$PHPR_DB_NAME,$PHPR_DB_HOST,$PHPR_DB_PORT,$PHPR_DB_USER,$PHPR_DB_PASS,$PHPR_LOAD_EXT,$PHPR_TAB_PRE,$N_PHPR_DB_TYPE,$N_PHPR_DB_NAME,$N_PHPR_DB_HOST,$N_PHPR_DB_PORT,$N_PHPR_DB_USER,$N_PHPR_DB_PASS,$N_PHPR_LOAD_EXT,$N_PHPR_TAB_PRE,$ext_pgsql_caricata,$ext_mysql_caricata,$mantieni_anni);
 esegui_query("update $tablepersonalizza set valpersonalizza = 'SI' where idpersonalizza = 'subordinazione' and idutente = '1'");
 if (@is_file(C_DATI_PATH."/dati_interconnessioni.php")) unlink(C_DATI_PATH."/dati_interconnessioni.php");
 if ($num_lin_dati_sessione == 1) esegui_query("insert into $tablesessioni (idsessioni,idutente,indirizzo_ip,user_agent,ultimo_accesso) values ('$id_sessione','$idutente','$indirizzo_ip','$user_agent','$ultimo_accesso')","",1);
@@ -326,7 +420,7 @@ echo mex("Aggiornamento eseguito con successo",$pag).".<br>";
 elseif (!$agg_cod_sorg) echo mex("Non si è potuto portare a termine l'<div style=\"display: inline; color: red;\">aggiornamento</div>",$pag).".<br>";
 @unlink($file_backup);
 distruggi_lock_file($filelock,$file_backup);
-} # fine if (($aggiorna_subordinazione or...
+} # fine if ((!empty($aggiorna_subordinazione) or...
 
 
 if ($id_utente_azione_ic) {
@@ -339,11 +433,12 @@ $interconn_dir = opendir("./includes/interconnect/");
 while ($mod_ext = readdir($interconn_dir)) {
 if ($mod_ext != "." and $mod_ext != ".." and @is_dir("./includes/interconnect/$mod_ext")) {
 include("./includes/interconnect/$mod_ext/name.php");
-if ($ic_present[$interconnection_name] == "SI" and (!$id_ric or $int_ric == $interconnection_name)) {
+if (isset($ic_present[$interconnection_name]) and $ic_present[$interconnection_name] == "SI" and (empty($id_ric) or $int_ric == $interconnection_name)) {
 include("./includes/interconnect/$mod_ext/functions_import.php");
 $funz_import_reservations = "import_reservations_".$interconnection_func_name;
 $id_utente_origi = $id_utente;
 $id_utente = 1;
+if (!isset($id_ric)) $id_ric = "";
 $testo = $funz_import_reservations("",$id_ric,$file_interconnessioni,$anno,$PHPR_TAB_PRE,2,$id_utente,$HOSTNAME);
 echo $testo;
 
@@ -357,18 +452,19 @@ esegui_query("insert into $tableinterconnessioni (tipoid,nome_ic,idremoto1) valu
 $limite = date("YmdHis",mktime(date("H"),date("i"),(date("s") + (C_DIFF_ORE * 3600)),date("m"),(date("d") - 2),date("Y")));
 if ($ultimo_aggiornamento_tariffe < $limite) {
 $agg_tariffe_da_remoto = 1;
+variabili_x_form($lista_tutti_app,$maxocc,$lista_regola2,$lista_regola3,$origini_prenota,$campi_pers_comm,$num_appartamenti,$pass_cc,$priv_gest_pass_cc,$id_sessione,$tableappartamenti,$tableregole,$tablepersonalizza);
 include("./includes/interconnect/$mod_ext/form.php");
 $ultimo_aggiornamento_tariffe = date("YmdHis",(time() + (C_DIFF_ORE * 3600)));
 esegui_query("update $tableinterconnessioni set idremoto1 = '$ultimo_aggiornamento_tariffe' where tipoid = 'u_agg_tar' and nome_ic = '$interconnection_name' ");
 } # fine if ($ultimo_aggiornamento_tariffe < $limite)
 
 $id_utente = $id_utente_origi;
-} # fine if ($ic_present[$interconnection_name] == "SI" and (!$id_ric or...
+} # fine if (isset($ic_present[$interconnection_name]) and $ic_present[$interconnection_name] == "SI" and (empty($id_ric) or...
 } # fine if ($modello_ext != "." and $modello_ext != ".." and...
 } # fine while ($mod_ext = readdir($interconn_dir))
 closedir($interconn_dir);
 
-if (!$agg_disp or !$agg_tar) {
+if (empty($agg_disp) or empty($agg_tar)) {
 $minuti_aspetta_agg = 25;
 $limite_aspetta_aggiornamento = date("Y-m-d H:i:s",(time() - ($minuti_aspetta_agg * 60) + (C_DIFF_ORE * 3600)));
 $errore_aggiornamento = esegui_query("select * from $tablecache where (numero = '11' or numero = '12') and tipo = 'error_ic' and data_modifica < '$limite_aspetta_aggiornamento' ");
@@ -378,9 +474,9 @@ $tipo_err = risul_query($errore_aggiornamento,$num1,'numero');
 if ($tipo_err == '11') $agg_disp = 1;
 if ($tipo_err == '12') $agg_tar = 1;
 } # fine for $num1
-} # fine if (!$agg_disp or !$agg_tar)
+} # fine if (empty($agg_disp) or empty($agg_tar))
 else $num_err = 0;
-if ($agg_disp or $agg_tar) {
+if (!empty($agg_disp) or !empty($agg_tar)) {
 $lock = 1;
 if ($agg_disp) $aggiorna_disp = 1;
 else $aggiorna_disp = 0;
@@ -388,7 +484,7 @@ if ($agg_tar) $aggiorna_tar = 1;
 else $aggiorna_tar = 0;
 if (@function_exists('pcntl_fork')) include("./includes/interconnect/aggiorna_ic_fork.php");
 else include("./includes/interconnect/aggiorna_ic.php");
-} # fine if ($agg_disp or $agg_tar)
+} # fine if (!empty($agg_disp) or !empty($agg_tar))
 if ($num_err) {
 if ($agg_disp) esegui_query("delete from $tablecache where numero = '11' and tipo = 'error_ic' ");
 if ($agg_tar) esegui_query("delete from $tablecache where numero = '12' and tipo = 'error_ic' ");
@@ -412,49 +508,7 @@ echo "<form accept-charset=\"utf-8\" method=\"post\" action=\"./inizio.php\"><di
 
 
 
-if ($priv_crea_interconnessioni == "s") {
-
-
-$lista_tutti_app = "";
-$maxocc = array();
-$appartamenti = esegui_query("select * from $tableappartamenti order by idappartamenti");
-$num_appartamenti = numlin_query($appartamenti);
-for ($num1 = 0 ; $num1 < $num_appartamenti ; $num1++) {
-$idapp = risul_query($appartamenti,$num1,'idappartamenti');
-$maxocc[$idapp] = risul_query($appartamenti,$num1,'maxoccupanti');
-$lista_tutti_app .= "$idapp,";
-} # fine for $num1
-$lista_tutti_app = substr($lista_tutti_app,0,-1);
-
-$lista_regola2 = array();
-$regole2 = esegui_query("select * from $tableregole where tariffa_per_app != ''");
-$num_regole2 = numlin_query($regole2);
-for ($num1 = 0 ; $num1 < $num_regole2 ; $num1++) {
-$tariffa = risul_query($regole2,$num1,'tariffa_per_app');
-$lista_app = risul_query($regole2,$num1,'motivazione');
-if (strcmp($lista_app,"")) {
-$lista_regola2[$tariffa] = explode(",",$lista_app);
-$lista_regola2[$tariffa]['num'] = count($lista_regola2[$tariffa]);
-} # fine if (strcmp($lista_app,""))
-else $lista_regola2[$tariffa]['num'] = 0;
-$lista_regola2[$tariffa]['txt'] = $lista_app;
-$lista_app2 = risul_query($regole2,$num1,'motivazione2');
-$lista_regola2[$tariffa]['txt2'] = $lista_app;
-if ($lista_app and $lista_app2) $lista_regola2[$tariffa]['txt2'] .= ",$lista_app2";
-$lista_regola2[$tariffa]['napp'] = risul_query($regole2,$num1,'motivazione3');
-if (substr($lista_regola2[$tariffa]['napp'],0,1) == "v") {
-$lista_regola2[$tariffa]['vapp'] = 1;
-$lista_regola2[$tariffa]['napp'] = substr($lista_regola2[$tariffa]['napp'],1);
-} # fine if (substr($lista_regola2[$tariffa]['napp'],0,1) == "v")
-} # fine for $num1
-
-$lista_regola4 = array();
-$regole4 = esegui_query("select * from $tableregole where tariffa_per_persone != '' order by tariffa_per_persone");
-$num_regole4 = numlin_query($regole4);
-for ($num1 = 0 ; $num1 < $num_regole4 ; $num1++) {
-$tariffa = risul_query($regole4,$num1,'tariffa_per_persone');
-$lista_regola4[$tariffa] = risul_query($regole4,$num1,'iddatainizio');
-} # fine for $num1
+variabili_x_form($lista_tutti_app,$maxocc,$lista_regola2,$lista_regola3,$origini_prenota,$campi_pers_comm,$num_appartamenti,$pass_cc,$priv_gest_pass_cc,$id_sessione,$tableappartamenti,$tableregole,$tablepersonalizza);
 
 
 
@@ -462,7 +516,7 @@ if (fixset($modifica_interconnessione) == "SI") {
 $mostra_form_iniziale = "NO";
 
 
-if ($modulo) {
+if (!empty($modulo) and $priv_crea_interconnessioni == "s") {
 unset($interconnection_name);
 $interconn_dir = opendir("./includes/interconnect/");
 while ($mod_ext = readdir($interconn_dir)) {
@@ -475,12 +529,12 @@ include("./includes/interconnect/$mod_ext/form.php");
 } # fine if ($modello_ext != "." and $modello_ext != ".." and...
 } # fine while ($mod_ext = readdir($interconn_dir))
 closedir($interconn_dir);
-} # fine if ($modulo)
+} # fine if (!empty($modulo) and $priv_crea_interconnessioni == "s")
 
 
 else {
 
-if ($crea_subordinazione) {
+if (!empty($crea_subordinazione)) {
 $file_backup = C_DATI_PATH."/sub_backup.php";
 $filelock = crea_lock_file($file_backup);
 $errore = "NO";
@@ -490,7 +544,7 @@ $utente_subordinazione = stripslashes($utente_subordinazione);
 $password_subordinazione = stripslashes($password_subordinazione);
 } # fine if (@get_magic_quotes_gpc())
 if ($compresso_subordinazione != "SI") $compresso_subordinazione = "";
-if ($mantieni_anni != 1) $mantieni_anni = "";
+if (!isset($mantieni_anni) or $mantieni_anni != 1) $mantieni_anni = "";
 if (substr($url_subordinazione,0,7) != "http://" and substr($url_subordinazione,0,8) != "https://") $errore = "SI";
 else {
 if (substr($url_subordinazione,-1) != "/") $url_subordinazione .= "/";
@@ -498,7 +552,7 @@ $errore = scarica_backup_subordinazione($file_backup,$url_subordinazione,$utente
 } # fine else if (substr($url_subordinazione,0,7) != "http://")
 
 if ($errore != "SI") {
-if (!$continua) {
+if (empty($continua)) {
 echo "<br><big>".mex("<div style=\"display: inline; color: red;\"><b>ATTENZIONE</b></div>: premendo su <b>\"<i>Continua</i>\"</b> tutti i dati del <i>database attuale</i> verranno <b>cancellati</b>",$pag)."!</big><br><br>
 <div style=\"text-align: center;\"><form accept-charset=\"utf-8\" method=\"post\" action=\"./interconnessioni.php\"><div>
 <input type=\"hidden\" name=\"anno\" value=\"$anno\">
@@ -512,9 +566,9 @@ echo "<br><big>".mex("<div style=\"display: inline; color: red;\"><b>ATTENZIONE<
 <input type=\"hidden\" name=\"compresso_subordinazione\" value=\"$compresso_subordinazione\">
 <input type=\"hidden\" name=\"mantieni_anni\" value=\"$mantieni_anni\">
 <input type=\"hidden\" name=\"continua\" value=\"SI\">
-<input class=\"sbutton\" type=\"submit\" name=\"vai\" value=\"".mex("Continua",$pag)."\">
+<input class=\"sbutton\" type=\"submit\" value=\"".mex("Continua",$pag)."\">
 </div></form></div><br>";
-} # fine if (!$continua)
+} # fine if (empty($continua))
 else {
 $file_sub = @fopen(C_DATI_PATH."/dati_subordinazione.php","w+");
 if ($file_sub) {
@@ -539,11 +593,11 @@ $N_PHPR_DB_USER = $PHPR_DB_USER;
 $N_PHPR_DB_PASS = $PHPR_DB_PASS;
 $N_PHPR_LOAD_EXT = $PHPR_LOAD_EXT;
 $N_PHPR_TAB_PRE = $PHPR_TAB_PRE;
-ripristina_backup($file_backup,"SI",$pag,$numconnessione,$database_esistente,$tempdatabase,$PHPR_DB_TYPE,$PHPR_DB_NAME,$PHPR_DB_HOST,$PHPR_DB_PORT,$PHPR_DB_USER,$PHPR_DB_PASS,$PHPR_LOAD_EXT,$PHPR_TAB_PRE,$N_PHPR_DB_TYPE,$N_PHPR_DB_NAME,$N_PHPR_DB_HOST,$N_PHPR_DB_PORT,$N_PHPR_DB_USER,$N_PHPR_DB_PASS,$N_PHPR_LOAD_EXT,$N_PHPR_TAB_PRE,$ext_pgsql_caricata,$ext_mysql_caricata,$mantieni_anni);
+ripristina_backup($file_backup,"SI",$pag,$numconnessione,"","",$PHPR_DB_TYPE,$PHPR_DB_NAME,$PHPR_DB_HOST,$PHPR_DB_PORT,$PHPR_DB_USER,$PHPR_DB_PASS,$PHPR_LOAD_EXT,$PHPR_TAB_PRE,$N_PHPR_DB_TYPE,$N_PHPR_DB_NAME,$N_PHPR_DB_HOST,$N_PHPR_DB_PORT,$N_PHPR_DB_USER,$N_PHPR_DB_PASS,$N_PHPR_LOAD_EXT,$N_PHPR_TAB_PRE,$ext_pgsql_caricata,$ext_mysql_caricata,$mantieni_anni);
 esegui_query("update $tablepersonalizza set valpersonalizza = 'SI' where idpersonalizza = 'subordinazione' and idutente = '1'");
 echo mex("Subordinazione creata",$pag).".<br>";
 } # fine if ($file_sub)
-} # fine else if (!$continua)
+} # fine else if (empty($continua))
 } # fine if ($errore != "SI")
 
 else {
@@ -551,17 +605,17 @@ echo mex("Impossibile effettuare il collegamento, controllare i dati immessi",$p
 } # fine else if ($errore != "SI")
 @unlink($file_backup);
 distruggi_lock_file($filelock,$file_backup);
-} # fine if ($crea_subordinazione)
+} # fine if (!empty($crea_subordinazione))
 
 
-if ($cancella_subordinazione) {
+if (!empty($cancella_subordinazione)) {
 @unlink(C_DATI_PATH."/dati_subordinazione.php");
 esegui_query("update $tablepersonalizza set valpersonalizza = 'NO' where idpersonalizza = 'subordinazione' and idutente = '1'");
 echo mex("Subordinazione cancellata",$pag).".<br>";
-} # fine if ($cancella_subordinazione)
+} # fine if (!empty($cancella_subordinazione))
 
 
-if ($modifica_utente_agg and $n_utente_agg and $n_utente_agg != "1") {
+if (!empty($modifica_utente_agg) and !empty($n_utente_agg) and $n_utente_agg != "1" and controlla_num_pos($n_utente_agg) == "SI") {
 $utente_esistente = esegui_query("select * from $tableutenti where idutenti = '".aggslashdb($n_utente_agg)."'");
 if (numlin_query($utente_esistente) > 0) {
 $id_utente_az = esegui_query("select idlocale from $tableinterconnessioni where tipoid = 'id_utente_az' ");
@@ -569,9 +623,9 @@ if (numlin_query($id_utente_az) > 0) esegui_query("update $tableinterconnessioni
 else esegui_query("insert into $tableinterconnessioni (idlocale,tipoid) values ('$n_utente_agg','id_utente_az') ");
 echo "".mex("Utente per l'aggiornamento remoto modificato",$pag).".<br>";
 } # fine if (numlin_query($utente_esistente) > 0)
-} # fine if ($modifica_utente_agg and $n_utente_agg and...
+} # fine if (!empty($modifica_utente_agg) and !empty($n_utente_agg) and...
 
-} # fine else if ($modulo)
+} # fine else if (!empty($modulo) and $priv_crea_interconnessioni == "s")
 
 
 if ($mostra_form_iniziale == "NO") {
@@ -619,13 +673,13 @@ echo "<option value=\"$idutenti\"$sel>$nome_utente</option>";
 } # fine for $num1
 echo "</select>
 <input class=\"sbutton\" type=\"submit\" value=\"".mex("Modifica",$pag)."\">";
-if ($nome_utente_agg) {
+if (!empty($nome_utente_agg)) {
 $url_corr = "http://";
 if ($_SERVER['HTTPS']) $url_corr = "https://";
 $url_corr .= $_SERVER['HTTP_HOST'].$_SERVER['SCRIPT_NAME'];
 echo "<br><div class=\"separ\" style=\"height: 3px;\"></div>
 <small>(URL: ".$url_corr."?user=$nome_utente_agg&amp;password=XXXXXX)</small>";
-} # fine if ($nome_utente_agg)
+} # fine if (!empty($nome_utente_agg))
 echo "</div></form><hr style=\"width: 95%\">";
 
 if (@is_file(C_DATI_PATH."/dati_subordinazione.php")) {
@@ -665,6 +719,9 @@ echo "<input type=\"text\" name=\"url_subordinazione\" value=\"http://\" size=60
 
 } # fine else if (@is_file(C_DATI_PATH."/dati_subordinazione.php"))
 
+
+if ($priv_crea_interconnessioni == "s") {
+
 $interconn_dir = opendir("./includes/interconnect/");
 $interconnessioni = array();
 while ($mod_ext = readdir($interconn_dir)) {
@@ -674,13 +731,15 @@ ksort($interconnessioni);
 reset($interconnessioni);
 foreach ($interconnessioni as $mod_ext => $val_i) {
 include("./includes/interconnect/$mod_ext/name.php");
-if ($interconnection_name_show[$lingua_mex]) $titolo = $interconnection_name_show[$lingua_mex];
+if (!empty($interconnection_name_show[$lingua_mex])) $titolo = $interconnection_name_show[$lingua_mex];
 else $titolo = $interconnection_name_show['en'];
 echo "<hr style=\"width: 95%\"><div id=\"h$interconnection_data_dir\" style=\"text-align: center;\"><b>$titolo</b></div><br>";
 $agg_tariffe_da_remoto = 0;
 include("./includes/interconnect/$mod_ext/form.php");
 } # fine foreach ($interconnessioni as $mod_ext => $val_i)
 closedir($interconn_dir);
+
+if (!empty($ic_present) and defined('C_URL_NUOVI_APP') and C_URL_NUOVI_APP) echo "<hr style=\"width: 95%\"><div style=\"text-align: center;\"><br>".mex("Se vuoi collegare altri account per una interconnessione già attiva inquesta pagina, allora",$pag)." <a href=\"".C_URL_NUOVI_APP."\" target=\"_blank\">".mex("aggiungi altre interconnessioni",$pag)."</a>.<br><br>";
 
 
 $templates_dir = opendir("./includes/templates/");
@@ -696,11 +755,11 @@ if (fixset($template_name_show['tpl_type']) == "interconnection") {
 if (!function_exists('mex2')) {
 $perc_cart_mod_sel = "";
 include("./includes/templates/funzioni_modelli.php");
-$percorso_cartella_modello = $perc_cart_mod_vett[0];
+#$percorso_cartella_modello = $perc_cart_mod_vett[0];
 $anno_modello = $anno;
 $lingua_modello = $lingua_mex;
 } # fine if (!function_exists('mex2'))
-if ($template_name_show[$lingua_mex]) $titolo = $template_name_show[$lingua_mex];
+if (!empty($template_name_show[$lingua_mex])) $titolo = $template_name_show[$lingua_mex];
 else {
 $messaggio = "";
 if (@is_file("./includes/lang/$lingua_mex/modt_$modello_ext.php")) {
@@ -718,8 +777,20 @@ include("./includes/templates/$modello_ext/form.php");
 } # fine foreach ($modelli as $modello_ext => $val_i)
 closedir($templates_dir);
 
+} # fine if ($priv_crea_interconnessioni == "s")
 
-echo "<hr style=\"width: 95%\"><div style=\"text-align: center;\">
+echo "
+<script type=\"text/javascript\">
+<!--
+var sel_memu = document.getElementsByTagName('select');
+for (var n1 = 0 ; n1 < sel_memu.length ; n1++) {
+if (sel_memu[n1].querySelector('option[selected]')) {
+sel_memu[n1].querySelector('option[selected]').selected = true;
+}
+}
+-->
+</script>
+<hr style=\"width: 95%\"><div style=\"text-align: center;\">
 <form accept-charset=\"utf-8\" method=\"post\" action=\"./personalizza.php\"><div>
 <input type=\"hidden\" name=\"anno\" value=\"$anno\">
 <input type=\"hidden\" name=\"id_sessione\" value=\"$id_sessione\">
@@ -729,8 +800,6 @@ echo "<hr style=\"width: 95%\"><div style=\"text-align: center;\">
 } # fine if ($mostra_form_iniziale != "NO")
 
 
-
-} # fine if ($priv_crea_interconnessioni == "s")
 
 if ($tema[$id_utente] and $tema[$id_utente] != "base" and @is_dir("./themes/".$tema[$id_utente]."/php")) include("./themes/".$tema[$id_utente]."/php/foot.php");
 else include("./includes/foot.php");

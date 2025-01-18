@@ -2,7 +2,7 @@
 
 ##################################################################################
 #    HOTELDRUID
-#    Copyright (C) 2001-2019 by Marco Maria Francesco De Santis (marco@digitaldruid.net)
+#    Copyright (C) 2001-2023 by Marco Maria Francesco De Santis (marco@digitaldruid.net)
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published by
@@ -63,7 +63,10 @@ elseif (defined('C_NASCONDI_MARCA') and C_NASCONDI_MARCA != "SI") echo "<link re
 echo "<style type=\"text/css\">
 :root { --t1color: $t1color; }
 .t1color { background-color: $t1color; }
-</style>
+";
+if (empty($cookie_sess)) echo "a:link { user-select: none; -moz-user-select: none; -webkit-user-select: none; -ms-user-select: none; }
+";
+echo "</style>
 <link rel=\"stylesheet\" type=\"text/css\" href=\"./base.css$vers_hinc\" media=\"all\">
 <link rel=\"stylesheet\" type=\"text/css\" href=\"./themes/$tema_corr/inc/stylesheet.css$vers_hinc\" media=\"all\">
 ";
@@ -120,23 +123,28 @@ if ($show_bar != "NO") {
 
 if ($id_utente != 1) {
 $tableprivilegi = $PHPR_TAB_PRE."privilegi";
-if (!$anno_utente_attivato) {
-if (!$privilegi_annuali_utente) $privilegi_annuali_utente = esegui_query("select * from $tableprivilegi where idutente = '$id_utente' and anno = '$anno'");
+if (empty($anno_utente_attivato)) {
+if (empty($privilegi_annuali_utente)) $privilegi_annuali_utente = esegui_query("select * from $tableprivilegi where idutente = '$id_utente' and anno = '$anno'");
 if (numlin_query($privilegi_annuali_utente) == 0) $anno_utente_attivato = "NO";
 else $anno_utente_attivato = "SI";
-} # fine if (!$anno_utente_attivato)
+} # fine if (empty($anno_utente_attivato))
+if (!isset($modifica_pers)) $modifica_pers = "";
+if (!isset($inserimento_nuovi_clienti)) $inserimento_nuovi_clienti = "";
+if (!isset($modifica_clienti)) $modifica_clienti = "";
+if (!isset($vedi_clienti)) $vedi_clienti = "";
 if ($anno_utente_attivato == "SI") {
-if (!isset($privilegi_globali_utente)) $privilegi_globali_utente = esegui_query("select * from $tableprivilegi where idutente = '$id_utente' and anno = '1'");
+if (empty($privilegi_globali_utente)) $privilegi_globali_utente = esegui_query("select * from $tableprivilegi where idutente = '$id_utente' and anno = '1'");
 if (!isset($priv_mod_pers)) $priv_mod_pers = risul_query($privilegi_globali_utente,0,'priv_mod_pers');
-if (!fixset($modifica_pers) and substr($priv_mod_pers,0,1) != "s") $modifica_pers = "NO";
+if (empty($modifica_pers) and substr($priv_mod_pers,0,1) != "s") $modifica_pers = "NO";
 if (!isset($priv_crea_backup)) $priv_crea_backup = substr($priv_mod_pers,1,1);
 if (!isset($priv_crea_interconnessioni)) $priv_crea_interconnessioni = substr($priv_mod_pers,3,1);
 if (!isset($priv_crea_pagineweb)) $priv_crea_pagineweb = substr($priv_mod_pers,8,1);
 if (!isset($priv_gest_pass_cc)) $priv_gest_pass_cc = substr($priv_mod_pers,5,1);
+if (!isset($priv_mod_pass)) $priv_mod_pass = substr($priv_mod_pers,10,1);
 if (!isset($priv_ins_clienti)) $priv_ins_clienti = risul_query($privilegi_globali_utente,0,'priv_ins_clienti');
-if (!fixset($inserimento_nuovi_clienti) and substr($priv_ins_clienti,0,1) != "s") $inserimento_nuovi_clienti = "NO";
-if (!fixset($modifica_clienti) and substr($priv_ins_clienti,1,1) != "s" and substr($priv_ins_clienti,1,1) != "p") $modifica_clienti = "NO";
-if (!fixset($vedi_clienti) and substr($priv_ins_clienti,2,1) != "s" and substr($priv_ins_clienti,2,1) != "p") $vedi_clienti = "NO";
+if (empty($inserimento_nuovi_clienti) and substr($priv_ins_clienti,0,1) != "s") $inserimento_nuovi_clienti = "NO";
+if (empty($modifica_clienti) and substr($priv_ins_clienti,1,1) != "s" and substr($priv_ins_clienti,1,1) != "p") $modifica_clienti = "NO";
+if (empty($vedi_clienti) and substr($priv_ins_clienti,2,1) != "s" and substr($priv_ins_clienti,2,1) != "p") $vedi_clienti = "NO";
 if (!isset($priv_vedi_messaggi)) {
 $priv_messaggi = risul_query($privilegi_globali_utente,0,'priv_messaggi');
 $priv_vedi_messaggi = substr($priv_messaggi,0,1);
@@ -176,6 +184,7 @@ if (!isset($priv_crea_backup)) $priv_crea_backup = "s";
 if (!isset($priv_crea_interconnessioni)) $priv_crea_interconnessioni = "s";
 if (!isset($priv_crea_pagineweb)) $priv_crea_pagineweb = "s";
 if (!isset($priv_gest_pass_cc)) $priv_gest_pass_cc = "s";
+if (!isset($priv_mod_pass)) $priv_mod_pass = "s";
 if (!isset($inserimento_nuovi_clienti)) $inserimento_nuovi_clienti = "SI";
 if (!isset($modifica_clienti)) $modifica_clienti = "SI";
 if (!isset($vedi_clienti)) $vedi_clienti = "SI";
@@ -358,20 +367,20 @@ echo "<div class=\"drop nb_rat\"><div class=\"nb_rat\"><ul>
 </ul></li></ul></div></div></td><td>";
 } # fine if ($priv_vedi_tab_periodi != "n" and !$mobile_device)
 } # fine if ($priv_vedi_tab_mesi != "n" or $priv_vedi_tab_prenotazioni != "n" or...
-if (($modifica_pers != "NO" or ($priv_crea_backup == "s" and !isset($installazione_subordinata)) or $priv_crea_pagineweb == "s" or ($priv_crea_interconnessioni == "s" and (!defined('C_CREA_SUBORDINAZIONI') or C_CREA_SUBORDINAZIONI != "NO")) or $priv_gest_pass_cc == "s") and !$mobile_device) {
+if (($modifica_pers != "NO" or ($priv_mod_pass != "n" and !isset($installazione_subordinata)) or ($priv_crea_backup == "s" and !isset($installazione_subordinata)) or $priv_crea_pagineweb == "s" or ($priv_crea_interconnessioni == "s" and (!defined('C_CREA_SUBORDINAZIONI') or C_CREA_SUBORDINAZIONI != "NO")) or $priv_gest_pass_cc == "s") and !$mobile_device) {
 echo "|</td><td><div class=\"drop nb_con\"><ul>
 <li><a class=\"nav\" id=\"nb_con\" href=\"./personalizza.php?$sessione_anno_var\">&nbsp;<b>".mex("CONFIGURA","head.php")."</b>&nbsp;</a>";
-if ($modifica_pers != "NO" or ($priv_crea_backup == "s" and !isset($installazione_subordinata)) or $priv_crea_pagineweb == "s" or ($priv_crea_interconnessioni == "s" and (!defined('C_CREA_SUBORDINAZIONI') or C_CREA_SUBORDINAZIONI != "NO"))) {
+if ($modifica_pers != "NO" or ($priv_mod_pass != "n" and !isset($installazione_subordinata)) or ($priv_crea_backup == "s" and !isset($installazione_subordinata)) or $priv_crea_pagineweb == "s" or ($priv_crea_interconnessioni == "s" and (!defined('C_CREA_SUBORDINAZIONI') or C_CREA_SUBORDINAZIONI != "NO"))) {
 echo "<ul>";
-if ($id_utente == 1 and !isset($installazione_subordinata)) echo "<li><a id=\"nb_use\" href=\"./gestione_utenti.php?$sessione_anno_var\">&nbsp;<b>".mex("UTENTI","head.php")."</b>&nbsp;</a></li>";
+if ($priv_mod_pass != "n" and !isset($installazione_subordinata)) echo "<li><a id=\"nb_use\" href=\"./gestione_utenti.php?$sessione_anno_var\">&nbsp;<b>".mex("UTENTI","head.php")."</b>&nbsp;</a></li>";
 if ($priv_crea_pagineweb == "s") echo "<li><a id=\"nb_web\" href=\"./crea_modelli.php?$sessione_anno_var\">&nbsp;<b>".mex("SITO WEB","head.php")."</b>&nbsp;</a></li>";
 if ($priv_crea_interconnessioni == "s" and (!defined('C_CREA_SUBORDINAZIONI') or C_CREA_SUBORDINAZIONI != "NO")) echo "<li><a id=\"nb_int\" href=\"./interconnessioni.php?$sessione_anno_var\">&nbsp;<b>".mex("INTERCONN.","head.php")."</b>&nbsp;</a></li>";
 if ($priv_crea_backup == "s" and !isset($installazione_subordinata)) echo "<li><a id=\"nb_bac\" href=\"./crea_backup.php?$sessione_anno_var\">&nbsp;<b>".mex("BACKUP","head.php")."</b>&nbsp;</a></li>";
 if ($modifica_pers != "NO") echo "<li><a id=\"nb_cdoc\" href=\"./personalizza.php?$sessione_anno_var#contratti\">&nbsp;<b>".mex("DOCUMENTI","head.php")."</b>&nbsp;</a></li>";
 echo "</ul>";
-} # fine if ($modifica_pers != "NO" or ($priv_crea_backup == "s" and !isset($installazione_subordinata)) or
+} # fine if ($modifica_pers != "NO" or ($priv_mod_pass != "n" and !isset($installazione_subordinata)) or ($priv_crea_backup == "s" and !isset($installazione_subordinata)) or
 echo "</li></ul></div></td><td>";
-} # fine if (($modifica_pers != "NO" or ($priv_crea_backup == "s" and !isset($installazione_subordinata)) or...
+} # fine if (($modifica_pers != "NO" or ($priv_mod_pass != "n" and !isset($installazione_subordinata)) or ($priv_crea_backup == "s" and !isset($installazione_subordinata)) or...
 echo "</td></tr></table></td>";
 
 if (!empty($idprenota_origine)) $anno = $anno - 1;

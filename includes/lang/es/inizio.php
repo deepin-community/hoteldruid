@@ -128,6 +128,12 @@ case "nel database sono ancora disponibili periodi solo per meno di":	$messaggio
 case "mesi":  					$messaggio = "meses"; break;
 case "OK, ho capito":  				$messaggio = "OK, entendido"; break;
 case "Crea Anno":  				$messaggio = "Crear Año"; break;
+case "Nota":  					$messaggio = "Nota"; break;
+case "l'anno":  				$messaggio = "el año"; break;
+case "verrà archiviato automaticamente il":  	$messaggio = "será archivado automáticamente el"; break;
+case "nel frattempo si possono aggiungere periodi oltre il":	$messaggio = "mientras tanto se pueden añadir períodos más allá del"; break;
+case "ricordarsi di tornare al":  		$messaggio = "recordar volver al"; break;
+case "una volta conclusa la consultazione del":	$messaggio = "una vez terminada la consulta del"; break;
 case "":  		$messaggio = ""; break;
 case "":  		$messaggio = ""; break;
 

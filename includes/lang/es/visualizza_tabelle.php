@@ -374,6 +374,11 @@ case "e applica la % del tipo di persona":  	$messaggio = "y aplicar el % del ti
 case "escludendo":  				$messaggio = "excluyendo"; break;
 case "includendo solo":  			$messaggio = "incluyendo solo"; break;
 case "e":  					$messaggio = "y"; break;
+case "Superato il massimo numero di anni comparabili":	$messaggio = "Superado el número máximo de años comparables"; break;
+case "Numero_predefinito di persone":  		$messaggio = "Número_predefinido de personas"; break;
+case "Numero_minimo di persone":  		$messaggio = "Número_mínimo de personas"; break;
+case "Id":  					$messaggio = "Id"; break;
+case "chiedere":  				$messaggio = "preguntar"; break;
 case "":  		$messaggio = ""; break;
 case "":  		$messaggio = ""; break;
 
