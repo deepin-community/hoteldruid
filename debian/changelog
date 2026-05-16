@@ -2,6 +2,8 @@ hoteldruid (3.0.3-2) unstable; urgency=medium
 
   * Fix reflected XSS via ripristina_backup parameter in crea_backup.php
     (CVE-2025-25747)
+  * Enforce password strength policy in gestione_utenti.php
+    (CVE-2025-25749)
 
  -- deepin-ci-robot <packages@deepin.org>  Sat, 17 May 2026 03:00:00 +0800
 
